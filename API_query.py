@@ -49,7 +49,7 @@ print(site_csv.columns)
 
 input()
 
-################ unediger Scheiß #################
+################ old example code for basic generation of OS containers #################
 
 # some uknown test
 DEFAULT_SIDE = "Oncology Department"

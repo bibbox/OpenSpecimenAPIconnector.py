@@ -174,7 +174,6 @@ class Json_factory():
         :return:
         '''
 
-
         spec = {
             "lineage": lineage,
             "visitId": visit_id,
@@ -207,9 +206,35 @@ class Json_factory():
         return json.dumps(spec)
 
     # Export Jsons
+
     # Export Sites
 
     def create_site_export_job_json(self, record_ids=None):
+
+        site_json = {"objectType": "site", "recordIds": record_ids}
+
+        return json.dumps(site_json)
+
+    # Export collection protocols
+
+    def create_cp_export_job_json(self, record_ids=None):
+
+        site_json = {"objectType": "site", "recordIds": record_ids}
+
+        return json.dumps(site_json)
+
+    ##TODO
+
+    # Import collection protocols
+    
+    def create_site_import_job_json(self, record_ids=None):
+
+        site_json = {"objectType": "site", "recordIds": record_ids}
+
+        return json.dumps(site_json)
+
+    
+    def create_cp_import_job_json(self, record_ids=None):
 
         site_json = {"objectType": "site", "recordIds": record_ids}
 
