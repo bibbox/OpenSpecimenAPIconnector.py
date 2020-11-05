@@ -27,11 +27,12 @@ import tempfile
 
 class SiteFactory():
 
-    def __init__(self, base_url, Json_Fac, Req_Fac):
+    def __init__(self, base_url, Json_Fac, Req_Fac, File_Fact):
 
         self.base_url = base_url
         self.Json_Fac = Json_Fac
         self.Req_Fac = Req_Fac
+        self.File_Fact = File_Fact
 
     def get_all_site_ids(self, record_ids=None):
 
@@ -44,8 +45,10 @@ class SiteFactory():
             ids[i] = item["id"]
 
         return ids
-
-    def get_BBMRI_sites(self):
+    
+    ##TODO: Create simpler flag if a Site is a active BBMRI BIOBANK and get rid of if
+    
+    def get_BBMRI_sites_json(self, pandas=True):
 
         site_ids = self.get_all_site_ids()
         sites = []
@@ -57,13 +60,14 @@ class SiteFactory():
             print(json.dumps(req_json, indent=4, sort_keys=True))
             if req_json["extensionDetail"].get("attrs", False) and \
                     "miabis" in req_json["extensionDetail"]["formCaption"].lower():
-                sites.append(json.dumps(req_json["extensionDetail"]))
+                if pandas:
+                    sites.append(self.File_Fact.pandas_from_json)
                 print(json.dumps(req_json, indent=4, sort_keys=True))
                 input()
 
         return sites
 
-    def get_site_pandas(self):
+    def get_all_sites(self, pandas=True):
 
         job_endpoint = "/export-jobs/"
         job_url = self.base_url + job_endpoint
@@ -81,6 +85,9 @@ class SiteFactory():
             fp.write(r.content)
             with zipfile.ZipFile(fp, 'r', zipfile.ZIP_DEFLATED) as archive:
                 with archive.open("output.csv", "r") as csv_file:
-                    csv = pd.read_csv(csv_file)
+                    if pandas:
+                        site_data = pd.read_csv(csv_file)
+                    else:
+                        site_data = csv_file
 
-        return csv
+        return site_data

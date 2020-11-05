@@ -22,11 +22,12 @@ from dateutil.relativedelta import relativedelta
 
 class Form_factory():
 
-    def __init__(self, base_url, Json_Fact, Req_Fac):
+    def __init__(self, base_url, Json_Fact, Req_Fac, File_Fact):
 
         self.base_url = base_url
         self.Json_Fact = Json_Fact
         self.Req_Fac = Req_Fac
+        self.File_Fact = File_Fact
 
 
     def add_visit(self):

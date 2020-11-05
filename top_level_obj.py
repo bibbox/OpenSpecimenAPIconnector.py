@@ -26,6 +26,9 @@ from Forms import Form_factory
 from jsons import Json_factory
 from cp_factory import Cp_factory
 from Part_fact import Participant_Fact
+from query_factory import Query_Factory
+from user_factory import User_factory
+from specimen_factory import Specimen_Factory
 
 class OS_BBMRI_conn():
 
@@ -34,6 +37,7 @@ class OS_BBMRI_conn():
         self.base_url = base_url
         self.auth = auth
         self.headers = {'content-type': "application/json", 'cache-control': "no-cache"}
+        
         # json templates
         self.Json_Fact = Json_factory()
         # files
@@ -41,13 +45,20 @@ class OS_BBMRI_conn():
         # requests
         self.Req_Fact = RequestFactory(self.headers, self.auth)
         # site operations
-        self.Site_Fact = SiteFactory(self.base_url, self.Json_Fact, self.Req_Fact)
-        # form operations
-        self.Form_Fact = Form_factory(self.base_url, self.Json_Fact, self.Req_Fact)
+        self.Site_Fact = SiteFactory(self.base_url, self.Json_Fact, self.Req_Fact, self.File_Fact)
+        # user operations
+        self.User_Fact = User_factory(self.base_url, self.Json_Fact, self.Req_Fact, self.File_Fact, self.Site_Fact)
         # CP operations
-        self.CP_Fact = Cp_factory(self.base_url, self.Req_Fact, self.Site_Fact, self.Json_Fact, self.Form_Fact)
+        self.CP_Fact = Cp_factory(self.base_url,  self.Json_Fact, self.Req_Fact, self.File_Fact, self.Site_Fact,
+                                  self.Form_Fact)
+        # form operations
+        self.Form_Fact = Form_factory(self.base_url, self.Json_Fact, self.Req_Fact, self.File_Fact)
         # Participant Operations
-        self.Participant_Fact = Participant_Fact(self.base_url, self.Json_Fact, self.Req_Fact, self.CP_Fact)
-
-
-
+        self.Part_Fact = Participant_Fact(self.base_url, self.Json_Fact, self.Req_Fact, self.File_Fact, 
+                                                 self.CP_Fact)
+        # specimen operations
+        self.Spec_Fact = Specimen_Factory(self.base_url, self.Json_Fact, self.Req_Fact, self.File_Fact, 
+                                                 self.CP_Fact, self.Part_Fact)
+        # Query operations
+        self.Query_fact = Query_Factory(self.base_url, self.Json_Fact, self.Req_Fact, self.File_Fact, 
+                                                 self.CP_Fact, self.Part_Fact, self.Spec_Fact)

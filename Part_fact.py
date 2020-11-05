@@ -22,15 +22,17 @@ from dateutil.relativedelta import relativedelta
 
 class Participant_Fact():
 
-    def __init__(self, base_url, CP_Fact, Json_Fact, Req_Fact):
+    def __init__(self, base_url, Json_Fact, Req_Fact, File_Fact, CP_fact):
 
         self.base_url = base_url
         self.CP_Fact = CP_Fact
         self.Json_Fact = Json_Fact
         self.Req_Fact = Req_Fact
+        self.File_Fact = File_Fact
+        self.CP_Fact = CP_fact
 
     def participant_generator(self):
         pass
 
     def create_part(self):
-        passSc
+        pass

@@ -10,7 +10,7 @@ import names
 import random
 import time
 import datetime
-import qrcode
+import pandas as pd
 from datetime import date
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
@@ -29,6 +29,8 @@ def strTimeProp(start, end, format, prop):
 
 def randomDate(start, end, prop):
     return strTimeProp(start, end, '%Y-%m-%d', prop)
+
+##TODO add this methods to parser in order to make a generic callable main script e.g. python main.py -param1 - param2 ...
 
 auth = ('admin', 'Login@123')
 env = "local"

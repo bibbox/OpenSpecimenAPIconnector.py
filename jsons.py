@@ -150,9 +150,9 @@ class Json_factory():
     def create_cp_event_json(self):
         pass
 
-    def create_spec_json(self, lineage, visit_id, av_qty, user, visitDate, init_qty, spec_class, spec_type, anat_site, stor_loc=None,
-                      status="Collected", cont=None, proced=None, qual="Acceptable", concent=None,  path=None,
-                      laterality=None):
+    def create_spec_json(self, lineage, visit_id, av_qty, user, visitDate, init_qty, spec_class, spec_type, anat_site, 
+                         stor_loc=None, status="Collected", cont=None, proced=None, qual="Acceptable", concent=None,  
+                         path=None, laterality=None):
         '''
         :param lineage:
         :param visit_id:
@@ -210,14 +210,6 @@ class Json_factory():
     # Export Sites
 
     def create_site_export_job_json(self, record_ids=None):
-
-        site_json = {"objectType": "site", "recordIds": record_ids}
-
-        return json.dumps(site_json)
-
-    # Export collection protocols
-
-    def create_cp_export_job_json(self, record_ids=None):
 
         site_json = {"objectType": "site", "recordIds": record_ids}
 
