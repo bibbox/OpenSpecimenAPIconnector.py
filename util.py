@@ -19,15 +19,8 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
 
-class Specimen_Factory():
-    
-    def __init__(self, base_url, Json_Fact, Req_Fact, File_Fact, CP_Fact, Part_Fact):
-        
-        self.base_url = base_url 
-        self.Json_Fact = Json_Fact 
-        self.Req_Fact = Req_Fact 
-        self.File_Fact = File_Fact
-        self.CP_Fact = CP_Fact
-        self.Part_Fact = Part_Fact
-        
+class Utility():
+
+    def __init__(self):
+        pass
     
