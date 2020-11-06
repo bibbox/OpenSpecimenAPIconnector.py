@@ -13,24 +13,31 @@ import datetime
 from datetime import date
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+import pandas as pd
+import numpy as np
+import tempfile
 
 from datetime import date
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
 
-class Form_factory():
+class OS_BBMRI_merge():
 
-    def __init__(self, base_url, Json_Fact, Req_Fac, File_Fact):
+    def __init__(self, base_url, Json_Fact, Req_Fact, File_Fact,
+                CP_Fact, Part_Fact, Spec_Fact, Query_fact):
 
         self.base_url = base_url
         self.Json_Fact = Json_Fact
-        self.Req_Fac = Req_Fac
+        self.Req_Fact = Req_Fact
         self.File_Fact = File_Fact
+        self.CP_Fact = CP_Fact
+        self.Part_Fact = Part_Fact
+        self.Spec_Fact = Spec_Fact
+        self.Query_fact = Query_fact
 
-
-    def add_visit(self):
+    def get_BBMRIbiobank_pandas(self):
         pass
 
-    def add_visit_ext(self):
+    def get_BBMRICollection_pandas(self):
         pass

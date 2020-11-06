@@ -28,6 +28,7 @@ from Part_fact import Participant_Fact
 from query_factory import Query_Factory
 from user_factory import User_factory
 from specimen_factory import Specimen_Factory
+from OS_BBMRI_merge import OS_BBMRI_merge
 
 class OS_BBMRI_conn():
 
@@ -35,23 +36,22 @@ class OS_BBMRI_conn():
 
         self.base_url = base_url
         self.auth = auth
-        self.headers = {'content-type': "application/json", 'cache-control': "no-cache"}
         
         # json templates
         self.Json_Fact = Json_factory()
         # files
         self.File_Fact = File_factory()
         # requests
-        self.Req_Fact = RequestFactory(self.headers, self.auth)
+        self.Req_Fact = RequestFactory(self.auth)
         # site operations
         self.Site_Fact = SiteFactory(self.base_url, self.Json_Fact, self.Req_Fact, self.File_Fact)
         # user operations
         self.User_Fact = User_factory(self.base_url, self.Json_Fact, self.Req_Fact, self.File_Fact, self.Site_Fact)
+        # form operations
+        self.Form_Fact = Form_factory(self.base_url, self.Json_Fact, self.Req_Fact, self.File_Fact)
         # CP operations
         self.CP_Fact = Cp_factory(self.base_url,  self.Json_Fact, self.Req_Fact, self.File_Fact, self.Site_Fact,
                                   self.Form_Fact)
-        # form operations
-        self.Form_Fact = Form_factory(self.base_url, self.Json_Fact, self.Req_Fact, self.File_Fact)
         # Participant Operations
         self.Part_Fact = Participant_Fact(self.base_url, self.Json_Fact, self.Req_Fact, self.File_Fact, 
                                                  self.CP_Fact)
@@ -61,3 +61,6 @@ class OS_BBMRI_conn():
         # Query operations
         self.Query_fact = Query_Factory(self.base_url, self.Json_Fact, self.Req_Fact, self.File_Fact, 
                                                  self.CP_Fact, self.Part_Fact, self.Spec_Fact)
+
+        self.PS_BBMRI_merge = OS_BBMRI_merge(self.base_url, self.Json_Fact, self.Req_Fact, self.File_Fact,
+                                                 self.CP_Fact, self.Part_Fact, self.Spec_Fact, self.Query_fact)

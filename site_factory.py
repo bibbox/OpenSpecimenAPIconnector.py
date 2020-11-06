@@ -44,6 +44,15 @@ class SiteFactory():
             ids[i] = item["id"]
 
         return ids
+
+    def get_site_pandas_template(self):
+
+        site_template_endpoint = "/import-jobs/input-file-template?schema=site"
+        site_template_url = self.base_url + site_template_endpoint
+        r = self.Req_Fac.get_request(site_template_url)
+        site_pandas_template = pd.DataFrame(columns=[r.content.decode()])
+
+        return site_pandas_template
     
     ##TODO: Create simpler flag if a Site is a active BBMRI BIOBANK and get rid of if
     

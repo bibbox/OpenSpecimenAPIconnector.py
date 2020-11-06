@@ -9,7 +9,7 @@ class File_factory():
     def __init__(self):
         pass
 
-    def pandas_from_excel(self, wxcel):
+    def pandas_from_excel(self, excel):
         
         df = pd.read_excel(excel)
         return df
@@ -19,10 +19,7 @@ class File_factory():
         df = pd.read_json(json)
         return df
     
-    def pandas_from_csv(self, csv):
+    def pandas_from_csv(self, csv_file):
         
         df = pd.read_csv(csv)
         return df
-
-
-

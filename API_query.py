@@ -21,16 +21,18 @@ from dateutil.relativedelta import relativedelta
 from top_level_obj import OS_BBMRI_conn
 
 
-def strTimeProp(start, end, format, prop):
-    stime = time.mktime(time.strptime(start, format))
-    etime = time.mktime(time.strptime(end, format))
-    ptime = stime + prop * (etime - stime)
-    return time.strftime(format, time.localtime(ptime))
+##TODO (longterm) Decide upon desired functionality ---> API only or direct database interaction as well and what should it be
+## able to accomplish; in OS; in the BBMRI directory
 
-def randomDate(start, end, prop):
-    return strTimeProp(start, end, '%Y-%m-%d', prop)
+##TODO Get cp def and isolate directory fields
+## Read cp template from file and fill values from excel File; reimport/just switch headers with pandas and done...
+## Aggregate Fields in OS --> Either here(Export/Edit/Import) or within OS (js/html) ---> Database, Java(backend)
+## Add Specimen import via json and Bulk CSV
+## Add Visit import via json and Bulk CSV
+## Add all other Bulk Methods for CSV
+## See where json is neccesary
 
-##TODO add this methods to parser in order to make a generic callable main script e.g. python main.py -param1 - param2 ...
+# add this methods to parser in order to make a generic callable main script e.g. python main.py -param1 - param2 ...
 
 auth = ('admin', 'Login@123')
 env = "local"
@@ -39,15 +41,25 @@ headers = {'content-type': "application/json", 'cache-control': "no-cache"}
 if env == "local":
     baseUrl = 'http://localhost:9000/openspecimen/rest/ng'
 elif env == "bibbox":
-    baseUrl = 'http://localhost:9000/openspecimen/rest/ng'
+    baseUrl = 'http://biobank.silicolab.bibbox.org/openspecimen/rest/ng'
 
 os_conn = OS_BBMRI_conn(auth, baseUrl)
 ids = os_conn.Site_Fact.get_all_site_ids()
-sites = os_conn.Site_Fact.get_BBMRI_sites()
-site_csv = os_conn.Site_Fact.get_site_csv()
+sites_csv = os_conn.Site_Fact.get_all_sites()
+cp_ids = os_conn.CP_Fact.get_all_cp_ids()
+cp_pandas_template = os_conn.CP_Fact.get_cp_pandas_template()
+site_pandas_template = os_conn.Site_Fact.get_site_pandas_template()
 
-print(sites)
-print(site_csv.columns)
+print(cp_pandas_template)
+print(site_pandas_template)
+print(cp_ids)
+rand_no_part = random.randint(1000, 5000)
+print(rand_no_part)
+input()
+for idx in cp_ids:
+    os_conn.Part_Fact.participant_generator(cp_id=idx, num_part=rand_no_part)
+
+print(sites_csv.columns)
 
 input()
 

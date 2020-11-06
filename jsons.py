@@ -23,11 +23,20 @@ class Json_factory():
     def __init__(self):
         pass
 
+    ##TODO Decide upon way of json creation/storage for OS operations, the current idea is to set mandatory values to
+    ## boolean true by default. than a random generator can create the values in fixed order and they can be set
+    ## according to the boolean. Even better would be the restriction to use pandas data frames directly and create the
+    ## json once data entry is done. Another important question is how to deal with custom value fields in various cases.
+    ## Further, where possible, the csv import option should be used and json creation should be left to the numerous
+    ## methods within Open Specimen
+    ## first approach to be overhauled
+
     # creation jsons:
     # participant
-    def create_participant_json(self, fn, ln, birthdate, gender, cp_id, reg_date, pp_id, death_date=None,
-                             vital_status="Unknown", pmis=None, eth=None, activity="Active", phi=True,
-                             registeredCps=None, cpId=-1, reqRegInfo=False, forceDelete=False):
+    def create_participant_json(self, fn=True, ln=True, birthdate=True, gender=True, cp_id=None, reg_date=True,
+                            pp_id=True, death_date=None, vital_status="Unknown", pmis=None, eth=None,
+                            activity="Active", phi="true", registeredCps=None, cpId=-1, reqRegInfo=False,
+                            forceDelete=False):
 
         '''
         :param fn:
@@ -77,7 +86,7 @@ class Json_factory():
             "ppid": pp_id
         }
 
-        return json.dumps(participantRegistration)
+        return participantRegistration
 
     # Collection Protocoll
 
