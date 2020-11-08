@@ -20,7 +20,7 @@ class RequestFactory():
 
     def __init__(self, auth):
 
-        self.json_headers =  {'content-type': "application/json", 'cache-control': "no-cache"}
+        self.json_headers = {'content-type': "application/json", 'cache-control': "no-cache"}
         self.zip_headers = {'content-type': "application/zip", 'cache-control': "no-cache"}
         self.form_data_headers = {'content-type': "form-data", 'cache-control': "no-cache"}
 

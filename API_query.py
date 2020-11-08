@@ -36,7 +36,6 @@ from top_level_obj import OS_BBMRI_conn
 
 auth = ('admin', 'Login@123')
 env = "local"
-headers = {'content-type': "application/json", 'cache-control': "no-cache"}
 
 if env == "local":
     baseUrl = 'http://localhost:9000/openspecimen/rest/ng'

@@ -62,5 +62,5 @@ class OS_BBMRI_conn():
         self.Query_fact = Query_Factory(self.base_url, self.Json_Fact, self.Req_Fact, self.File_Fact, 
                                                  self.CP_Fact, self.Part_Fact, self.Spec_Fact)
 
-        self.PS_BBMRI_merge = OS_BBMRI_merge(self.base_url, self.Json_Fact, self.Req_Fact, self.File_Fact,
+        self.OS_BBMRI_merge = OS_BBMRI_merge(self.base_url, self.Json_Fact, self.Req_Fact, self.File_Fact,
                                                  self.CP_Fact, self.Part_Fact, self.Spec_Fact, self.Query_fact)

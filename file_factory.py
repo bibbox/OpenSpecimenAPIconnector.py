@@ -13,7 +13,8 @@ class File_factory():
         
         df = pd.read_excel(excel)
         return df
-        
+
+
     def pandas_from_json(self, json):
         
         df = pd.read_json(json)
