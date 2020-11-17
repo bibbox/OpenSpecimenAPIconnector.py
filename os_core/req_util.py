@@ -1,8 +1,7 @@
+#! /bin/python3
 import requests
-import json
 import pickle
 import json
-import requests
 import uuid
 import faker
 from faker import Factory
