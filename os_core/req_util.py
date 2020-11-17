@@ -4,7 +4,7 @@ import pickle
 import json
 import uuid
 import faker
-from faker import Factory
+#from faker import Factory
 import names
 import random
 import time
@@ -12,7 +12,7 @@ import datetime
 from datetime import date
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-from jsons import Json_factory
+from .jsons import Json_factory
 
 
 class OS_request_gen():
@@ -36,7 +36,7 @@ class OS_request_gen():
 
         return r
 
-    def get_post_request(self, url, data, form_data=False):
+    def post_request(self, url, data, form_data=False):
 
         if form_data:
             r = requests.request("POST", url, data=data, auth=self.auth,
@@ -46,8 +46,14 @@ class OS_request_gen():
                                  headers=self.json_headers)
         return r
 
-    def get_put_request(self, url, data):
+    def put_request(self, url, data):
 
         r = requests.request("PUT", url, data=data, auth=self.auth,
                              headers=self.json_headers)
+        return r
+
+    def delete_request(self, url):
+
+        r = requests.request("DELETE", url, auth=self.auth )
+
         return r
