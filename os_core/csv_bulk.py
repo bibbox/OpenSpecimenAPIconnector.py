@@ -23,13 +23,15 @@ class csv_bulk:
         self.auth = auth
 
 
-# Check URL, Password, header
+# Check URL, Password
 
     def ausgabe(self):
 
         print(self.base_url, self.OS_request_gen.auth)
 
-# Get template_file, return pandas Dataframe
+#   Get template_file, return pandas Dataframe
+#       -schemaname:   https://docs.google.com/spreadsheets/d/1fFcL91jSoTxusoBdxM_sr6TkLt65f25YPgfV-AYps4g/edit#gid=0
+#           e.g. specimen,masterSpecimen (camelCase)  
 
     def get_template(self, schemaname):
 
@@ -42,22 +44,28 @@ class csv_bulk:
 
         return ret_val
 
-# Upload the CSV file
+#   Upload the CSV file, returns fileId for upload job
+#       - filename: string of the filename with ending
+#       - file: file with datatyp .csv (OS standard separator is comma ',')
 
     def upload_csv(self, filename, file):
 
         endpoint = '/input-file'
         url = self.base_url + endpoint
         files = [('file', (filename, file, 'text/csv'))]
-        headers = {'cache-control': "no-cache"}
 
         r = self.OS_request_gen.post_request(url=url, files=files)
 
         return json.loads(r.text)["fileId"]
 
-#  create and run job
+#   create and run job, returns json file with job id etc.
+#       - schemaname: string with name of Inputtype https://docs.google.com/spreadsheets/d/1fFcL91jSoTxusoBdxM_sr6TkLt65f25YPgfV-AYps4g/edit#gid=0
+#       - fileId: ID formatted Text which is generated in os_core.csv_bulk.upload_csv
+#       - operation: UPDATE or CREATE
+#       - dateformat: optional, needed if Format is incompatibel with OS systemconfiguration
+#       - timeformat: optional, needed if Format is incompatibel with OS systemconfiguration
 
-    def run_upload(self, schemaname, fileid, operation='CREATE'):
+    def run_upload(self, schemaname, fileid, operation='CREATE',dateformat=None, timeformat=None):
 
         url = self.base_url
         payload = '{\"objectType\":\"'+schemaname+'\",\"importType\":\"' + \
@@ -67,18 +75,30 @@ class csv_bulk:
 
         return r.text
 
-#   get job status
+#   get job status, returns status code
+#       - 200:Bulk Import request was successfully processed.
+#       - 401:uthorisation failed, user doesn’t have the authority.
+#       - 500:Internal server error, encountered server error while performing operations.
+#       - jobid= Id of the job
+
     def get_job_status(self, jobid):
 
         endpoint = '/'+ str(jobid)
         url = self.base_url + endpoint
+        
         r = self.OS_request_gen.get_request(url)
 
         return r.text
 
-#   downlaod job report
+#   downlaod job report, generates json output of the import job
+#   last row of the csv contains information about upload e.g "SUCCSESS"
+#       - jobid= Id of the job
+
     def job_report(self, jobid):
+
         endpoint = '/' + str(jobid) + '/output'
         url = self.base_url + endpoint
+
         r = self.OS_request_gen.get_request(url)
+
         return r.text
