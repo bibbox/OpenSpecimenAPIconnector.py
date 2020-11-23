@@ -3,7 +3,6 @@
 # imports
 import json
 
-# imports within the module
 from os_core.req_util import OS_request_gen
 
 # TODO
@@ -23,8 +22,8 @@ class users:
 
         # define class members here
         self.OS_request_gen = OS_request_gen(auth)
+        
         self.base_url = base_url
-        self.auth = auth
 
 ##  Check URL, Password
     def ausgabe(self):
@@ -37,7 +36,9 @@ class users:
 
         endpoint = "/users"
         url = self.base_url + endpoint
+
         r = self.OS_request_gen.get_request(url=url)
+
         return json.loads(r.text)
 
     #   get specific user with id, can be expanded via tokkens which can be added in the link(e.g. ?loginName=loginName) as far as i know from other API calls
@@ -45,7 +46,9 @@ class users:
 
         endpoint = "/users/"+str(userId)
         url = self.base_url + endpoint
+
         r = self.OS_request_gen.get_request(url=url)
+
         return json.loads(r.text)
 
     #   change password, ToDo with "userId, oldPassword, newPassword" also others than superadmin chan change der Password
@@ -53,8 +56,10 @@ class users:
 
         endpoint = "/users/password"
         url = self.base_url+endpoint
+
         payload = "{\"userId\":\"" + \
             str(userId)+"\",\"newPassword\":\""+newPassword+"\"}"
+
         r = self.OS_request_gen.put_request(url=url, data=payload)
 
         return json.loads(r.text)
@@ -64,10 +69,12 @@ class users:
 
         endpoint = "/users"
         url = self.base_url+endpoint
+
         payload = "{\"dnd\":"+dnd+",\"domainName\":\""+domainname+"\",\"instituteName\":\""+institutename+"\",\"type\":\""+type +\
             "\",\"firstName\":\""+firstname+"\",\"lastName\":\""+lastname+"\",\"emailAddress\":\""+emailaddress +\
             "\",\"phoneNumber\":\""+phonenumber+"\",\"loginName\":\"" + \
             loginname+"\",\"address\":\""+address+"\"}"
+
         r = self.OS_request_gen.post_request(url=url, data=payload)
 
         return json.loads(r.text)
@@ -77,6 +84,7 @@ class users:
 
         endpoint = "/users/"+str(userid)+"/?close=true"
         url = self.base_url+endpoint
+
         r = self.OS_request_gen.delete_request(url)
 
         return json.loads(r.text)
@@ -88,6 +96,7 @@ class users:
 
         endpoint = '/rbac/subjects/'+str(userid)+'/roles'
         url = self.base_url+endpoint
+
         r = self.OS_request_gen.get_request(url)
 
         return json.loads(r.text)
@@ -99,8 +108,10 @@ class users:
 
         endpoint = '/rbac/subjects/'+str(userid)+'/roles'
         url = self.base_url+endpoint
+
         payload = "{\n  \"site\":{\"id\":\""+str(siteid)+"\"},\n  \"collectionProtocol\":{\"id\":\""+str(
             cpid)+"\"},\n  \"role\":{\"name\":\""+role+"\"}\n}"
+            
         r = self.OS_request_gen.post_request(url=url, data=payload)
 
         return json.loads(r.text)

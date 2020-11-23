@@ -1,10 +1,16 @@
+#! /bin/python3
+
+
 #### This is for testing reasons online
 
 
-#! /bin/python3
+
 from os_core.users import users
 from os_core.specimen import specimen
+from os_core.mandatory import mark_mandatory
+from os_core.csv_bulk import csv_bulk
 import json
+import pandas
 
 
 # base_url='http://biobank.silicolab.bibbox.org/'
@@ -13,7 +19,7 @@ auth = ('admin', 'Login@123')
 
 
 ## User test
-user = users(base_url, auth)
+#user = users(base_url, auth)
 #user.ausgabe()
 #user_info = user.get_user(3)
 #print(user_info)
@@ -31,10 +37,34 @@ user = users(base_url, auth)
 #speci.ausgabe()
 
 ## Specimentest
+#speci=specimen(base_url=base_url, auth=auth)
+#speci.ausgabe()
+#speci_info=speci.get_specimen(1)
+#print(speci_info)
+#speci_info=speci.check_specimen(specimenLabel='asd')
+#print(speci_info)
+#speci_info=speci.create_specimen_api(label='label2',cpId=2,specimenClass='Fluid',specimenType='Bile',pathology='Malignant',anatomicSite='Abdomen, NOS'\
+#    ,laterality='Bilateral',lineage='New',status='Collected')
+#print(speci_info)
 
-
-
-
+csvfiles=csv_bulk(base_url,auth)
+#csvfiles.ausgabe()
+#file=csvfiles.get_template(schemaname='specimen')
+#print(file)
+#print(len(file))
+input_=pandas.read_csv('/home/v/Programs/BBMRI_API/dev_chri/specimen.csv')
+print(input_.to_csv(index=None))
+file_id=csvfiles.upload_csv(filename='specimen.csv',file=input_.to_csv(index=None))
+print('#files')
+print(file_id)
+uplo=csvfiles.run_upload(schemaname='specimen',fileid=file_id)
+print(uplo)
+stat=csvfiles.get_job_status(12)
+print(stat)
+statu=csvfiles.job_report(12)
+print('#status')
+print(statu)
+#open(file)
 
 
 
