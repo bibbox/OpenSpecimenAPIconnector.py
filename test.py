@@ -9,6 +9,7 @@ from os_core.users import users
 from os_core.specimen import specimen
 from os_core.mandatory import mark_mandatory
 from os_core.csv_bulk import csv_bulk
+from os_util.bulk_operations import bulk_operations
 import json
 import pandas
 
@@ -29,6 +30,7 @@ auth = ('admin', 'Login@123')
 #print(user_info)
 #user_info=user.change_password(3,'Login@1234')
 #print(user_info)
+
 #user_info=user.create_user(dnd='false', firstname='Max', lastname='Mustermann', emailaddress='error@404.com', phonenumber='0640123456' , domainname='openspecimen', loginname='Max', institutename='Biobank Institute', type='SUPER', address='Address' ,activitystatus='Active')
 #user_info=user.delete_user(12)
 #user_info=user.get_roles(3)
@@ -47,26 +49,22 @@ auth = ('admin', 'Login@123')
 #    ,laterality='Bilateral',lineage='New',status='Collected')
 #print(speci_info)
 
-csvfiles=csv_bulk(base_url,auth)
+#csvfiles=csv_bulk(base_url,auth)
 #csvfiles.ausgabe()
 #file=csvfiles.get_template(schemaname='specimen')
 #print(file)
 #print(len(file))
-input_=pandas.read_csv('/home/v/Programs/BBMRI_API/dev_chri/specimen.csv')
-print(input_.to_csv(index=None))
-file_id=csvfiles.upload_csv(filename='specimen.csv',file=input_.to_csv(index=None))
-print('#files')
-print(file_id)
-uplo=csvfiles.run_upload(schemaname='specimen',fileid=file_id)
-print(uplo)
-stat=csvfiles.get_job_status(12)
-print(stat)
-statu=csvfiles.job_report(12)
-print('#status')
-print(statu)
+#input_=pandas.read_csv('/home/v/Programs/BBMRI_API/dev_chri/specimen.csv')
+#file_id=csvfiles.upload_csv(filename='specimen.csv',file=input_.to_csv(index=None))
+#uplo=csvfiles.run_upload(schemaname='specimen',fileid=file_id)
+#stat=csvfiles.get_job_status(12)
+#statu=csvfiles.job_report(12)
 #open(file)
 
-
+bulk_op=bulk_operations(base_url,auth)
+input_=pandas.read_csv('/home/v/Programs/BBMRI_API/dev_chri/specimen.csv')
+uplo=bulk_op.bulk_import(file=input_.to_csv(index=None),filename='specimen.csv',schemaname='specimen')
+print(uplo)
 
 
 

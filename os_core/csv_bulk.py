@@ -88,7 +88,7 @@ class csv_bulk:
         
         r = self.OS_request_gen.get_request(url)
 
-        return r.text
+        return r
 
 #   downlaod job report, generates json output of the import job
 #   last row of the csv contains information about upload e.g "SUCCSESS"
