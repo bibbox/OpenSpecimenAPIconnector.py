@@ -1,3 +1,4 @@
+
 #! /bin/python3
 import requests
 import pickle
@@ -5,6 +6,7 @@ import json
 import uuid
 import faker
 #from faker import Factory
+
 import names
 import random
 import time
@@ -13,6 +15,7 @@ from datetime import date
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from .jsons import Json_factory
+
 
 
 class OS_request_gen():
@@ -36,7 +39,8 @@ class OS_request_gen():
 
         if stream:
             r = requests.request("GET", url, auth=self.auth,
-                                 headers=self.zip_headers, stream=stream)
+            headers=self.zip_headers, stream=stream)
+
         else:
             r = requests.request("GET", url, auth=self.auth,
                                  headers=self.json_headers)
@@ -46,9 +50,11 @@ class OS_request_gen():
 
     def post_request(self, url, data=None, form_data=False, files=None):
 
+
         if form_data:
             r = requests.request("POST", url, data=data, auth=self.auth,
                                  headers=self.form_data_headers)
+
         if form_data==False and files==None:
             r = requests.request("POST", url, data=data, auth=self.auth,
                                  headers=self.json_headers)
@@ -81,3 +87,4 @@ class OS_request_gen():
     def user_name(self):
 
         return self.user_name
+
