@@ -68,6 +68,7 @@ class csv_bulk:
 #       - operation: UPDATE or CREATE
 #       - dateformat: optional, needed if Format is incompatibel with OS systemconfiguration
 #       - timeformat: optional, needed if Format is incompatibel with OS systemconfiguration
+#       -return: ('JOBID', 'response.text')
 
     def run_upload(self, schemaname, fileid, operation='CREATE',dateformat=None, timeformat=None):
 

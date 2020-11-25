@@ -39,8 +39,8 @@ auth = ('admin', 'Login@123')
 #speci.ausgabe()
 
 ## Specimentest
-#speci=specimen(base_url=base_url, auth=auth)
-#speci.ausgabe()
+speci=specimen(base_url=base_url, auth=auth)
+speci.ausgabe()
 #speci_info=speci.get_specimen(1)
 #print(speci_info)
 #speci_info=speci.check_specimen(specimenLabel='asd')
@@ -48,11 +48,35 @@ auth = ('admin', 'Login@123')
 #speci_info=speci.create_specimen_api(label='label2',cpId=2,specimenClass='Fluid',specimenType='Bile',pathology='Malignant',anatomicSite='Abdomen, NOS'\
 #    ,laterality='Bilateral',lineage='New',status='Collected')
 #print(speci_info)
+#speci_info=speci.search_specimens(labels=['Jupyter'])
+#print(speci_info)
+#param={}
+#param['status']='Collected'
+#param['reason']='BecauseIcan'
+#updateparam=json.dumps(param)
+#print(type(updateparam))
+#print(json.loads(updateparam).keys())
+#test='testos'
+#print(test[0:-1])
+#search={}
+#search['label']='Jupyter1'
+#search['id']=[1,2]
+#print(search)
+#search['id_']=2
+#print(search)
+#search['exactMatch']='true'
+#searchpar=json.dumps(search)
+#speci_info=speci.search_specimens(searchpar)
+#print(speci_info)
+speci_info=speci.delete_specimen(specimenid=[4,5])
+print(speci_info)
+#speci_info=speci.update_specimen(specimenid=7,updateparams=updateparam)
+#print(speci_info)
 
-csvfiles=csv_bulk(base_url,auth)
+#csvfiles=csv_bulk(base_url,auth)
 #csvfiles.ausgabe()
-file=csvfiles.get_template(schemaname='specimen')
-file.to_csv('specimen2.csv')
+#file=csvfiles.get_template(schemaname='specimen')
+#file.to_csv('specimen2.csv')
 #print('##### filestart #####')
 #print(file)
 #print('##### fileend #####')
@@ -65,14 +89,16 @@ file.to_csv('specimen2.csv')
 #statu=csvfiles.job_report(12)
 #open(file)
 
-bulk_op=bulk_operations(base_url,auth)
-input_=pandas.read_csv('/home/v/Programs/BBMRI_API/dev_chri/specimen.csv')
+#bulk_op=bulk_operations(base_url,auth)
+#input_=pandas.read_csv('/home/v/Programs/BBMRI_API/dev_chri/specimen.csv')
 #print('#### filestart #####')
 #print('specimen.csv')
 #print(input_)
 #print('#### fileend ####')
-uplo=bulk_op.bulk_import(file=input_.to_csv(index=None),filename='specimen.csv',schemaname='specimen',operation='UPDATE')
-print(uplo)
+#uplo=bulk_op.bulk_import(file=input_.to_csv(index=None),filename='specimen.csv',schemaname='specimen',operation='UPDATE')
+#print(uplo)
+
+#print(json.loads('nothing searched'))
 
 
 
