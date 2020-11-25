@@ -22,10 +22,10 @@ class bulk_operations:
 
         upload_ = self.csv_bulk.run_upload(schemaname=schemaname, fileid=fileid, operation=operation,dateformat=dateformat,timeformat=timeformat)
 
-        jobid = upload_[6:8]    #json starts with {"id":xx so char 7,8 of the string
+        jobid = upload_[0]    #json starts with {"id":xx so char 7,8 of the string
 
         #Job report has to be created, if there is no sleep, there is an error, 
-        time.sleep(10)
+        time.sleep(5)
 
         r = self.csv_bulk.job_report(jobid)
 

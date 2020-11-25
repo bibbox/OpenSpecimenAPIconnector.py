@@ -29,6 +29,7 @@ class csv_bulk:
 
         print(self.base_url, self.OS_request_gen.auth)
 
+
 #   Get template_file, return pandas Dataframe
 #       -schemaname:   https://docs.google.com/spreadsheets/d/1fFcL91jSoTxusoBdxM_sr6TkLt65f25YPgfV-AYps4g/edit#gid=0
 #           e.g. specimen,masterSpecimen (camelCase)  
@@ -37,12 +38,14 @@ class csv_bulk:
 
         endpoint = '/input-file-template?schema=' + str(schemaname)
         url = self.base_url + endpoint
+
         r = self.OS_request_gen.get_request(url)
 
         data = io.StringIO(r.text)
-        ret_val = pandas.read_csv(data, sep=",")
+        ret_val = pandas.read_csv(data, sep=",",encoding='UTF-8', engine='python')
 
         return ret_val
+
 
 #   Upload the CSV file, returns fileId for upload job
 #       - filename: string of the filename with ending
@@ -57,6 +60,7 @@ class csv_bulk:
         r = self.OS_request_gen.post_request(url=url, files=files)
 
         return json.loads(r.text)["fileId"]
+
 
 #   create and run job, returns json file with job id etc.
 #       - schemaname: string with name of Inputtype https://docs.google.com/spreadsheets/d/1fFcL91jSoTxusoBdxM_sr6TkLt65f25YPgfV-AYps4g/edit#gid=0
@@ -73,7 +77,8 @@ class csv_bulk:
 
         r = self.OS_request_gen.post_request(url, data=payload)
 
-        return r.text
+        return (json.loads(r.text)["id"], r.text)
+
 
 #   get job status, returns status code
 #       - 200:Bulk Import request was successfully processed.
@@ -88,10 +93,11 @@ class csv_bulk:
         
         r = self.OS_request_gen.get_request(url)
 
-        return r
+        return r.text
+
 
 #   downlaod job report, generates json output of the import job
-#   last row of the csv contains information about upload e.g "SUCCSESS"
+#   last row of the csv contains information about upload.
 #       - jobid= Id of the job
 
     def job_report(self, jobid):
