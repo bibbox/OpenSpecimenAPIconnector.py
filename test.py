@@ -9,6 +9,8 @@ from os_core.users import users
 from os_core.specimen import specimen
 from os_core.mandatory import mark_mandatory
 from os_core.csv_bulk import csv_bulk
+from os_core.visit import visit
+from os_core.participant import participant
 from os_util.bulk_operations import bulk_operations
 import json
 import pandas
@@ -39,8 +41,8 @@ auth = ('admin', 'Login@123')
 #speci.ausgabe()
 
 ## Specimentest
-speci=specimen(base_url=base_url, auth=auth)
-speci.ausgabe()
+#speci=specimen(base_url=base_url, auth=auth)
+#speci.ausgabe()
 #speci_info=speci.get_specimen(1)
 #print(speci_info)
 #speci_info=speci.check_specimen(specimenLabel='asd')
@@ -68,8 +70,8 @@ speci.ausgabe()
 #searchpar=json.dumps(search)
 #speci_info=speci.search_specimens(searchpar)
 #print(speci_info)
-speci_info=speci.delete_specimen(specimenid=[4,5])
-print(speci_info)
+#speci_info=speci.delete_specimen(specimenid=[4,5])
+#print(speci_info)
 #speci_info=speci.update_specimen(specimenid=7,updateparams=updateparam)
 #print(speci_info)
 
@@ -100,7 +102,47 @@ print(speci_info)
 
 #print(json.loads('nothing searched'))
 
+vis=visit(base_url=base_url, auth=auth)
+#vis.ausgabe()
+
+#params='{\"name\":\"API-TEST1\",\"site\":\"Biobank Site\",\"ppid\":\"PPID2\",\"cpShortTitle\":\"PT\"}' 
+
+#addedvisit=vis.add_visit(params)
+#print(addedvisit)
+
+#params='{\"visit\":\n{\"name\":\"API-TEST-VISIT\",\"site\":\"Biobank Site\",\"ppid\":\"PPID2\",\"cpShortTitle\":\"PT\"},\n\
+#\"specimens\":\n[\"label\":\"visittest\",\"lineage\":\"New\",\"status\":\"Collected\",\"initalQty\":\"10\",\"reqId\":\"1\",\
+#\"specimenClass\":\"Fluid\",\"type\":\"Bile\",\"createdOn\":\"2020-30-11\",\"pathology\":\"Malignant\",\"atomicSite\":\"Abdomen, NOS\",\"laterality\":\"Bilateral\",\
+#\"collectionEvent\":{\"user\":{\"id\":\"2\"},\"time\":\"2020-30-11\"},\
+#\"receivedEvent\":{\"user\":{\"id\":\"2\"},\"time\":\"2020-30-11\"}]}'
+#print(params)
+#            ,\"createdOn\":\"' + now + '\",\"collectionEvent\":{\"user\":{\"id\":\"'+ str(userId) + '\"},\"time\":\"' \
+#            + now + '\"},\"receivedEvent\":{\"user\":{\"id\":\"' + str(userId) +'\"},\"receivedQuality\":\"Acceptable\",\"time\":\"' \
+#            + now + '\"},\"specimenClass\":\"' + str(specimenClass) +'\",\"type\":\"' + str(specimenType) + '\",\"pathology\":\"' + str(pathology) + '\",' \
+#            + '\"anatomicSite\":\"'+ str(anatomicSite) + '\",\"laterality\":\"' + str(laterality) +'\"}'
+#TODO:addedspecivisit=vis.add_visit_specimen(params=params)
+#deleted_visit=vis.delete_visit(5)
+#print(deleted_visit)
+#visit_detail=vis.get_visit_namespr(visitname='visit01')
+#print(visit_detail)
+#visit_detail=vis.get_visit_namespr(sprnumber=123)
+#print(visit_detail)
+#visit_detail=vis.get_visit_namespr(visitname='visit01',sprnumber=123)
+#print(visit_detail)
+#visit_detail=vis.get_visits_cpr(cprid=3)
+#print(visit_detail)
+#visit_detail=vis.get_visits_cpr(cprid=3,includestats=True)
+#print(visit_detail)
 
 
+#params='{\"name\":\"API-UPDATE\",\"site\":\"Biobank Site\",\"ppid\":\"PPID2\",\"cpShortTitle\":\"PT\"}'#,\"eventLabel\":\"Unplanned Collection\"}' 
+#updatedvisit=vis.update_visit(visitid=5,params=params)
+#print(updatedvisit)
 
+party =participant(base_url=base_url, auth=auth)
+party.ausgabe()
 
+partydetail=party.get_participant(ppid=3)
+print(partydetail)
+
+params='{\"ppid\":\"PPID\"}'

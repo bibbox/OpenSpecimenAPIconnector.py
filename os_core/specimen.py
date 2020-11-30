@@ -20,7 +20,6 @@ class specimen:
 
 # Check URL, Password, header
 
-
     def ausgabe(self):
 
         print(self.base_url, self.OS_request_gen.auth)
@@ -127,7 +126,7 @@ class specimen:
         if isinstance(specimenid,list):
 
             for id in specimenid:
-                endpoint+=str(id)+','
+                endpoint+=str(id)+','  
 
             endpoint=endpoint[0:-1]
         
