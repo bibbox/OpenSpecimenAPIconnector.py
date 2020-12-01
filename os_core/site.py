@@ -1,17 +1,17 @@
 #! /bin/python3
-# imports to be cleaned later
+
 
 import json
 from os_core.req_util import OS_request_gen
 
 
-class collection_protocol():
+class sites():
 
     def __init__(self, base_url, auth):
 
         self.OS_request_gen = OS_request_gen(base_url, auth)
         
-        self.base_url = base_url + '/collection-protocols'
+        self.base_url = base_url + '/sites'
         
 
 # Check URL, Password, header
@@ -21,28 +21,28 @@ class collection_protocol():
         print(self.base_url, self.OS_request_gen.auth)
 
 
-#   Create Collection Protocol
-#   Input:  - params: Parameter of the Collection protocol as json-formatted string
-#   Output: - either details of the CP as json-formatted string
+#   Create Site
+#   Input:  - params: Parameter of the Site as json-formatted string
+#   Output: - either details of the Institute as json-formatted string
 #           - or error message
-    def create_collection_protocol(self, params):
+    def create_sites(self, params):
 
         url = self.base_url + '/'
 
         payload = params
 
-        r = self.OS_request_gen.get_request(url)
+        r = self.OS_request_gen.post_request(url, payload)
 
         return json.loads(r.text)
 
 
-#   Delete Collection Protocol
-#   Input:  - cpid: ID of the collection protocol
+#   Delete Site
+#   Input:  - siid: ID of the Site
 #   Output: - either json-formatted string with details of the deleted CP
 #           - or error message
-    def delete_collection_protocol(self, cpid):
+    def delete_sites(self, siid):
 
-        endpoint = '/' + str(cpid)
+        endpoint = '/' + str(siid)
 
         url = self.base_url + endpoint
 
@@ -51,13 +51,13 @@ class collection_protocol():
         return json.loads(r.text)
 
 
-# Search colelction protocol, with different parameters.
+# Search Sites, with different parameters.
 #   Input:  -json-dict (keys=OpenSpecimenKeys, value= values)
 #           - for each key values can either be a single value or a list of values
 #           Handle with care, some Params e.g availableQty are not searchable via API
-#   Output: -returns: json-formatted string of all CPs wich fullfill searchParams
+#   Output: -returns: json-formatted string of all Sites wich fullfill searchParams
 #           - or an error message
-    def search_collection_protocols(self, search_params):
+    def search_sites(self, search_params):
 
         endpoint = '?'
 
@@ -82,9 +82,9 @@ class collection_protocol():
         return json.loads(r.text)
 
 
-#   Get all Collection Protocols
-#   Output: json-formatted string of all collection protocol
-    def get_all_collection_protocols(self):
+#   Get all Sites
+#   Output: json-formatted string of all Sites
+    def get_all_sites(self):
 
         url = self.base_url
 
@@ -93,13 +93,13 @@ class collection_protocol():
         return json.loads(r.text)
 
 
-#   Get Collection Protocol
-#   Input:  - cpid: Colletion Protocol ID
+#   Get site
+#   Input:  - siid: Site ID
 #   Output: - either json-formatted string with the details
 #           - or error message
-    def get_collection_protocol(self, cpid):
+    def get_collection_protocol(self, siid):
 
-        endpoint = '/' + str(cpid)
+        endpoint = '/' + str(siid)
 
         url = self.base_url + endpoint
 
@@ -108,32 +108,14 @@ class collection_protocol():
         return json.loads(r.text)
 
 
-#   Merge two Colelction Protocols
-#   Input:  - cpShortTitle_src: Collection Protocol Short Title of the Soruce CP
-#           - cpshorttitle_tgt: Collection Protocol Short Title of the target CP
-#   Output: - 
-    def merge_colelction_protocols(self, cpShortTitle_src, cpShortTitle_tgt):
-
-        endpoint = '/merge'
-
-        url = self.base_url + endpoint
-
-        payload = '{\"srcCpShortTitle\":\"' + str(cpShortTitle_src) + \
-            '\",\"tgtCpShortTitle\":\"' + str(cpShortTitle_tgt) + '\"}'
-
-        r = self.OS_request_gen.post_request(url, payload)
-
-        return json.loads(r.text)
-
-
-#   Update colelction Protocol
-#   Input:  - cpid: ID of the Colelction Protocol which should get updated
+#   Update Site
+#   Input:  - siid: ID of the Site which should get updated
 #           - params: Paramters which should get updated
 #   Output: - eiher details of the CP as json formatted  string
 #           - or error message
-    def update_collection_protocol(self, cpid, params):
+    def update_collection_protocol(self, siid, params):
 
-        endpoint = '/' + str(cpid)
+        endpoint = '/' + str(siid)
 
         url = self.base_url + endpoint
 
