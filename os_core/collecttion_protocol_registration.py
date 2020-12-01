@@ -29,12 +29,9 @@ class collection_protocol_registration:
 
         url = self.base_url + '/'
 
-        print(url) 
-
         payload = params
 
         r = self.OS_request_gen.post_request(url, payload)
-        print(r)
 
         return json.loads(r.text)
 
@@ -137,10 +134,9 @@ class collection_protocol_registration:
         url = self.base_url + '/'
 
         payload = params
-        print(payload)
 
         r = self.OS_request_gen.post_request(url, payload)
-        print(r)
+
         return json.loads(r.text)
 
 

@@ -12,6 +12,9 @@ from os_core.csv_bulk import csv_bulk
 from os_core.visit import visit
 from os_core.participant import participant
 from os_core.collecttion_protocol_registration import collection_protocol_registration
+from os_core.collection_protocol_event import collection_protocol_event
+
+
 from os_util.bulk_operations import bulk_operations
 import json
 import pandas
@@ -167,7 +170,31 @@ params='{\"participant\":{\"birthDate\":\"2020-11-23\"},\"cpId\":\"2\"}'
 #part_info=participant.get_registration(cprid=6)
 #print(part_info)
 
-params='{\"participant\":{\"id\":\"10\"},\"registrationDate\":\"2020-12-01\",\"cpId\":\"3\",\"ppid\":\"PPID10\"}'
+#params='{\"participant\":{\"id\":\"10\"},\"registrationDate\":\"2020-12-01\",\"cpId\":\"3\",\"ppid\":\"PPID10\"}'
 
-part_info=participant.register_to_cp(params)
-print(part_info)
+#part_info=participant.register_to_cp(params)
+#print(part_info)
+
+event = collection_protocol_event(base_url=base_url, auth=auth)
+event.ausgabe()
+
+
+params='{\"eventLabel\":\"API-TESOS\","eventPoint\":\"0\",\"eventPointUnit\":\"DAYS\",\
+\"collectionProtocol\":\"PART\",\"defaultSite\":\"Biobank Site\", \"clinicalDiagnosis\":\"Not Specified\",\
+\"acitivtyStatus\":\"Active\",\"code\":\"TESTOS\"}'
+#print(params)
+eventinfo=event.create_event(params)
+print(eventinfo)
+eventinfo=event.get_all_events(cpid=2)
+print(eventinfo)
+params='{\"eventLabel\":\"TEST_UPDATE\"}'
+eventinfo=event.update_event(eventid=10, params=params)
+print(eventinfo)
+eventinfo=event.get_event(eventid=10)
+print(eventinfo)
+#eventinfo=event.delete_event(eventid=9)
+#print(eventinfo)
+#eventinfo=event.delete_event(eventid=9)
+#print(eventinfo)
+eventinfo=event.get_event(eventid=10)
+print(eventinfo)

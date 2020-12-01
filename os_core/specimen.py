@@ -95,9 +95,8 @@ class specimen:
 
         r = self.OS_request_gen.get_request(url)
 
-        ausgabe = json.loads(r.text)
+        return = json.loads(r.text)
 
-        return ausgabe
 
 # Update Specimen with Id
 #   Input:  - specimenid Id of the specimen
