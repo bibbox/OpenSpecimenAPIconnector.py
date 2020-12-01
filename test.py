@@ -11,6 +11,7 @@ from os_core.mandatory import mark_mandatory
 from os_core.csv_bulk import csv_bulk
 from os_core.visit import visit
 from os_core.participant import participant
+from os_core.collecttion_protocol_registration import collection_protocol_registration
 from os_util.bulk_operations import bulk_operations
 import json
 import pandas
@@ -102,7 +103,7 @@ auth = ('admin', 'Login@123')
 
 #print(json.loads('nothing searched'))
 
-vis=visit(base_url=base_url, auth=auth)
+#vis=visit(base_url=base_url, auth=auth)
 #vis.ausgabe()
 
 #params='{\"name\":\"API-TEST1\",\"site\":\"Biobank Site\",\"ppid\":\"PPID2\",\"cpShortTitle\":\"PT\"}' 
@@ -135,14 +136,38 @@ vis=visit(base_url=base_url, auth=auth)
 #print(visit_detail)
 
 
-#params='{\"name\":\"API-UPDATE\",\"site\":\"Biobank Site\",\"ppid\":\"PPID2\",\"cpShortTitle\":\"PT\"}'#,\"eventLabel\":\"Unplanned Collection\"}' 
+#params='{\"name\":\"BABY\",\"site\":\"Biobank Site\",\"cpShortTitle\":\"PT\"}'#,\"eventLabel\":\"Unplanned Collection\"}' 
 #updatedvisit=vis.update_visit(visitid=5,params=params)
 #print(updatedvisit)
 
-party =participant(base_url=base_url, auth=auth)
-party.ausgabe()
+#party =participant(base_url=base_url, auth=auth)
+#party.ausgabe()
 
-partydetail=party.get_participant(ppid=3)
-print(partydetail)
+#partydetail=party.get_participant(ppid=3)
+#print(partydetail)
 
-params='{\"ppid\":\"PPID\"}'
+#params='{\"ppid\":\"PPID\"}'
+
+participant=collection_protocol_registration(base_url=base_url, auth=auth)
+#participant.ausgabe()
+
+params='{\"participant\":{\"birthDate\":\"2020-11-23\"},\"cpId\":\"2\"}'
+
+
+#print(params)
+
+#part_info =participant.create_participant(params)
+#part_info = participant.update_participant(cprid=10,params=params)
+#print(part_info)
+#part_info =participant.delete_participant(cprid=7)
+#print(part_info)
+
+#part_info = participant.merge_participants(id_from=9, id_to=6)
+#print(part_info)
+#part_info=participant.get_registration(cprid=6)
+#print(part_info)
+
+params='{\"participant\":{\"id\":\"10\"},\"registrationDate\":\"2020-12-01\",\"cpId\":\"3\",\"ppid\":\"PPID10\"}'
+
+part_info=participant.register_to_cp(params)
+print(part_info)
