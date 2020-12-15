@@ -14,11 +14,10 @@ class specimen:
 
         # define class members here
         self.OS_request_gen = OS_request_gen(auth)
-
         self.base_url = base_url
-        
 
 # Check URL, Password, header
+
     def ausgabe(self):
 
         print(self.base_url, self.OS_request_gen.auth)
@@ -50,33 +49,81 @@ class specimen:
 
         return r
 
-# Create Specimen via API with the OS standard form
+# Create Specimen/aliquot/Derivative via API
+#   Input:  -params: PArameter as json-formatted string
+#   Output: -either specimen_details as json formatted string
+#           -or  error message with details as python dict
 
-    def create_specimen_api(self, label, cpId, specimenClass, specimenType, pathology, anatomicSite, laterality, status, initialQty=None, \
-                        availableQty=None,comments=None,  visitId=None, concetration=None, collectionEvent=None, biohazards=None, \
-                        receivedEvent=None, extensionDetail=None, lineage="New", storageLocation="Not Specified", userId=2):
+    def create_specimen_api(self, params):
 
         endpoint = '/specimens'
         url = self.base_url + endpoint
 
-        now = datetime.now().isoformat(timespec='milliseconds')+'Z'
-        
-        payload = '{\"label\":\"' + str(label) + '\",\"cpId\":' + str(cpId) + ',\"lineage\":\"' + str(lineage) + '\",\"status\":\"' + str(status) \
-            + '\",\"createdOn\":\"' + now + '\",\"collectionEvent\":{\"user\":{\"id\":\"'+ str(userId) + '\"},\"time\":\"' \
-            + now + '\"},\"receivedEvent\":{\"user\":{\"id\":\"' + str(userId) +'\"},\"receivedQuality\":\"Acceptable\",\"time\":\"' \
-            + now + '\"},\"specimenClass\":\"' + str(specimenClass) +'\",\"type\":\"' + str(specimenType) + '\",\"pathology\":\"' + str(pathology) + '\",' \
-            + '\"anatomicSite\":\"'+ str(anatomicSite) + '\",\"laterality\":\"' + str(laterality) +'\"}'
-        
-        r = self.OS_request_gen.post_request(url, data = payload)
-            
+        payload = params
+
+        r = self.OS_request_gen.post_request(url, data=payload)
+
         return json.loads(r.text)
-    
-#Create Specimen via CSV import
-    #def
-# Create Aliquot via API
 
-#    def create_aliquot_api(self, ):
+# Search specimens, with different parameters.
+#   Input:  -json-dict (keys=OpenSpecimenKeys, value= values)
+#           - for each key values can either be a single value or a list of values
+#           Handle with care, some Params e.g availableQty are not searchable via API
+#   output: -returns: json-formatted string of all specimens wich fullfill searchParams
+#
+    def search_specimens(self, search_params):
 
-#"container":"Not Specified","procedure":"Not Specified",
- #"receivedEvent":{"user":{"loginName":"admin"},"receivedQuality":"Acceptable","time":"2020-11-18T07:49:35.366Z"},
- # "specimenClass":"Fluid","type":"Bile","pathology":"Malignant","anatomicSite":"Abdomen, NOS","laterality":"Bilateral","children":[],"specimensPool":[]}]
+        endpoint = '/specimens?'
+
+        params = json.loads(search_params)
+        keys = params.keys()
+
+        for key in keys:
+            if isinstance(params[key],list):
+                for param in params[key]:
+                    endpoint += str(key)
+                    endpoint += '='+str(param)+'&'
+            else:
+                endpoint += str(key)
+                endpoint += '=' + str(params[key])+'&'
+
+        endpoint = endpoint[0:-1]
+        url = self.base_url+endpoint
+        r = self.OS_request_gen.get_request(url)
+
+        return json.loads(r.text)
+
+
+# Update Specimen with Id
+#   Input:  - specimenid Id of the specimen
+#           - updateparams: Parameter to update as json_formatted string
+#   Output: - Specimen Details, with updated params as python dict
+#           - error message as python dict
+
+    def update_specimen(self, specimenid, updateparams):
+
+        endpoint = '/specimens/'+str(specimenid)
+        url = self.base_url + endpoint
+        data = updateparams
+        r = self.OS_request_gen.put_request(url, data)
+        return json.loads(r.text)
+
+#   Delete Specimen with id
+#       Input:  - specimenid: Id of specimen which should get deleted as value or list of values
+#       Output: - Details of the specimen as python dict
+#               - or error message as python dict
+
+    def delete_specimen(self, specimenid):
+
+        endpoint = '/specimens?id='
+        if isinstance(specimenid, list):
+            for spec_id in specimenid:
+                endpoint += str(spec_id) + ','
+            endpoint = endpoint[0:-1]
+        else:
+            endpoint += str(specimenid)
+
+        url = self.base_url + endpoint
+        r = self.OS_request_gen.delete_request(url)
+        return json.loads(r.text)
+

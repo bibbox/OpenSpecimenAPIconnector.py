@@ -25,10 +25,12 @@ class users:
         
         self.base_url = base_url
 
+
 ##  Check URL, Password
     def ausgabe(self):
 
         print(self.base_url, self.OS_request_gen.auth)
+
 
 ##   Users
     #   get all users, nothing required
@@ -41,43 +43,46 @@ class users:
 
         return json.loads(r.text)
 
+
     #   get specific user with id, can be expanded via tokkens which can be added in the link(e.g. ?loginName=loginName) as far as i know from other API calls
     def get_user(self, userId):
 
         endpoint = "/users/"+str(userId)
+
         url = self.base_url + endpoint
 
         r = self.OS_request_gen.get_request(url=url)
 
         return json.loads(r.text)
 
+
     #   change password, ToDo with "userId, oldPassword, newPassword" also others than superadmin chan change der Password
-    def change_password(self, userId, newPassword):
+    def change_password(self, params):
 
         endpoint = "/users/password"
+
         url = self.base_url+endpoint
 
-        payload = "{\"userId\":\"" + \
-            str(userId)+"\",\"newPassword\":\""+newPassword+"\"}"
+        payload=params
 
         r = self.OS_request_gen.put_request(url=url, data=payload)
 
         return json.loads(r.text)
 
+
     #   create User
-    def create_user(self, dnd, firstname, lastname, emailaddress, phonenumber, domainname, loginname, institutename, type, address, activitystatus):
+    def create_user(self, params):
 
         endpoint = "/users"
+
         url = self.base_url+endpoint
 
-        payload = "{\"dnd\":"+dnd+",\"domainName\":\""+domainname+"\",\"instituteName\":\""+institutename+"\",\"type\":\""+type +\
-            "\",\"firstName\":\""+firstname+"\",\"lastName\":\""+lastname+"\",\"emailAddress\":\""+emailaddress +\
-            "\",\"phoneNumber\":\""+phonenumber+"\",\"loginName\":\"" + \
-            loginname+"\",\"address\":\""+address+"\"}"
+        payload = params
 
         r = self.OS_request_gen.post_request(url=url, data=payload)
 
         return json.loads(r.text)
+
 
     #   delete User, via UserId
     def delete_user(self, userid):
@@ -88,6 +93,7 @@ class users:
         r = self.OS_request_gen.delete_request(url)
 
         return json.loads(r.text)
+
 
 ##   Roles
 
@@ -101,16 +107,17 @@ class users:
 
         return json.loads(r.text)
 
+
     #   assign role to users
     #   inputs are the Users ID and the  site_id, Collection protocol id and role
     #   ToDO Openspecimen allows different 'unique' identifier eg for CP {'id':1}, {'shortTitle':'sT'}, {'title':'Title'}
-    def assign_role(self, userid, siteid, cpid, role):
+    def assign_role(self, userid, params):
 
         endpoint = '/rbac/subjects/'+str(userid)+'/roles'
+
         url = self.base_url+endpoint
 
-        payload = "{\n  \"site\":{\"id\":\""+str(siteid)+"\"},\n  \"collectionProtocol\":{\"id\":\""+str(
-            cpid)+"\"},\n  \"role\":{\"name\":\""+role+"\"}\n}"
+        payload = params
             
         r = self.OS_request_gen.post_request(url=url, data=payload)
 
