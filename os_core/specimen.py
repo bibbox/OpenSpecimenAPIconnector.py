@@ -63,6 +63,7 @@ class specimen:
 
         r = self.OS_request_gen.post_request(url, data=payload)
 
+
         return json.loads(r.text)
 
 # Search specimens, with different parameters.
@@ -71,10 +72,10 @@ class specimen:
 #           Handle with care, some Params e.g availableQty are not searchable via API
 #   output: -returns: json-formatted string of all specimens wich fullfill searchParams
 #
-    def search_specimens(self, search_params):
+    def search_specimens(self, search_params=None):
 
         endpoint = '/specimens?'
-
+    
         params = json.loads(search_params)
         keys = params.keys()
 
@@ -107,6 +108,7 @@ class specimen:
         data = updateparams
         r = self.OS_request_gen.put_request(url, data)
         return json.loads(r.text)
+
 
 #   Delete Specimen with id
 #       Input:  - specimenid: Id of specimen which should get deleted as value or list of values

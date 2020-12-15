@@ -13,7 +13,6 @@ class collection_protocol_event:
         self.OS_request_gen = OS_request_gen(auth)
         self.base_url = base_url + '/collection-protocol-events'
 
-
 #   Check URL, Password, header
     def ausgabe(self):
 
@@ -41,7 +40,7 @@ class collection_protocol_event:
 
         endpoint = '/' + str(eventid)
         url = self.base_url + endpoint
-        r = self.OS_request_gen.delete_request(url)
+	r = self.OS_request_gen.delete_request(url)
 
         return json.loads(r.text)
 
@@ -83,5 +82,4 @@ class collection_protocol_event:
         url = self.base_url + endpoint
         payload = params
         r = self.OS_request_gen.get_request(url, payload)
-
         return json.loads(r.text)

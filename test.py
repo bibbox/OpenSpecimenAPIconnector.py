@@ -12,9 +12,14 @@ from os_core.participant import participant
 from os_core.collection_protocoll import collection_protocol
 from os_core.collecttion_protocol_registration import collection_protocol_registration
 from os_core.collection_protocol_event import collection_protocol_event
+<<<<<<< HEAD
+=======
+from os_core.query import query
+>>>>>>> dev_chri
 
 
 from os_util.bulk_operations import bulk_operations
+from os_util.query_util import query_util
 import json
 import pandas
 
@@ -155,18 +160,18 @@ auth = ('admin', 'Login@123')
 
 # params='{\"ppid\":\"PPID\"}'
 
-participant = collection_protocol_registration(base_url=base_url, auth=auth)
-participant.ausgabe()
-params = '{\"participant\":{\"birthDate\":\"2020-11-23\"},\"cpId\":\"2\"}'
-print(params)
-cp_tools = collection_protocol(base_url, auth)
-cps = cp_tools.get_all_collection_protocols()
-cp_tools.update_collection_protocol()
+#participant = collection_protocol_registration(base_url=base_url, auth=auth)
+#participant.ausgabe()
+#params = '{\"participant\":{\"birthDate\":\"2020-11-23\"},\"cpId\":\"2\"}'
+#print(params)
+#cp_tools = collection_protocol(base_url, auth)
+#cps = cp_tools.get_all_collection_protocols()
+#
+#cp_tools.get_cp_def()
+#cp_tools.get_collection_protocol()
+#print(cps)
+#input()
 
-cp_tools.get_cp_def()
-cp_tools.get_collection_protocol()
-print(cps)
-input()
 
 # part_info =participant.create_participant(params)
 # part_info = participant.update_participant(cprid=10,params=params)
@@ -207,3 +212,14 @@ input()
 # #print(eventinfo)
 # eventinfo=event.get_event(eventid=10)
 # print(eventinfo)
+<<<<<<< HEAD
+=======
+
+qry =query_util(base_url=base_url, auth=auth)
+
+#exqry= qry.create_aql(cpid=1,aql='select Participant.ppid, SpecimenCollectionGroup.collectionDate, count(distinct Specimen.id) where Specimen.lineage = \"Aliquot\"')
+#print(exqry)
+
+exqry = qry.execute_query(23,0,10)
+print(exqry)
+>>>>>>> dev_chri
