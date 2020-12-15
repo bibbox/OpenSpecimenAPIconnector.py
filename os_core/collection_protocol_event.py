@@ -11,7 +11,6 @@ class collection_protocol_event:
 
         # define class members here
         self.OS_request_gen = OS_request_gen(auth)
-
         self.base_url = base_url + '/collection-protocol-events'
 
 
@@ -28,9 +27,7 @@ class collection_protocol_event:
     def create_event(self, params):
 
         url = self.base_url
-
         payload = params
-
         r = self.OS_request_gen.post_request(url, payload)
 
         return json.loads(r.text)
@@ -43,9 +40,7 @@ class collection_protocol_event:
     def delete_event(self, eventid):
 
         endpoint = '/' + str(eventid)
-
         url = self.base_url + endpoint
-
         r = self.OS_request_gen.delete_request(url)
 
         return json.loads(r.text)
@@ -58,9 +53,7 @@ class collection_protocol_event:
     def get_all_events(self, cpid):
 
         endpoint = '?cpId=' + str(cpid)
-
         url= self.base_url + endpoint
-
         r = self.OS_request_gen.get_request(url)
 
         return json.loads(r.text)
@@ -73,9 +66,7 @@ class collection_protocol_event:
     def get_event(self, eventid):
 
         endpoint = '/' + str(eventid)
-
         url = self.base_url + endpoint
-
         r = self.OS_request_gen.get_request(url)
 
         return json.loads(r.text)
@@ -89,11 +80,8 @@ class collection_protocol_event:
     def update_event(self, eventid, params):
 
         endpoint = '/' + str(eventid)
-
         url = self.base_url + endpoint
-
         payload = params
-
         r = self.OS_request_gen.get_request(url, payload)
 
         return json.loads(r.text)

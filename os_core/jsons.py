@@ -239,6 +239,7 @@ class Json_factory():
 
         return json.dumps(site_json)
 
+<<<<<<< HEAD
     
 #   Create  Any AQL Query
     def create_aql(self, cpid, aql, rowmode='OFF', coloumexpr='true', isodate='true'):
@@ -264,3 +265,16 @@ class Json_factory():
         }
 
         return json.dumps(params)
+=======
+    def create_cpr_part_import_job(self, schemaname=None, operation=None, fileid=None,
+                                   dateformat=None, timeformat=None):
+
+        part_cpr_json = {"objectType": schemaname,
+                    "importType": operation,
+                    "inputFileId": fileid,
+                    "dateFormat":dateformat,
+                    "timeFormat":timeformat
+                    }
+
+        return json.dumps(part_cpr_json)
+>>>>>>> dev_chri
