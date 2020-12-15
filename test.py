@@ -12,6 +12,7 @@ from os_core.participant import participant
 from os_core.collection_protocoll import collection_protocol
 from os_core.collecttion_protocol_registration import collection_protocol_registration
 from os_core.collection_protocol_event import collection_protocol_event
+from os_core.query import query
 
 
 from os_util.bulk_operations import bulk_operations
@@ -127,6 +128,98 @@ auth = ('admin', 'Login@123')
 #            + now + '\"},\"receivedEvent\":{\"user\":{\"id\":\"' + str(userId) +'\"},\"receivedQuality\":\"Acceptable\",\"time\":\"' \
 #            + now + '\"},\"specimenClass\":\"' + str(specimenClass) +'\",\"type\":\"' + str(specimenType) + '\",\"pathology\":\"' + str(pathology) + '\",' \
 #            + '\"anatomicSite\":\"'+ str(anatomicSite) + '\",\"laterality\":\"' + str(laterality) +'\"}'
+<<<<<<< HEAD
+#TODO:addedspecivisit=vis.add_visit_specimen(params=params)
+#deleted_visit=vis.delete_visit(5)
+#print(deleted_visit)
+#visit_detail=vis.get_visit_namespr(visitname='visit01')
+#print(visit_detail)
+#visit_detail=vis.get_visit_namespr(sprnumber=123)
+#print(visit_detail)
+#visit_detail=vis.get_visit_namespr(visitname='visit01',sprnumber=123)
+#print(visit_detail)
+#visit_detail=vis.get_visits_cpr(cprid=3)
+#print(visit_detail)
+#visit_detail=vis.get_visits_cpr(cprid=3,includestats=True)
+#print(visit_detail)
+
+
+#params='{\"name\":\"BABY\",\"site\":\"Biobank Site\",\"cpShortTitle\":\"PT\"}'#,\"eventLabel\":\"Unplanned Collection\"}' 
+#updatedvisit=vis.update_visit(visitid=5,params=params)
+#print(updatedvisit)
+
+#party =participant(base_url=base_url, auth=auth)
+#party.ausgabe()
+
+#partydetail=party.get_participant(ppid=3)
+#print(partydetail)
+
+#params='{\"ppid\":\"PPID\"}'
+
+participant=collection_protocol_registration(base_url=base_url, auth=auth)
+#participant.ausgabe()
+
+params='{\"participant\":{\"birthDate\":\"2020-11-23\"},\"cpId\":\"2\"}'
+
+
+#print(params)
+
+#part_info =participant.create_participant(params)
+#part_info = participant.update_participant(cprid=10,params=params)
+#print(part_info)
+#part_info =participant.delete_participant(cprid=7)
+#print(part_info)
+
+#part_info = participant.merge_participants(id_from=9, id_to=6)
+#print(part_info)
+#part_info=participant.get_registration(cprid=6)
+#print(part_info)
+
+#params='{\"participant\":{\"id\":\"10\"},\"registrationDate\":\"2020-12-01\",\"cpId\":\"3\",\"ppid\":\"PPID10\"}'
+
+#part_info=participant.register_to_cp(params)
+#print(part_info)
+
+#event = collection_protocol_event(base_url=base_url, auth=auth)
+#event.ausgabe()
+
+
+#params='{\"eventLabel\":\"API-TESOS\","eventPoint\":\"0\",\"eventPointUnit\":\"DAYS\",\
+#\"collectionProtocol\":\"PART\",\"defaultSite\":\"Biobank Site\", \"clinicalDiagnosis\":\"Not Specified\",\
+#\"acitivtyStatus\":\"Active\",\"code\":\"TESTOS\"}'
+#print(params)
+#eventinfo=event.create_event(params)
+#print(eventinfo)
+#eventinfo=event.get_all_events(cpid=2)
+#print(eventinfo)
+#params='{\"eventLabel\":\"TEST_UPDATE\"}'
+#eventinfo=event.update_event(eventid=10, params=params)
+#print(eventinfo)
+#eventinfo=event.get_event(eventid=10)
+#print(eventinfo)
+#eventinfo=event.delete_event(eventid=9)
+#print(eventinfo)
+#eventinfo=event.delete_event(eventid=9)
+#print(eventinfo)
+#eventinfo=event.get_event(eventid=10)
+#print(eventinfo)
+
+
+qry=query(base_url=base_url, auth=auth)
+qry.ausgabe()
+
+#payload="{\"title\":\"SEPP1\",\"selectList\":[\"Participant.ppid\",\"Participant.regDate\",\"Participant.gender\",\"Participant.race\",\"SpecimenCollectionGroup.clinicalDiagnosis\",\"Specimen.label\",\"Specimen.type\",\"Specimen.tissueSite\",\"Specimen.spmnCollRecvDetails.collTime\",\"Specimen.specimenStatistics.ischemiaTime\"],\"filters\":[{\"id\":1,\"field\":\"Specimen.label\",\"op\":\"EQ\",\"values\":[\"Jupyter1\"],\"desc\":\"\"},{\"id\":2,\"field\":\"Specimen.label\",\"op\":\"EQ\",\"values\":[\"Jupyter2\"],\"desc\":\"\"}],\"queryExpression\":[{\"nodeType\":\"PARENTHESIS\",\"value\":\"LEFT\"},{\"nodeType\":\"FILTER\",\"value\":1},{\"nodeType\":\"OPERATOR\",\"value\":\"OR\"},{\"nodeType\":\"FILTER\",\"value\":2},{\"nodeType\":\"PARENTHESIS\",\"value\":\"RIGHT\"}],\"cpId\":1,\"drivingForm\":\"Participant\",\"reporting\":{\"type\":\"none\",\"params\":{}},\"wideRowMode\":\"DEEP\"}"
+#qer=qry.create_query(params=payload)
+#print(qer)
+search="{}"
+#search['cpId']='1'
+#searchparam=json.dumps(search)
+#params="{\"cpId\":\""
+#qer=qry.search_query(search_params=searchparam)
+qer=qry.execute_saved_query(qryid=23,params=search)
+print(qer)
+
+=======
 
 # TODO:addedspecivisit=vis.add_visit_specimen(params=params)
 # deleted_visit = vis.delete_visit(5)
@@ -206,3 +299,4 @@ input()
 # #print(eventinfo)
 # eventinfo=event.get_event(eventid=10)
 # print(eventinfo)
+>>>>>>> 03ef78fc021cd183a358fa63fad899ec06b12884
