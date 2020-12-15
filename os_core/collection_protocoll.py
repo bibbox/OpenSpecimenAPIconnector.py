@@ -4,15 +4,11 @@
 import json
 from os_core.req_util import OS_request_gen
 
-
 class collection_protocol():
 
     def __init__(self, base_url, auth):
-
-        self.OS_request_gen = OS_request_gen(base_url, auth)
-        
+        self.OS_request_gen = OS_request_gen(auth)
         self.base_url = base_url + '/collection-protocols'
-        
 
 # Check URL, Password, header
 
@@ -28,13 +24,9 @@ class collection_protocol():
     def create_collection_protocol(self, params):
 
         url = self.base_url + '/'
-
         payload = params
-
         r = self.OS_request_gen.get_request(url)
-
         return json.loads(r.text)
-
 
 #   Delete Collection Protocol
 #   Input:  - cpid: ID of the collection protocol
@@ -43,13 +35,9 @@ class collection_protocol():
     def delete_collection_protocol(self, cpid):
 
         endpoint = '/' + str(cpid)
-
         url = self.base_url + endpoint
-
         r = self.OS_request_gen.delete_request(url)
-
         return json.loads(r.text)
-
 
 # Search colelction protocol, with different parameters.
 #   Input:  -json-dict (keys=OpenSpecimenKeys, value= values)
@@ -69,29 +57,32 @@ class collection_protocol():
                 for param in params[key]:
                     endpoint += str(key)
                     endpoint += '='+str(param)+'&'
+            else:        endpoint = '?'
+
+        params = json.loads(search_params)
+        keys = params.keys()
+
+        for key in keys:
+            if isinstance(params[key],list):
+                for param in params[key]:
+                    endpoint += str(key)
+                    endpoint += '='+str(param)+'&'
             else:
                 endpoint += str(key)
                 endpoint += '='+str(params[key])+'&'
-
         endpoint = endpoint[0:-1]
-
         url = self.base_url+endpoint
-
         r = self.OS_request_gen.get_request(url)
 
         return json.loads(r.text)
-
 
 #   Get all Collection Protocols
 #   Output: json-formatted string of all collection protocol
     def get_all_collection_protocols(self):
 
         url = self.base_url
-
         r = self.OS_request_gen.get_request(url)
-
         return json.loads(r.text)
-
 
 #   Get Collection Protocol
 #   Input:  - cpid: Colletion Protocol ID
@@ -100,13 +91,10 @@ class collection_protocol():
     def get_collection_protocol(self, cpid):
 
         endpoint = '/' + str(cpid)
-
         url = self.base_url + endpoint
-
         r = self.OS_request_gen.get_request(url)
 
         return json.loads(r.text)
-
 
 #   Merge two Colelction Protocols
 #   Input:  - cpShortTitle_src: Collection Protocol Short Title of the Soruce CP
@@ -115,9 +103,7 @@ class collection_protocol():
     def merge_colelction_protocols(self, cpShortTitle_src, cpShortTitle_tgt):
 
         endpoint = '/merge'
-
         url = self.base_url + endpoint
-
         payload = '{\"srcCpShortTitle\":\"' + str(cpShortTitle_src) + \
             '\",\"tgtCpShortTitle\":\"' + str(cpShortTitle_tgt) + '\"}'
 
@@ -134,11 +120,31 @@ class collection_protocol():
     def update_collection_protocol(self, cpid, params):
 
         endpoint = '/' + str(cpid)
-
         url = self.base_url + endpoint
-
         payload = params
-
         r = self.OS_request_gen.put_request(url, payload)
 
         return json.loads(r.text)
+
+    def get_cp_pandas_template(self):
+        '''
+        Input: None
+        Returns: pandas data frame of csv template
+        :return:
+        '''
+
+        site_template_endpoint = "/import-jobs/input-file-template?schema=cp"
+        site_template_url = self.base_url + site_template_endpoint
+        r = self.OS_request_gen.get_request(site_template_url)
+        cp_pandas_template = pd.DataFrame(columns=[r.content.decode()])
+
+        return cp_pandas_template
+
+    def get_cp_def(self, ID):
+
+        cp_endpoint = "/{}/definition".format(ID)
+        cp_url = self.base_url + cp_endpoint
+        r = self.OS_request_gen.get_request(cp_url)
+        cp_def_json = json.loads(r.text)
+
+        return cp_def_json

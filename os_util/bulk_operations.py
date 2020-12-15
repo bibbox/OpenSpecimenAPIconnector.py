@@ -2,12 +2,9 @@
 
 from os_core.csv_bulk import csv_bulk
 from os_core.req_util import OS_request_gen
-
-
 import io
 import pandas
 import time
-
 
 class bulk_operations:
 
@@ -16,11 +13,13 @@ class bulk_operations:
 
         self.csv_bulk = csv_bulk(base_url=base_url, auth=auth)
 
-    def bulk_import(self, file, filename, schemaname, operation='CREATE', dateformat=None, timeformat=None):
+    def bulk_import(self, file, filename, schemaname, operation='CREATE',
+                    dateformat=None, timeformat=None):
 
-        fileid = self.csv_bulk.upload_csv(filename,file)
+        fileid = self.csv_bulk.upload_csv(filename, file)
 
-        upload_ = self.csv_bulk.run_upload(schemaname=schemaname, fileid=fileid, operation=operation,dateformat=dateformat,timeformat=timeformat)
+        upload_ = self.csv_bulk.run_upload(schemaname=schemaname, fileid=fileid, operation=operation,
+                                           dateformat=dateformat,timeformat=timeformat)
 
         jobid = upload_[0]    #json starts with {"id":xx so char 7,8 of the string
 

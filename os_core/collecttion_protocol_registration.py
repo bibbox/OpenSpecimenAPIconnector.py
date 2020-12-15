@@ -11,7 +11,6 @@ class collection_protocol_registration:
 
         # define class members here
         self.OS_request_gen = OS_request_gen(auth)
-
         self.base_url = base_url + '/collection-protocol-registrations'
 
 
@@ -28,11 +27,8 @@ class collection_protocol_registration:
     def create_participant(self, params):
 
         url = self.base_url + '/'
-
         payload = params
-
         r = self.OS_request_gen.post_request(url, payload)
-
         return json.loads(r.text)
 
 
@@ -42,11 +38,8 @@ class collection_protocol_registration:
     def delete_consent(self, cprid):
 
         endpoint = '/' + str(cprid) + '/consent-form'
-
         url = self.base_url + endpoint
-
         r = self.OS_request_gen.delete_request(url)
-
         return json.loads(r.text)
 
 
@@ -57,11 +50,8 @@ class collection_protocol_registration:
     def delete_participant(self, cprid):
 
         endpoint = '/' + str(cprid)
-
         url = self.base_url + endpoint
-
         r = self.OS_request_gen.delete_request(url)
-
         return json.loads(r.text)
 
 
@@ -72,11 +62,8 @@ class collection_protocol_registration:
     def download_consent_form(self, cprid):
 
         endpoint = '/' + str(cprid) + '/consent-form'
-
         url = self.base_url + endpoint
-
         r = self.OS_request_gen.get_request(url)
-
         return r
 
 
@@ -87,11 +74,8 @@ class collection_protocol_registration:
     def get_consents(self, cprid):
 
         endpoint = '/' + str(cprid) + '/consents'
-
         url = self.base_url + endpoint
-
         r = self.OS_request_gen.get_request(url)
-
         return r
 
 
@@ -102,11 +86,8 @@ class collection_protocol_registration:
     def get_registration(self, cprid):
 
         endpoint = '/' + str(cprid)
-
         url = self.base_url + endpoint
-
         r = self.OS_request_gen.get_request(url)
-
         return json.loads(r.text)
 
     
@@ -116,13 +97,9 @@ class collection_protocol_registration:
     def get_registrations(self, params):
 
         endpoint = '/list'
-
         url = self.base_url + endpoint
-
         payload= params
-
         r = self.OS_request_gen.post_request(url, payload)
-
         return json.loads(r.text)
 
 #   Register Participant to another protocol
@@ -132,11 +109,8 @@ class collection_protocol_registration:
     def register_to_cp(self, params):
 
         url = self.base_url + '/'
-
         payload = params
-
         r = self.OS_request_gen.post_request(url, payload)
-
         return json.loads(r.text)
 
 
@@ -148,13 +122,9 @@ class collection_protocol_registration:
     def merge_participants(self, id_from, id_to):
 
         endpoint = '/'+ str(id_from)
-
         url = self.base_url + endpoint
-
         payload = '{\"participant\":{\"id\":\"' + str(id_to) + '\"}}'
-
         r = self.OS_request_gen.put_request(url, payload)
-
         return json.loads(r.text)
 
     
@@ -166,12 +136,8 @@ class collection_protocol_registration:
     def update_participant(self, cprid, params):
 
         endpoint = '/' + str(cprid)
-
         url = self.base_url + endpoint
-
         payload = params
-
         r = self.OS_request_gen.put_request(url, payload)
-
         return json.loads(r.text)
 

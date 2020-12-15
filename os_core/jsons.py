@@ -223,6 +223,12 @@ class Json_factory():
 
         return json.dumps(site_json)
 
+    def create_cpr_export_job_json(self, cp_id=None):
+
+        part_json = {"objectType": "cpr", "params": {"cpId": cp_id}}
+
+        return json.dumps(part_json)
+
     ##TODO
 
     # Import collection protocols
@@ -233,9 +239,3 @@ class Json_factory():
 
         return json.dumps(site_json)
 
-    
-    def create_cp_import_job_json(self, record_ids=None):
-
-        site_json = {"objectType": "site", "recordIds": record_ids}
-
-        return json.dumps(site_json)

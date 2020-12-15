@@ -13,15 +13,12 @@ from os_core.req_util import OS_request_gen
 class csv_bulk:
 
     # Constructor
-
     def __init__(self, base_url, auth):
 
         # define class members here
         self.OS_request_gen = OS_request_gen(auth)
-
         self.base_url = base_url + '/import-jobs'
         self.auth = auth
-
 
 # Check URL, Password
 

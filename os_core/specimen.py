@@ -14,9 +14,7 @@ class specimen:
 
         # define class members here
         self.OS_request_gen = OS_request_gen(auth)
-
         self.base_url = base_url
-
 
 # Check URL, Password, header
 
@@ -87,15 +85,13 @@ class specimen:
                     endpoint += '='+str(param)+'&'
             else:
                 endpoint += str(key)
-                endpoint += '='+str(params[key])+'&'
+                endpoint += '=' + str(params[key])+'&'
 
         endpoint = endpoint[0:-1]
-
         url = self.base_url+endpoint
-
         r = self.OS_request_gen.get_request(url)
 
-        return = json.loads(r.text)
+        return json.loads(r.text)
 
 
 # Update Specimen with Id
@@ -103,15 +99,13 @@ class specimen:
 #           - updateparams: Parameter to update as json_formatted string
 #   Output: - Specimen Details, with updated params as python dict
 #           - error message as python dict
+
     def update_specimen(self, specimenid, updateparams):
 
         endpoint = '/specimens/'+str(specimenid)
         url = self.base_url + endpoint
-
         data = updateparams
-
         r = self.OS_request_gen.put_request(url, data)
-
         return json.loads(r.text)
 
 #   Delete Specimen with id
@@ -121,21 +115,15 @@ class specimen:
 
     def delete_specimen(self, specimenid):
 
-        endpoint='/specimens?id='
-        if isinstance(specimenid,list):
-
-            for id in specimenid:
-                endpoint+=str(id)+','  
-
-            endpoint=endpoint[0:-1]
-        
+        endpoint = '/specimens?id='
+        if isinstance(specimenid, list):
+            for spec_id in specimenid:
+                endpoint += str(spec_id) + ','
+            endpoint = endpoint[0:-1]
         else:
+            endpoint += str(specimenid)
 
-            endpoint+=str(specimenid)
-
-        url= self.base_url + endpoint
-
+        url = self.base_url + endpoint
         r = self.OS_request_gen.delete_request(url)
-
         return json.loads(r.text)
- 
+

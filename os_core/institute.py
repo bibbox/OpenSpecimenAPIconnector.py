@@ -28,9 +28,7 @@ class institutes():
     def create_institute(self, params):
 
         url = self.base_url + '/'
-
         payload = params
-
         r = self.OS_request_gen.post_request(url, payload)
 
         return json.loads(r.text)
@@ -43,9 +41,7 @@ class institutes():
     def delete_institute(self, inid):
 
         endpoint = '/' + str(inid)
-
         url = self.base_url + endpoint
-
         r = self.OS_request_gen.delete_request(url)
 
         return json.loads(r.text)
@@ -74,9 +70,7 @@ class institutes():
                 endpoint += '='+str(params[key])+'&'
 
         endpoint = endpoint[0:-1]
-
         url = self.base_url+endpoint
-
         r = self.OS_request_gen.get_request(url)
 
         return json.loads(r.text)
@@ -87,7 +81,6 @@ class institutes():
     def get_all_institutes(self):
 
         url = self.base_url
-
         r = self.OS_request_gen.get_request(url)
 
         return json.loads(r.text)
@@ -100,9 +93,7 @@ class institutes():
     def get_collection_protocol(self, inid):
 
         endpoint = '/' + str(inid)
-
         url = self.base_url + endpoint
-
         r = self.OS_request_gen.get_request(url)
 
         return json.loads(r.text)
@@ -116,11 +107,8 @@ class institutes():
     def update_collection_protocol(self, inid, params):
 
         endpoint = '/' + str(inid)
-
         url = self.base_url + endpoint
-
         payload = params
-
         r = self.OS_request_gen.put_request(url, payload)
 
         return json.loads(r.text)

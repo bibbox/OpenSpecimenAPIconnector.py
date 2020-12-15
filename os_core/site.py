@@ -10,7 +10,6 @@ class sites():
     def __init__(self, base_url, auth):
 
         self.OS_request_gen = OS_request_gen(base_url, auth)
-        
         self.base_url = base_url + '/sites'
         
 
@@ -21,6 +20,19 @@ class sites():
         print(self.base_url, self.OS_request_gen.auth)
 
 
+    def get_site_pandas_template(self):
+        '''
+
+        :return:
+        '''
+
+        site_template_endpoint = "/import-jobs/input-file-template?schema=site"
+        site_template_url = self.base_url + site_template_endpoint
+        r = self.Req_Fac.get_request(site_template_url)
+        site_pandas_template = pd.DataFrame(columns=[r.content.decode()])
+
+        return site_pandas_template
+
 #   Create Site
 #   Input:  - params: Parameter of the Site as json-formatted string
 #   Output: - either details of the Institute as json-formatted string
@@ -28,9 +40,7 @@ class sites():
     def create_sites(self, params):
 
         url = self.base_url + '/'
-
         payload = params
-
         r = self.OS_request_gen.post_request(url, payload)
 
         return json.loads(r.text)
@@ -43,9 +53,7 @@ class sites():
     def delete_sites(self, siid):
 
         endpoint = '/' + str(siid)
-
         url = self.base_url + endpoint
-
         r = self.OS_request_gen.delete_request(url)
 
         return json.loads(r.text)
@@ -60,7 +68,6 @@ class sites():
     def search_sites(self, search_params):
 
         endpoint = '?'
-
         params = json.loads(search_params)
         keys = params.keys()
 
@@ -74,9 +81,7 @@ class sites():
                 endpoint += '='+str(params[key])+'&'
 
         endpoint = endpoint[0:-1]
-
         url = self.base_url+endpoint
-
         r = self.OS_request_gen.get_request(url)
 
         return json.loads(r.text)
@@ -87,7 +92,6 @@ class sites():
     def get_all_sites(self):
 
         url = self.base_url
-
         r = self.OS_request_gen.get_request(url)
 
         return json.loads(r.text)
@@ -97,12 +101,10 @@ class sites():
 #   Input:  - siid: Site ID
 #   Output: - either json-formatted string with the details
 #           - or error message
-    def get_collection_protocol(self, siid):
+    def get_site(self, siid):
 
         endpoint = '/' + str(siid)
-
         url = self.base_url + endpoint
-
         r = self.OS_request_gen.get_request(url)
 
         return json.loads(r.text)
@@ -113,14 +115,10 @@ class sites():
 #           - params: Paramters which should get updated
 #   Output: - eiher details of the CP as json formatted  string
 #           - or error message
-    def update_collection_protocol(self, siid, params):
+    def update_site(self, siid, params):
 
         endpoint = '/' + str(siid)
-
         url = self.base_url + endpoint
-
         payload = params
-
         r = self.OS_request_gen.put_request(url, payload)
-
         return json.loads(r.text)
