@@ -41,7 +41,7 @@ class query:
 #   Input:  - params: JSON-formatted string with parameters for request
 #   Output: - json-formatted string with results
 #           - or error message
-    def execute_query(self, params):
+    def create_aql(self, params):
 
         endpoint = "/query"
         url = self.base_url + endpoint
@@ -91,7 +91,7 @@ class query:
 #           - params: JSON-formatted string with parameters for request
 #   Output: - json-formatted string with results
 #           - or error message
-    def execute_saved_query(self, qryid, params):
+    def execute_query(self, qryid, params):
 
         endpoint = "/query/" + str(qryid)
         url = self.base_url + endpoint

@@ -2,6 +2,7 @@
 
 from os_core.query import query
 from os_core.req_util import OS_request_gen
+from os_core.jsons import Json_factory
 import json
 import io
 import pandas
@@ -13,15 +14,25 @@ class query_util:
     def __init__(self, base_url, auth):
 
         self.query = query(base_url=base_url, auth=auth)
+        self.jsons = Json_factory()
+        
 
 
 # Create a query
 
-    def create_query(self, cpid, aql, rowmode, coloumexpr, isodate):
+    def create_aql(self, cpid, aql, rowmode='OFF', coloumexpr='true', isodate='true'):
+        
+        params = self.jsons.create_aql(cpid, aql, rowmode, coloumexpr, isodate)
 
-        params = '{\"cpId\":\"' + str(cpid) + '\",\"aql\":\"' + str(aql) + '\",\"wideRowMode\":\"' + str(rowmode) + '\",\"outputColumnExprs\":\"' \
-                + str(coloumexpr) + '\",\"outputIsoDateTime\":\"' + str(isodate) + '\"}'
+        r = self.query.create_aql(params)
 
-        r =query.execute_query(params)
+        return json.dumps(r)
 
-        return json.loads(r.text)
+# Execute a saved Query
+    def execute_query(self,qryid, start, results, rowmode="OFF", drivingform="Participant"):
+
+        params = self.jsons.execute_query(start, results, drivingform, rowmode)
+
+        r = self.query.execute_query(qryid, params)
+
+        return json.dumps(r)

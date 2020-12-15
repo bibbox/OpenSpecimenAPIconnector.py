@@ -91,11 +91,7 @@ class specimen:
         url = self.base_url+endpoint
         r = self.OS_request_gen.get_request(url)
 
-<<<<<<< HEAD
-        return  json.loads(r.text)
-=======
         return json.loads(r.text)
->>>>>>> 03ef78fc021cd183a358fa63fad899ec06b12884
 
 
 # Update Specimen with Id
