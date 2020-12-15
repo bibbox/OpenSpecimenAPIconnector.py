@@ -12,7 +12,10 @@ from os_core.participant import participant
 from os_core.collection_protocoll import collection_protocol
 from os_core.collecttion_protocol_registration import collection_protocol_registration
 from os_core.collection_protocol_event import collection_protocol_event
+<<<<<<< HEAD
+=======
 from os_core.query import query
+>>>>>>> dev_chri
 
 
 from os_util.bulk_operations import bulk_operations
@@ -184,6 +187,7 @@ print(cps)
 input()
 >>>>>>> dev_chri
 
+
 # part_info =participant.create_participant(params)
 # part_info = participant.update_participant(cprid=10,params=params)
 # print(part_info)
@@ -223,6 +227,8 @@ input()
 # #print(eventinfo)
 # eventinfo=event.get_event(eventid=10)
 # print(eventinfo)
+<<<<<<< HEAD
+=======
 
 qry =query_util(base_url=base_url, auth=auth)
 
@@ -231,3 +237,4 @@ qry =query_util(base_url=base_url, auth=auth)
 
 exqry = qry.execute_query(23,0,10)
 print(exqry)
+>>>>>>> dev_chri

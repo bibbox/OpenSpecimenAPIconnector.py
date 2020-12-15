@@ -240,6 +240,22 @@ class Json_factory():
         return json.dumps(site_json)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+    def create_cpr_part_import_job(self, schemaname=None, operation=None, fileid=None,
+                                   dateformat=None, timeformat=None):
+
+        part_cpr_json = {"objectType": schemaname,
+                    "importType": operation,
+                    "inputFileId": fileid,
+                    "dateFormat":dateformat,
+                    "timeFormat":timeformat
+                    }
+
+        return json.dumps(part_cpr_json)
+
+>>>>>>> 7fe3a7d4d2daba140b751285a32393b55324f0f8
     
 #   Create  Any AQL Query
     def create_aql(self, cpid, aql, rowmode='OFF', coloumexpr='true', isodate='true'):
@@ -265,6 +281,7 @@ class Json_factory():
         }
 
         return json.dumps(params)
+<<<<<<< HEAD
 =======
     def create_cpr_part_import_job(self, schemaname=None, operation=None, fileid=None,
                                    dateformat=None, timeformat=None):
@@ -277,4 +294,6 @@ class Json_factory():
                     }
 
         return json.dumps(part_cpr_json)
+=======
+>>>>>>> 7fe3a7d4d2daba140b751285a32393b55324f0f8
 >>>>>>> dev_chri
