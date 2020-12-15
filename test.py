@@ -157,7 +157,6 @@ auth = ('admin', 'Login@123')
 
 # params='{\"ppid\":\"PPID\"}'
 
-<<<<<<< HEAD
 #participant = collection_protocol_registration(base_url=base_url, auth=auth)
 #participant.ausgabe()
 #params = '{\"participant\":{\"birthDate\":\"2020-11-23\"},\"cpId\":\"2\"}'
@@ -169,20 +168,7 @@ auth = ('admin', 'Login@123')
 #cp_tools.get_collection_protocol()
 #print(cps)
 #input()
-=======
-participant = collection_protocol_registration(base_url=base_url, auth=auth)
-participant.ausgabe()
-params = '{\"participant\":{\"birthDate\":\"2020-11-23\"},\"cpId\":\"2\"}'
-print(params)
-cp_tools = collection_protocol(base_url, auth)
-cps = cp_tools.get_all_collection_protocols()
-cp_tools.update_collection_protocol()
 
-cp_tools.get_cp_def()
-cp_tools.get_collection_protocol()
-print(cps)
-input()
->>>>>>> dev_chri
 
 # part_info =participant.create_participant(params)
 # part_info = participant.update_participant(cprid=10,params=params)
