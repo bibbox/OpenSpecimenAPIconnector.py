@@ -238,8 +238,6 @@ class Json_factory():
         site_json = {"objectType": "site", "recordIds": record_ids}
 
         return json.dumps(site_json)
-
-<<<<<<< HEAD
     
 #   Create  Any AQL Query
     def create_aql(self, cpid, aql, rowmode='OFF', coloumexpr='true', isodate='true'):
@@ -265,7 +263,7 @@ class Json_factory():
         }
 
         return json.dumps(params)
-=======
+
     def create_cpr_part_import_job(self, schemaname=None, operation=None, fileid=None,
                                    dateformat=None, timeformat=None):
 
@@ -277,4 +275,4 @@ class Json_factory():
                     }
 
         return json.dumps(part_cpr_json)
->>>>>>> dev_chri
+
