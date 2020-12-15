@@ -63,6 +63,7 @@ class specimen:
 
         r = self.OS_request_gen.post_request(url, data=payload)
 
+
         return json.loads(r.text)
 
 # Search specimens, with different parameters.
@@ -107,6 +108,7 @@ class specimen:
         data = updateparams
         r = self.OS_request_gen.put_request(url, data)
         return json.loads(r.text)
+
 
 #   Delete Specimen with id
 #       Input:  - specimenid: Id of specimen which should get deleted as value or list of values
