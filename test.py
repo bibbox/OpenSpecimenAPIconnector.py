@@ -161,6 +161,7 @@ params = '{\"participant\":{\"birthDate\":\"2020-11-23\"},\"cpId\":\"2\"}'
 print(params)
 cp_tools = collection_protocol(base_url, auth)
 cps = cp_tools.get_all_collection_protocols()
+cp_tools.update_collection_protocol()
 
 cp_tools.get_cp_def()
 cp_tools.get_collection_protocol()

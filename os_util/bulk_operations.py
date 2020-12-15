@@ -17,9 +17,8 @@ class bulk_operations:
                     dateformat=None, timeformat=None):
 
         fileid = self.csv_bulk.upload_csv(filename, file)
-
         upload_ = self.csv_bulk.run_upload(schemaname=schemaname, fileid=fileid, operation=operation,
-                                           dateformat=dateformat,timeformat=timeformat)
+                                           dateformat=dateformat, timeformat=timeformat)
 
         jobid = upload_[0]    #json starts with {"id":xx so char 7,8 of the string
 
@@ -27,9 +26,10 @@ class bulk_operations:
         time.sleep(5)
 
         r = self.csv_bulk.job_report(jobid)
+        print(r)
 
         data = io.StringIO(r)
         ret_val = pandas.read_csv(data, sep=",")
-        ret=ret_val.iloc[:,[2,-2,-1]]
+        ret = ret_val.iloc[:, [2, -2, -1]]
 
         return ret

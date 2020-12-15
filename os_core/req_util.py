@@ -48,19 +48,19 @@ class OS_request_gen():
         return r
 
 
-    def post_request(self, url, data=None, form_data=False, files=None):
+    def post_request(self, url, data=None, form_data=False, files=None, params=None):
 
 
         if form_data:
             r = requests.request("POST", url, data=data, auth=self.auth,
-                                 headers=self.form_data_headers)
+                                 headers=self.form_data_headers, params=params)
 
         if form_data==False and files==None:
             r = requests.request("POST", url, data=data, auth=self.auth,
-                                 headers=self.json_headers)
+                                 headers=self.json_headers, params=params)
         if files!=None:
             r= requests.request("POST", url, auth=self.auth, 
-                                 headers=self.file_headers,files=files)
+                                 headers=self.file_headers,files=files, params=params)
         return r
 
 

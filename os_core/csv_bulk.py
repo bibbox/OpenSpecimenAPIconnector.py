@@ -8,6 +8,7 @@ import requests
 from datetime import datetime
 
 from os_core.req_util import OS_request_gen
+from os_core.jsons import Json_factory
 
 
 class csv_bulk:
@@ -17,6 +18,7 @@ class csv_bulk:
 
         # define class members here
         self.OS_request_gen = OS_request_gen(auth)
+        self.Json_fact = Json_factory()
         self.base_url = base_url + '/import-jobs'
         self.auth = auth
 
@@ -70,9 +72,8 @@ class csv_bulk:
     def run_upload(self, schemaname, fileid, operation='CREATE',dateformat=None, timeformat=None):
 
         url = self.base_url
-        payload = '{\"objectType\":\"'+schemaname+'\",\"importType\":\"' + \
-            operation+'\",\"inputFileId\":\"'+fileid+'\"}'
-
+        payload = self.Json_fact.create_cpr_part_import_job(schemaname=schemaname, operation=operation, fileid=fileid,
+                                                            dateformat=dateformat, timeformat=timeformat)
         r = self.OS_request_gen.post_request(url, data=payload)
 
         return (json.loads(r.text)["id"], r.text)

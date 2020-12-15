@@ -239,3 +239,14 @@ class Json_factory():
 
         return json.dumps(site_json)
 
+    def create_cpr_part_import_job(self, schemaname=None, operation=None, fileid=None,
+                                   dateformat=None, timeformat=None):
+
+        part_cpr_json = {"objectType": schemaname,
+                    "importType": operation,
+                    "inputFileId": fileid,
+                    "dateFormat":dateformat,
+                    "timeFormat":timeformat
+                    }
+
+        return json.dumps(part_cpr_json)

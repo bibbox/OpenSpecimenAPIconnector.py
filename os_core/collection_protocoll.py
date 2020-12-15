@@ -48,7 +48,6 @@ class collection_protocol():
     def search_collection_protocols(self, search_params):
 
         endpoint = '?'
-
         params = json.loads(search_params)
         keys = params.keys()
 
