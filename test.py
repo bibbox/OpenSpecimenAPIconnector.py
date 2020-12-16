@@ -217,4 +217,3 @@ qry =query_util(base_url=base_url, auth=auth)
 
 exqry = qry.execute_query(23,0,10)
 print(exqry)
-
