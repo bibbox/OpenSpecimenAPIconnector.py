@@ -238,8 +238,6 @@ class Json_factory():
         site_json = {"objectType": "site", "recordIds": record_ids}
 
         return json.dumps(site_json)
-
-
     
 #   Create  Any AQL Query
     def create_aql(self, cpid, aql, rowmode='OFF', coloumexpr='true', isodate='true'):
