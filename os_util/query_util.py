@@ -26,7 +26,7 @@ class query_util:
 
         r = self.query.create_aql(params)
 
-        return json.dumps(r)
+        return r
 
 # Execute a saved Query
     def execute_query(self,qryid, start, results, rowmode="OFF", drivingform="Participant"):
