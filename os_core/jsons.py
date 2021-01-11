@@ -158,7 +158,7 @@ class Json_factory():
     def create_cp_event_json(self):
         pass
 
-    def create_spec_json(self, lineage, visit_id, av_qty, user, visitDate, init_qty, spec_class, spec_type, anat_site, 
+    def create_spec_json(self, lineage, visit_id, av_qty, user, visitDate, init_qty, spec_class, spec_type, anat_site, label, 
                          stor_loc=None, status="Collected", cont=None, proced=None, qual="Acceptable", concent=None,  
                          path=None, laterality=None):
         '''
@@ -275,4 +275,77 @@ class Json_factory():
                     }
 
         return json.dumps(part_cpr_json)
+
+    def get_registrations(self, cpid=None, registrationdate=None, ppid=None, name=None, birthdate=None, uid=None, specimen=None,
+                                    includestats=None, startat=None,maxresults=None):
+
+        params = {
+            "cpId": cpid,
+            "registrationDate": registrationdate,
+            "ppid": ppid,
+            "name": name,
+            "dob": birthdate,
+            "uid": uid,
+            "specimen": specimen,
+            "includeStats": includestats,
+            "startAt": startat,
+            "maxResults": maxresults
+        }
+
+        return json.dumps(params)
+
+    def create_cp_event_json(self, label, point, cp, site, diagnosis, status, activity, unit, code=None):
+
+        params = {
+            "eventLabel": label,
+            "clinicalDiagnosis": diagnosis,
+            "clinicalStatus": status,
+            "collectionProtocol": cp,
+            "defaultSite": site,
+            "activityStatus": activity,
+            "eventPoint": point,
+            "eventPointUnit": unit
+        }
+
+        return json.dumps(params)
+
+    def add_visit_json(self,cprid, name, site,eventid=None,eventlabel=None,ppid=None, cptitle=None, cpshorttitle=None,
+                        diagnosis=None, clinicalstatus=None, activity=None, visitstatus="COMPLETE", missedreason=None,
+                        missedby=None, comments=None,pathologynumber=None,cohort=None, visitdate=None, cpid=None):
+
+        params = {
+            "cprId": cprid,
+            "eventId": eventid,
+            "eventLabel": eventlabel,
+            "ppid": ppid,
+            "cpTitle": cptitle,
+            "cpShortTitle":cpshorttitle,
+            "cpId": cpid,
+            "name": name,
+            "clinicalDiagnoses": diagnosis,
+            "clinicalStatus": clinicalstatus,
+            "activityStatus": activity,
+            "site": site,
+            "status": visitstatus,
+            "missedReason": missedreason,
+            "missedBy": missedby,
+            "comments": comments,
+            "surgicalPathologyNumber": pathologynumber,
+            "cohort": cohort,
+            "visitDate": visitdate
+        }
+        
+        return json.dumps(params)
+
+    def storage_location_json(self, id=None, name=None, xpos=None, ypos=None):
+
+        params = {
+            "id": id,
+            "name": name,
+            "positionX": xpos,
+            "positionY": ypos
+        }
+
+        return json.dumps(params)
+    
 

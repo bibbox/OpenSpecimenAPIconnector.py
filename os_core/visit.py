@@ -39,9 +39,9 @@ class visit:
 
 #   Create a Visit and Specimen in one call
 #   Input:  - params: Parameter as json formatted string two field "Visit":params for visit, Specimens": params for specimens
-#   Output: - either DEtails of visit and Specimen
+#   Output: - either Details of visit and Specimen
 #           - or error message with details
-# JSON PArse ERROR can be created via add visit and add specimen seperatly
+# JSON Parse ERROR can be created via add visit and add specimen seperatly
     def add_visit_specimen(self, params):
 
         endpoint = '/visits/collect'
