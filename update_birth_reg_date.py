@@ -19,9 +19,12 @@ from os_util.bulk_operations import bulk_operations
 from os_util.query_util import query_util
 from os_util.cpr_util import cpr_util
 from os_util.visit_util import visit_util
+from faker import Faker
 import json
 import pandas
 import random
+import datetime
+
 
 #base_url='http://biobank.silicolab.bibbox.org/openspecimen/rest/ng'
 base_url='http://biobank-7-2.silicolab.bibbox.org/openspecimen/rest/ng'
@@ -29,34 +32,24 @@ base_url='http://biobank-7-2.silicolab.bibbox.org/openspecimen/rest/ng'
 auth = ('admin', 'Login@123')
 print('#1')
 #Constants:
-#CPTitle="Hellenic Biobank of Overweight and Obesity in Childhood and Adolescence"
+CPTitle="Hellenic Biobank of Overweight and Obesity in Childhood and Adolescence"
 #CPTitle="Main collection of Clinical-biological Biobank at INAB, comprising of all the samples."
 SiteName="Hellenic Biobank for Parkinson\'s Disease"
 #SiteName="Clinical-biological Biobank at INAB affiliated with Hematology Department and HCT Unit, ?G. Papanicolaou? Hospital, Thessaloniki, Greece"
-Type=[['Plasma','Fluid'],['Serum','Fluid'],['DNA','Molecular'],['Cell - Not Specified', 'Cell'],
-    ['Tissue - Not Specified','Tissue'],['Whole Blood','Fluid'],['Slide','Cell'],['Frozen Tissue','Tissue']]
+
 print('#2')
-#generate Event
-event = cpevent_util(base_url,auth)
-evt =event.create_event(label="Base Event", point=0,cp=SiteName, site=SiteName, diagnosis= "Not Specified",
-                        status="Not Specified", activity="Active", unit="DAYS", code="Event")
-#print(evt)
-eventid=5#evt['id']
-print('#3')
 #Get cprId via Query
 qry =query_util(base_url=base_url, auth=auth)
-exqry = qry.create_aql(cpid=18, aql='select Participant.id where CollectionProtocol.id = 18')
+exqry = qry.create_aql(cpid=17, aql='select Participant.id where CollectionProtocol.id = 17')
 cprID=exqry['rows']
 print('#4')
 #generate visit's and specimens
-vis = visit_util(base_url=base_url, auth=auth)
+part = collection_protocol_registration(base_url=base_url, auth=auth)
+fake = Faker()
+start_date = datetime.date(year=2010, month=1, day=1)
 for ID in cprID:
-    typ=Type[random.randrange(8)]
-    label = 'specimen'+str(ID[0])
-    visitname="visit_"+str(ID[0])
-    specisit= vis.add_visit_speci(cprid=ID[0], name=visitname, site=SiteName, eventid=eventid, visit_id=None, av_qty= 10, user=None,
-                            lineage = "New", init_qty=10, spec_class=typ[1], spec_type=typ[0], anat_site=None,speclabel=label)
-    print(specisit)
-    
-#print(specisit)
-
+    params={"participant":{"birthDate": str(fake.date_between(start_date='-90y', end_date='-5y'))},
+            "registrationDate": str(fake.date_between(start_date=start_date, end_date='today'))}
+    params=json.dumps(params)
+    partici=part.update_participant(ID[0],params)
+    print(partici)
