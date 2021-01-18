@@ -26,7 +26,7 @@ class CSV_exporter():
         r = self.OS_request_gen.post_request(job_url, data)
         req_json = json.loads(r.text)
         job_id = req_json["id"]
-
+        
         return job_id
 
     def get_job_output(self, job_id):

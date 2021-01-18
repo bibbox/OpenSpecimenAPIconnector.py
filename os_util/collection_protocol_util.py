@@ -1,3 +1,8 @@
+   #! /bin/python3
+
+
+
+
    def cp_get_cps_json(self):
         endpoint = "/collection-protocols"
         url = self.base_url + endpoint

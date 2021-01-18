@@ -347,5 +347,18 @@ class Json_factory():
         }
 
         return json.dumps(params)
+
+    def create_cp_csv_export_job(self, objecttype, cpid, entitytype=None, formname=None):
+
+        data = {
+            "objectType": objecttype,
+            "params":{
+                "entityType": entitytype,
+                "formName": formname,
+                "cpId": cpid
+            }
+        }
+
+        return json.dumps(data)
     
 

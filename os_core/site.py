@@ -101,9 +101,9 @@ class sites():
 #   Input:  - siid: Site ID
 #   Output: - either json-formatted string with the details
 #           - or error message
-    def get_site(self, siid):
+    def get_site(self, siteid):
 
-        endpoint = '/' + str(siid)
+        endpoint = '/' + str(siteid)
         url = self.base_url + endpoint
         r = self.OS_request_gen.get_request(url)
 
