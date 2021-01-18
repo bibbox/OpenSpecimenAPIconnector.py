@@ -9,7 +9,7 @@ class sites():
 
     def __init__(self, base_url, auth):
 
-        self.OS_request_gen = OS_request_gen(base_url, auth)
+        self.OS_request_gen = OS_request_gen(auth)
         self.base_url = base_url + '/sites'
         
 
