@@ -30,8 +30,14 @@ class site_util:
         
         r = self.sites.search_sites(search_string = search_string)
 
-        return r 
-        #if siteExtension:
+        if siteExtension:
+            si =[]
+            for obj in r:
+                siteid=obj['id']
+                si.append(self.sites.get_site(siteid = siteid))
+            r = si
+
+        return r
 
 
 

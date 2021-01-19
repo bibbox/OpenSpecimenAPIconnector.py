@@ -232,5 +232,5 @@ auth = ('admin', 'Login@123')
 
 sites = site_util(base_url = base_url, auth = auth)
 
-bbsites =  sites.search_sites(sitename='Bio',institutename="Biobank Institute")
+bbsites =  sites.search_sites(sitename='Bio',institutename="Biobank Institute",)
 print(bbsites)
