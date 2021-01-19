@@ -8,18 +8,27 @@ from os_core.collection_protocoll import collection_protocol
 
 import json
 import pandas as pd
+import xlsxwriter
+from openpyxl import load_workbook
 
 
 # URL to OpenSpecimen and Logindata
 base_url = 'http://biobank-7-2.silicolab.bibbox.org/openspecimen/rest/ng'
 auth = ('admin', 'Login@123')
 
+#shhetnames:
+bb_sheet = "eu_bbmri_eric_biobanks"
+per_sheet = "eu_bbmri_eric_persons"
+cp_sheet = "eu_bbmri_eric_collections"
+
 # Load headers of BBMRI_ERIC Directory
 template_file_name="empty_eric_duo.xlsx"
-biobank_header = pd.read_excel(template_file_name, sheet_name = "eu_bbmri_eric_biobanks")
-collection_header = pd.read_excel(template_file_name, sheet_name="eu_bbmri_eric_collections")
-person_header = pd.read_excel(template_file_name, sheet_name = "eu_bbmri_eric_persons")
-bbmri_file = pd.read_excel(sheet_name = None)
+biobank_header = pd.read_excel(template_file_name, sheet_name = bb_sheet )
+collection_header = pd.read_excel(template_file_name, sheet_name = cp_sheet)
+person_header = pd.read_excel(template_file_name, sheet_name = per_sheet)
+bbmri_file = pd.read_excel(template_file_name, sheet_name = None)
+
+
 
 #Convert Headers to json-dict
 collection_header_json=json.loads(collection_header.to_json())
@@ -36,19 +45,24 @@ persons_extensions={
     "id":"bbmri-eric:conntactID:GR_TEST",
     "title_before_name":None,
     "title_after_name":None,
-    "head_role":"PI",
-    "contact_priority":"1",
     "zip":"123456",
     "city":"City",
     "country":"GR",
     "collections":None
 }
 
+biobank_extensions ={
+    "partner_charter_signed":'0',
+    "head_title_before_name":None,
+    "head_role":"PI",
+    "contact_priority":"1"
+}
+
 # Mapping between OpenSpecimen keywords and bbmri keywords regarding persons
 person_map = {
     "firstName":"first_name",
     "lastName":"last_name",
-    "emailAdress":"email",
+    "emailAddress":"email",
     "phoneNumber":"phone",
     "address":"address",
     "instituteName":"biobanks"
@@ -123,16 +137,53 @@ for atr in attrs:
     id_ = id_.replace(" ", "_")
     if id_== "bbmri_collection_id":    
         id_="id"
-    '''if isinstance(atr['value'],list):
+    if isinstance(atr['value'],list):
+        string = str('')
         for i in range(len(atr['value'])):
-            string+=str(atr['value'][i])+', '
+            string+=str(atr['value'][i])+ ', '
         string=string[0:-2]
     else:
         string=atr['value']
-    collection_json[id_]=string'''
+    collection_json[id_]=string
     collection_json[id_]=atr['value']
 
 # Write the excel file
-bbmri_file.
-#bbmri_file.to_excel('test.xlsx', sheet_name='eu_bbmri_eric_collections', )
+filename='empty_eric_duo (copy).xlsx'
+df = pd.json_normalize(biobank_json)
+with pd.ExcelWriter(filename, engine = 'openpyxl', mode = 'a') as writer:
+    writer.book = load_workbook(filename)
+    df.to_excel(writer, sheet_name = bb_sheet,  index = False)
+df = pd.json_normalize(collection_json)
+with pd.ExcelWriter(filename, engine = 'openpyxl', mode = 'a') as writer:
+    writer.book = load_workbook(filename)
+    df.to_excel(writer, sheet_name = cp_sheet,  index = False)
+df = pd.json_normalize(person_json)
+with pd.ExcelWriter(filename, engine = 'openpyxl', mode = 'a') as writer:
+    writer.book = load_workbook(filename)
+    df.to_excel(writer, sheet_name = per_sheet,  index = False)
 
+#writer = pd.ExcelWriter('test.xlsx', engine = 'openpyxl', mode = 'a')
+
+#df.to_excel(writer, sheet_name = bb_sheet, index =False, header = None)
+#writer.save()
+
+'''
+#print(bbmri_file)
+#df = pd.json_normalize(biobank_json)
+#print(type(df))
+#df.to_excel('test.xlsx', index=False,  sheet_name=bb_sheet)
+
+bbmri_file[bb_sheet] = pd.json_normalize(biobank_json)
+bbmri_file[per_sheet] = pd.json_normalize(person_json)
+bbmri_file[cp_sheet] = pd.json_normalize(collection_json)
+
+df = pd.json_normalize(bbmri_file)
+print(type(df))
+print(df.ndim)
+
+#print(bbmri_file)
+
+#df = pd.DataFrame.from_dict(bbmri_file)
+
+#df.to_excel('test.xlsx', sheet_name = None, index = False)
+'''
