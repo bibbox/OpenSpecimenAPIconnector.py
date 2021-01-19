@@ -37,7 +37,7 @@ persons_extensions={
     "title_before_name":None,
     "title_after_name":None,
     "head_role":"PI",
-    "contactPriority":"1",
+    "contact_priority":"1",
     "zip":"123456",
     "city":"City",
     "country":"GR",
@@ -133,5 +133,6 @@ for atr in attrs:
     collection_json[id_]=atr['value']
 
 # Write the excel file
+bbmri_file.
 #bbmri_file.to_excel('test.xlsx', sheet_name='eu_bbmri_eric_collections', )
 

@@ -1,6 +1,4 @@
 #! /bin/python3
-
-
 import json
 from os_core.req_util import OS_request_gen
 
@@ -60,28 +58,14 @@ class sites():
 
 
 # Search Sites, with different parameters.
-#   Input:  -json-dict (keys=OpenSpecimenKeys, value= values)
+#   Input:  -json-formatted string (keys=OpenSpecimenKeys, value= values)
 #           - for each key values can either be a single value or a list of values
-#           Handle with care, some Params e.g availableQty are not searchable via API
+#           Handle with care, some Params are not searchable via API
 #   Output: -returns: json-formatted string of all Sites wich fullfill searchParams
 #           - or an error message
-    def search_sites(self, search_params):
+    def search_sites(self, search_string):
 
-        endpoint = '?'
-        params = json.loads(search_params)
-        keys = params.keys()
-
-        for key in keys:
-            if isinstance(params[key],list):
-                for param in params[key]:
-                    endpoint += str(key)
-                    endpoint += '='+str(param)+'&'
-            else:
-                endpoint += str(key)
-                endpoint += '='+str(params[key])+'&'
-
-        endpoint = endpoint[0:-1]
-        url = self.base_url+endpoint
+        url = self.base_url + search_string
         r = self.OS_request_gen.get_request(url)
 
         return json.loads(r.text)

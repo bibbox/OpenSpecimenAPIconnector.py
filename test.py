@@ -18,6 +18,7 @@ from os_core.query import query
 from os_util.bulk_operations import bulk_operations
 from os_util.query_util import query_util
 from os_util.cpr_util import cpr_util
+from os_util.site_util import site_util
 import json
 import pandas
 
@@ -211,15 +212,15 @@ auth = ('admin', 'Login@123')
 # eventinfo=event.get_event(eventid=10)
 # print(eventinfo)
 
-qry =query_util(base_url=base_url, auth=auth)
+#qry =query_util(base_url=base_url, auth=auth)
 
 #exqry= qry.create_aql(cpid=1,aql='select Participant.ppid, SpecimenCollectionGroup.collectionDate, count(distinct Specimen.id) where Specimen.lineage = \"Aliquot\"')
 #print(exqry)
 
 #exqry = qry.execute_query(23,0,10)
 #print(exqry)
-exqry = qry.create_aql(cpid=4, aql='select Participant.ppid where CollectionProtocol.id = 4')
-cprID=exqry['rows']
+#exqry = qry.create_aql(cpid=4, aql='select Participant.ppid where CollectionProtocol.id = 4')
+#cprID=exqry['rows']
 
 
 
@@ -228,3 +229,8 @@ cprID=exqry['rows']
 
 #cp = cpr.get_registrations(cpid=4, maxresults=1)
 #print(cp)
+
+sites = site_util(base_url = base_url, auth = auth)
+
+bbsites =  sites.search_sites(sitename='Bio',institutename="Biobank Institute")
+print(bbsites)
