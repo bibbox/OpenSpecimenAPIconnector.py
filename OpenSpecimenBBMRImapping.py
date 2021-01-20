@@ -1,5 +1,21 @@
 #! /bin/python3
 
+
+'''
+    Road to official version:
+    ::::::TODO::::::
+    - Extend TODO-List
+    - Person_Extensions in openspecimen
+    - Some_fields in Collections have to be loaded separatly
+    - Header should be borderless, and non-bold
+    - Format of cells
+    - use OpenSpecimenBBMRIconnector.py pip package instead
+    - Bring it in a JUPYTER NoteBook
+    - Extend Dokumentation, or maybe via JUPYTER NoteBook
+    -- optional: functionize it?!?
+
+'''
+
 from os_core.site import sites
 from os_core.jsons import Json_factory
 from os_core.users import users
@@ -8,23 +24,31 @@ from os_core.collection_protocoll import collection_protocol
 
 import json
 import pandas as pd
+import xlsxwriter
+from openpyxl import load_workbook
 
 
 # URL to OpenSpecimen and Logindata
 base_url = 'http://biobank-7-2.silicolab.bibbox.org/openspecimen/rest/ng'
 auth = ('admin', 'Login@123')
 
+#shhetnames:
+bb_sheet = "eu_bbmri_eric_biobanks"
+per_sheet = "eu_bbmri_eric_persons"
+cp_sheet = "eu_bbmri_eric_collections"
+
+#file_output
+output_file = "test.xlsx"
+
+# Design header for writing to xlsx
+# here we create a format object for header. 
+
+
 # Load headers of BBMRI_ERIC Directory
 template_file_name="empty_eric_duo.xlsx"
-biobank_header = pd.read_excel(template_file_name, sheet_name = "eu_bbmri_eric_biobanks")
-collection_header = pd.read_excel(template_file_name, sheet_name="eu_bbmri_eric_collections")
-person_header = pd.read_excel(template_file_name, sheet_name = "eu_bbmri_eric_persons")
-bbmri_file = pd.read_excel(sheet_name = None)
+bbmri_file = pd.read_excel(template_file_name, sheet_name = None)
 
-#Convert Headers to json-dict
-collection_header_json=json.loads(collection_header.to_json())
-biobank_header_json=json.loads(biobank_header.to_json())
-person_header_json=json.loads(person_header.to_json())
+
 
 #initialize Users,CollectionProtocols, Sites
 protocols = collection_protocol(base_url = base_url, auth = auth)
@@ -33,105 +57,156 @@ site = sites(base_url = base_url, auth = auth)
 
 #Dict what now can't be done via OpenSpecimen extension Fields in persons
 persons_extensions={
-    "id":"bbmri-eric:conntactID:GR_TEST",
     "title_before_name":None,
     "title_after_name":None,
-    "head_role":"PI",
-    "contactPriority":"1",
     "zip":"123456",
     "city":"City",
     "country":"GR",
     "collections":None
 }
 
+biobank_extensions ={
+    "partner_charter_signed":'0',
+    "head_title_before_name":None,
+    "head_role":"PI",
+    "contact_priority":"1"
+}
+
 # Mapping between OpenSpecimen keywords and bbmri keywords regarding persons
 person_map = {
-    "firstName":"first_name",
-    "lastName":"last_name",
-    "emailAdress":"email",
-    "phoneNumber":"phone",
+    "first_name":"firstName",
+    "last_name":"lastName",
+    "email":"emailAddress",
+    "phone":"phoneNumber",
     "address":"address",
-    "instituteName":"biobanks"
+    "biobanks":"instituteName"
 }
 
 # Mapping between OpenSpecimen keyqords and BBMRI keywords regarding biobanks
 biobank_map = {
-    "name":"name"
+    "name":"name",
+    "partner_charter_signed":"partner_chart",
+    "collections":"collection_protocols_already_in_biobank",
+    "biobank":"biobank_label"
 }
 
 #Mapping between Openspecimne keywords and BBMRI keywords regarding CollectionProtocols
 collection_map= {
-    "shortTitle":"acronym",
-    "title":"name",
-
+    "acronym":"shortTitle",
+    "name":"title",
+    "id":"bbmri_collection_id"
 }
 #load Openspecimen Collection Protocols
-cp = protocols.get_collection_protocol(cpid = "18")
+cps = protocols.get_all_collection_protocols()
 
-#extract User
-OS_user_id = cp['principalInvestigator']['id']
-OS_user = user.get_user(userId = OS_user_id)
+# get all CP-IDs
+collection_protocol_ids=[]
+for cp in cps:
+    collection_protocol_ids.append(cp['id'])
+collection_protocol_ids = collection_protocol_ids[1:] #One CP is empty
 
-#extractSite
-OS_site_name = cp['cpSites'][0]['siteName']
-OS_sites = site.get_all_sites()
-for i in range(len(OS_sites)):
-    if OS_sites[i]['name']==OS_site_name:
-        OS_site_id=OS_sites[i]['id']
-OS_site=site.get_site(siteid = OS_site_id)
+index_=0
+#writing all Collection protocols to the bbmri-dict
+for cp_id in collection_protocol_ids:
+    cp = protocols.get_collection_protocol(cpid = str(cp_id))
 
+    #extract User
+    OS_user_id = cp['principalInvestigator']['id']
+    OS_user = user.get_user(userId = OS_user_id)
 
-#fill the bbmri_persons_dict
-person_json=person_header_json
-for key in persons_extensions:
-    person_json[key]=persons_extensions[key]
-
-for key in OS_user:
-    if key in person_map.keys():
-        person_json[person_map[key]]=OS_user[key]
-
-
-#fill the BBBMRI Biobank dict
-biobank_json = biobank_header_json
-biobank_json['name'] = OS_site_name
-attrs = OS_site['extensionDetail']['attrs']
-for atr in attrs:
-    id_ = atr["caption"].lower()
-    id_ = id_.replace(" ", "_")
-    if isinstance(atr['value'],list):
-        for i in range(len(atr['value'])):
-            string+=atr['value'][i]+', '
-        string=string[0:-2]
-    else:
-        string=atr['value']
-    biobank_json[id_]=string
-
-person_json['id']=biobank_json['contact']
-
-attrs=cp['extensionDetail']['attrs']
-collection_json=collection_header_json
+    #extractSite
+    OS_site_name = cp['cpSites'][0]['siteName']
+    OS_sites = site.get_all_sites()
+    for i in range(len(OS_sites)):
+        if OS_sites[i]['name']==OS_site_name:
+            OS_site_id=OS_sites[i]['id']
+    OS_site=site.get_site(siteid = OS_site_id)
 
 
-##fill json-dict, with OpenSpecimen standard fields
-for key in cp:
-    if key in collection_map.keys():
-        collection_json[collection_map[key]]=cp[key]
+    #check if user exists
+    #if bbmri_file[per_sheet]['id'].values()
+    #  fill the bbmri_persons_dict
+    for key in bbmri_file[per_sheet].keys():
+        
+        # fileds which can't generated by OpenSpecimen for now
+        if key in persons_extensions.keys():
+            bbmri_file[per_sheet].at[index_, key]=persons_extensions[key]
+            
+        # standard fields in OpenSpecimen which are named differently to BBMRI
+        elif key in person_map.keys():
+            bbmri_file[per_sheet][key]=OS_user[person_map[key]]
+        
+
+    # fill the Biobank fields
+
+    attrs = OS_site['extensionDetail']['attrs']     #extract BBMRI-Extension-Details
+    # ExtensionFields are called differently in Openspecimen #TODO-for MIABIS Plugin
+    for attr in attrs:
+        key_string=attr["caption"]=attr["caption"].lower().replace(" ","_")
+        value_string = ''
+        if isinstance(attr['value'],list):
+            for i in range(len(attr['value'])):
+                value_string+=attr['value'][i]+', '
+            value_string=value_string[0:-2]
+        else:
+            value_string=attr['value'] 
+        
+        # append the OS_Biobank dict with the extensiondetails, such that there are lesser if statements
+        OS_site[key_string]=value_string
 
 
-for atr in attrs:
-    id_ = atr["caption"].lower()
-    id_ = id_.replace(" ", "_")
-    if id_== "bbmri_collection_id":    
-        id_="id"
-    '''if isinstance(atr['value'],list):
-        for i in range(len(atr['value'])):
-            string+=str(atr['value'][i])+', '
-        string=string[0:-2]
-    else:
-        string=atr['value']
-    collection_json[id_]=string'''
-    collection_json[id_]=atr['value']
+    for key in bbmri_file[bb_sheet].keys():
+        # The Persons ID is stored in the BIobank contact,
+        if key =='contact':
+            bbmri_file[per_sheet].at[index_,'id']=OS_site[key]
 
-# Write the excel file
-#bbmri_file.to_excel('test.xlsx', sheet_name='eu_bbmri_eric_collections', )
+
+        # fileds which can't generated by OpenSpecimen for now
+        if key in biobank_extensions.keys():
+            bbmri_file[bb_sheet].at[index_,key]=biobank_extensions[key]
+
+        # standard fields in OpenSpecimen which are named differently to BBMRI
+        elif key in biobank_map.keys():
+            bbmri_file[bb_sheet].at[index_,key]=OS_site[biobank_map[key]]
+
+        # fields which are named same to BBMRI
+        elif key in OS_site.keys():  
+            bbmri_file[bb_sheet].at[index_,key]=OS_site[key]
+
+    
+
+  
+    #fill the BBBMRI Biobank dict
+
+    attrs = cp['extensionDetail']['attrs']     #extract BBMRI-Extension-Details
+    # ExtensionFields are called differently in Openspecimen #TODO-for MIABIS Plugin
+    for attr in attrs:
+        key_string = attr['caption'].lower().replace(' ','_')
+        value_string = ''
+        if isinstance(attr['value'],list):
+            for i in range(len(attr['value'])):
+                value_string+=attr['value'][i]+', '
+            value_string=value_string[0:-2]
+        else:
+            value_string=attr['value']
+        
+        # append the OS_Biobank dict with the extensiondetails, such that there are lesser if statements
+        cp[key_string] = value_string
+                
+        
+    ##fill json-dict, with OpenSpecimen standard fields
+    for key in bbmri_file[cp_sheet]:
+        if key in collection_map.keys():
+            bbmri_file[cp_sheet].at[index_,key]=cp[collection_map[key]]
+        elif key in cp.keys():
+            bbmri_file[cp_sheet].at[index_,key]=cp[key]
+
+    #Next Line in pandas
+    index_+=1
+
+#Write excel-file
+with pd.ExcelWriter(output_file,engine='openpyxl') as writer:
+    for sheet_name in bbmri_file.keys():
+        df = bbmri_file[sheet_name]
+        df.to_excel(writer, sheet_name=sheet_name,index=False)
 
