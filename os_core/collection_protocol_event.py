@@ -7,6 +7,24 @@ from os_core.req_util import OS_request_gen
 
 class collection_protocol_event:
 
+    """Handles the Events of corresponding to a Colelction Protocol
+
+    This class allows you to handle the Events in Openspecimen. One can create an event,
+    but first the corresponding Colelction Protocol have to create, for example via os_core.collection_protocol.py.
+    Get all events or just get one event, delete or update an existing event.
+
+    Notes
+    -----
+    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
+    just pass the parameters via JSON-formatted string. This means the user has to know the keywords.
+
+    Example
+    -------
+
+    A code example, where also Events are handled is in the Jupyter-Notebook::
+
+        $ jupyter notebook main.ipynb
+    """
     def __init__(self, base_url, auth):
 
         """Constructor of the Class collection_protocol_event
