@@ -12,6 +12,7 @@ class collection_protocol_event:
     This class allows you to handle the Events in Openspecimen. One can create an event,
     but first the corresponding Colelction Protocol have to create, for example via os_core.collection_protocol.py.
     Get all events or just get one event, delete or update an existing event.
+    The output is a JSON dict with either details or the Openspecimen error message.
 
     Notes
     -----
@@ -25,6 +26,7 @@ class collection_protocol_event:
 
         $ jupyter notebook main.ipynb
     """
+
     def __init__(self, base_url, auth):
 
         """Constructor of the Class collection_protocol_event
@@ -77,6 +79,7 @@ class collection_protocol_event:
         json dict
             Returns a json dict with the details of the created event, or the OpenSpecimen error message. 
         """
+
         url = self.base_url
         payload = params
         r = self.OS_request_gen.post_request(url, payload)
@@ -170,11 +173,6 @@ class collection_protocol_event:
         return json.loads(r.text)
 
 
-#   Update Event with ID
-#   Input:  - eventid: Id of the Event which should get updated
-#           - params: Parameter of the Event which should get updated
-#   Output: - either details of the updated event as jsoon-formatted string
-#           - or error message
     def update_event(self, eventid, params):
 
         """Update an existing event with ID eventid and the parameters params.
@@ -197,6 +195,7 @@ class collection_protocol_event:
         json-dict
             Details of the event  as JSON-dict which was updated, or an error message, which is generated from OpenSpecimen.
         """
+        
         endpoint = '/' + str(eventid)
         url = self.base_url + endpoint
         payload = params
