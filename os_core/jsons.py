@@ -361,5 +361,14 @@ class Json_factory():
 
         return json.dumps(data)
 
+    def merge_cps(self, src_cp, trg_cp):
+        
+        data = {
+            "srcCpShortTitle": src_cp,
+            "tgtCpShortTitle": trg_cp
+        }
+
+        return json.dumps(data)
+
 
 
