@@ -370,5 +370,14 @@ class Json_factory():
 
         return json.dumps(data)
 
+    def create_institute(self, institutename):
+
+        data = {
+            "name": institutename
+        }
+
+        return json.dumps(data)
+
+
 
 
