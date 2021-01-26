@@ -61,4 +61,28 @@ class url_gen:
         url_string = url_string[0:-1]
 
         return url_string
+
+    def query_url_gen(self, cpid = None, searchstring = None, start = None, max_ = None, countreq = None):
+
+        url_string = '?'
+
+        if cpid != None:
+            url_string += _write_instance(entity = 'cpId', value = cpid)
+        
+        if searchString != None:
+            url_string += _write_instance(entity = 'searchString', value = searchstring)
+
+        if start != None:
+            url_string += _write_instance(entity = 'start', value = start)
+
+        if max_ != None:
+            url_string += _write_instance(entity = 'max', value = max_)
+
+        if countreq != None:
+            url_string += _write_instance(entity = 'countReq', value = countreq)
+
+        url_string = url_string[0:-1]
+        
+        return url_string
+
     
