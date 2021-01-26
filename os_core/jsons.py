@@ -378,6 +378,21 @@ class Json_factory():
 
         return json.dumps(data)
 
+    def get_participants(self, lastname = None, uid = None, birthdate = None, pmi = None, empi = None, reqreginfo = None):
+
+        data ={
+            "lastName" : lastname,
+            "pmi":{
+                "mrn" : str(pmi[0]),
+                "siteName" : pmi[1]
+            },
+            "birthDate" : birthdate,
+            "uid" : uid,
+            "empi" : empi,
+            "reqRegInfo" : reqreginfo
+        }
+        
+        return json.dumps(data)
 
 
 
