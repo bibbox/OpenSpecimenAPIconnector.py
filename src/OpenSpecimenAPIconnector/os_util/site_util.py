@@ -1,9 +1,9 @@
 #! /bin/python3
 
-from os_core.site import sites
-from os_core.req_util import OS_request_gen
-from os_core.jsons import Json_factory
-from os_core.url import url_gen
+from ..os_core.site import sites
+from ..os_core.req_util import OS_request_gen
+from ..os_core.jsons import Json_factory
+from ..os_core.url import url_gen
 
 import pandas as pd
 import json

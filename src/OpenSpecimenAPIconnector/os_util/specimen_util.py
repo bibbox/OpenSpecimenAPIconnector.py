@@ -3,7 +3,7 @@
 import pandas
 import json
 
-from os_core.specimen import specimen
+from ..os_core.specimen import specimen
 
 class specimen_util:
 

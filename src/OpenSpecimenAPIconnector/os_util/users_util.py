@@ -1,7 +1,5 @@
 #Create User
 
-##TODO finish this
-
 payload = "{\"dnd\":"+dnd+",\"domainName\":\""+domainname+"\",\"instituteName\":\""+institutename+"\",\"type\":\""+type +\
             "\",\"firstName\":\""+firstname+"\",\"lastName\":\""+lastname+"\",\"emailAddress\":\""+emailaddress +\
             "\",\"phoneNumber\":\""+phonenumber+"\",\"loginName\":\"" + \

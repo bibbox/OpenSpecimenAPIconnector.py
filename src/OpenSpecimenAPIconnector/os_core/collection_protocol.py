@@ -3,6 +3,7 @@
 
 import json
 from .req_util import OS_request_gen
+from .jsons import Json_factory
 
 
 class collection_protocol():

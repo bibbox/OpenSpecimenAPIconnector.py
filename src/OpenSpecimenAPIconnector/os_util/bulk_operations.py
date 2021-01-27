@@ -1,7 +1,7 @@
 #! /bin/python3
 
-from .csv_bulk import csv_bulk
-from os_core.req_util import OS_request_gen
+from ..os_core.csv_bulk import csv_bulk
+from ..os_core.req_util import OS_request_gen
 import io
 import pandas
 import time

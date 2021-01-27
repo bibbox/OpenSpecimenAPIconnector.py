@@ -9,9 +9,10 @@ setup(
     author_email='simon.streit@medunigraz-at',
     license='BSD 2-clause',
     install_requires=['pandas',
-                      'numpy'               
-                      ],
-
+                      'numpy',               
+                      'requests',
+		      'faker',
+		      'names'],
     classifiers=[
         'Development Status :: 3 -Alpha',
         'Intended Audience :: Developers',

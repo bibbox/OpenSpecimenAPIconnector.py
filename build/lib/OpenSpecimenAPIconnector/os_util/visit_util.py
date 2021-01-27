@@ -1,8 +1,8 @@
 #! /bin/python3
 
-from os_core.visit import visit
-from os_core.req_util import OS_request_gen
-from os_core.jsons import Json_factory
+from ..os_core.visit import visit
+from ..os_core.req_util import OS_request_gen
+from ..os_core.jsons import Json_factory
 import json
 import io
 import pandas

@@ -5,9 +5,9 @@ import json
 import tempfile
 import time
 
-from os_core.csv_export import CSV_exporter
-from os_core.jsons import Json_factory
-from os_core.req_util import OS_request_gen
+from ..os_core.csv_export import CSV_exporter
+from ..os_core.jsons import Json_factory
+from ..os_core.req_util import OS_request_gen
 
 class Export_OP():
 

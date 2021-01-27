@@ -9,9 +9,9 @@ src/OpenSpecimenAPIconnector.egg-info/dependency_links.txt
 src/OpenSpecimenAPIconnector.egg-info/requires.txt
 src/OpenSpecimenAPIconnector.egg-info/top_level.txt
 src/OpenSpecimenAPIconnector/os_core/__init__.py
+src/OpenSpecimenAPIconnector/os_core/collection_protocol.py
 src/OpenSpecimenAPIconnector/os_core/collection_protocol_event.py
 src/OpenSpecimenAPIconnector/os_core/collection_protocol_registration.py
-src/OpenSpecimenAPIconnector/os_core/collection_protocoll.py
 src/OpenSpecimenAPIconnector/os_core/csv_bulk.py
 src/OpenSpecimenAPIconnector/os_core/csv_export.py
 src/OpenSpecimenAPIconnector/os_core/institute.py
@@ -33,6 +33,7 @@ src/OpenSpecimenAPIconnector/os_util/cpevent_util.py
 src/OpenSpecimenAPIconnector/os_util/cpr_util.py
 src/OpenSpecimenAPIconnector/os_util/csv_exp_util.py
 src/OpenSpecimenAPIconnector/os_util/export_operations.py
+src/OpenSpecimenAPIconnector/os_util/institute_util.py
 src/OpenSpecimenAPIconnector/os_util/query_util.py
 src/OpenSpecimenAPIconnector/os_util/site_util.py
 src/OpenSpecimenAPIconnector/os_util/specimen_util.py

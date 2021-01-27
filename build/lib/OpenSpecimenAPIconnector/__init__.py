@@ -1,2 +1,2 @@
-from . import os_core
-from . import os_util
+from .os_core import *
+from .os_util import *

@@ -1,5 +1,5 @@
 from .collection_protocol_event import collection_protocol_event
-from .collection_protocoll import collection_protocol
+from .collection_protocol import collection_protocol
 from .collection_protocol_registration import collection_protocol_registration
 from .csv_bulk import csv_bulk
 from .csv_export import CSV_exporter
