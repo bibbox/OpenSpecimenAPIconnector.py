@@ -350,4 +350,3 @@ class collection_protocol_registration:
         payload = params
         r = self.OS_request_gen.put_request(url, payload)
         return json.loads(r.text)
-

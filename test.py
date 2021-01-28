@@ -10,7 +10,7 @@ from os_core.csv_bulk import csv_bulk
 from os_core.visit import visit
 from os_core.participant import participant
 from os_core.collection_protocoll import collection_protocol
-from os_core.collecttion_protocol_registration import collection_protocol_registration
+from os_core.collection_protocol_registration import collection_protocol_registration
 from os_core.collection_protocol_event import collection_protocol_event
 from os_core.query import query
 
@@ -19,6 +19,7 @@ from os_util.bulk_operations import bulk_operations
 from os_util.query_util import query_util
 from os_util.cpr_util import cpr_util
 from os_util.site_util import site_util
+from OpenSpecimenBBMRImapping import execute_mapping
 import json
 import pandas
 
@@ -230,7 +231,12 @@ auth = ('admin', 'Login@123')
 #cp = cpr.get_registrations(cpid=4, maxresults=1)
 #print(cp)
 
-sites = site_util(base_url = base_url, auth = auth)
+#sites = site_util(base_url = base_url, auth = auth)
 
-bbsites =  sites.search_sites(sitename='Bio',institutename="Biobank Institute",)
-print(bbsites)
+#bbsites =  sites.search_sites(sitename='Bio',institutename="Biobank Institute",)
+#print(bbsites)
+
+test = execute_mapping()
+
+
+test1 = test.run()

@@ -5,7 +5,7 @@ import requests
 
 class OS_request_gen():
     
-     """Generates OpenSpecimen specific requests
+    """Generates OpenSpecimen specific requests
      
     This class generates OpenSpecimen specific requests such that headers and authentification are created automatically.
     With this class the users has to specify which requests do they need, the url and the payload, which should be sended

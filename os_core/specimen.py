@@ -119,11 +119,11 @@ class specimen:
         return r
 
 
-    def create_specimen_api(self, params):
+    def create_specimen(self, params):
 
-        """Creates a Specimen/Aliquot/Derivative
+        """Creates a Specimen
         
-        Creates a Specimen/Aliquot/Derivative. In order to use this function one has to know
+        Creates a Specimen. In order to use this function one has to know
         the parameters which OpenSpecimen needs to create a Specimen. One can use it via the os_util class
         specimen_util.py. This allows just the basic definition, if one has Extensions 
         e.g. BBMRI contact, this fields has to be added separatly. 
@@ -133,7 +133,7 @@ class specimen:
         params : string
             JSON formatted string with parameters: label[mandatory if its created manually, leave empty if the System creates it
             automatically], specimenclass, type, pathology, atomicSite, laterality, initialQty, availableQty, lineage,
-            visitId, parentId[mandatory if Aliquot/Derivative], status, storageLocation(dict with keys positionX[optional], 
+            visitId,  status, storageLocation(dict with keys positionX[optional], 
             positionY[optional])[optional], concetration[optional], biohazards[optional], comments[optional],
             collectionEvent(DICT with keys user,time, container[otpional], procedure[optional]),
             receivedEvent(DICT with keys user, time, receivedQuality), extensionDetails(DICT with keys useUdn, attrsmap,
@@ -142,7 +142,7 @@ class specimen:
         Returns
         -------
         json-dict
-            Either details of the created Specimen/aliquot/Derivative as dictornary or OpenSpecimen's error message
+            Either details of the created Specimen as dictornary or OpenSpecimen's error message
         """
         
         url = self.base_url 
@@ -152,7 +152,7 @@ class specimen:
         return json.loads(r.text)
 
     
-    def search_specimens(self, search_params):
+    def search_specimens(self, search_string):
         
         """Search for  Specimen with specific values.
         
@@ -172,12 +172,11 @@ class specimen:
             Details of the matching Specimens, if no one matches it is an empty list.
         """
         
-        enpoint = str(searchparams)
+        endpoint = str(search_string)
         url = self.base_url + endpoint
         r = self.OS_request_gen.get_request(url)
 
         return json.loads(r.text)
-
 
     def update_specimen(self, specimenid, updateparams):
         
@@ -222,7 +221,7 @@ class specimen:
         return json.loads(r.text)
 
 
-    def delete_specimen(self, specimenid):
+    def delete_specimen(self, specimenids):
         
         """Delete a Specimen/Derivative/Aliquot
         
@@ -235,9 +234,9 @@ class specimen:
         
         Parameters
         ----------
-        specimenid: string or int or 
-            The unique ID(s) of the Specimen/Aliquot/Derivative which OpenSpecimen creates itselfs as a string or integer. 
-            It will get converted to a string. Deleting more specimens has the form "specimenid_1+...+specimenid_n"
+        specimenids: string 
+            The unique ID(s) of the Specimen/Aliquot/Derivative which OpenSpecimen creates itselfs. 
+            Deleting specimens has the form "?id=specimenid_1+...+specimenid_n"
             
         Returns
         -------
@@ -245,15 +244,9 @@ class specimen:
             Details of the Specimens which is deleted or the OpenSpecimen error message as dict.
         """
 
-        endpoint = '?id='
-        if isinstance(specimenid, list):
-            for spec_id in specimenid:
-                endpoint += str(spec_id) + ','
-            endpoint = endpoint[0:-1]
-        else:
-            endpoint += str(specimenid)
-
-        url = self.base_url + endpoint
+        url = self.base_url + specimenids
         r = self.OS_request_gen.delete_request(url)
+
         return json.loads(r.text)
 
+##TODO create aliquot

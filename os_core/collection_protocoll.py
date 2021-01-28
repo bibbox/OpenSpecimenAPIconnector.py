@@ -3,6 +3,7 @@
 
 import json
 from os_core.req_util import OS_request_gen
+from os_core.jsons import Json_factory
 
 
 class collection_protocol():
@@ -226,11 +227,6 @@ class collection_protocol():
         return json.loads(r.text)
 
 
-#   Update colelction Protocol
-#   Input:  - cpid: ID of the Colelction Protocol which should get updated
-#           - params: Paramters which should get updated
-#   Output: - eiher details of the CP as json formatted  string
-#           - or error message
     def update_collection_protocol(self, cpid, params):
 
         """Updates a existing Collection Protocol with ID ::cpid:: with the Parameters ::params::

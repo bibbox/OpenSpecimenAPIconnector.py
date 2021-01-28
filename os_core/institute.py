@@ -157,11 +157,7 @@ class institutes():
         return json.loads(r.text)
 
 
-#   Get Institute
-#   Input:  - inid: Insitute ID
-#   Output: - either json-formatted string with the details
-#           - or error message
-    def get_collection_protocol(self, inid):
+    def get_institute(self, inid):
 
         """Get the institute with the ID ::inid::
 
