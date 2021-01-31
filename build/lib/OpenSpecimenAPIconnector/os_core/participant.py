@@ -92,6 +92,10 @@ class participant:
 
         Get one or more Participants which matches the criteria passed with params. This class can be used via
         the os_util class cpr_util.py.
+        
+        Note
+        ----
+        In the response, the matching attributes are listed.
 
         Parameters
         ----------

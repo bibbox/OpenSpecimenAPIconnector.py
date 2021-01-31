@@ -1,3 +1,4 @@
+# module util imports
 from .bulk_operations import bulk_operations
 #from .collection_protocol_util import collection_protocol_util NOT DONE
 from .cpevent_util import cpevent_util
@@ -9,6 +10,9 @@ from .site_util import site_util
 from .specimen_util import specimen_util
 #from .users_util import users_util NOT DONE
 from .visit_util import visit_util
+
+# module imports from core outside
+from ..mg_util OpenSpecimenBBMRImapping
 
 
 

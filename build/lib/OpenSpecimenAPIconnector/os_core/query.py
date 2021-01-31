@@ -153,8 +153,7 @@ class query:
 
         params : string
             JSON-formatted string with parameters: drivingForm, wideRowmode,
-            startAt, maxResults
-            
+            startAt, maxResults  
 
         Returns
         -------

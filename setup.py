@@ -12,7 +12,9 @@ setup(
                       'numpy',               
                       'requests',
 		      'faker',
-		      'names'],
+		      'names',
+		      'xlsxwriter',
+		      'openpyxl'],
     classifiers=[
         'Development Status :: 3 -Alpha',
         'Intended Audience :: Developers',

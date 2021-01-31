@@ -1,5 +1,4 @@
 #! /bin/python3
-# imports to be cleaned later
 
 import json
 from .req_util import OS_request_gen
