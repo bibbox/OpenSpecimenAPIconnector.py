@@ -15,7 +15,7 @@ class bbmri_mapping:
             "country":"GR",
             "collections":None
         }
-        print(type(data))
+
         return data
 
 
@@ -29,7 +29,7 @@ class bbmri_mapping:
             "address":"address",
             "biobanks":"instituteName"
         }
-        print(type(data))
+
         return data
 
 
@@ -41,7 +41,7 @@ class bbmri_mapping:
             "head_role":"PI",
             "contact_priority":"1"
         }
-        print(type(data))
+
         return data
 
 
@@ -53,7 +53,7 @@ class bbmri_mapping:
             "collections":"collection_protocols_already_in_biobank",
             "biobank":"biobank_label"
         }
-        print(type(data))
+
         return data
 
     def collection_map(self):
@@ -63,5 +63,5 @@ class bbmri_mapping:
             "name":"title",
             "id":"bbmri_collection_id"
         }
-        print(type(data))
+
         return data
