@@ -244,7 +244,7 @@ class collection_protocol():
 
         Parameter
         ---------
-        cpid : strinf or int
+        cpid : string or int
             Unique Collection Protocol ID which is generated automatically from the System. It will be converted to a string.
         
         params : string
