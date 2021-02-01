@@ -31,9 +31,9 @@ class specimen_util:
 
         return r
 
-    def create_specimen(self, label, specimenclass, specimentype , pathology , anatomic, laterality, initqty, avaqty, visitid, recqlt,
-                        colltime = None, rectime = None, lineage = 'New', status = 'Collected', stor_name = None, storlocx = None,
-                        storlocy = None, concetration = None, biohazard = None, userid = None, comments = None,  collproc=None, 
+    def create_specimen(self, label, specimenclass, specimentype, pathology, anatomic, laterality, initqty, avaqty, visitid, recqlt,
+                        colltime=None, rectime=None, lineage='New', status='Collected', stor_name=None, storlocx=None,
+                        storlocy=None, concentration=None, biohazard=None, userid = None, comments = None, collproc=None,
                         conttype=None, extensionudn="false", extensionmap=None, extensiondict =None):
         
         if userid != None:
@@ -53,21 +53,21 @@ class specimen_util:
 
         extension = self.jsons.create_extension(attrsmap = extensionmap, extensiondict = extensiondict, useudn = extensionudn)
 
-        params = self.jsons.create_specimen_json(label = label, specimenclass = specimenclass, specimentype = specimentype, pathology =pathology,
-                anatomic= anatomic, laterality = laterality, initqty = initqty, avaqty = avaqty, visitid = visitid, colltime = colltime,
-                userid = userid, comments = comments, collproc = collproc, conttype = conttype, recqlt = recqlt, rectime = rectime,
-                lineage = lineage, status = status, storloc = storloc, concentration = concetration, biohazard = biohazard,
-                comments = comments, collproc = collproc, conttype = conttype, extension = extension)
+        params = self.jsons.create_specimen_json(label=label, specimenclass=specimenclass, specimentype=specimentype, pathology=pathology,
+                anatomic=anatomic, laterality=laterality, initqty=initqty, avaqty=avaqty, visitid=visitid, colltime=colltime,
+                userid=userid, comments=comments, collproc=collproc, conttype=conttype, recqlt=recqlt, rectime=rectime,
+                lineage=lineage, status=status, storloc=storloc, concentration=concentration, biohazard=biohazard,
+                extension=extension)
         
         r = self.specimen.create_specimen(params = params)
 
         return r
 
 
-        def update_specimen(self, specimenid, label = None, specimenclass = None, specimentype = None, pathology = None, anatomic = None, laterality = None,
-                            initqty = None, avaqty = None, visitid = None, recqlt = None, colltime = None, rectime = None, lineage = 'New',
-                            status = 'Collected', stor_name = None, storlocx = None, storlocy = None, concetration = None, biohazard = None,
-                            userid = None, comments = None,  collproc=None, conttype=None, extensionudn="false", extensionmap=None, extensiondict =None):
+    def update_specimen(self, specimenid, label = None, specimenclass = None, specimentype = None, pathology = None, anatomic = None, laterality = None,
+                        initqty = None, avaqty = None, visitid = None, recqlt = None, colltime = None, rectime = None, lineage = 'New',
+                        status = 'Collected', stor_name = None, storlocx = None, storlocy = None, concentration = None, biohazard = None,
+                        userid = None, comments = None,  collproc=None, conttype=None, extensionudn="false", extensionmap=None, extensiondict =None):
 
         if userid != None:
             users = users.get_all_users()
@@ -83,12 +83,14 @@ class specimen_util:
         params = self.jsons.create_specimen_json(label = label, specimenclass = specimenclass, specimentype = specimentype, pathology =pathology,
                 anatomic= anatomic, laterality = laterality, initqty = initqty, avaqty = avaqty, visitid = visitid, colltime = colltime,
                 userid = userid, comments = comments, collproc = collproc, conttype = conttype, recqlt = recqlt, rectime = rectime,
-                lineage = lineage, status = status, storloc = storloc, concentration = concetration, biohazard = biohazard,
-                comments = comments, collproc = collproc, conttype = conttype, extension = extension)
-        
+                lineage = lineage, status = status, storloc = storloc, concentration = concentration, biohazard = biohazard,
+                extension = extension)
+
         r = self.specimen.update_specimen(specimenid = specimenid,params = params)
 
         return r
 
-        def delete_specimens(self, specimenids):
+    def delete_specimens(self, specimenids):
+
+        pass
 

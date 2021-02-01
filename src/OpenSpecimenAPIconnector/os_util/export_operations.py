@@ -28,13 +28,19 @@ class Export_OP():
         # temporary solution until template file handling is clear
 
         if entity == "institute":
-            pass
+            data = self.Json_fac.create_institue_export_job_json()
         elif entity == "user":
-            pass
+            data = self.Json_fac.create_user_export_job()
         elif entity == "site":
             data = self.Json_fac.create_site_export_job_json(record_ids=param)
+        elif entity == "cp":
+            data = self.Json_fac.create_cp_export_job_json(cp_id=param)
         elif entity == "cpr":
             data = self.Json_fac.create_cpr_export_job_json(cp_id=param)
+        elif entity == "visit":
+            data = self.Json_fac.create_visit_export_job_json(cp_id=param)
+        elif entity == "specimen":
+            data = self.Json_fac.create_specimen_export_job_json(cp_id=param)
 
         job_id = self.exporter.create_export_job(data)
         export_file = self.exporter.get_job_output(job_id)

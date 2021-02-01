@@ -35,8 +35,6 @@ class visit_util:
         
         vis = json.loads(vis)
         speci= json.loads(speci)
-        
-        params={}
         params={"visit":vis,
             "specimens":[speci]}
         

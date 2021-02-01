@@ -12,7 +12,7 @@ from .specimen_util import specimen_util
 from .visit_util import visit_util
 
 # module imports from core outside
-from ..mg_util OpenSpecimenBBMRImapping
+from ..mg_util.OpenSpecimenBBMRImapping import ExecuteMapping
 
 
 

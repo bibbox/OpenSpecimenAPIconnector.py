@@ -158,14 +158,26 @@ class Json_factory():
 
     # Collection Protocol event
 
-    def create_cp_event_json(self):
-        pass
+    def create_cp_event_json(self, label, point, cp, site, diagnosis, status, activity, unit, code=None):
 
-    def create_specimen_json(self, label = None, specimenclass = None, specimentype = None , pathology = None, anatomic = None,
-                            laterality = None, initqty = None, avaqty = None, visitid = None, userid = None, colltime = None,
-                            rectime = None, recqlt = None, lineage = 'New', status = 'Collected', storloc = None, concetration = None, 
-                            biohazard = None, comments = None,  collproc=None, conttype=None, extension =None):
-        
+        params = {
+            "eventLabel": label,
+            "clinicalDiagnosis": diagnosis,
+            "clinicalStatus": status,
+            "collectionProtocol": cp,
+            "defaultSite": site,
+            "activityStatus": activity,
+            "eventPoint": point,
+            "eventPointUnit": unit
+        }
+
+        return json.dumps(params)
+
+
+    def create_specimen_json(self, label=None, specimenclass=None, specimentype=None, pathology=None, anatomic=None,
+                            laterality=None, initqty=None, avaqty=None, visitid=None, userid=None, colltime=None,
+                            rectime=None, recqlt=None, lineage='New', status='Collected', storloc=None, concentration=None,
+                            biohazard=None, comments=None,  collproc=None, conttype=None, extension =None):
 
         spec = {
             "label": label,
@@ -207,34 +219,66 @@ class Json_factory():
         }
 
         return json.dumps(data)
-    
-    
 
-    # Export Sites
+    # Export Institute CSV
+    def create_institue_export_job_json(self):
 
+        institute_json = {"objectType": "institute"}
+
+        return json.dumps(institute_json)
+
+    # Export Sites CSV
     def create_site_export_job_json(self, record_ids=None):
 
-        site_json = {"objectType": "site", "recordIds": record_ids}
+        site_json = {"objectType": "site"}
 
         return json.dumps(site_json)
 
+    # Export User CSV
+    def create_user_export_job(self):
+
+        user_json = {"objectType": "user"}
+
+        return json.dumps(user_json)
+
+    # Export CP Registaration CSV
+    def create_cp_export_job_json(self, cp_id=None):
+
+        cp_json = {"objectType": "cp", "params": {"cpId": cp_id}}
+
+        return json.dumps(cp_json)
+
+    # Export CP Registaration CSV
     def create_cpr_export_job_json(self, cp_id=None):
 
-        part_json = {"objectType": "cpr", "params": {"cpId": cp_id}}
+        cpr_json = {"objectType": "cpr", "params": {"cpId": cp_id}}
 
-        return json.dumps(part_json)
+        return json.dumps(cpr_json)
+
+    # Export Vist CSV
+    def create_visit_export_job_json(self, cp_id=None):
+
+        visit_json = {"objectType": "specimen", "params": {"cpId": cp_id}}
+
+        return json.dumps(visit_json)
+
+    # Export Specimen CSV
+    def create_specimen_export_job_json(self, cp_id=None):
+
+        specimen_json = {"objectType": "specimen", "params": {"cpId": cp_id}}
+
+        return json.dumps(specimen_json)
 
     ##TODO
 
     # Import collection protocols
-    
     def create_site_import_job_json(self, record_ids=None):
 
         site_json = {"objectType": "site", "recordIds": record_ids}
 
         return json.dumps(site_json)
     
-#   Create  Any AQL Query
+    # Create  Any AQL Query
     def create_aql(self, cpid, aql, rowmode='OFF', coloumexpr='true', isodate='true'):
 
         params = {
@@ -247,7 +291,7 @@ class Json_factory():
 
         return json.dumps(params)
 
-# Execute Saved Query
+    # Execute Saved Query
     def execute_query(self, start, results, drivingform="Participant", rowmode="OFF"):
 
         params= {
@@ -285,21 +329,6 @@ class Json_factory():
             "includeStats": includestats,
             "startAt": startat,
             "maxResults": maxresults
-        }
-
-        return json.dumps(params)
-
-    def create_cp_event_json(self, label, point, cp, site, diagnosis, status, activity, unit, code=None):
-
-        params = {
-            "eventLabel": label,
-            "clinicalDiagnosis": diagnosis,
-            "clinicalStatus": status,
-            "collectionProtocol": cp,
-            "defaultSite": site,
-            "activityStatus": activity,
-            "eventPoint": point,
-            "eventPointUnit": unit
         }
 
         return json.dumps(params)

@@ -1,5 +1,5 @@
 # mg_util direct imports
-from .OpenSpecimenBBMRImapping import execute_mapping 
+from .OpenSpecimenBBMRImapping import ExecuteMapping
 
 # os_util imports
 from ..os_util.bulk_operations import bulk_operations

@@ -1,11 +1,13 @@
 import pandas as pd
 import zipfile
 import json
+import time
 import io
 import requests
 import json
 import tempfile
 import os
+from json.decoder import JSONDecodeError
 
 from datetime import datetime
 
@@ -25,6 +27,9 @@ class CSV_exporter():
         job_url = self.base_url + job_endpoint
         r = self.OS_request_gen.post_request(job_url, data)
         req_json = json.loads(r.text)
+        if req_json["status"] == "IN_PROGRESS":
+            print("Waiting for job to finish")
+            time.sleep(35)
         job_id = req_json["id"]
         
         return job_id
@@ -43,7 +48,6 @@ class CSV_exporter():
         os.remove("testfile")
 
         return job_data
-
 
 
 

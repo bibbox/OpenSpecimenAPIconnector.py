@@ -1,8 +1,5 @@
 #! /bin/python3
-
 #### This is online for testing reasons only
-
-
 from ..os_core.users import users
 from ..os_core.specimen import specimen
 from ..os_core.mandatory import mark_mandatory
@@ -24,7 +21,6 @@ import json
 import pandas
 import random
 import numpy as np
-
 
 class aggregator():
 
