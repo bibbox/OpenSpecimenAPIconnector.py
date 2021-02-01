@@ -18,6 +18,9 @@ from datetime import date
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
+
+
+
 class Json_factory():
 
     def __init__(self):
@@ -158,62 +161,54 @@ class Json_factory():
     def create_cp_event_json(self):
         pass
 
-    def create_spec_json(self, lineage, visit_id, av_qty, user, visitDate, init_qty, spec_class, spec_type, anat_site, label, 
-                         stor_loc=None, status="Collected", cont=None, proced=None, qual="Acceptable", concent=None,  
-                         path=None, laterality=None):
-        '''
-        :param lineage:
-        :param visit_id:
-        :param av_qty:
-        :param user:
-        :param visitDate:
-        :param init_qty:
-        :param spec_class:
-        :param spec_type:
-        :param anat_site:
-        :param stor_loc:
-        :param status:
-        :param cont:
-        :param proced:
-        :param qual:
-        :param concent:
-        :param path:
-        :param laterality:
-        :return:
-        '''
+    def create_specimen_json(self, label = None, specimenclass = None, specimentype = None , pathology = None, anatomic = None,
+                            laterality = None, initqty = None, avaqty = None, visitid = None, userid = None, colltime = None,
+                            rectime = None, recqlt = None, lineage = 'New', status = 'Collected', storloc = None, concetration = None, 
+                            biohazard = None, comments = None,  collproc=None, conttype=None, extension =None):
+        
 
         spec = {
-            "lineage": lineage,
-            "visitId": visit_id,
-            "status": status,
-            "availableQty": av_qty,
-            "storageLocation": stor_loc,
-            "collectionEvent":
-                {
-                    "user": user,
-                    "time": visitDate,
-                    "container": cont,
-                    "procedure": proced,
-                },
-            "receivedEvent":
-                {
-                    "user": user,
-                    "time": visitDate,
-                    "receivedQuality": qual
-                },
-            "initialQty": init_qty,
-            "concentration": concent,
             "label": label,
-            "specimenClass": spec_class,
-            "type": spec_type,
-            "pathology": path,
-            "anatomicSite": anat_site,
-            "laterality": laterality
+            "specimenClass": specimenclass,
+            "type": specimentype,
+            "pathology": pathology,
+            "anatomicSite": anatomic,
+            "laterality": laterality,
+            "initialQty": initqty,
+            "availableQty": avaqty,
+            "visitId": visitid,
+            "status": status,
+            "storageLocation": {storloc},
+            "concetration": concentration,
+            "biohazard": biohazard,
+            "comments": comments,
+            "collevent": {
+                "user": {"id": user},
+                    "time": colltime,
+                    "container": conttype,
+                    "procedure": procedure
+                     },
+            "receivedEvent":{
+                "user":{"id": userid},
+                "time": rectime,
+                "receivedQuality": recqlt
+            },
+            "extensionDetail": {extension}
             }
 
         return json.dumps(spec)
 
-    # Export Jsons
+    def create_extension(self, attrsmap, extensiondict, useudn="false"):
+
+        data = {
+            "useUdn": useudn,
+            "attryMap": attrsmap,
+            "value": extensiondict
+        }
+
+        return json.dumps(data)
+    
+    
 
     # Export Sites
 
@@ -393,6 +388,8 @@ class Json_factory():
         }
         
         return json.dumps(data)
+
+    
 
 
 
