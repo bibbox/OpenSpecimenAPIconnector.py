@@ -209,13 +209,14 @@ class site_util:
 
         return r
     
-    def create_cp(self, cpid, short_title=None, title=None, pi_mail=None, time_start=None, time_end=None, sites, man_id=False, coords=None,
+    def update_cp(self, cpid, short_title=None, title=None, pi_mail=None, time_start=None, time_end=None, sites, man_id=False, coords=None,
                            consentsWaived=False,eth_cons_id=None, part_no=None, desc_url=None, visitNameFmt=None,
                            man_visit_name=False, man_spec_label=True, aliquots_in_same=None, activity="Active"):
 
-        """Create a Colelction protocol with the given Parameters.
+        """update a Colelction protocol with the given Parameters.
         
-        Create a colelction protocol with the Parameters passed to the function.
+        Update a colelction protocol with the Parameters passed to the function. The Colelction protocol ID 
+        cpid is mandatory.
 
         Notes
         -----
@@ -225,7 +226,7 @@ class site_util:
         ----------
         cpid : int or string
             ID of the Colelction Protocol which should get updated.
-            
+
         short_title : string
             Short title of the Collection Protocol.
 
