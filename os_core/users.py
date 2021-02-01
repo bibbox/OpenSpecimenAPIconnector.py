@@ -231,7 +231,7 @@ class users:
         """
 
         endpoint = '/rbac/subjects/'+str(userid)+'/roles'
-        url = self.base_url+endpoint
+        url = self.base_url + endpoint
         payload = params
         r = self.OS_request_gen.post_request(url=url, data=payload)
 

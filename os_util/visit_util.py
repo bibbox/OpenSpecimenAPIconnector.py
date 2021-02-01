@@ -3,6 +3,7 @@
 from os_core.visit import visit
 from os_core.req_util import OS_request_gen
 from os_core.jsons import Json_factory
+from os_core.url import url_gen
 import json
 import io
 import pandas
@@ -15,6 +16,7 @@ class visit_util:
 
         self.visit = visit(base_url=base_url, auth=auth)
         self.jsons = Json_factory()
+        self.url = url_gen()
 
     #Add visit and specimen
     def add_visit_speci(self, cprid, name, lineage, visit_id, av_qty, user, init_qty, spec_class, spec_type, anat_site,
@@ -45,3 +47,20 @@ class visit_util:
         r = self.visit.add_visit_specimen(params)
 
         return r
+
+    def search_visit_namespr(self, visitname=None, sprnumber=None):
+
+        searchstring = self.url.search_visit_name_spr(visitname = visitname, sprnumber = sprnumber)
+
+        r = self.visit.get_visit_namespr(search_string =searchstring)
+
+        return r
+    
+    def search_visit_cprid(self, cprid, includestats = "false"):
+
+        searchstring = self.url.search_visit_cprid(cprid = cprid, includestats = includestats)
+        r = self.visit.get_visits_cpr(search_string = searchstring)
+
+        return r
+        
+

@@ -322,4 +322,29 @@ class url_gen:
 
         return url_string
 
+
+    def search_visit_name_spr(self, visitname=None, sprnumber=None):
+
+        url_string = '?'
+
+        if visitname!=None:
+            url_string += 'visitName=' + str(visitname)
+
+        elif sprnumber!=None:
+            url_string += 'sprNumber=' + str(sprnumber)
+        
+        return url_string
+
+    def search_visit_cprid(self, cprid , includestats="false"):
+
+        url_string = '?'
+        url_string += _write_instance(entity = 'cprId', value = cprid)
+
+        if includestats== 'true':
+            url_string += _write_instance(entity = 'includeStats', value = includestats)
+        
+        return url_string
+
+
+        
     
