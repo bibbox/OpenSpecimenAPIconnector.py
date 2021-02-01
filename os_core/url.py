@@ -325,6 +325,25 @@ class url_gen:
 
     def search_visit_name_spr(self, visitname=None, sprnumber=None):
 
+    """Generates the URL endpoint for searching a visit
+
+        Generates the string of the URL endpoint for dsearching one or more visits by
+        the name or surgical pathology number.It looks like '?name=visitname&sprNumber=sprnumber'
+
+        Parameters
+        ----------
+        visitname : string
+            The Visit Name which one wants to get.
+
+        sprnumber : string or int
+            The Surgical pathology number as int or string, get converted to a string
+
+        Returns
+        -------
+        string
+            The url endpoint as string.
+        """
+
         url_string = '?'
 
         if visitname!=None:
@@ -336,6 +355,25 @@ class url_gen:
         return url_string
 
     def search_visit_cprid(self, cprid , includestats="false"):
+
+        """Generates the URL endpoint for searching a visit
+
+        Generates the string of the URL endpoint for searching a visits by the
+        Collection Protocol REgistration ID.It looks like '?cprId=cprid&includeStats=true/false'
+
+        Parameters
+        ----------
+        cprid : string or int
+            The Visit Id which one wants to get. Gets converted to a string.
+
+        includestats : string
+            OpenSpecimens boolean type true/false. Default is false and thus optional. 
+
+        Returns
+        -------
+        string
+            The url endpoint as string.
+        """
 
         url_string = '?'
         url_string += _write_instance(entity = 'cprId', value = cprid)
