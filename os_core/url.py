@@ -327,7 +327,7 @@ class url_gen:
 
     """Generates the URL endpoint for searching a visit
 
-        Generates the string of the URL endpoint for dsearching one or more visits by
+        Generates the string of the URL endpoint for searching one or more visits by
         the name or surgical pathology number.It looks like '?name=visitname&sprNumber=sprnumber'
 
         Parameters
