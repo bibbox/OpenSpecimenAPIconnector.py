@@ -289,7 +289,8 @@ class Json_factory():
 
         return json.dumps(params)
 
-    def create_cp_event_json(self, label, point, cp, site, diagnosis, status, activity, unit, code=None):
+    def create_cp_event_json(self, label = None, point = None, cp = None, site = None, diagnosis = None, 
+                            status = None, activity = None, unit = None, code=None):
 
         params = {
             "eventLabel": label,
