@@ -7,22 +7,22 @@ from os_core.req_util import OS_request_gen
 
 class collection_protocol_event:
 
-    """Handles the Events of corresponding to a Colelction Protocol
+    """Handles the Events corresponding to a Collection Protocol
 
     This class allows you to handle the Events in Openspecimen. One can create an event,
-    but first the corresponding Colelction Protocol have to create, for example via os_core.collection_protocol.py.
+    but first the corresponding Collection Protocol has to be created, for example via os_core.collection_protocol.py.
     Get all events or just get one event, delete or update an existing event.
     The output is a JSON dict with either details or the Openspecimen error message.
 
     Notes
     -----
-    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
+    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes, one can
     just pass the parameters via JSON-formatted string. This means the user has to know the keywords.
 
     Example
     -------
 
-    A code example, where also Events are handled is in the Jupyter-Notebook::
+    A code example, where also events are handled is in the Jupyter-Notebook::
 
         $ jupyter notebook main.ipynb
     """
@@ -31,8 +31,8 @@ class collection_protocol_event:
 
         """Constructor of the Class collection_protocol_event
 
-        Constructor of the class colelction_protocol_event, can handle the basic API-calls
-        of the collection protocol events in OpenSpecimen. Connects this class to OpenSpecimen
+        Constructor of the class collection_protocol_event can handle the basic API-calls
+        of the collection protocol events in OpenSpecimen which connects this class to OpenSpecimen's
         specific request handle (os_core.request_util.py).
 
         Parameters
@@ -51,8 +51,8 @@ class collection_protocol_event:
 
         """Testing of the URL and authentification.
 
-        If there are unexpected errors one can easily test if the URL and login data is correctly spelled.
-        the function prints the URL and login data, handed over to the class, to the output terminal.
+        If there are any unexpected errors one can easily test if the URL and login data are spelled correctly.
+        The function prints the URL and login data, handed over to the class to the output terminal.
         """
 
         print(self.base_url, self.OS_request_gen.auth)
@@ -63,9 +63,9 @@ class collection_protocol_event:
         """Create an event for a given Collection Protocol.
 
         Create an event for a given Collection Protocol. In order to use this function one
-        has to know the parameters, which OpenSpecimen needs to create an event. An other way
+        has to know the parameters, which OpenSpecimen needs for to create an event. Another way
         to use it is with the class os_util.cpevent_util.py. An advantage of creating events with
-        API calls is that the event Code "code" can be sett, which is needed to add conditional forms
+        API calls is that the event Code "code" can be set, which is needed to add conditional forms
         via the workflow.
 
         Parameters
@@ -91,11 +91,11 @@ class collection_protocol_event:
 
         """Delete an event with the ID eventid.
 
-        Delete an event, which is allready in OpenSpecimen. The unique ID is generated from OpenSpecimen
-        and can for example be seen in the URL, if one click on the event in the GUI. The URL looks like:
+        Delete an event, which is already in OpenSpecimen. The unique ID is generated from OpenSpecimen
+        and can for example be seen in the URL, if one clicks on the event in the GUI. The URL looks like:
         http(s)://<host>:<port>/openspecimen/#/cps/{CollectionProtocolId}/specimen-requirements?eventId={eventid}
-        For example, one can extract the eventid with an event-key from OpenSpecimen, when first the function
-        "get_all_events(self, cpid)" for a specific Collection Protocol, with the Collection Protocol ID is called.
+        For example, one can extract the eventid with an event-key from OpenSpecimen, when the function
+        "get_all_events(self, cpid)" for a specific Collection Protocol, with the Collection Protocol ID is called first.
 
 
         Parameters
@@ -122,10 +122,10 @@ class collection_protocol_event:
         """Get all events for a specific Collection Protocol with ID cpid.
 
         Get the details of all events within a given Collection Protocol with the ID cpid.
-        For example the ID can be seen in the URL if one click on the overview of a Collection
+        For example, the ID can be seen in the URL if one clicks on the overview of a Collection
         Protocol. The URL looks like: http(s)://<host>:<port>/openspecimen/#/cps/{cpid}/overview .
-        An other possibility is to search, via the  function "search_collection_protocols(self, search_params)"
-        from the class os_core.collection_protocol with a OpenSpecimen specific key and value.
+        Another possibility is to search via the  function "search_collection_protocols(self, search_params)"
+        from the class os_core.collection_protocol with an OpenSpecimen specific key and value.
 
         Parameters
         ----------
@@ -150,11 +150,11 @@ class collection_protocol_event:
 
         """Get the details of an event with the unique ID eventid.
 
-        Get the details of an event, which is allready in OpenSpecimen. The unique ID is generated from OpenSpecimen
-        and can for example be seen in the URL, if one click on the event in the GUI. The URL looks like:
+        Get the details of an event, which is already in OpenSpecimen. The unique ID is generated from OpenSpecimen
+        and can for example be seen in the URL, if one clicks on the event in the GUI. The URL looks like:
         http(s)://<host>:<port>/openspecimen/#/cps/{CollectionProtocolId}/specimen-requirements?eventId={eventid}
-        For example, one can extract the eventid with an event-key from OpenSpecimen, when first the function
-        "get_all_events(self, cpid)" for a specific Collection Protocol, with the Collection Protocol ID is called.
+        For example, one can extract the eventid with an event-key from OpenSpecimen, when the function
+        "get_all_events(self, cpid)" for a specific Collection Protocol, with the Collection Protocol ID is called first.
 
         Parameters
         ----------
@@ -177,10 +177,10 @@ class collection_protocol_event:
 
         """Update an existing event with ID eventid and the parameters params.
 
-        update an existing event with ID eventid. In order to use this function one
+        Update an existing event with ID eventid. In order to use this function, one
         has to know the parameters, which OpenSpecimen allows to update. 
-        For example one can 'add' the parameter "code" to an existing event which was created via GUI.
-        This is needed if one want to add conditional forms via the workflow.
+        For example, one can 'add' the parameter "code" to an existing event which was created via GUI.
+        This is needed if one wants to add conditional forms via the workflow.
 
         Parameters
         ----------
