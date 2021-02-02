@@ -187,19 +187,18 @@ class institutes():
         """Updates a existing Institute with ID ::inid:: with the Parameters ::params::
 
         Updates a existing Institute with the automatically generated OpsenSpecimen's system wide
-        unique Institute ID ::cpid::, with the Parameter ::params:: which are passed to the function.
+        unique Institute ID ::instituteid::, with the Parameter ::params:: which are passed to the function.
         The ID of the Institute have to be known and can for example be seen in the GUI by clicking on 
         the Institutes, which has the format http(s)://<host>:<port>/openspecimen/institutes/{inid}/... .
         Or via the function search_institutes.
 
         Parameter
         ---------
-        inid : string or int
+        instituteid :  int
             Unique Institute ID which is generated automatically from the System. It will be converted to a string.
         
-        params : string
-            JSON-formatted string with the key name. 
-
+        institutename : string
+            New name of the isntitute, if it is leaved empty nothing will be updated.
         Returns
         -------
         JSON-dict
