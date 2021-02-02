@@ -281,13 +281,13 @@ class Json_factory():
         return json.dumps(site_json)
     
 #   Create  Any AQL Query
-    def create_aql(self, cpid, aql, rowmode='OFF', coloumexpr='true', isodate='true'):
+    def create_aql(self, cpid, aql, rowmode='OFF', columnexpr='true', isodate='true'):
 
         params = {
             "cpId" : cpid,
             "aql" : aql,
             "wideRowMode" : rowmode,
-            "outputColoumnExprs" : coloumexpr,
+            "outputColoumnExprs" : columnexpr,
             "outputIsoDateTime" : isodate
         }
 

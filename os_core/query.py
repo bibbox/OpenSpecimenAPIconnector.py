@@ -2,7 +2,7 @@
 
 
 import json
-from os_core.req_util import OS_request_gen
+from ..os_core.req_util import OS_request_gen
 
 
 class query:
@@ -29,10 +29,10 @@ class query:
 
     def __init__(self, base_url, auth):
 
-        """Constructor of the Class institutes
+        """Constructor of the Class query.
 
-        Constructor of the class institutes, can handle the basic API-calls
-        of the institutes in OpenSpecimen. Connects this class to OpenSpecimen
+        Constructor of the class query, can handle the basic API-calls
+        of the query in OpenSpecimen. Connects this class to OpenSpecimen
         specific URL Generator Class (os_core/url.py)
 
         Parameters
@@ -112,7 +112,6 @@ class query:
         return json.loads(r.text)
 
 
-# cpid = None, searchstring = None, start = None, max_ = None, countreq = None
     def search_query(self, suburl):
 
         """Search for list of queries with specific suburl.

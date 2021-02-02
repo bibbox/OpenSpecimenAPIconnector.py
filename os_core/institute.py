@@ -199,6 +199,7 @@ class institutes():
         
         institutename : string
             New name of the isntitute, if it is leaved empty nothing will be updated.
+            
         Returns
         -------
         JSON-dict
