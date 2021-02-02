@@ -436,6 +436,20 @@ class Json_factory():
         
         return json.dumps(data)
 
+
+    def create_site(self, name, institutename, type_, coordinators = None, address = None):
+
+        params = {
+            "name": name,
+            "instituteName": institutename,
+            "coordinators" : coordinators,
+            "type": type_,
+            "address": address
+        }
+
+        return json.dumps(data)
+        
+
     
 
 

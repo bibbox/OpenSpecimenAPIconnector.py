@@ -30,9 +30,10 @@ class sites():
 
     def __init__(self, base_url, auth):
 
-        """Constructor of the Class collection_protocol
-        Constructor of the class colelction_protocol, can handle the basic API-calls
-        of the collection protocol in OpenSpecimen. Connects this class to OpenSpecimen
+        """Constructor of the Class sites
+
+        Constructor of the class sites, can handle the basic API-calls
+        of the csites in OpenSpecimen. Connects this class to OpenSpecimen
         specific request handle (os_core.request_util.py). And generates the site specific API-URL.
         
         Parameters
