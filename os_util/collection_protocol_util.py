@@ -260,7 +260,7 @@ class site_util:
         part_no : string
             String with number of anticipated Participant count.
 
-        desc_url : string
+        desc_url = string
             URL with the decription of the Collection Protocol.
         
         visitNameFMT : string
@@ -289,6 +289,8 @@ class site_util:
                 part_no = part_no, desc_url = desc_url, visitNameFmt = visitNameFmt, man_visit_name = man_visit_name,
                 man_spec_label = man_spec_label, aliquots_in_same = aliquots_in_same, activity = activity)
         
-        r = self.cps.update_collection_protocol(cpid = cpid, params = params)
+        r = self.cps.update_collection_protocol(cpid =cpid, params = params)
 
         return r
+
+

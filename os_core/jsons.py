@@ -36,10 +36,10 @@ class Json_factory():
 
     # creation jsons:
     # participant
-    def create_participant_json(self, fn=True, ln=True, birthdate=True, gender=True, cp_id=None, reg_date=True,
-                            pp_id=True, death_date=None, vital_status="Unknown", pmis=None, eth=None,
-                            activity="Active", phi="true", registeredCps=None, cpId=-1, reqRegInfo=False,
-                            forceDelete=False):
+    def create_participant_json(self, regdate, id = None, cpid = None, cptitle = None, cpshorttile = None, ppid = None,
+                                firstname = None, middlename = None, lastname = None, uid = None, birthdate = None, vitalstatus = None,
+                                deathdate = None, gender = None, race = None, ethnicities = None, sexgenotype = None, pmis = None,
+                                mrn = None, sitename = None, empi = None):
 
         '''
         :param fn:
@@ -62,31 +62,30 @@ class Json_factory():
         :return:
         '''
 
-        if registeredCps is None:
-            registeredCps = []
 
         participantRegistration = {
             "participant": {
-                "firstName": fn,
-                "lastName": ln,
-                "middleName": "",
+                "firstName": firstname,
+                "middleName": middlename,                
+                "lastName": lastname,
+                "uid" : uid
                 "birthDate": birthdate,
-                "deathDate": death_date,
+                "vitalStatus": vitalstatus,
+                "deathDate": deathdate,
                 "gender": gender,
-                "races": [],
-                "vitalStatus": vital_status,
-                "pmis": pmis,
+                "race": race,
                 "ethnicities": eth,
-                "activityStatus": activity,
-                "phiAccess": phi,
-                "registeredCps": registeredCps,
-                "cpId": cpId,
-                "reqRegInfo": reqRegInfo,
-                "forceDelete": forceDelete
+                "sexGenotype":sexgenotype,
+                "pmis": pmis,
+                "mrn": mrn,
+                "siteName": sitename,
+                "empi": empi
             },
-            "cpId": cp_id,
-            "registrationDate": reg_date,
-            "ppid": pp_id
+            "cpId": cpid,
+            "cpTitle": cpTitle,
+            "cpShorttitle":cpshorttitle, 
+            "registrationDate": regdate,
+            "ppid": ppid
         }
 
         return participantRegistration
@@ -208,7 +207,54 @@ class Json_factory():
 
         return json.dumps(data)
     
-    
+   # Export Institute CSV
+    def create_institue_export_job_json(self):
+
+        institute_json = {"objectType": "institute"}
+        return json.dumps(institute_json)
+
+
+    # Export Sites CSV
+    def create_site_export_job_json(self, record_ids=None):
+
+        site_json = {"objectType": "site"}
+        return json.dumps(site_json)
+
+
+    # Export User CSV
+    def create_user_export_job(self):
+
+        user_json = {"objectType": "user"}
+        return json.dumps(user_json)
+
+
+    # Export CP Registaration CSV
+    def create_cp_export_job_json(self, cp_id=None):
+
+        cp_json = {"objectType": "cp", "params": {"cpId": cp_id}}
+        return json.dumps(cp_json)
+
+
+    # Export CP Registaration CSV
+    def create_cpr_export_job_json(self, cp_id=None):
+
+        cpr_json = {"objectType": "cpr", "params": {"cpId": cp_id}}
+        return json.dumps(cpr_json)
+
+
+    # Export Vist CSV
+    def create_visit_export_job_json(self, cp_id=None):
+
+        visit_json = {"objectType": "specimen", "params": {"cpId": cp_id}}
+        return json.dumps(visit_json)
+
+
+    # Export Specimen CSV
+    def create_specimen_export_job_json(self, cp_id=None):
+
+        specimen_json = {"objectType": "specimen", "params": {"cpId": cp_id}}
+        return json.dumps(specimen_json) 
+
 
     # Export Sites
 
@@ -235,13 +281,13 @@ class Json_factory():
         return json.dumps(site_json)
     
 #   Create  Any AQL Query
-    def create_aql(self, cpid, aql, rowmode='OFF', coloumexpr='true', isodate='true'):
+    def create_aql(self, cpid, aql, rowmode='OFF', columnexpr='true', isodate='true'):
 
         params = {
             "cpId" : cpid,
             "aql" : aql,
             "wideRowMode" : rowmode,
-            "outputColoumnExprs" : coloumexpr,
+            "outputColoumnExprs" : columnexpr,
             "outputIsoDateTime" : isodate
         }
 
@@ -289,7 +335,8 @@ class Json_factory():
 
         return json.dumps(params)
 
-    def create_cp_event_json(self, label, point, cp, site, diagnosis, status, activity, unit, code=None):
+    def create_cp_event_json(self, label = None, point = None, cp = None, site = None, diagnosis = None, 
+                            status = None, activity = None, unit = None, code=None):
 
         params = {
             "eventLabel": label,
@@ -388,6 +435,20 @@ class Json_factory():
         }
         
         return json.dumps(data)
+
+
+    def create_site(self, name, institutename, type_, coordinators = None, address = None):
+
+        params = {
+            "name": name,
+            "instituteName": institutename,
+            "coordinators" : coordinators,
+            "type": type_,
+            "address": address
+        }
+
+        return json.dumps(data)
+        
 
     
 
