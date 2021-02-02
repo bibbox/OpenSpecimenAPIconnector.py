@@ -342,7 +342,7 @@ class cpr_util:
         Returns
         -------
         JSON-dict
-            Details of the created Participant or the OpenSpecimen error message as Dictornary.
+            Details of the updated Participant or the OpenSpecimen error message as Dictornary.
         """
 
         params = self.jsons.create_participant_json(regdate = regdate, id = cprid, cpid = cpid, cptitle = cptitle, 
