@@ -1,0 +1,876 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>OpenSpecimenAPIconnector.os_core.req_util API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>OpenSpecimenAPIconnector.os_core.req_util</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">#! /bin/python3
+
+import requests
+
+class OS_request_gen():
+    
+    &#34;&#34;&#34;Generates OpenSpecimen specific requests
+     
+    This class generates OpenSpecimen specific requests such that headers and authentification are created automatically.
+    With this class the users has to specify which requests do they need, the url and the payload, which should be sended
+    to OpenSpecimen. The payload alters for different requests and can be seen in the OpenSpecimen&#39;s API documentation.
+    The class can handle following requests: GET, POST(formdata, files, json-formatted string), PUT, DELETE, HEADER.
+    
+    Notes
+    -----
+    In order to use this and also the other classes, the user has to know OpenSpecimen. The users have to know which requests
+    are needed and what content should be uploaded. The API documentation of OpenSpecimen is in:
+    https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs
+    
+    Example
+    -------
+    A code example, where those requests are used is in the Jupyter-Notebook::
+        $ jupyter notebook main.ipynb
+    &#34;&#34;&#34;
+
+    def __init__(self, auth):
+        
+        &#34;&#34;&#34;Constructor of the class OS_request_gen()
+        
+        Constructor of the class OS_request_gen(). It generates the possible headers for the differnet requests,
+        which are json_headers, zip_headers, form_data_headers, file_headers.
+        
+        Parameters
+        ----------
+        auth : string
+            String as tupple with the format &#34;( API-User, Password)&#34;
+        &#34;&#34;&#34;
+        
+        self.json_headers = {
+            &#39;content-type&#39;: &#34;application/json&#34;, &#39;cache-control&#39;: &#34;no-cache&#34;}
+        self.zip_headers = {
+            &#39;content-type&#39;: &#34;application/zip&#34;, &#39;cache-control&#39;: &#34;no-cache&#34;}
+        self.form_data_headers = {
+            &#39;content-type&#39;: &#34;form-data&#34;, &#39;cache-control&#39;: &#34;no-cache&#34;}
+        self.file_headers={
+            &#39;cache-control&#39;: &#34;no-cache&#34;}
+
+        self.auth = auth
+        self.user_name = auth[0]
+
+
+    def get_request(self, url, stream=False):
+        
+        &#34;&#34;&#34;Generates GET requests for OpenSpecimen
+        
+        Generates GET request for OpenSpecimen, which always contains the URL in the format
+        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/... . Is used for searching objects and 
+        downloading templates or collections. If one downloads a larger file the parameter
+        stream has to be set to &#34;True&#34;.
+        
+        Parameters
+        ----------
+        url : string
+            URL for the get request as string. Has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/...
+            
+        stream : bool
+            Can be set &#34;True&#34; for larger files, which are taking time to download. Default value is &#34;False&#34;.
+            
+        Returns
+        -------
+        http(s) response
+            The response of the request, consists of status code, header and body. The type of the body alters
+            for different request.
+        &#34;&#34;&#34;
+
+        if stream:
+            r = requests.request(&#34;GET&#34;, url, auth=self.auth,
+            headers=self.zip_headers, stream=stream)
+
+        else:
+            r = requests.request(&#34;GET&#34;, url, auth=self.auth,
+                                 headers=self.json_headers)
+
+        return r
+
+
+    def post_request(self, url, data=None, form_data=False, files=None, params=None):
+
+        &#34;&#34;&#34;Generates POST requests for OpenSpecimen
+        
+        Generates POST request for OpenSpecimen, which always contains the URL in the format
+        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/... . This request is most times used 
+        for creating or updating objects in OpenSpecimen and the data is either a JSON-dict
+        with the keys from OpenSpecimen or a binary-file content( this needs a second call to
+        execute the job)
+        
+        Parameters
+        ----------
+        url : string
+            URL for the get request as string. Has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/...
+            
+        data : json-formatted strings
+            Json-formatted string, with the keys from OpenSpecimen.
+            
+        form_data : bool
+            Default value is &#34;False&#34;. Can be set to &#34;True&#34; if for examples forms (.xml-files) are uploaded.
+        
+        files : binary
+            Default value is &#34;None&#34;. Contains tuple with name + ending and file itself.
+        
+        params : json formatted string
+            Json-formatted string, with the keys from OpenSpecimen.
+            
+        Returns
+        -------
+        http(s) response
+            The response of the request, consists of status code, header and body. The type of the body alters
+            for different request.
+        &#34;&#34;&#34;
+        
+        if form_data:
+            r = requests.request(&#34;POST&#34;, url, data=data, auth=self.auth,
+                                 headers=self.form_data_headers, params=params)
+
+        if form_data==False and files==None:
+            r = requests.request(&#34;POST&#34;, url, data=data, auth=self.auth,
+                                 headers=self.json_headers, params=params)
+        if files!=None:
+            r= requests.request(&#34;POST&#34;, url, auth=self.auth, 
+                                 headers=self.file_headers,files=files, params=params)
+        return r
+
+
+    def put_request(self, url, data):
+        
+        &#34;&#34;&#34;Generates PUT requests for OpenSpecimen
+        
+        Generates PUT request for OpenSpecimen, which always contains the URL in the format
+        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/... . This request is most times used 
+        for updating objects in OpenSpecimen and the data is a JSON-dict with the keys 
+        from OpenSpecimen.
+        
+        Parameters
+        ----------
+        url : string
+            URL for the get request as string. Has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/...
+            
+        data : json-formatted strings
+            Json-formatted string, with the keys from OpenSpecimen.
+            
+        Returns
+        -------
+        http(s) response
+            The response of the request, consists of status code, header and body. The type of the body alters
+            for different request.
+        &#34;&#34;&#34;
+
+        r = requests.request(&#34;PUT&#34;, url, data=data, auth=self.auth,
+                             headers=self.json_headers)
+        return r
+
+
+    def delete_request(self, url):
+        
+        &#34;&#34;&#34;Generates DELETE requests for OpenSpecimen
+        
+        Generates DELETE request for OpenSpecimen, which always contains the URL in the format
+        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity}/{objectID} . Is used for deleting objects 
+        of a desired entities e.g. specimens. Usually OpenSpecimen requires the ID of the object in the URL.
+        
+        Parameters
+        ----------
+        url : string
+            URL for the get request as string. Has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity}/{objectID}
+            
+        Returns
+        -------
+        http(s) response
+            The response of the request, consists of status code, header and body. The type of the body alters
+            for different request.
+        &#34;&#34;&#34;
+
+        r = requests.request(&#34;DELETE&#34;, url, auth=self.auth)
+
+        return r
+
+
+    def head_request(self, url):
+        
+        &#34;&#34;&#34;Generates HEAD requests for OpenSpecimen
+        
+        Generates HEAD request for OpenSpecimen, which always contains the URL in the format
+        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity} . Is used for getting
+        the header of an object. Usually OpenSpecimen requires the entity of the object in the URL.
+        
+        Parameters
+        ----------
+        url : string
+            URL for the get request as string. Has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity}
+            
+        Returns
+        -------
+        http(s) response
+            The response of the request, consists of status code, header and body. The type of the body alters
+            for different request.
+        &#34;&#34;&#34;
+
+        r = requests.request(&#34;HEAD&#34;, url, auth=self.auth)
+
+        return r
+
+    def user_name(self):
+        
+        &#34;&#34;&#34;Returns the OpenSpecimen Login name
+        
+        Returns the OpenSpecimen login name of the API-User.
+        
+        Returns
+        -------
+        string
+            The API-User&#39;s login name.
+        &#34;&#34;&#34;
+        
+        return self.user_name</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="OpenSpecimenAPIconnector.os_core.req_util.OS_request_gen"><code class="flex name class">
+<span>class <span class="ident">OS_request_gen</span></span>
+<span>(</span><span>auth)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates OpenSpecimen specific requests</p>
+<p>This class generates OpenSpecimen specific requests such that headers and authentification are created automatically.
+With this class the users has to specify which requests do they need, the url and the payload, which should be sended
+to OpenSpecimen. The payload alters for different requests and can be seen in the OpenSpecimen's API documentation.
+The class can handle following requests: GET, POST(formdata, files, json-formatted string), PUT, DELETE, HEADER.</p>
+<h2 id="notes">Notes</h2>
+<p>In order to use this and also the other classes, the user has to know OpenSpecimen. The users have to know which requests
+are needed and what content should be uploaded. The API documentation of OpenSpecimen is in:
+<a href="https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs">https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs</a></p>
+<h2 id="example">Example</h2>
+<p>A code example, where those requests are used is in the Jupyter-Notebook::
+$ jupyter notebook main.ipynb</p>
+<p>Constructor of the class OS_request_gen()</p>
+<p>Constructor of the class OS_request_gen(). It generates the possible headers for the differnet requests,
+which are json_headers, zip_headers, form_data_headers, file_headers.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>auth</code></strong> :&ensp;<code>string</code></dt>
+<dd>String as tupple with the format "( API-User, Password)"</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class OS_request_gen():
+    
+    &#34;&#34;&#34;Generates OpenSpecimen specific requests
+     
+    This class generates OpenSpecimen specific requests such that headers and authentification are created automatically.
+    With this class the users has to specify which requests do they need, the url and the payload, which should be sended
+    to OpenSpecimen. The payload alters for different requests and can be seen in the OpenSpecimen&#39;s API documentation.
+    The class can handle following requests: GET, POST(formdata, files, json-formatted string), PUT, DELETE, HEADER.
+    
+    Notes
+    -----
+    In order to use this and also the other classes, the user has to know OpenSpecimen. The users have to know which requests
+    are needed and what content should be uploaded. The API documentation of OpenSpecimen is in:
+    https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs
+    
+    Example
+    -------
+    A code example, where those requests are used is in the Jupyter-Notebook::
+        $ jupyter notebook main.ipynb
+    &#34;&#34;&#34;
+
+    def __init__(self, auth):
+        
+        &#34;&#34;&#34;Constructor of the class OS_request_gen()
+        
+        Constructor of the class OS_request_gen(). It generates the possible headers for the differnet requests,
+        which are json_headers, zip_headers, form_data_headers, file_headers.
+        
+        Parameters
+        ----------
+        auth : string
+            String as tupple with the format &#34;( API-User, Password)&#34;
+        &#34;&#34;&#34;
+        
+        self.json_headers = {
+            &#39;content-type&#39;: &#34;application/json&#34;, &#39;cache-control&#39;: &#34;no-cache&#34;}
+        self.zip_headers = {
+            &#39;content-type&#39;: &#34;application/zip&#34;, &#39;cache-control&#39;: &#34;no-cache&#34;}
+        self.form_data_headers = {
+            &#39;content-type&#39;: &#34;form-data&#34;, &#39;cache-control&#39;: &#34;no-cache&#34;}
+        self.file_headers={
+            &#39;cache-control&#39;: &#34;no-cache&#34;}
+
+        self.auth = auth
+        self.user_name = auth[0]
+
+
+    def get_request(self, url, stream=False):
+        
+        &#34;&#34;&#34;Generates GET requests for OpenSpecimen
+        
+        Generates GET request for OpenSpecimen, which always contains the URL in the format
+        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/... . Is used for searching objects and 
+        downloading templates or collections. If one downloads a larger file the parameter
+        stream has to be set to &#34;True&#34;.
+        
+        Parameters
+        ----------
+        url : string
+            URL for the get request as string. Has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/...
+            
+        stream : bool
+            Can be set &#34;True&#34; for larger files, which are taking time to download. Default value is &#34;False&#34;.
+            
+        Returns
+        -------
+        http(s) response
+            The response of the request, consists of status code, header and body. The type of the body alters
+            for different request.
+        &#34;&#34;&#34;
+
+        if stream:
+            r = requests.request(&#34;GET&#34;, url, auth=self.auth,
+            headers=self.zip_headers, stream=stream)
+
+        else:
+            r = requests.request(&#34;GET&#34;, url, auth=self.auth,
+                                 headers=self.json_headers)
+
+        return r
+
+
+    def post_request(self, url, data=None, form_data=False, files=None, params=None):
+
+        &#34;&#34;&#34;Generates POST requests for OpenSpecimen
+        
+        Generates POST request for OpenSpecimen, which always contains the URL in the format
+        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/... . This request is most times used 
+        for creating or updating objects in OpenSpecimen and the data is either a JSON-dict
+        with the keys from OpenSpecimen or a binary-file content( this needs a second call to
+        execute the job)
+        
+        Parameters
+        ----------
+        url : string
+            URL for the get request as string. Has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/...
+            
+        data : json-formatted strings
+            Json-formatted string, with the keys from OpenSpecimen.
+            
+        form_data : bool
+            Default value is &#34;False&#34;. Can be set to &#34;True&#34; if for examples forms (.xml-files) are uploaded.
+        
+        files : binary
+            Default value is &#34;None&#34;. Contains tuple with name + ending and file itself.
+        
+        params : json formatted string
+            Json-formatted string, with the keys from OpenSpecimen.
+            
+        Returns
+        -------
+        http(s) response
+            The response of the request, consists of status code, header and body. The type of the body alters
+            for different request.
+        &#34;&#34;&#34;
+        
+        if form_data:
+            r = requests.request(&#34;POST&#34;, url, data=data, auth=self.auth,
+                                 headers=self.form_data_headers, params=params)
+
+        if form_data==False and files==None:
+            r = requests.request(&#34;POST&#34;, url, data=data, auth=self.auth,
+                                 headers=self.json_headers, params=params)
+        if files!=None:
+            r= requests.request(&#34;POST&#34;, url, auth=self.auth, 
+                                 headers=self.file_headers,files=files, params=params)
+        return r
+
+
+    def put_request(self, url, data):
+        
+        &#34;&#34;&#34;Generates PUT requests for OpenSpecimen
+        
+        Generates PUT request for OpenSpecimen, which always contains the URL in the format
+        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/... . This request is most times used 
+        for updating objects in OpenSpecimen and the data is a JSON-dict with the keys 
+        from OpenSpecimen.
+        
+        Parameters
+        ----------
+        url : string
+            URL for the get request as string. Has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/...
+            
+        data : json-formatted strings
+            Json-formatted string, with the keys from OpenSpecimen.
+            
+        Returns
+        -------
+        http(s) response
+            The response of the request, consists of status code, header and body. The type of the body alters
+            for different request.
+        &#34;&#34;&#34;
+
+        r = requests.request(&#34;PUT&#34;, url, data=data, auth=self.auth,
+                             headers=self.json_headers)
+        return r
+
+
+    def delete_request(self, url):
+        
+        &#34;&#34;&#34;Generates DELETE requests for OpenSpecimen
+        
+        Generates DELETE request for OpenSpecimen, which always contains the URL in the format
+        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity}/{objectID} . Is used for deleting objects 
+        of a desired entities e.g. specimens. Usually OpenSpecimen requires the ID of the object in the URL.
+        
+        Parameters
+        ----------
+        url : string
+            URL for the get request as string. Has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity}/{objectID}
+            
+        Returns
+        -------
+        http(s) response
+            The response of the request, consists of status code, header and body. The type of the body alters
+            for different request.
+        &#34;&#34;&#34;
+
+        r = requests.request(&#34;DELETE&#34;, url, auth=self.auth)
+
+        return r
+
+
+    def head_request(self, url):
+        
+        &#34;&#34;&#34;Generates HEAD requests for OpenSpecimen
+        
+        Generates HEAD request for OpenSpecimen, which always contains the URL in the format
+        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity} . Is used for getting
+        the header of an object. Usually OpenSpecimen requires the entity of the object in the URL.
+        
+        Parameters
+        ----------
+        url : string
+            URL for the get request as string. Has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity}
+            
+        Returns
+        -------
+        http(s) response
+            The response of the request, consists of status code, header and body. The type of the body alters
+            for different request.
+        &#34;&#34;&#34;
+
+        r = requests.request(&#34;HEAD&#34;, url, auth=self.auth)
+
+        return r
+
+    def user_name(self):
+        
+        &#34;&#34;&#34;Returns the OpenSpecimen Login name
+        
+        Returns the OpenSpecimen login name of the API-User.
+        
+        Returns
+        -------
+        string
+            The API-User&#39;s login name.
+        &#34;&#34;&#34;
+        
+        return self.user_name</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="OpenSpecimenAPIconnector.os_core.req_util.OS_request_gen.delete_request"><code class="name flex">
+<span>def <span class="ident">delete_request</span></span>(<span>self, url)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates DELETE requests for OpenSpecimen</p>
+<p>Generates DELETE request for OpenSpecimen, which always contains the URL in the format
+http(s)://<host>:<port>/openspecimen/rest/ng/{entity}/{objectID} . Is used for deleting objects
+of a desired entities e.g. specimens. Usually OpenSpecimen requires the ID of the object in the URL.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>url</code></strong> :&ensp;<code>string</code></dt>
+<dd>URL for the get request as string. Has the form: http(s)://<host>:<port>/openspecimen/rest/ng/{entity}/{objectID}</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>http(s) response</code></dt>
+<dd>The response of the request, consists of status code, header and body. The type of the body alters
+for different request.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def delete_request(self, url):
+    
+    &#34;&#34;&#34;Generates DELETE requests for OpenSpecimen
+    
+    Generates DELETE request for OpenSpecimen, which always contains the URL in the format
+    http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity}/{objectID} . Is used for deleting objects 
+    of a desired entities e.g. specimens. Usually OpenSpecimen requires the ID of the object in the URL.
+    
+    Parameters
+    ----------
+    url : string
+        URL for the get request as string. Has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity}/{objectID}
+        
+    Returns
+    -------
+    http(s) response
+        The response of the request, consists of status code, header and body. The type of the body alters
+        for different request.
+    &#34;&#34;&#34;
+
+    r = requests.request(&#34;DELETE&#34;, url, auth=self.auth)
+
+    return r</code></pre>
+</details>
+</dd>
+<dt id="OpenSpecimenAPIconnector.os_core.req_util.OS_request_gen.get_request"><code class="name flex">
+<span>def <span class="ident">get_request</span></span>(<span>self, url, stream=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates GET requests for OpenSpecimen</p>
+<p>Generates GET request for OpenSpecimen, which always contains the URL in the format
+http(s)://<host>:<port>/openspecimen/rest/ng/&hellip; . Is used for searching objects and
+downloading templates or collections. If one downloads a larger file the parameter
+stream has to be set to "True".</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>url</code></strong> :&ensp;<code>string</code></dt>
+<dd>URL for the get request as string. Has the form: http(s)://<host>:<port>/openspecimen/rest/ng/&hellip;</dd>
+<dt><strong><code>stream</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Can be set "True" for larger files, which are taking time to download. Default value is "False".</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>http(s) response</code></dt>
+<dd>The response of the request, consists of status code, header and body. The type of the body alters
+for different request.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_request(self, url, stream=False):
+    
+    &#34;&#34;&#34;Generates GET requests for OpenSpecimen
+    
+    Generates GET request for OpenSpecimen, which always contains the URL in the format
+    http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/... . Is used for searching objects and 
+    downloading templates or collections. If one downloads a larger file the parameter
+    stream has to be set to &#34;True&#34;.
+    
+    Parameters
+    ----------
+    url : string
+        URL for the get request as string. Has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/...
+        
+    stream : bool
+        Can be set &#34;True&#34; for larger files, which are taking time to download. Default value is &#34;False&#34;.
+        
+    Returns
+    -------
+    http(s) response
+        The response of the request, consists of status code, header and body. The type of the body alters
+        for different request.
+    &#34;&#34;&#34;
+
+    if stream:
+        r = requests.request(&#34;GET&#34;, url, auth=self.auth,
+        headers=self.zip_headers, stream=stream)
+
+    else:
+        r = requests.request(&#34;GET&#34;, url, auth=self.auth,
+                             headers=self.json_headers)
+
+    return r</code></pre>
+</details>
+</dd>
+<dt id="OpenSpecimenAPIconnector.os_core.req_util.OS_request_gen.head_request"><code class="name flex">
+<span>def <span class="ident">head_request</span></span>(<span>self, url)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates HEAD requests for OpenSpecimen</p>
+<p>Generates HEAD request for OpenSpecimen, which always contains the URL in the format
+http(s)://<host>:<port>/openspecimen/rest/ng/{entity} . Is used for getting
+the header of an object. Usually OpenSpecimen requires the entity of the object in the URL.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>url</code></strong> :&ensp;<code>string</code></dt>
+<dd>URL for the get request as string. Has the form: http(s)://<host>:<port>/openspecimen/rest/ng/{entity}</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>http(s) response</code></dt>
+<dd>The response of the request, consists of status code, header and body. The type of the body alters
+for different request.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def head_request(self, url):
+    
+    &#34;&#34;&#34;Generates HEAD requests for OpenSpecimen
+    
+    Generates HEAD request for OpenSpecimen, which always contains the URL in the format
+    http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity} . Is used for getting
+    the header of an object. Usually OpenSpecimen requires the entity of the object in the URL.
+    
+    Parameters
+    ----------
+    url : string
+        URL for the get request as string. Has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity}
+        
+    Returns
+    -------
+    http(s) response
+        The response of the request, consists of status code, header and body. The type of the body alters
+        for different request.
+    &#34;&#34;&#34;
+
+    r = requests.request(&#34;HEAD&#34;, url, auth=self.auth)
+
+    return r</code></pre>
+</details>
+</dd>
+<dt id="OpenSpecimenAPIconnector.os_core.req_util.OS_request_gen.post_request"><code class="name flex">
+<span>def <span class="ident">post_request</span></span>(<span>self, url, data=None, form_data=False, files=None, params=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates POST requests for OpenSpecimen</p>
+<p>Generates POST request for OpenSpecimen, which always contains the URL in the format
+http(s)://<host>:<port>/openspecimen/rest/ng/&hellip; . This request is most times used
+for creating or updating objects in OpenSpecimen and the data is either a JSON-dict
+with the keys from OpenSpecimen or a binary-file content( this needs a second call to
+execute the job)</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>url</code></strong> :&ensp;<code>string</code></dt>
+<dd>URL for the get request as string. Has the form: http(s)://<host>:<port>/openspecimen/rest/ng/&hellip;</dd>
+<dt><strong><code>data</code></strong> :&ensp;<code>json-formatted strings</code></dt>
+<dd>Json-formatted string, with the keys from OpenSpecimen.</dd>
+<dt><strong><code>form_data</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Default value is "False". Can be set to "True" if for examples forms (.xml-files) are uploaded.</dd>
+<dt><strong><code>files</code></strong> :&ensp;<code>binary</code></dt>
+<dd>Default value is "None". Contains tuple with name + ending and file itself.</dd>
+<dt><strong><code>params</code></strong> :&ensp;<code>json formatted string</code></dt>
+<dd>Json-formatted string, with the keys from OpenSpecimen.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>http(s) response</code></dt>
+<dd>The response of the request, consists of status code, header and body. The type of the body alters
+for different request.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_request(self, url, data=None, form_data=False, files=None, params=None):
+
+    &#34;&#34;&#34;Generates POST requests for OpenSpecimen
+    
+    Generates POST request for OpenSpecimen, which always contains the URL in the format
+    http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/... . This request is most times used 
+    for creating or updating objects in OpenSpecimen and the data is either a JSON-dict
+    with the keys from OpenSpecimen or a binary-file content( this needs a second call to
+    execute the job)
+    
+    Parameters
+    ----------
+    url : string
+        URL for the get request as string. Has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/...
+        
+    data : json-formatted strings
+        Json-formatted string, with the keys from OpenSpecimen.
+        
+    form_data : bool
+        Default value is &#34;False&#34;. Can be set to &#34;True&#34; if for examples forms (.xml-files) are uploaded.
+    
+    files : binary
+        Default value is &#34;None&#34;. Contains tuple with name + ending and file itself.
+    
+    params : json formatted string
+        Json-formatted string, with the keys from OpenSpecimen.
+        
+    Returns
+    -------
+    http(s) response
+        The response of the request, consists of status code, header and body. The type of the body alters
+        for different request.
+    &#34;&#34;&#34;
+    
+    if form_data:
+        r = requests.request(&#34;POST&#34;, url, data=data, auth=self.auth,
+                             headers=self.form_data_headers, params=params)
+
+    if form_data==False and files==None:
+        r = requests.request(&#34;POST&#34;, url, data=data, auth=self.auth,
+                             headers=self.json_headers, params=params)
+    if files!=None:
+        r= requests.request(&#34;POST&#34;, url, auth=self.auth, 
+                             headers=self.file_headers,files=files, params=params)
+    return r</code></pre>
+</details>
+</dd>
+<dt id="OpenSpecimenAPIconnector.os_core.req_util.OS_request_gen.put_request"><code class="name flex">
+<span>def <span class="ident">put_request</span></span>(<span>self, url, data)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates PUT requests for OpenSpecimen</p>
+<p>Generates PUT request for OpenSpecimen, which always contains the URL in the format
+http(s)://<host>:<port>/openspecimen/rest/ng/&hellip; . This request is most times used
+for updating objects in OpenSpecimen and the data is a JSON-dict with the keys
+from OpenSpecimen.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>url</code></strong> :&ensp;<code>string</code></dt>
+<dd>URL for the get request as string. Has the form: http(s)://<host>:<port>/openspecimen/rest/ng/&hellip;</dd>
+<dt><strong><code>data</code></strong> :&ensp;<code>json-formatted strings</code></dt>
+<dd>Json-formatted string, with the keys from OpenSpecimen.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>http(s) response</code></dt>
+<dd>The response of the request, consists of status code, header and body. The type of the body alters
+for different request.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def put_request(self, url, data):
+    
+    &#34;&#34;&#34;Generates PUT requests for OpenSpecimen
+    
+    Generates PUT request for OpenSpecimen, which always contains the URL in the format
+    http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/... . This request is most times used 
+    for updating objects in OpenSpecimen and the data is a JSON-dict with the keys 
+    from OpenSpecimen.
+    
+    Parameters
+    ----------
+    url : string
+        URL for the get request as string. Has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/...
+        
+    data : json-formatted strings
+        Json-formatted string, with the keys from OpenSpecimen.
+        
+    Returns
+    -------
+    http(s) response
+        The response of the request, consists of status code, header and body. The type of the body alters
+        for different request.
+    &#34;&#34;&#34;
+
+    r = requests.request(&#34;PUT&#34;, url, data=data, auth=self.auth,
+                         headers=self.json_headers)
+    return r</code></pre>
+</details>
+</dd>
+<dt id="OpenSpecimenAPIconnector.os_core.req_util.OS_request_gen.user_name"><code class="name flex">
+<span>def <span class="ident">user_name</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns the OpenSpecimen Login name</p>
+<p>Returns the OpenSpecimen login name of the API-User.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>string</code></dt>
+<dd>The API-User's login name.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def user_name(self):
+    
+    &#34;&#34;&#34;Returns the OpenSpecimen Login name
+    
+    Returns the OpenSpecimen login name of the API-User.
+    
+    Returns
+    -------
+    string
+        The API-User&#39;s login name.
+    &#34;&#34;&#34;
+    
+    return self.user_name</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="OpenSpecimenAPIconnector.os_core" href="index.html">OpenSpecimenAPIconnector.os_core</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="OpenSpecimenAPIconnector.os_core.req_util.OS_request_gen" href="#OpenSpecimenAPIconnector.os_core.req_util.OS_request_gen">OS_request_gen</a></code></h4>
+<ul class="two-column">
+<li><code><a title="OpenSpecimenAPIconnector.os_core.req_util.OS_request_gen.delete_request" href="#OpenSpecimenAPIconnector.os_core.req_util.OS_request_gen.delete_request">delete_request</a></code></li>
+<li><code><a title="OpenSpecimenAPIconnector.os_core.req_util.OS_request_gen.get_request" href="#OpenSpecimenAPIconnector.os_core.req_util.OS_request_gen.get_request">get_request</a></code></li>
+<li><code><a title="OpenSpecimenAPIconnector.os_core.req_util.OS_request_gen.head_request" href="#OpenSpecimenAPIconnector.os_core.req_util.OS_request_gen.head_request">head_request</a></code></li>
+<li><code><a title="OpenSpecimenAPIconnector.os_core.req_util.OS_request_gen.post_request" href="#OpenSpecimenAPIconnector.os_core.req_util.OS_request_gen.post_request">post_request</a></code></li>
+<li><code><a title="OpenSpecimenAPIconnector.os_core.req_util.OS_request_gen.put_request" href="#OpenSpecimenAPIconnector.os_core.req_util.OS_request_gen.put_request">put_request</a></code></li>
+<li><code><a title="OpenSpecimenAPIconnector.os_core.req_util.OS_request_gen.user_name" href="#OpenSpecimenAPIconnector.os_core.req_util.OS_request_gen.user_name">user_name</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

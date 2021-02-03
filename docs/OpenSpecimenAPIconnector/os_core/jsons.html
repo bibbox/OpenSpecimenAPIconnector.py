@@ -1,0 +1,1549 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>OpenSpecimenAPIconnector.os_core.jsons API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>OpenSpecimenAPIconnector.os_core.jsons</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import requests
+import json
+import pickle
+import json
+import requests
+import uuid
+import faker
+from faker import Factory
+import names
+import random
+import time
+import datetime
+from datetime import date
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
+
+from datetime import date
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
+
+
+
+
+class Json_factory():
+
+    def __init__(self):
+        pass
+
+    ##TODO Decide upon way of json creation/storage for OS operations, the current idea is to set mandatory values to
+    ## boolean true by default. than a random generator can create the values in fixed order and they can be set
+    ## according to the boolean. Even better would be the restriction to use pandas data frames directly and create the
+    ## json once data entry is done. Another important question is how to deal with custom value fields in various cases.
+    ## Further, where possible, the csv import option should be used and json creation should be left to the numerous
+    ## methods within Open Specimen
+    ## first approach to be overhauled
+
+    # creation jsons:
+    # participant
+    def create_participant_json(self, fn=True, ln=True, birthdate=True, gender=True, cp_id=None, reg_date=True,
+                            pp_id=True, death_date=None, vital_status=&#34;Unknown&#34;, pmis=None, eth=None,
+                            activity=&#34;Active&#34;, phi=&#34;true&#34;, registeredCps=None, cpId=-1, reqRegInfo=False,
+                            forceDelete=False):
+
+        &#39;&#39;&#39;
+        :param fn:
+        :param ln:
+        :param birthdate:
+        :param gender:
+        :param cp_id:
+        :param reg_date:
+        :param pp_id:
+        :param death_date:
+        :param vital_status:
+        :param pmis:
+        :param eth:
+        :param activity:
+        :param phi:
+        :param registeredCps:
+        :param cpId:
+        :param reqRegInfo:
+        :param forceDelete:
+        :return:
+        &#39;&#39;&#39;
+
+        if registeredCps is None:
+            registeredCps = []
+
+        participantRegistration = {
+            &#34;participant&#34;: {
+                &#34;firstName&#34;: fn,
+                &#34;lastName&#34;: ln,
+                &#34;middleName&#34;: &#34;&#34;,
+                &#34;birthDate&#34;: birthdate,
+                &#34;deathDate&#34;: death_date,
+                &#34;gender&#34;: gender,
+                &#34;races&#34;: [],
+                &#34;vitalStatus&#34;: vital_status,
+                &#34;pmis&#34;: pmis,
+                &#34;ethnicities&#34;: eth,
+                &#34;activityStatus&#34;: activity,
+                &#34;phiAccess&#34;: phi,
+                &#34;registeredCps&#34;: registeredCps,
+                &#34;cpId&#34;: cpId,
+                &#34;reqRegInfo&#34;: reqRegInfo,
+                &#34;forceDelete&#34;: forceDelete
+            },
+            &#34;cpId&#34;: cp_id,
+            &#34;registrationDate&#34;: reg_date,
+            &#34;ppid&#34;: pp_id
+        }
+
+        return participantRegistration
+
+    # Collection Protocoll
+
+    def create_CP_json(self, short_title, title, pi_mail, time_start, time_end, sites, man_id=False, coords=None,
+                           consentsWaived=False,eth_cons_id=None, part_no=None, desc_url=None, visitNameFmt=None,
+                           man_visit_name=False, man_spec_label=True, aliquots_in_same=None, activity=&#34;Active&#34;):
+
+        &#39;&#39;&#39;
+        :param short_title:
+        :param title:
+        :param pi_mail:
+        :param sites:
+        :param man_id:
+        :param coords:
+        :param consentsWaived:
+        :param eth_cons_id:
+        :param part_no:
+        :param desc_url:
+        :param visitNameFmt:
+        :param man_visit_name:
+        :param man_spec_label:
+        :param aliquots_in_same:
+        :param activity:
+        :return:
+        &#39;&#39;&#39;
+
+        site_arr = []
+        for item in sites:
+            site_arr.append(
+                {
+                    &#34;siteName&#34;: item[0],
+                    &#34;code&#34;: item[1]
+                }
+            )
+
+        CP_reg = {
+            &#34;shortTitle&#34;: short_title,
+            &#34;title&#34;: title,
+            &#34;code&#34;: None,
+            &#34;principalInvestigator&#34;:
+                {
+                    &#34;loginName&#34;: pi_mail,
+                    &#34;domain&#34;: &#34;openspecimen&#34;
+                },
+            &#34;startDate&#34;: time_start,
+            &#34;endDate&#34;: time_end,
+            &#34;ppidFmt&#34;: &#34;DWP%05d&#34;,
+            &#34;manualPpidEnabled&#34;: man_id,
+            &#34;coordinators&#34;: coords,
+            &#34;cpSites&#34;: site_arr,
+            &#34;consentsWaived&#34;: consentsWaived,
+            &#34;irbId&#34;: eth_cons_id,
+            &#34;anticipatedParticipantsCount&#34;: part_no,
+            &#34;descriptionUrl&#34;: desc_url,
+            &#34;specimenLabelFmt&#34;: &#34;%PPI%.%SP_TYPE%.%SYS_UID%&#34;,
+            &#34;derivativeLabelFmt&#34;: &#34;%PPI%.%SP_TYPE%.%SYS_UID%&#34;,
+            &#34;aliquotLabelFmt&#34;: &#34;%PSPEC_LABEL%.%PSPEC_UID%&#34;,
+            &#34;visitNameFmt&#34;: visitNameFmt,
+            &#34;manualVisitNameEnabled&#34;: man_visit_name,
+            &#34;manualSpecLabelEnabled&#34;: man_spec_label,
+            &#34;aliquotsInSameContainer&#34;: aliquots_in_same,
+            &#34;activityStatus&#34;: activity
+        }
+
+        return json.dumps(CP_reg)
+
+    # Collection Protocol event
+
+    def create_cp_event_json(self, label, point, cp, site, diagnosis, status, activity, unit, code=None):
+
+        params = {
+            &#34;eventLabel&#34;: label,
+            &#34;clinicalDiagnosis&#34;: diagnosis,
+            &#34;clinicalStatus&#34;: status,
+            &#34;collectionProtocol&#34;: cp,
+            &#34;defaultSite&#34;: site,
+            &#34;activityStatus&#34;: activity,
+            &#34;eventPoint&#34;: point,
+            &#34;eventPointUnit&#34;: unit
+        }
+
+        return json.dumps(params)
+
+
+    def create_specimen_json(self, label=None, specimenclass=None, specimentype=None, pathology=None, anatomic=None,
+                            laterality=None, initqty=None, avaqty=None, visitid=None, userid=None, colltime=None,
+                            rectime=None, recqlt=None, lineage=&#39;New&#39;, status=&#39;Collected&#39;, storloc=None, concentration=None,
+                            biohazard=None, comments=None,  collproc=None, conttype=None, extension =None):
+
+        spec = {
+            &#34;label&#34;: label,
+            &#34;specimenClass&#34;: specimenclass,
+            &#34;type&#34;: specimentype,
+            &#34;pathology&#34;: pathology,
+            &#34;anatomicSite&#34;: anatomic,
+            &#34;laterality&#34;: laterality,
+            &#34;initialQty&#34;: initqty,
+            &#34;availableQty&#34;: avaqty,
+            &#34;visitId&#34;: visitid,
+            &#34;status&#34;: status,
+            &#34;storageLocation&#34;: {storloc},
+            &#34;concetration&#34;: concentration,
+            &#34;biohazard&#34;: biohazard,
+            &#34;comments&#34;: comments,
+            &#34;collevent&#34;: {
+                &#34;user&#34;: {&#34;id&#34;: user},
+                    &#34;time&#34;: colltime,
+                    &#34;container&#34;: conttype,
+                    &#34;procedure&#34;: procedure
+                     },
+            &#34;receivedEvent&#34;:{
+                &#34;user&#34;:{&#34;id&#34;: userid},
+                &#34;time&#34;: rectime,
+                &#34;receivedQuality&#34;: recqlt
+            },
+            &#34;extensionDetail&#34;: {extension}
+            }
+
+        return json.dumps(spec)
+
+    def create_extension(self, attrsmap, extensiondict, useudn=&#34;false&#34;):
+
+        data = {
+            &#34;useUdn&#34;: useudn,
+            &#34;attryMap&#34;: attrsmap,
+            &#34;value&#34;: extensiondict
+        }
+
+        return json.dumps(data)
+
+    # Export Institute CSV
+    def create_institue_export_job_json(self):
+
+        institute_json = {&#34;objectType&#34;: &#34;institute&#34;}
+
+        return json.dumps(institute_json)
+
+    # Export Sites CSV
+    def create_site_export_job_json(self, record_ids=None):
+
+        site_json = {&#34;objectType&#34;: &#34;site&#34;}
+
+        return json.dumps(site_json)
+
+    # Export User CSV
+    def create_user_export_job(self):
+
+        user_json = {&#34;objectType&#34;: &#34;user&#34;}
+
+        return json.dumps(user_json)
+
+    # Export CP Registaration CSV
+    def create_cp_export_job_json(self, cp_id=None):
+
+        cp_json = {&#34;objectType&#34;: &#34;cp&#34;, &#34;params&#34;: {&#34;cpId&#34;: cp_id}}
+
+        return json.dumps(cp_json)
+
+    # Export CP Registaration CSV
+    def create_cpr_export_job_json(self, cp_id=None):
+
+        cpr_json = {&#34;objectType&#34;: &#34;cpr&#34;, &#34;params&#34;: {&#34;cpId&#34;: cp_id}}
+
+        return json.dumps(cpr_json)
+
+    # Export Vist CSV
+    def create_visit_export_job_json(self, cp_id=None):
+
+        visit_json = {&#34;objectType&#34;: &#34;specimen&#34;, &#34;params&#34;: {&#34;cpId&#34;: cp_id}}
+
+        return json.dumps(visit_json)
+
+    # Export Specimen CSV
+    def create_specimen_export_job_json(self, cp_id=None):
+
+        specimen_json = {&#34;objectType&#34;: &#34;specimen&#34;, &#34;params&#34;: {&#34;cpId&#34;: cp_id}}
+
+        return json.dumps(specimen_json)
+
+    ##TODO
+
+    # Import collection protocols
+    def create_site_import_job_json(self, record_ids=None):
+
+        site_json = {&#34;objectType&#34;: &#34;site&#34;, &#34;recordIds&#34;: record_ids}
+
+        return json.dumps(site_json)
+    
+    # Create  Any AQL Query
+    def create_aql(self, cpid, aql, rowmode=&#39;OFF&#39;, coloumexpr=&#39;true&#39;, isodate=&#39;true&#39;):
+
+        params = {
+            &#34;cpId&#34; : cpid,
+            &#34;aql&#34; : aql,
+            &#34;wideRowMode&#34; : rowmode,
+            &#34;outputColoumnExprs&#34; : coloumexpr,
+            &#34;outputIsoDateTime&#34; : isodate
+        }
+
+        return json.dumps(params)
+
+    # Execute Saved Query
+    def execute_query(self, start, results, drivingform=&#34;Participant&#34;, rowmode=&#34;OFF&#34;):
+
+        params= {
+            &#34;drivingForm&#34;: drivingform,
+            &#34;wideRowMode&#34;: rowmode,
+            &#34;startAt&#34;: start,
+            &#34;maxResults&#34;:results
+        }
+
+        return json.dumps(params)
+
+    def create_cpr_part_import_job(self, schemaname=None, operation=None, fileid=None,
+                                   dateformat=None, timeformat=None):
+
+        part_cpr_json = {&#34;objectType&#34;: schemaname,
+                    &#34;importType&#34;: operation,
+                    &#34;inputFileId&#34;: fileid,
+                    &#34;dateFormat&#34;:dateformat,
+                    &#34;timeFormat&#34;:timeformat
+                    }
+
+        return json.dumps(part_cpr_json)
+
+    def get_registrations(self, cpid=None, registrationdate=None, ppid=None, name=None, birthdate=None, uid=None, specimen=None,
+                                    includestats=None, startat=None,maxresults=None):
+
+        params = {
+            &#34;cpId&#34;: cpid,
+            &#34;registrationDate&#34;: registrationdate,
+            &#34;ppid&#34;: ppid,
+            &#34;name&#34;: name,
+            &#34;dob&#34;: birthdate,
+            &#34;uid&#34;: uid,
+            &#34;specimen&#34;: specimen,
+            &#34;includeStats&#34;: includestats,
+            &#34;startAt&#34;: startat,
+            &#34;maxResults&#34;: maxresults
+        }
+
+        return json.dumps(params)
+
+    def add_visit_json(self,cprid, name, site,eventid=None,eventlabel=None,ppid=None, cptitle=None, cpshorttitle=None,
+                        diagnosis=None, clinicalstatus=None, activity=None, visitstatus=&#34;COMPLETE&#34;, missedreason=None,
+                        missedby=None, comments=None,pathologynumber=None,cohort=None, visitdate=None, cpid=None):
+
+        params = {
+            &#34;cprId&#34;: cprid,
+            &#34;eventId&#34;: eventid,
+            &#34;eventLabel&#34;: eventlabel,
+            &#34;ppid&#34;: ppid,
+            &#34;cpTitle&#34;: cptitle,
+            &#34;cpShortTitle&#34;:cpshorttitle,
+            &#34;cpId&#34;: cpid,
+            &#34;name&#34;: name,
+            &#34;clinicalDiagnoses&#34;: diagnosis,
+            &#34;clinicalStatus&#34;: clinicalstatus,
+            &#34;activityStatus&#34;: activity,
+            &#34;site&#34;: site,
+            &#34;status&#34;: visitstatus,
+            &#34;missedReason&#34;: missedreason,
+            &#34;missedBy&#34;: missedby,
+            &#34;comments&#34;: comments,
+            &#34;surgicalPathologyNumber&#34;: pathologynumber,
+            &#34;cohort&#34;: cohort,
+            &#34;visitDate&#34;: visitdate
+        }
+        
+        return json.dumps(params)
+
+    def storage_location_json(self, id=None, name=None, xpos=None, ypos=None):
+
+        params = {
+            &#34;id&#34;: id,
+            &#34;name&#34;: name,
+            &#34;positionX&#34;: xpos,
+            &#34;positionY&#34;: ypos
+        }
+
+        return json.dumps(params)
+
+    def create_cp_csv_export_job(self, objecttype, cpid, entitytype=None, formname=None):
+
+        data = {
+            &#34;objectType&#34;: objecttype,
+            &#34;params&#34;:{
+                &#34;entityType&#34;: entitytype,
+                &#34;formName&#34;: formname,
+                &#34;cpId&#34;: cpid
+            }
+        }
+
+        return json.dumps(data)
+
+    def merge_cps(self, src_cp, trg_cp):
+        
+        data = {
+            &#34;srcCpShortTitle&#34;: src_cp,
+            &#34;tgtCpShortTitle&#34;: trg_cp
+        }
+
+        return json.dumps(data)
+
+    def create_institute(self, institutename):
+
+        data = {
+            &#34;name&#34;: institutename
+        }
+
+        return json.dumps(data)
+
+    def get_participants(self, lastname = None, uid = None, birthdate = None, pmi = None, empi = None, reqreginfo = None):
+
+        data ={
+            &#34;lastName&#34; : lastname,
+            &#34;pmi&#34;:{
+                &#34;mrn&#34; : str(pmi[0]),
+                &#34;siteName&#34; : pmi[1]
+            },
+            &#34;birthDate&#34; : birthdate,
+            &#34;uid&#34; : uid,
+            &#34;empi&#34; : empi,
+            &#34;reqRegInfo&#34; : reqreginfo
+        }
+        
+        return json.dumps(data)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="OpenSpecimenAPIconnector.os_core.jsons.Json_factory"><code class="flex name class">
+<span>class <span class="ident">Json_factory</span></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Json_factory():
+
+    def __init__(self):
+        pass
+
+    ##TODO Decide upon way of json creation/storage for OS operations, the current idea is to set mandatory values to
+    ## boolean true by default. than a random generator can create the values in fixed order and they can be set
+    ## according to the boolean. Even better would be the restriction to use pandas data frames directly and create the
+    ## json once data entry is done. Another important question is how to deal with custom value fields in various cases.
+    ## Further, where possible, the csv import option should be used and json creation should be left to the numerous
+    ## methods within Open Specimen
+    ## first approach to be overhauled
+
+    # creation jsons:
+    # participant
+    def create_participant_json(self, fn=True, ln=True, birthdate=True, gender=True, cp_id=None, reg_date=True,
+                            pp_id=True, death_date=None, vital_status=&#34;Unknown&#34;, pmis=None, eth=None,
+                            activity=&#34;Active&#34;, phi=&#34;true&#34;, registeredCps=None, cpId=-1, reqRegInfo=False,
+                            forceDelete=False):
+
+        &#39;&#39;&#39;
+        :param fn:
+        :param ln:
+        :param birthdate:
+        :param gender:
+        :param cp_id:
+        :param reg_date:
+        :param pp_id:
+        :param death_date:
+        :param vital_status:
+        :param pmis:
+        :param eth:
+        :param activity:
+        :param phi:
+        :param registeredCps:
+        :param cpId:
+        :param reqRegInfo:
+        :param forceDelete:
+        :return:
+        &#39;&#39;&#39;
+
+        if registeredCps is None:
+            registeredCps = []
+
+        participantRegistration = {
+            &#34;participant&#34;: {
+                &#34;firstName&#34;: fn,
+                &#34;lastName&#34;: ln,
+                &#34;middleName&#34;: &#34;&#34;,
+                &#34;birthDate&#34;: birthdate,
+                &#34;deathDate&#34;: death_date,
+                &#34;gender&#34;: gender,
+                &#34;races&#34;: [],
+                &#34;vitalStatus&#34;: vital_status,
+                &#34;pmis&#34;: pmis,
+                &#34;ethnicities&#34;: eth,
+                &#34;activityStatus&#34;: activity,
+                &#34;phiAccess&#34;: phi,
+                &#34;registeredCps&#34;: registeredCps,
+                &#34;cpId&#34;: cpId,
+                &#34;reqRegInfo&#34;: reqRegInfo,
+                &#34;forceDelete&#34;: forceDelete
+            },
+            &#34;cpId&#34;: cp_id,
+            &#34;registrationDate&#34;: reg_date,
+            &#34;ppid&#34;: pp_id
+        }
+
+        return participantRegistration
+
+    # Collection Protocoll
+
+    def create_CP_json(self, short_title, title, pi_mail, time_start, time_end, sites, man_id=False, coords=None,
+                           consentsWaived=False,eth_cons_id=None, part_no=None, desc_url=None, visitNameFmt=None,
+                           man_visit_name=False, man_spec_label=True, aliquots_in_same=None, activity=&#34;Active&#34;):
+
+        &#39;&#39;&#39;
+        :param short_title:
+        :param title:
+        :param pi_mail:
+        :param sites:
+        :param man_id:
+        :param coords:
+        :param consentsWaived:
+        :param eth_cons_id:
+        :param part_no:
+        :param desc_url:
+        :param visitNameFmt:
+        :param man_visit_name:
+        :param man_spec_label:
+        :param aliquots_in_same:
+        :param activity:
+        :return:
+        &#39;&#39;&#39;
+
+        site_arr = []
+        for item in sites:
+            site_arr.append(
+                {
+                    &#34;siteName&#34;: item[0],
+                    &#34;code&#34;: item[1]
+                }
+            )
+
+        CP_reg = {
+            &#34;shortTitle&#34;: short_title,
+            &#34;title&#34;: title,
+            &#34;code&#34;: None,
+            &#34;principalInvestigator&#34;:
+                {
+                    &#34;loginName&#34;: pi_mail,
+                    &#34;domain&#34;: &#34;openspecimen&#34;
+                },
+            &#34;startDate&#34;: time_start,
+            &#34;endDate&#34;: time_end,
+            &#34;ppidFmt&#34;: &#34;DWP%05d&#34;,
+            &#34;manualPpidEnabled&#34;: man_id,
+            &#34;coordinators&#34;: coords,
+            &#34;cpSites&#34;: site_arr,
+            &#34;consentsWaived&#34;: consentsWaived,
+            &#34;irbId&#34;: eth_cons_id,
+            &#34;anticipatedParticipantsCount&#34;: part_no,
+            &#34;descriptionUrl&#34;: desc_url,
+            &#34;specimenLabelFmt&#34;: &#34;%PPI%.%SP_TYPE%.%SYS_UID%&#34;,
+            &#34;derivativeLabelFmt&#34;: &#34;%PPI%.%SP_TYPE%.%SYS_UID%&#34;,
+            &#34;aliquotLabelFmt&#34;: &#34;%PSPEC_LABEL%.%PSPEC_UID%&#34;,
+            &#34;visitNameFmt&#34;: visitNameFmt,
+            &#34;manualVisitNameEnabled&#34;: man_visit_name,
+            &#34;manualSpecLabelEnabled&#34;: man_spec_label,
+            &#34;aliquotsInSameContainer&#34;: aliquots_in_same,
+            &#34;activityStatus&#34;: activity
+        }
+
+        return json.dumps(CP_reg)
+
+    # Collection Protocol event
+
+    def create_cp_event_json(self, label, point, cp, site, diagnosis, status, activity, unit, code=None):
+
+        params = {
+            &#34;eventLabel&#34;: label,
+            &#34;clinicalDiagnosis&#34;: diagnosis,
+            &#34;clinicalStatus&#34;: status,
+            &#34;collectionProtocol&#34;: cp,
+            &#34;defaultSite&#34;: site,
+            &#34;activityStatus&#34;: activity,
+            &#34;eventPoint&#34;: point,
+            &#34;eventPointUnit&#34;: unit
+        }
+
+        return json.dumps(params)
+
+
+    def create_specimen_json(self, label=None, specimenclass=None, specimentype=None, pathology=None, anatomic=None,
+                            laterality=None, initqty=None, avaqty=None, visitid=None, userid=None, colltime=None,
+                            rectime=None, recqlt=None, lineage=&#39;New&#39;, status=&#39;Collected&#39;, storloc=None, concentration=None,
+                            biohazard=None, comments=None,  collproc=None, conttype=None, extension =None):
+
+        spec = {
+            &#34;label&#34;: label,
+            &#34;specimenClass&#34;: specimenclass,
+            &#34;type&#34;: specimentype,
+            &#34;pathology&#34;: pathology,
+            &#34;anatomicSite&#34;: anatomic,
+            &#34;laterality&#34;: laterality,
+            &#34;initialQty&#34;: initqty,
+            &#34;availableQty&#34;: avaqty,
+            &#34;visitId&#34;: visitid,
+            &#34;status&#34;: status,
+            &#34;storageLocation&#34;: {storloc},
+            &#34;concetration&#34;: concentration,
+            &#34;biohazard&#34;: biohazard,
+            &#34;comments&#34;: comments,
+            &#34;collevent&#34;: {
+                &#34;user&#34;: {&#34;id&#34;: user},
+                    &#34;time&#34;: colltime,
+                    &#34;container&#34;: conttype,
+                    &#34;procedure&#34;: procedure
+                     },
+            &#34;receivedEvent&#34;:{
+                &#34;user&#34;:{&#34;id&#34;: userid},
+                &#34;time&#34;: rectime,
+                &#34;receivedQuality&#34;: recqlt
+            },
+            &#34;extensionDetail&#34;: {extension}
+            }
+
+        return json.dumps(spec)
+
+    def create_extension(self, attrsmap, extensiondict, useudn=&#34;false&#34;):
+
+        data = {
+            &#34;useUdn&#34;: useudn,
+            &#34;attryMap&#34;: attrsmap,
+            &#34;value&#34;: extensiondict
+        }
+
+        return json.dumps(data)
+
+    # Export Institute CSV
+    def create_institue_export_job_json(self):
+
+        institute_json = {&#34;objectType&#34;: &#34;institute&#34;}
+
+        return json.dumps(institute_json)
+
+    # Export Sites CSV
+    def create_site_export_job_json(self, record_ids=None):
+
+        site_json = {&#34;objectType&#34;: &#34;site&#34;}
+
+        return json.dumps(site_json)
+
+    # Export User CSV
+    def create_user_export_job(self):
+
+        user_json = {&#34;objectType&#34;: &#34;user&#34;}
+
+        return json.dumps(user_json)
+
+    # Export CP Registaration CSV
+    def create_cp_export_job_json(self, cp_id=None):
+
+        cp_json = {&#34;objectType&#34;: &#34;cp&#34;, &#34;params&#34;: {&#34;cpId&#34;: cp_id}}
+
+        return json.dumps(cp_json)
+
+    # Export CP Registaration CSV
+    def create_cpr_export_job_json(self, cp_id=None):
+
+        cpr_json = {&#34;objectType&#34;: &#34;cpr&#34;, &#34;params&#34;: {&#34;cpId&#34;: cp_id}}
+
+        return json.dumps(cpr_json)
+
+    # Export Vist CSV
+    def create_visit_export_job_json(self, cp_id=None):
+
+        visit_json = {&#34;objectType&#34;: &#34;specimen&#34;, &#34;params&#34;: {&#34;cpId&#34;: cp_id}}
+
+        return json.dumps(visit_json)
+
+    # Export Specimen CSV
+    def create_specimen_export_job_json(self, cp_id=None):
+
+        specimen_json = {&#34;objectType&#34;: &#34;specimen&#34;, &#34;params&#34;: {&#34;cpId&#34;: cp_id}}
+
+        return json.dumps(specimen_json)
+
+    ##TODO
+
+    # Import collection protocols
+    def create_site_import_job_json(self, record_ids=None):
+
+        site_json = {&#34;objectType&#34;: &#34;site&#34;, &#34;recordIds&#34;: record_ids}
+
+        return json.dumps(site_json)
+    
+    # Create  Any AQL Query
+    def create_aql(self, cpid, aql, rowmode=&#39;OFF&#39;, coloumexpr=&#39;true&#39;, isodate=&#39;true&#39;):
+
+        params = {
+            &#34;cpId&#34; : cpid,
+            &#34;aql&#34; : aql,
+            &#34;wideRowMode&#34; : rowmode,
+            &#34;outputColoumnExprs&#34; : coloumexpr,
+            &#34;outputIsoDateTime&#34; : isodate
+        }
+
+        return json.dumps(params)
+
+    # Execute Saved Query
+    def execute_query(self, start, results, drivingform=&#34;Participant&#34;, rowmode=&#34;OFF&#34;):
+
+        params= {
+            &#34;drivingForm&#34;: drivingform,
+            &#34;wideRowMode&#34;: rowmode,
+            &#34;startAt&#34;: start,
+            &#34;maxResults&#34;:results
+        }
+
+        return json.dumps(params)
+
+    def create_cpr_part_import_job(self, schemaname=None, operation=None, fileid=None,
+                                   dateformat=None, timeformat=None):
+
+        part_cpr_json = {&#34;objectType&#34;: schemaname,
+                    &#34;importType&#34;: operation,
+                    &#34;inputFileId&#34;: fileid,
+                    &#34;dateFormat&#34;:dateformat,
+                    &#34;timeFormat&#34;:timeformat
+                    }
+
+        return json.dumps(part_cpr_json)
+
+    def get_registrations(self, cpid=None, registrationdate=None, ppid=None, name=None, birthdate=None, uid=None, specimen=None,
+                                    includestats=None, startat=None,maxresults=None):
+
+        params = {
+            &#34;cpId&#34;: cpid,
+            &#34;registrationDate&#34;: registrationdate,
+            &#34;ppid&#34;: ppid,
+            &#34;name&#34;: name,
+            &#34;dob&#34;: birthdate,
+            &#34;uid&#34;: uid,
+            &#34;specimen&#34;: specimen,
+            &#34;includeStats&#34;: includestats,
+            &#34;startAt&#34;: startat,
+            &#34;maxResults&#34;: maxresults
+        }
+
+        return json.dumps(params)
+
+    def add_visit_json(self,cprid, name, site,eventid=None,eventlabel=None,ppid=None, cptitle=None, cpshorttitle=None,
+                        diagnosis=None, clinicalstatus=None, activity=None, visitstatus=&#34;COMPLETE&#34;, missedreason=None,
+                        missedby=None, comments=None,pathologynumber=None,cohort=None, visitdate=None, cpid=None):
+
+        params = {
+            &#34;cprId&#34;: cprid,
+            &#34;eventId&#34;: eventid,
+            &#34;eventLabel&#34;: eventlabel,
+            &#34;ppid&#34;: ppid,
+            &#34;cpTitle&#34;: cptitle,
+            &#34;cpShortTitle&#34;:cpshorttitle,
+            &#34;cpId&#34;: cpid,
+            &#34;name&#34;: name,
+            &#34;clinicalDiagnoses&#34;: diagnosis,
+            &#34;clinicalStatus&#34;: clinicalstatus,
+            &#34;activityStatus&#34;: activity,
+            &#34;site&#34;: site,
+            &#34;status&#34;: visitstatus,
+            &#34;missedReason&#34;: missedreason,
+            &#34;missedBy&#34;: missedby,
+            &#34;comments&#34;: comments,
+            &#34;surgicalPathologyNumber&#34;: pathologynumber,
+            &#34;cohort&#34;: cohort,
+            &#34;visitDate&#34;: visitdate
+        }
+        
+        return json.dumps(params)
+
+    def storage_location_json(self, id=None, name=None, xpos=None, ypos=None):
+
+        params = {
+            &#34;id&#34;: id,
+            &#34;name&#34;: name,
+            &#34;positionX&#34;: xpos,
+            &#34;positionY&#34;: ypos
+        }
+
+        return json.dumps(params)
+
+    def create_cp_csv_export_job(self, objecttype, cpid, entitytype=None, formname=None):
+
+        data = {
+            &#34;objectType&#34;: objecttype,
+            &#34;params&#34;:{
+                &#34;entityType&#34;: entitytype,
+                &#34;formName&#34;: formname,
+                &#34;cpId&#34;: cpid
+            }
+        }
+
+        return json.dumps(data)
+
+    def merge_cps(self, src_cp, trg_cp):
+        
+        data = {
+            &#34;srcCpShortTitle&#34;: src_cp,
+            &#34;tgtCpShortTitle&#34;: trg_cp
+        }
+
+        return json.dumps(data)
+
+    def create_institute(self, institutename):
+
+        data = {
+            &#34;name&#34;: institutename
+        }
+
+        return json.dumps(data)
+
+    def get_participants(self, lastname = None, uid = None, birthdate = None, pmi = None, empi = None, reqreginfo = None):
+
+        data ={
+            &#34;lastName&#34; : lastname,
+            &#34;pmi&#34;:{
+                &#34;mrn&#34; : str(pmi[0]),
+                &#34;siteName&#34; : pmi[1]
+            },
+            &#34;birthDate&#34; : birthdate,
+            &#34;uid&#34; : uid,
+            &#34;empi&#34; : empi,
+            &#34;reqRegInfo&#34; : reqreginfo
+        }
+        
+        return json.dumps(data)</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.add_visit_json"><code class="name flex">
+<span>def <span class="ident">add_visit_json</span></span>(<span>self, cprid, name, site, eventid=None, eventlabel=None, ppid=None, cptitle=None, cpshorttitle=None, diagnosis=None, clinicalstatus=None, activity=None, visitstatus='COMPLETE', missedreason=None, missedby=None, comments=None, pathologynumber=None, cohort=None, visitdate=None, cpid=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_visit_json(self,cprid, name, site,eventid=None,eventlabel=None,ppid=None, cptitle=None, cpshorttitle=None,
+                    diagnosis=None, clinicalstatus=None, activity=None, visitstatus=&#34;COMPLETE&#34;, missedreason=None,
+                    missedby=None, comments=None,pathologynumber=None,cohort=None, visitdate=None, cpid=None):
+
+    params = {
+        &#34;cprId&#34;: cprid,
+        &#34;eventId&#34;: eventid,
+        &#34;eventLabel&#34;: eventlabel,
+        &#34;ppid&#34;: ppid,
+        &#34;cpTitle&#34;: cptitle,
+        &#34;cpShortTitle&#34;:cpshorttitle,
+        &#34;cpId&#34;: cpid,
+        &#34;name&#34;: name,
+        &#34;clinicalDiagnoses&#34;: diagnosis,
+        &#34;clinicalStatus&#34;: clinicalstatus,
+        &#34;activityStatus&#34;: activity,
+        &#34;site&#34;: site,
+        &#34;status&#34;: visitstatus,
+        &#34;missedReason&#34;: missedreason,
+        &#34;missedBy&#34;: missedby,
+        &#34;comments&#34;: comments,
+        &#34;surgicalPathologyNumber&#34;: pathologynumber,
+        &#34;cohort&#34;: cohort,
+        &#34;visitDate&#34;: visitdate
+    }
+    
+    return json.dumps(params)</code></pre>
+</details>
+</dd>
+<dt id="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_CP_json"><code class="name flex">
+<span>def <span class="ident">create_CP_json</span></span>(<span>self, short_title, title, pi_mail, time_start, time_end, sites, man_id=False, coords=None, consentsWaived=False, eth_cons_id=None, part_no=None, desc_url=None, visitNameFmt=None, man_visit_name=False, man_spec_label=True, aliquots_in_same=None, activity='Active')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>:param short_title:
+:param title:
+:param pi_mail:
+:param sites:
+:param man_id:
+:param coords:
+:param consentsWaived:
+:param eth_cons_id:
+:param part_no:
+:param desc_url:
+:param visitNameFmt:
+:param man_visit_name:
+:param man_spec_label:
+:param aliquots_in_same:
+:param activity:
+:return:</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_CP_json(self, short_title, title, pi_mail, time_start, time_end, sites, man_id=False, coords=None,
+                       consentsWaived=False,eth_cons_id=None, part_no=None, desc_url=None, visitNameFmt=None,
+                       man_visit_name=False, man_spec_label=True, aliquots_in_same=None, activity=&#34;Active&#34;):
+
+    &#39;&#39;&#39;
+    :param short_title:
+    :param title:
+    :param pi_mail:
+    :param sites:
+    :param man_id:
+    :param coords:
+    :param consentsWaived:
+    :param eth_cons_id:
+    :param part_no:
+    :param desc_url:
+    :param visitNameFmt:
+    :param man_visit_name:
+    :param man_spec_label:
+    :param aliquots_in_same:
+    :param activity:
+    :return:
+    &#39;&#39;&#39;
+
+    site_arr = []
+    for item in sites:
+        site_arr.append(
+            {
+                &#34;siteName&#34;: item[0],
+                &#34;code&#34;: item[1]
+            }
+        )
+
+    CP_reg = {
+        &#34;shortTitle&#34;: short_title,
+        &#34;title&#34;: title,
+        &#34;code&#34;: None,
+        &#34;principalInvestigator&#34;:
+            {
+                &#34;loginName&#34;: pi_mail,
+                &#34;domain&#34;: &#34;openspecimen&#34;
+            },
+        &#34;startDate&#34;: time_start,
+        &#34;endDate&#34;: time_end,
+        &#34;ppidFmt&#34;: &#34;DWP%05d&#34;,
+        &#34;manualPpidEnabled&#34;: man_id,
+        &#34;coordinators&#34;: coords,
+        &#34;cpSites&#34;: site_arr,
+        &#34;consentsWaived&#34;: consentsWaived,
+        &#34;irbId&#34;: eth_cons_id,
+        &#34;anticipatedParticipantsCount&#34;: part_no,
+        &#34;descriptionUrl&#34;: desc_url,
+        &#34;specimenLabelFmt&#34;: &#34;%PPI%.%SP_TYPE%.%SYS_UID%&#34;,
+        &#34;derivativeLabelFmt&#34;: &#34;%PPI%.%SP_TYPE%.%SYS_UID%&#34;,
+        &#34;aliquotLabelFmt&#34;: &#34;%PSPEC_LABEL%.%PSPEC_UID%&#34;,
+        &#34;visitNameFmt&#34;: visitNameFmt,
+        &#34;manualVisitNameEnabled&#34;: man_visit_name,
+        &#34;manualSpecLabelEnabled&#34;: man_spec_label,
+        &#34;aliquotsInSameContainer&#34;: aliquots_in_same,
+        &#34;activityStatus&#34;: activity
+    }
+
+    return json.dumps(CP_reg)</code></pre>
+</details>
+</dd>
+<dt id="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_aql"><code class="name flex">
+<span>def <span class="ident">create_aql</span></span>(<span>self, cpid, aql, rowmode='OFF', coloumexpr='true', isodate='true')</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_aql(self, cpid, aql, rowmode=&#39;OFF&#39;, coloumexpr=&#39;true&#39;, isodate=&#39;true&#39;):
+
+    params = {
+        &#34;cpId&#34; : cpid,
+        &#34;aql&#34; : aql,
+        &#34;wideRowMode&#34; : rowmode,
+        &#34;outputColoumnExprs&#34; : coloumexpr,
+        &#34;outputIsoDateTime&#34; : isodate
+    }
+
+    return json.dumps(params)</code></pre>
+</details>
+</dd>
+<dt id="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_cp_csv_export_job"><code class="name flex">
+<span>def <span class="ident">create_cp_csv_export_job</span></span>(<span>self, objecttype, cpid, entitytype=None, formname=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_cp_csv_export_job(self, objecttype, cpid, entitytype=None, formname=None):
+
+    data = {
+        &#34;objectType&#34;: objecttype,
+        &#34;params&#34;:{
+            &#34;entityType&#34;: entitytype,
+            &#34;formName&#34;: formname,
+            &#34;cpId&#34;: cpid
+        }
+    }
+
+    return json.dumps(data)</code></pre>
+</details>
+</dd>
+<dt id="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_cp_event_json"><code class="name flex">
+<span>def <span class="ident">create_cp_event_json</span></span>(<span>self, label, point, cp, site, diagnosis, status, activity, unit, code=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_cp_event_json(self, label, point, cp, site, diagnosis, status, activity, unit, code=None):
+
+    params = {
+        &#34;eventLabel&#34;: label,
+        &#34;clinicalDiagnosis&#34;: diagnosis,
+        &#34;clinicalStatus&#34;: status,
+        &#34;collectionProtocol&#34;: cp,
+        &#34;defaultSite&#34;: site,
+        &#34;activityStatus&#34;: activity,
+        &#34;eventPoint&#34;: point,
+        &#34;eventPointUnit&#34;: unit
+    }
+
+    return json.dumps(params)</code></pre>
+</details>
+</dd>
+<dt id="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_cp_export_job_json"><code class="name flex">
+<span>def <span class="ident">create_cp_export_job_json</span></span>(<span>self, cp_id=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_cp_export_job_json(self, cp_id=None):
+
+    cp_json = {&#34;objectType&#34;: &#34;cp&#34;, &#34;params&#34;: {&#34;cpId&#34;: cp_id}}
+
+    return json.dumps(cp_json)</code></pre>
+</details>
+</dd>
+<dt id="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_cpr_export_job_json"><code class="name flex">
+<span>def <span class="ident">create_cpr_export_job_json</span></span>(<span>self, cp_id=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_cpr_export_job_json(self, cp_id=None):
+
+    cpr_json = {&#34;objectType&#34;: &#34;cpr&#34;, &#34;params&#34;: {&#34;cpId&#34;: cp_id}}
+
+    return json.dumps(cpr_json)</code></pre>
+</details>
+</dd>
+<dt id="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_cpr_part_import_job"><code class="name flex">
+<span>def <span class="ident">create_cpr_part_import_job</span></span>(<span>self, schemaname=None, operation=None, fileid=None, dateformat=None, timeformat=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_cpr_part_import_job(self, schemaname=None, operation=None, fileid=None,
+                               dateformat=None, timeformat=None):
+
+    part_cpr_json = {&#34;objectType&#34;: schemaname,
+                &#34;importType&#34;: operation,
+                &#34;inputFileId&#34;: fileid,
+                &#34;dateFormat&#34;:dateformat,
+                &#34;timeFormat&#34;:timeformat
+                }
+
+    return json.dumps(part_cpr_json)</code></pre>
+</details>
+</dd>
+<dt id="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_extension"><code class="name flex">
+<span>def <span class="ident">create_extension</span></span>(<span>self, attrsmap, extensiondict, useudn='false')</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_extension(self, attrsmap, extensiondict, useudn=&#34;false&#34;):
+
+    data = {
+        &#34;useUdn&#34;: useudn,
+        &#34;attryMap&#34;: attrsmap,
+        &#34;value&#34;: extensiondict
+    }
+
+    return json.dumps(data)</code></pre>
+</details>
+</dd>
+<dt id="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_institue_export_job_json"><code class="name flex">
+<span>def <span class="ident">create_institue_export_job_json</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_institue_export_job_json(self):
+
+    institute_json = {&#34;objectType&#34;: &#34;institute&#34;}
+
+    return json.dumps(institute_json)</code></pre>
+</details>
+</dd>
+<dt id="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_institute"><code class="name flex">
+<span>def <span class="ident">create_institute</span></span>(<span>self, institutename)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_institute(self, institutename):
+
+    data = {
+        &#34;name&#34;: institutename
+    }
+
+    return json.dumps(data)</code></pre>
+</details>
+</dd>
+<dt id="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_participant_json"><code class="name flex">
+<span>def <span class="ident">create_participant_json</span></span>(<span>self, fn=True, ln=True, birthdate=True, gender=True, cp_id=None, reg_date=True, pp_id=True, death_date=None, vital_status='Unknown', pmis=None, eth=None, activity='Active', phi='true', registeredCps=None, cpId=-1, reqRegInfo=False, forceDelete=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>:param fn:
+:param ln:
+:param birthdate:
+:param gender:
+:param cp_id:
+:param reg_date:
+:param pp_id:
+:param death_date:
+:param vital_status:
+:param pmis:
+:param eth:
+:param activity:
+:param phi:
+:param registeredCps:
+:param cpId:
+:param reqRegInfo:
+:param forceDelete:
+:return:</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_participant_json(self, fn=True, ln=True, birthdate=True, gender=True, cp_id=None, reg_date=True,
+                        pp_id=True, death_date=None, vital_status=&#34;Unknown&#34;, pmis=None, eth=None,
+                        activity=&#34;Active&#34;, phi=&#34;true&#34;, registeredCps=None, cpId=-1, reqRegInfo=False,
+                        forceDelete=False):
+
+    &#39;&#39;&#39;
+    :param fn:
+    :param ln:
+    :param birthdate:
+    :param gender:
+    :param cp_id:
+    :param reg_date:
+    :param pp_id:
+    :param death_date:
+    :param vital_status:
+    :param pmis:
+    :param eth:
+    :param activity:
+    :param phi:
+    :param registeredCps:
+    :param cpId:
+    :param reqRegInfo:
+    :param forceDelete:
+    :return:
+    &#39;&#39;&#39;
+
+    if registeredCps is None:
+        registeredCps = []
+
+    participantRegistration = {
+        &#34;participant&#34;: {
+            &#34;firstName&#34;: fn,
+            &#34;lastName&#34;: ln,
+            &#34;middleName&#34;: &#34;&#34;,
+            &#34;birthDate&#34;: birthdate,
+            &#34;deathDate&#34;: death_date,
+            &#34;gender&#34;: gender,
+            &#34;races&#34;: [],
+            &#34;vitalStatus&#34;: vital_status,
+            &#34;pmis&#34;: pmis,
+            &#34;ethnicities&#34;: eth,
+            &#34;activityStatus&#34;: activity,
+            &#34;phiAccess&#34;: phi,
+            &#34;registeredCps&#34;: registeredCps,
+            &#34;cpId&#34;: cpId,
+            &#34;reqRegInfo&#34;: reqRegInfo,
+            &#34;forceDelete&#34;: forceDelete
+        },
+        &#34;cpId&#34;: cp_id,
+        &#34;registrationDate&#34;: reg_date,
+        &#34;ppid&#34;: pp_id
+    }
+
+    return participantRegistration</code></pre>
+</details>
+</dd>
+<dt id="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_site_export_job_json"><code class="name flex">
+<span>def <span class="ident">create_site_export_job_json</span></span>(<span>self, record_ids=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_site_export_job_json(self, record_ids=None):
+
+    site_json = {&#34;objectType&#34;: &#34;site&#34;}
+
+    return json.dumps(site_json)</code></pre>
+</details>
+</dd>
+<dt id="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_site_import_job_json"><code class="name flex">
+<span>def <span class="ident">create_site_import_job_json</span></span>(<span>self, record_ids=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_site_import_job_json(self, record_ids=None):
+
+    site_json = {&#34;objectType&#34;: &#34;site&#34;, &#34;recordIds&#34;: record_ids}
+
+    return json.dumps(site_json)</code></pre>
+</details>
+</dd>
+<dt id="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_specimen_export_job_json"><code class="name flex">
+<span>def <span class="ident">create_specimen_export_job_json</span></span>(<span>self, cp_id=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_specimen_export_job_json(self, cp_id=None):
+
+    specimen_json = {&#34;objectType&#34;: &#34;specimen&#34;, &#34;params&#34;: {&#34;cpId&#34;: cp_id}}
+
+    return json.dumps(specimen_json)</code></pre>
+</details>
+</dd>
+<dt id="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_specimen_json"><code class="name flex">
+<span>def <span class="ident">create_specimen_json</span></span>(<span>self, label=None, specimenclass=None, specimentype=None, pathology=None, anatomic=None, laterality=None, initqty=None, avaqty=None, visitid=None, userid=None, colltime=None, rectime=None, recqlt=None, lineage='New', status='Collected', storloc=None, concentration=None, biohazard=None, comments=None, collproc=None, conttype=None, extension=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_specimen_json(self, label=None, specimenclass=None, specimentype=None, pathology=None, anatomic=None,
+                        laterality=None, initqty=None, avaqty=None, visitid=None, userid=None, colltime=None,
+                        rectime=None, recqlt=None, lineage=&#39;New&#39;, status=&#39;Collected&#39;, storloc=None, concentration=None,
+                        biohazard=None, comments=None,  collproc=None, conttype=None, extension =None):
+
+    spec = {
+        &#34;label&#34;: label,
+        &#34;specimenClass&#34;: specimenclass,
+        &#34;type&#34;: specimentype,
+        &#34;pathology&#34;: pathology,
+        &#34;anatomicSite&#34;: anatomic,
+        &#34;laterality&#34;: laterality,
+        &#34;initialQty&#34;: initqty,
+        &#34;availableQty&#34;: avaqty,
+        &#34;visitId&#34;: visitid,
+        &#34;status&#34;: status,
+        &#34;storageLocation&#34;: {storloc},
+        &#34;concetration&#34;: concentration,
+        &#34;biohazard&#34;: biohazard,
+        &#34;comments&#34;: comments,
+        &#34;collevent&#34;: {
+            &#34;user&#34;: {&#34;id&#34;: user},
+                &#34;time&#34;: colltime,
+                &#34;container&#34;: conttype,
+                &#34;procedure&#34;: procedure
+                 },
+        &#34;receivedEvent&#34;:{
+            &#34;user&#34;:{&#34;id&#34;: userid},
+            &#34;time&#34;: rectime,
+            &#34;receivedQuality&#34;: recqlt
+        },
+        &#34;extensionDetail&#34;: {extension}
+        }
+
+    return json.dumps(spec)</code></pre>
+</details>
+</dd>
+<dt id="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_user_export_job"><code class="name flex">
+<span>def <span class="ident">create_user_export_job</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_user_export_job(self):
+
+    user_json = {&#34;objectType&#34;: &#34;user&#34;}
+
+    return json.dumps(user_json)</code></pre>
+</details>
+</dd>
+<dt id="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_visit_export_job_json"><code class="name flex">
+<span>def <span class="ident">create_visit_export_job_json</span></span>(<span>self, cp_id=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_visit_export_job_json(self, cp_id=None):
+
+    visit_json = {&#34;objectType&#34;: &#34;specimen&#34;, &#34;params&#34;: {&#34;cpId&#34;: cp_id}}
+
+    return json.dumps(visit_json)</code></pre>
+</details>
+</dd>
+<dt id="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.execute_query"><code class="name flex">
+<span>def <span class="ident">execute_query</span></span>(<span>self, start, results, drivingform='Participant', rowmode='OFF')</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def execute_query(self, start, results, drivingform=&#34;Participant&#34;, rowmode=&#34;OFF&#34;):
+
+    params= {
+        &#34;drivingForm&#34;: drivingform,
+        &#34;wideRowMode&#34;: rowmode,
+        &#34;startAt&#34;: start,
+        &#34;maxResults&#34;:results
+    }
+
+    return json.dumps(params)</code></pre>
+</details>
+</dd>
+<dt id="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.get_participants"><code class="name flex">
+<span>def <span class="ident">get_participants</span></span>(<span>self, lastname=None, uid=None, birthdate=None, pmi=None, empi=None, reqreginfo=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_participants(self, lastname = None, uid = None, birthdate = None, pmi = None, empi = None, reqreginfo = None):
+
+    data ={
+        &#34;lastName&#34; : lastname,
+        &#34;pmi&#34;:{
+            &#34;mrn&#34; : str(pmi[0]),
+            &#34;siteName&#34; : pmi[1]
+        },
+        &#34;birthDate&#34; : birthdate,
+        &#34;uid&#34; : uid,
+        &#34;empi&#34; : empi,
+        &#34;reqRegInfo&#34; : reqreginfo
+    }
+    
+    return json.dumps(data)</code></pre>
+</details>
+</dd>
+<dt id="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.get_registrations"><code class="name flex">
+<span>def <span class="ident">get_registrations</span></span>(<span>self, cpid=None, registrationdate=None, ppid=None, name=None, birthdate=None, uid=None, specimen=None, includestats=None, startat=None, maxresults=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_registrations(self, cpid=None, registrationdate=None, ppid=None, name=None, birthdate=None, uid=None, specimen=None,
+                                includestats=None, startat=None,maxresults=None):
+
+    params = {
+        &#34;cpId&#34;: cpid,
+        &#34;registrationDate&#34;: registrationdate,
+        &#34;ppid&#34;: ppid,
+        &#34;name&#34;: name,
+        &#34;dob&#34;: birthdate,
+        &#34;uid&#34;: uid,
+        &#34;specimen&#34;: specimen,
+        &#34;includeStats&#34;: includestats,
+        &#34;startAt&#34;: startat,
+        &#34;maxResults&#34;: maxresults
+    }
+
+    return json.dumps(params)</code></pre>
+</details>
+</dd>
+<dt id="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.merge_cps"><code class="name flex">
+<span>def <span class="ident">merge_cps</span></span>(<span>self, src_cp, trg_cp)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def merge_cps(self, src_cp, trg_cp):
+    
+    data = {
+        &#34;srcCpShortTitle&#34;: src_cp,
+        &#34;tgtCpShortTitle&#34;: trg_cp
+    }
+
+    return json.dumps(data)</code></pre>
+</details>
+</dd>
+<dt id="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.storage_location_json"><code class="name flex">
+<span>def <span class="ident">storage_location_json</span></span>(<span>self, id=None, name=None, xpos=None, ypos=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def storage_location_json(self, id=None, name=None, xpos=None, ypos=None):
+
+    params = {
+        &#34;id&#34;: id,
+        &#34;name&#34;: name,
+        &#34;positionX&#34;: xpos,
+        &#34;positionY&#34;: ypos
+    }
+
+    return json.dumps(params)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="OpenSpecimenAPIconnector.os_core" href="index.html">OpenSpecimenAPIconnector.os_core</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="OpenSpecimenAPIconnector.os_core.jsons.Json_factory" href="#OpenSpecimenAPIconnector.os_core.jsons.Json_factory">Json_factory</a></code></h4>
+<ul class="">
+<li><code><a title="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.add_visit_json" href="#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.add_visit_json">add_visit_json</a></code></li>
+<li><code><a title="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_CP_json" href="#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_CP_json">create_CP_json</a></code></li>
+<li><code><a title="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_aql" href="#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_aql">create_aql</a></code></li>
+<li><code><a title="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_cp_csv_export_job" href="#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_cp_csv_export_job">create_cp_csv_export_job</a></code></li>
+<li><code><a title="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_cp_event_json" href="#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_cp_event_json">create_cp_event_json</a></code></li>
+<li><code><a title="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_cp_export_job_json" href="#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_cp_export_job_json">create_cp_export_job_json</a></code></li>
+<li><code><a title="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_cpr_export_job_json" href="#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_cpr_export_job_json">create_cpr_export_job_json</a></code></li>
+<li><code><a title="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_cpr_part_import_job" href="#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_cpr_part_import_job">create_cpr_part_import_job</a></code></li>
+<li><code><a title="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_extension" href="#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_extension">create_extension</a></code></li>
+<li><code><a title="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_institue_export_job_json" href="#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_institue_export_job_json">create_institue_export_job_json</a></code></li>
+<li><code><a title="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_institute" href="#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_institute">create_institute</a></code></li>
+<li><code><a title="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_participant_json" href="#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_participant_json">create_participant_json</a></code></li>
+<li><code><a title="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_site_export_job_json" href="#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_site_export_job_json">create_site_export_job_json</a></code></li>
+<li><code><a title="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_site_import_job_json" href="#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_site_import_job_json">create_site_import_job_json</a></code></li>
+<li><code><a title="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_specimen_export_job_json" href="#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_specimen_export_job_json">create_specimen_export_job_json</a></code></li>
+<li><code><a title="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_specimen_json" href="#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_specimen_json">create_specimen_json</a></code></li>
+<li><code><a title="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_user_export_job" href="#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_user_export_job">create_user_export_job</a></code></li>
+<li><code><a title="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_visit_export_job_json" href="#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_visit_export_job_json">create_visit_export_job_json</a></code></li>
+<li><code><a title="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.execute_query" href="#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.execute_query">execute_query</a></code></li>
+<li><code><a title="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.get_participants" href="#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.get_participants">get_participants</a></code></li>
+<li><code><a title="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.get_registrations" href="#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.get_registrations">get_registrations</a></code></li>
+<li><code><a title="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.merge_cps" href="#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.merge_cps">merge_cps</a></code></li>
+<li><code><a title="OpenSpecimenAPIconnector.os_core.jsons.Json_factory.storage_location_json" href="#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.storage_location_json">storage_location_json</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>
