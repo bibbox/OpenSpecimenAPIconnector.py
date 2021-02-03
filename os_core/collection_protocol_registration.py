@@ -39,7 +39,7 @@ class collection_protocol_registration:
         """Testing of the URL and authentification.
 
         If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
-        The function prints the URL and login data and handed over to the class to the output terminal.
+        The function prints the URL and login data and hand it over to the class to the output terminal.
         """
 
         print(self.base_url, self.OS_request_gen.auth)
@@ -255,7 +255,7 @@ class collection_protocol_registration:
         The Participants unique ID has to be known and can be seen for example via 
         the GUI in the URL: http(s)://<host>:<port>/openspecimen/cp-view/{cpId}/participants/{cprid}/...
         or with the function get_participant_matches in the os_core class participants.
-        Also the collection protocol ID of the Protocol which the participant is registered at has to be known.
+        Also, the collection protocol ID of the Protocol in which the participant is registered at has to be known.
 
         Parameter
         ---------
