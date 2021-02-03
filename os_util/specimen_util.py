@@ -4,17 +4,50 @@ import pandas
 import json
 from datetime import date
 
-from os_core.specimen import specimen
-from os_core.url import url_gen
-from os_core.jsons import Json_factory
-from os_core.req_util import OS_request_gen
-from os_core.users import users
+from ..os_core.specimen import specimen
+from ..os_core.url import url_gen
+from ..os_core.jsons import Json_factory
+from ..os_core.req_util import OS_request_gen
+from ..os_core.users import users
 
 
 
 class specimen_util:
 
+    """Handles the calls for Specimens
+    
+    This class handles the API calls for OpenSpecimen Specimens. It can create, update, delete, 
+    search specimens with different parameters. The other calls are int the os_core class specimens
+    The output is a JSON dict or the Error message as dict. It also can check if a
+    specimen exists which returns a string which tells you if it exists.
+    
+    Notes
+    -----
+    In order to use this and also the other classes, the user has to know OpenSpecimen. 
+    The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
+    the calls refer to this site. More details can be seen in the documentation.
+    
+    Example
+    -------
+    A code example, where the Specimens/Derivatives/Aliquots are handled is in the Jupyter-Notebook::
+        $ jupyter notebook main.ipynb
+    """
+
     def __init__(self, bas_url, auth):
+
+        """Constructor of the Class specimens_util
+        
+        Constructor of the class specimen_util, can handle the basic API-calls
+        of the specimensin OpenSpecimen. It also connects this class to the os_core classes
+        OS_request_gen, specimen, url_gen and Json_factory.
+        
+        Parameters
+        ----------
+        base_url : string
+            URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng
+        auth : tuple
+            Consits of two strings ( loginname , password)
+        """
 
         self.req_gen =OS_request_gen(auth = auth)
         self.specimen = specimen(base_url = base_url, auth = auth)
@@ -24,19 +57,149 @@ class specimen_util:
 
     def search_specimens(self, label = None, cprid = None, eventid = None, visitid = None, maxres = "100", exact = "false", extension = "true"):
 
+        """Search for  Specimen with specific values.
+        
+        Search for one or more Specimens with the values in the search_string defined. The search string looks like:
+        http(s)://<host>:<port>/openspecimen/rest/np/specimens?{param_1}={value_1}&...&{param_x}={value_x}
+        
+        
+        Parameters
+        ----------
+        label : string
+            Label of the specimen.
+
+        cprid : int
+            Collection Protocol Registration ID to what Participant the specimen belongs.
+
+        eventid : int
+            Unique systemwide Identifier of the event.
+
+        visitid : int
+            Unique systemwide identifier of the visit.
+
+        maxres : int
+            Defines how many results are returned maximally.
+
+        exact : string
+            OpenSpecimen's boolean true/false. If true parameter have to match exactly.
+
+        extension : string
+            OpenSpecimen's boolean true/false. If true extension Details will get returned too.
+
+        Returns
+        -------
+        dict
+            Details of the matching Specimens, if no one matches it is an empty list.
+        """
+
         search_string = self.url.search_specimen(self, label = label, cprid = cprid, eventid = eventid, visitid = visitid,
                                              maxres = maxres, exact = exact, extension = extension)
-        
         r = self.specimen.search_specimens(search_string = search_string)
 
         return r
 
-    def create_specimen(self, label, specimenclass, specimentype , pathology , anatomic, laterality, initqty, avaqty, visitid, recqlt,
+    def create_specimen(self, specimenclass, specimentype , pathology , anatomic, laterality, initqty, avaqty, visitid, recqlt, label = None,
                         colltime = None, rectime = None, lineage = 'New', status = 'Collected', stor_name = None, storlocx = None,
                         storlocy = None, concetration = None, biohazard = None, userid = None, comments = None,  collproc=None, 
                         conttype=None, extensionudn="false", extensionmap=None, extensiondict =None):
+
+        """Create a Specimen to a visit
+
+        Create a Specimen to an already existing Visit. In order to use this function one has to know,
+        the mandatory details of the specimen e.g. the class of the Specimen.
         
-        if userid != None:
+        Notes
+        -----
+        The label is mandatory if the Protocolsettings are such that the Label is created manually, otherwise
+        it has to be left empty.
+
+        Parameters
+        ----------
+        specimenclass : string
+            Class of the specimen.
+        
+        specimentype : string
+            Type of the specimen, belongs to the class.
+        
+        pathology : string
+            Pathologystatus of the Specimen.
+
+        anatomic : string
+            The anatomic site of the specimen.
+        
+        laterality : string
+            The laterality of the specimen.
+        
+        initqty : int
+            The initial quantity of a specimen.
+        
+        avaqty : int
+            The available quantity of a specimen.
+        
+        visitid : int
+            The unique identifier of the visit.
+
+        recqlt : string
+            The received quality.
+        
+        label : string
+            The Label of the specimen, if automatically generated leave it empty, else its mandatory.
+            
+        colltime : string
+            Date and Time of the collection event, the format is in the OpenSpecimen's System configuration.[optional]
+            
+        rectime : string
+            Date and Time of the received event, the format is in the OpenSpecimen's System configuration.[optional]
+            
+        lineage : string
+            Lineage of the specimen, default value is New.
+            
+        status : string
+            Status of the Specimen, default is 'Collected'.
+        
+        stor_name : string
+            Name of the container. [optional]
+        
+        storlocx : int
+            Position of the specimen in the Container in x direction.[optional]
+
+        storlocy : int
+            Position of the specimen int the container in y direction.[optional]
+            
+        concetration  : int
+            Concentration of the specimen[optional].
+        
+        biohazard : string
+            Biohazards of that specimen.[optional]
+        
+        userid : int
+            ID of the user who creates the specimen. If not specified the API user is taken.
+            
+        comments : string
+            Comments regarding to the specimen[optional].
+        
+        collproc : string
+            The procedure of the collection[otpional].
+
+        conttype : string
+            Type of the storage conatiner.
+            
+        extensionudn : string
+            OpenSpecimen's boolean true/false. If true the extension keys are the udn values of the corresponding form.[optional]
+        
+        extensionmap : string
+            The name of the Form which should be taken.[optional]
+
+        extensiondict : dict
+            The dictornary of the extensions, has to be created manually. Either with udn or name (as defined before). [optional]
+
+        Returns
+        -------
+        dict
+            Dictornary with details of the specimen or the OpenSpecimen's error meessage.
+        """
+        
+        if userid == None:
             users = users.get_all_users()
             logname= self.req_gen.user_name()
             for user in users:
@@ -64,10 +227,109 @@ class specimen_util:
         return r
 
 
-        def update_specimen(self, specimenid, label = None, specimenclass = None, specimentype = None, pathology = None, anatomic = None, laterality = None,
+    def update_specimen(self, specimenid, label = None, specimenclass = None, specimentype = None, pathology = None, anatomic = None, laterality = None,
                             initqty = None, avaqty = None, visitid = None, recqlt = None, colltime = None, rectime = None, lineage = 'New',
                             status = 'Collected', stor_name = None, storlocx = None, storlocy = None, concetration = None, biohazard = None,
                             userid = None, comments = None,  collproc=None, conttype=None, extensionudn="false", extensionmap=None, extensiondict =None):
+
+        """Update an existing Specimen
+
+        Update an existing Specimen In order to use this function one has to know the specimenid. This can be seen via the GUI
+        y clicking on the desired Specimen, and read from the URL: http(s)://<host>:<port>/openspecimen/cps/{cpid}/specimens/{specimenid}/... .
+        Or via search Specimen, for example by name and then extract the ID via key ["id"].
+        
+        Notes
+        -----
+        The specimenid is mandatory, all the other keys are otional for updating. If left empty nothing will be changed.
+
+        Parameters
+        ----------
+        specimenid : int
+            Unique Id of the specimen.
+
+        specimenclass : string
+            Class of the specimen.
+        
+        specimentype : string
+            Type of the specimen, belongs to the class.
+        
+        pathology : string
+            Pathologystatus of the Specimen.
+
+        anatomic : string
+            The anatomic site of the specimen.
+        
+        laterality : string
+            The laterality of the specimen.
+        
+        initqty : int
+            The initial quantity of a specimen.
+        
+        avaqty : int
+            The available quantity of a specimen.
+        
+        visitid : int
+            The unique identifier of the visit.
+
+        recqlt : string
+            The received quality.
+        
+        label : string
+            The Label of the specimen.
+            
+        colltime : string
+            Date and Time of the collection event, the format is in the OpenSpecimen's System configuration.
+            
+        rectime : string
+            Date and Time of the received event, the format is in the OpenSpecimen's System configuration.
+            
+        lineage : string
+            Lineage of the specimen, default value is New.
+            
+        status : string
+            Status of the Specimen, default is 'Collected'.
+        
+        stor_name : string
+            Name of the container. 
+        
+        storlocx : int
+            Position of the specimen in the Container in x direction.
+
+        storlocy : int
+            Position of the specimen int the container in y direction.
+            
+        concetration  : int
+            Concentration of the specimen.
+        
+        biohazard : string
+            Biohazards of that specimen.
+        
+        userid : int
+            ID of the user who creates the specimen. If not specified the API user is taken.
+            
+        comments : string
+            Comments regarding to the specimen.
+        
+        collproc : string
+            The procedure of the collection.
+
+        conttype : string
+            Type of the storage conatiner.
+            
+        extensionudn : string
+            OpenSpecimen's boolean true/false. If true the extension keys are the udn values of the corresponding form.
+        
+        extensionmap : string
+            The name of the Form which should be taken.
+
+        extensiondict : dict
+            The dictornary of the extensions, has to be created manually. Either with udn or name (as defined before). 
+
+        Returns
+        -------
+        dict
+            Dictornary with details of the specimen or the OpenSpecimen's error meessage.
+        """
 
         if userid != None:
             users = users.get_all_users()
@@ -90,5 +352,31 @@ class specimen_util:
 
         return r
 
-        def delete_specimens(self, specimenids):
+    def delete_specimens(self, specimenids):
+
+        """Delete a Specimen/Derivative/Aliquot
+        
+        Delete an already existing Specimen/Derivative/Aliquot. The parameter ::specimenid:: is the uniqe ID of the Specimen/
+        Derivative/Aliquot which is generated automatically from OpenSpecimen. To get the ID one can click in the GUI on the 
+        Specimen/Derivative/Aliquot and read it from the URL, with format:
+        http(s)://<host>:<port>/openspecimen/cp-view/{cpid}/specimen/{specimenid}/... .
+        An other possibility is to search via 'search_specimens' for a specific parameter and then extract the ID
+        from the JSON-dict which get returned. The function allows also to delete a list of specimen
+        
+        Parameters
+        ----------
+        specimenids: list or int 
+            The unique ID(s) of the Specimen/Aliquot/Derivative which OpenSpecimen creates itselfs. 
+            Deleting specimens has the form "?id=specimenid_1+...+specimenid_n"
+            
+        Returns
+        -------
+        JSON-dict
+            Details of the Specimens which is deleted or the OpenSpecimen error message as dict.
+        """
+
+        specids = self.url.delete_specimens(specimenids = specimenids)
+        r = self.specimen.delete_specimen(specimenids = specids)
+
+        return r
 
