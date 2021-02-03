@@ -61,7 +61,7 @@ class bbmri_connector:
         # Load headers of BBMRI_ERIC Directory
         template_file_name = "empty_eric_duo.xlsx"
         url = "https://drive.google.com/uc?export=download&id=1eICcwOXrsfYxaG_kjs_myCBCosEpHqVz"
-        bbmri_file = pd.read_excel(url, sheet_name=None)
+        bbmri_file = pd.read_excel(template_file_name, sheet_name=None)
 
         # initialize Users,CollectionProtocols, Sites
         protocols = collection_protocol(base_url=base_url, auth=auth)
