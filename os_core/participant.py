@@ -15,15 +15,15 @@ class participant:
     
     Notes
     -----
-    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
-    just pass the parameters via JSON-formatted string. This means the user has to know the keywords.
+    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes, one can
+    just pass the parameters via a JSON-formatted string. This means the user has to know the keywords.
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
 
     Example
     -------
 
-    A code example, where the Institutes are handled is in the Jupyter-Notebook:
+    A code example, where the institutes are handled, is in the Jupyter-Notebook:
 
         $ jupyter notebook main.ipynb
     """
@@ -32,7 +32,7 @@ class participant:
 
         """Constructor of the Class institutes
 
-        Constructor of the class institutes, can handle the basic API-calls
+        Constructor of the class institutes can handle the basic API-calls
         of the institutes in OpenSpecimen. Connects this class to OpenSpecimen
         specific URL Generator Class (os_core/url.py) and the os_util class participant_util
 
@@ -41,7 +41,7 @@ class participant:
         base_url : string
             URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng
         auth : tuple
-            Consits of two strings ( loginname , password)
+            Consists of two strings ( loginname , password)
         """
 
         self.OS_request_gen = OS_request_gen(auth)
@@ -52,8 +52,8 @@ class participant:
 
         """Testing of the URL and authentification.
 
-        If there are unexpected errors one can easily test if the URL and login data is correctly spelled.
-        the function prints the URL and login data, handed over to the class, to the output terminal.
+        If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
+        The function prints the URL and login data and hand it over to the class, to the output terminal.
         """
 
         print(self.base_url, self.OS_request_gen.auth)        
@@ -63,18 +63,18 @@ class participant:
         """Get the participant with the Participant Protocol ID ::ppid::
 
         Get the details of the Participant with the Collection protocol wide unique ID ::ppid::.
-        This ID can generated automatically from OpenSpecimen or generated manually, which has
+        This ID can be generated automatically from OpenSpecimen or generated manually, which has
         to be specified when the Collection Protocol is created.
 
         Parameters
         ----------
         ppid : string or int
-            The Collection Protocol  wide unique Participant Protocol ID of the Institute, will be converted to a string.
+            The Collection Protocol  wide unique Participant Protocol ID of the Institute will be converted to a string.
 
         Returns
         -------
         JSON-dict
-            Details of the PArticipant with the specified PPID, or the OpenSpecimen error message.
+            🤦‍♀️Details of the Participant with the specified PPID, or the OpenSpecimen error message.
         """
 
         endpoint = '/participants/' + str(ppid)
@@ -88,14 +88,14 @@ class participant:
 
     def get_participant_matches(self, params):
 
-        """Get the  Participants which matches the params.
+        """Get the Participants who matches the params.
 
-        Get one or more Participants which matches the criteria passed with params. This class can be used via
+        Get one or more participants who matches the criteria 🤦‍♀️passed with params. This class can be used via
         the os_util class cpr_util.py.
         
         Note
         ----
-        In the response, the matching attributes are listed.
+        In the response the matching attributes are listed.
 
         Parameters
         ----------
@@ -106,7 +106,7 @@ class participant:
         Returns
         -------
         JSON-dict
-            Details of all matching Participants or the OpenSpecimen's error message.
+            Details of all matching participants or the OpenSpecimen's error message.
         """
 
         endpoint = '/participants/match'
