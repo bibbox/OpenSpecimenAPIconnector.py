@@ -143,12 +143,167 @@ class visit_util:
         return r
 
 
-    def add_visit_speci(self, cprid, name, lineage, visit_id, av_qty, user, init_qty, spec_class, spec_type, anat_site,
-                        site, speclabel, eventid=None,eventlabel=None,ppid=None, cptitle=None, cpshorttitle=None,
-                        diagnosis=None, clinicalstatus=None, acitivity=None, visitstatus=None, missedreason=None,
-                        missedby=None, comments=None,pathologynumber=None,cohort=None, visitdate=None, cpid=None,                         
-                        stor_loc=None, status="Collected", cont=None, proced=None, qual="Acceptable", concent=None,  
-                        path=None, laterality=None, visitDate=None):
+    def add_visit_speci(self,  name, lineage, av_qty, user, init_qty, spec_class, spec_type, anat_site, site,
+                        speclabel = None, eventid=None, eventlabel=None, cprid = None, ppid=None, cptitle=None, cpshorttitle=None,
+                        cpid = None, diagnosis=None, clinicalstatus=None, acitivity=None, visitstatus=None, missedreason=None,
+                        missedby=None, comments=None, pathologynumber=None, cohort=None, visitdate=None, laterality=None, rec_qlt = None,                        
+                        colltime = None, rectime = None, status="Collected", stor_name=None, storlocx =None, storlocy =None, concentration=None, 
+                        biohazrad = None, comments = None, collproc=None, conttype = None, extensionudn = 'false', extensionmap = None,
+                        extensiondict = None):
+
+            """Add a visit and a specimen in one call.
+        
+        Add a visit and a specimen in OpenSpecimen via one API call. To use this function, one has to know the
+        Parameters of the Participant, event and site.
+
+        Note
+        ----
+        Mandatory fields are -cprId or (ppid and cpTitle) or (ppid and cpShortTitle) or (ppid and cpid)
+        - name, site
+        The label is mandatory if the Protocolsettings are such that the Label is created manually, otherwise
+        it has to be left empty.  
+
+        Parameters
+        ----------
+        cprid : int
+            Identifier of the Collection Protocoll Registration to which the Visit belongs.
+            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.
+
+        name : string
+            Name of the Visit.
+        
+        lineage : string
+            Lineage of the specimen, if created it is New.
+        
+        av_qty : int
+            The available quantity of a specimen.
+        
+        user : int
+            ID of the user who creates the specimen. If not specified the API user is taken.
+        
+        init_qty : int
+            The initial quantity of a specimen.
+
+        spec_class : string
+            Class of the specimen.
+        
+        spec_type : string
+            Type of the specimen, belongs to the class.
+        
+        anat_site : string
+            The anatomic site of the specimen.
+
+        site : string
+            Site to which the Visit belongs.
+        site,
+        eventid : int
+            ID of the event to which the visit belongs.[optional]
+        
+        eventlabel : string
+            Label of the event to which the visit belongs.[optional]
+        
+        ppid : string
+            Identifier of the Participant to whom the Visit belongs.
+            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.
+        
+        cptitle : string
+            Name of the Collection Protocol.
+            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.
+        
+        cpshorttitle : title
+            Acronym of the Collection Protocol.
+            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.
+        
+        cpid : int
+            Identifier of the Collection Protocol.
+            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.
+
+        diagnosis : string
+            Name of the diagnoses of the visit.
+        
+        clinicalstatus : string
+            Clinical Status of the visit.[optional]
+        
+        activity : stringsite,
+            Activity Status of the Visit.[optional]
+
+        visitstatus : string
+            Status of the visit.[optional]
+
+        missedreason : string
+            Reason why the visit was missed.[optional]
+
+        missedby : string
+            Details of the person who missed the visit.[optional]
+
+        comments : string
+            Commets regarding the visit.[optional]
+        
+        pathologynumber : string
+            Surgical Pathology number. [optional]
+        
+        cohort : string
+            Cohorts to which the Visit belongs. [optional]
+
+        visitdate : string
+            Date when the visit will occur, if empty takes the current date.[optional]
+        
+        pathology : string
+            Pathologystatus of the Specimen.
+        
+        laterality : string
+            The laterality of the specimen.
+               
+        recqlt : string
+            The received quality.
+   
+        colltime : string
+            Date and Time of the collection event, the format is in the OpenSpecimen's System configuration.[optional]
+            
+        rectime : string
+            Date and Time of the received event, the format is in the OpenSpecimen's System configuration.[optional]
+                        
+        status : string
+            Status of the Specimen, default is 'Collected'.
+        
+        stor_name : string
+            Name of the container. [optional]
+        
+        storlocx : int
+            Position of the specimen in the Container in x direction.[optional]
+
+        storlocy : int
+            Position of the specimen int the container in y direction.[optional]
+            
+        concetration  : int
+            Concentration of the specimen[optional].
+        
+        biohazard : string
+            Biohazards of that specimen.[optional]
+                    
+        comments : string
+            Comments regarding to the specimen[optional].
+        
+        collproc : string
+            The procedure of the collection[otpional].
+
+        conttype : string
+            Type of the storage conatiner.
+            
+        extensionudn : string
+            OpenSpecimen's boolean true/false. If true the extension keys are the udn values of the corresponding form.[optional]
+        
+        extensionmap : string
+            The name of the Form which should be taken.[optional]
+
+        extensiondict : dict
+            The dictornary of the extensions, has to be created manually. Either with udn or name (as defined before). [optional]
+
+        Returns
+        -------
+        dict
+            Details of the visit and specimen as JSON dict or the Openspecimen's error message.
+        """
 
         vis = self.jsons.add_visit_json(cprid=cprid, name=name, site=site, eventid=eventid, eventlabel=eventlabel, ppid=ppid, cptitle=cptitle, 
                                         cpshorttitle=cpshorttitle, diagnosis=diagnosis,clinicalstatus=clinicalstatus, activity=acitivity,
@@ -156,8 +311,9 @@ class visit_util:
                                         pathologynumber=pathologynumber, cohort=cohort, visitdate=visitdate, cpid=cpid)
         
         speci = self.jsons.create_spec_json(lineage=lineage,  av_qty=av_qty, user=user, visitDate=visitdate, init_qty=init_qty, visit_id=None,
-                                        spec_class=spec_class, spec_type=spec_type, anat_site=anat_site, stor_loc=stor_loc, label=speclabel,
-                                        status=status, cont=cont, proced=proced, qual=qual, concent=concent, path=path, laterality=laterality)
+                                        spec_class=spec_class, spec_type=spec_type, anat_site=anat_site, stor_name=stor_name,storlocx =xtorlocx,
+                                        storlocy = storlocy, label=speclabel, status=status, cont = conttype, proced=proced, qual= rec_qual, concent=concent,
+                                        path=path, laterality=laterality)
         
         vis = json.loads(vis)
         speci= json.loads(speci)
@@ -173,9 +329,95 @@ class visit_util:
         return r
     
 
-    def update_visit(self, visitid, name, site, eventid=None, eventlabel=None, cprid= None, ppid=None, cptitle=None, cpshorttitle=None,
-                        diagnosis=None, clinicalstatus=None, activity=None, visitstatus=None, missedreason=None,
-                        missedby=None, comments=None,pathologynumber=None,cohort=None, visitdate=None, cpid=None):
+    def update_visit(self, visitid, name = None, site = None, eventid=None, eventlabel=None, cprid= None, ppid=None, cptitle=None, 
+                    cpshorttitle=None, diagnosis=None, clinicalstatus=None, activity=None, visitstatus=None, missedreason=None,
+                    missedby=None, comments=None, pathologynumber=None, cohort=None, visitdate=None, cpid=None):
+        
+        """Updating a visit
+
+        Update an existing Visit with Id visitid and the parameters params. All parameters are
+        optional for updating and  those which are not passed stays the same. Those parameters and 
+        the visit Id have to be known to use this function and can
+        be found out in the GUI by clicking on a participant and the visit. It looks like:
+        http(s)://<host>:<port>/openspeicmen/cp-view/{cpid}/participant/{cprid}/visits/detail/ocerview?visitId={visitid}&eventId={eventId} .
+        Or via the function get_visit_namespr, when one know the name of the visit and then extract the id from there.
+
+        Note
+        ----
+        All paramteres are optional, except the visitid. The parameters which are not passed will stay the same.
+
+        Parameters
+        ----------
+        visitid : int 
+            Id of the visit, gets converted to a string
+        
+        name : string
+            Name of the Visit.
+        
+        site : string
+            Site to which the Visit belongs.
+        
+        eventid : int
+            ID of the event to which the visit belongs.[optional]
+        
+        eventlabel : string
+            Label of the event to which the visit belongs.[optional]
+        
+        cprid : int
+            Identifier of the Collection Protocoll Registration to which the Visit belongs.
+            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.
+
+        ppid : string
+            Identifier of the Participant to whom the Visit belongs.
+            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.
+        
+        cptitle : string
+            Name of the Collection Protocol.
+            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.
+        
+        cpshorttitle : title
+            Acronym of the Collection Protocol.
+            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.
+        
+        cpid : int
+            Identifier of the Collection Protocol.
+            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.
+
+        diagnosis : string
+            Name of the diagnoses of the visit.
+        
+        clinicalstatus : string
+            Clinical Status of the visit.[optional]
+        
+        activity : string
+            Activity Status of the Visit.[optional]
+
+        visitstatus : string
+            Status of the visit.[optional]
+
+        missedreason : string
+            Reason why the visit was missed.[optional]
+
+        missedby : string
+            Details of the person who missed the visit.[optional]
+
+        comments : string
+            Commets regarding the visit.[optional]
+        
+        pathologynumber : string
+            Surgical Pathology number. [optional]
+        
+        cohort : string
+            Cohorts to which the Visit belongs. [optional]
+
+        visitdate : string
+            Date when the visit will occur, if empty takes the current date.[optional]
+
+        Returns
+        -------
+        dict
+            JSON-dict with details of the updated visit or OpenSpecimens Error message
+        """
         
         vis = self.jsons.add_visit_json(cprid=cprid, name=name, site=site, eventid=eventid, eventlabel=eventlabel, ppid=ppid, cptitle=cptitle, 
                                         cpshorttitle=cpshorttitle, diagnosis=diagnosis,clinicalstatus=clinicalstatus, activity=acitivity,
@@ -187,6 +429,27 @@ class visit_util:
 
     def search_visit_namespr(self, visitname=None, sprnumber=None):
 
+        """Get a Visit by the name or the Surgical pathology number
+
+        Get one or more visits by the name or the surgical pathology number. Those parameters have to be known 
+        in order to know this function. If just the visitname is passed one return a visit with the corresponding name.
+        If just the surgical pathology number is passed it returns all visits with this number. If both are passed
+        it works as logical AND.
+
+        Parameters
+        ----------
+        visitname : string
+            Substring of the name of the visit.
+
+        sprnumber : string
+            Surgical Pathology number of the visits.
+
+        Returns
+        -------
+        dict
+            JSON-dict with details of the visits.
+        """
+
         searchstring = self.url.search_visit_name_spr(visitname = visitname, sprnumber = sprnumber)
 
         r = self.visit.get_visit_namespr(search_string =searchstring)
@@ -194,6 +457,26 @@ class visit_util:
         return r
     
     def search_visit_cprid(self, cprid, includestats = "false"):
+        
+        """Get a Visit by the Collection protocol Registration Id.
+
+        Get a visits by the colelction Protocoll Registration ID. Those parameters have to be known 
+        in order to know this function. They can be extracted from calling a search function in the 
+        os_core class visits.
+
+        Parameters
+        ----------
+        cprid : int
+            Identifier of the collection protocol registration.
+        
+        includestats : string
+            OpenSpecimen's boolean true/false. If true the sats of the participants, e.g. number of visits are included.
+        
+        Returns
+        -------
+        dict
+            JSON-dict with details of the visit.
+        """
 
         searchstring = self.url.search_visit_cprid(cprid = cprid, includestats = includestats)
         r = self.visit.get_visits_cpr(search_string = searchstring)
