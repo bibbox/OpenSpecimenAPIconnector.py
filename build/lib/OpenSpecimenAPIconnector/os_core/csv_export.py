@@ -8,7 +8,7 @@ class CSV_exporter():
     """Handles the API calls for CSV file export
 
     This class provides methods to create and fetch the resutls of an internal OpenSpecimen export job.
-    
+
 
     Notes
     -----
@@ -27,17 +27,17 @@ class CSV_exporter():
 
     def __init__(self, base_url, auth):
         
-	"""Constructor of the Class CSV_exporter
+        """Constructor of the Class CSV_exporter
 
-       	Handles the basic API-calls for export-job fetching and creation. Either creates or fetches the outcome of an 
-	specific export job
+        Handles the basic API-calls for export-job fetching and creation. Either creates or fetches the outcome of an 
+        specific export job
 
         Parameters
         ----------
         base_url : string
-            URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng
+        URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng
         auth : tuple
-            Consits of two strings (loginname , password)
+        Consits of two strings (loginname , password)
         """
 
         self.OS_request_gen = OS_request_gen(auth)
@@ -47,19 +47,19 @@ class CSV_exporter():
     def create_export_job(self, data):
 
         """Create export job method with the entity (Collection Protocoll, Institutes etc.)
-	   encoded within the data JSON-formated-strig.
+        encoded within the data JSON-formated-strig.
 
         Parameters
         ----------
         data : JSON-formatted-string 
-	     Containing the information needed by the API. 
-	     See OpenSpecimenAPIconnector.os_util.Export_OP().export_file to find the JSON 
-	     blueprint methods in OpenSpecimenAPIconnector.os_util.Json_Factory().
-	
-	Returns
+        Containing the information needed by the API. 
+        See OpenSpecimenAPIconnector.os_util.Export_OP().export_file to find the JSON 
+        blueprint methods in OpenSpecimenAPIconnector.os_util.Json_Factory().
+
+        Returns
         -------
         job_id: String
-              A string representing the id (integer number) assigned by the OpenSpecimen API
+        A string representing the id (integer number) assigned by the OpenSpecimen API
         """        
 
         job_endpoint = "/export-jobs/"
@@ -80,12 +80,12 @@ class CSV_exporter():
         Parameters
         ----------
         job_id : String representing the ID for identifying the output file
-        
-	Returns
+
+        Returns
         -------
         job_data: pandas.DataFrame()
-            A pandas data frame containing the CSV files information. You can easily recover the original file
-	    by using the pandas.to_csv() method.
+        A pandas data frame containing the CSV files information. You can easily recover the original file
+        by using the pandas.to_csv() method.
         """        
 	
 

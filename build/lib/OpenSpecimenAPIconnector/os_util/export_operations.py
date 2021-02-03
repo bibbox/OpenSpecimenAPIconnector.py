@@ -23,7 +23,7 @@ class Export_OP():
     just pass the parameters via JSON-formatted string. The user has to know the keywords.
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
-    
+
     Currently not all entitiy types are implemented. Further at the moment Collection protocoll still does not support 
     CSV export. 
 
@@ -38,14 +38,14 @@ class Export_OP():
 
     def __init__(self, base_url, auth):
 
-	"""Constructor of the Class Export_OP        
+        """Constructor of the Class Export_OP        
 
         Parameters
         ----------
         base_url : string
-            URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng
+        URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng
         auth : tuple
-            Consits of two strings (loginname , password)
+        Consits of two strings (loginname , password)
         """
 
         self.base_url = base_url
@@ -59,13 +59,13 @@ class Export_OP():
         Parameters
         ----------
         entity : String representing the entity(collection protocoll) for identifying the necessary JSON data string
-	param: String representing the various additional neccesary parameters. E.g.: The Collection protocoll identifier 
-        
-	Returns
+        param: String representing the various additional neccesary parameters. E.g.: The Collection protocoll identifier 
+
+        Returns
         -------
         export_file: pandas.DataFrame()
-            A pandas data frame containing the CSV files information. You can easily recover the original file
-	    by using the pandas.to_csv() method.
+        A pandas data frame containing the CSV files information. You can easily recover the original file
+        by using the pandas.to_csv() method.
         """        
         # temporary solution until template file handling is clear
 
