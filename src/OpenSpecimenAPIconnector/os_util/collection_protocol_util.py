@@ -25,10 +25,10 @@ class site_util:
     #           - maxresults: Maximum of Results which should be displayed
     #           - siteExtension: boolean if ExtensionDetails should be shown
     # Output:   - 
-    def search_cps(self, searchstring = None, title = None, piid = None, reponame = None, startat = none, maxresults = None, detailedlist = None):
+    def search_cps(self, searchstring = None, title = None, piid = None, reponame = None, startat = None, maxresults = None, detailedlist = None):
 
         search_string = self.urls.cp_search_url_gen(searchstring = None, title = None, piid = None, reponame = None,
-                                                    startat = none, maxresults = None, detailedlist = None)
+                                                    startat = None, maxresults = None, detailedlist = None)
         
         r = self.cps.search_collection_protocols(search_string = search_string)
 

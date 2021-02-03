@@ -158,7 +158,7 @@ class bbmri_connector:
                     bbmri_file[cp_sheet].at[index_, key] = cp[key]
 
         # Write excel-file
-        with pd.ExcelWriter(output_file, engine='openpyxl') as writer:
+        with pd.ExcelWriter(output_file, engine='xlsxwriter') as writer:
             for sheet_name in bbmri_file.keys():
                 df = bbmri_file[sheet_name]
                 df.to_excel(writer, sheet_name=sheet_name, index=False)
