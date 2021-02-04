@@ -239,8 +239,7 @@ class collection_protocol():
 
         Note
         ----
-        The optional parameters are those, which are optional for a Collection Protocol. For updating, all parameters are optional,
-       🤦‍♀️ those which are not passed to the function will stay the same as before.
+        For updating, all parameters are optional. Those parameters which are not passed to the function, will stay the same as before.
 
         Parameter
         ---------
