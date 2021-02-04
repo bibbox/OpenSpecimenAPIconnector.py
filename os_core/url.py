@@ -38,15 +38,15 @@ class url_gen:
 
     """Generates the endpoint URL for search- and list operations
 
-    This class generates the URL endpoints for searchoperations. Also list operations,
+    This class generates the URL endpoints for 🤦‍♀️searchoperations. Also list operations,
     for example deleting a list of specimens can be handled with this class. 
     Search string look like '?entity1=value1&...&entityx=valuex'. List operations needs string
     like 'entity=value1,...,valuex'
 
     Notes
     -----
-    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
-    just pass the parameters via JSON-formatted string. This means the user has to know the keywords.
+    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes, one can
+    just pass the parameters via a JSON-formatted string. This means the user has to know the keywords.
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
 
@@ -65,16 +65,16 @@ class url_gen:
 
         """Generates the string for Site
 
-        This function generates the string to search after sites, with names or the sites to an institute.
+        This function generates the string to search for sites, with names or the sites to an institute.
         Sitename and Institutename can be lists, they are handled as a logical AND. 
 
         Parameters
         ----------
         sitename : string or list
-            Substring of the Site which want to be searched after as string or list.
+            Substring of the Site which wants to be searched for as string or list.
 
         instituename : string or list
-            Substring of the Institute which want to be searched after as string or list.
+            Substring of the Institute which want to be searched for as string or list.
         
         maxresults : string or int
             The maximum results what should be shown. OpenSpecimen's and here the default-value is 100.
@@ -100,27 +100,27 @@ class url_gen:
 
     def cp_search_url_gen(self, searchstring = None, title = None, piid = None, reponame = None, startat = None, maxresults = None, detailedlist = None):
 
-        """Generates the string for Colection Protocol search
+        """Generates the string for Collection Protocol search
 
-        This function generates the string to search after colletion protocols,
+        This function generates the string to search for collection protocols,
         with the permissable values from OpenSpecimen. 
         The values can be lists, they are handled as a logical AND. 
 
         Note
         ----
-        All parameters are allowed to pass to the function as lists, alltough openSpecimen can't handle them.
-        One need to know what values can be lists, the paramters section tells you if values can be lists.
+        All parameters are allowed to pass to the function as lists, although openSpecimen can't handle them.
+        One needs to know 🤦‍♀️what (which/that) values can be lists, the parameters section tells you if values can be lists.
 
         Parameters
         ----------
         searchstring : string or list
-            Substring of the title and short title which want to be searched after as string or list.
+            Substring of the title and short title which want to be searched for as string or list.
 
         title : string or list
-            Substring of the title which want to be searched after as string or list.
+            Substring of the title which want to be searched for as string or list.
         
         ppid : string or int
-            The id of the principal investigator as string or int. Get converted to a string.
+            The ID of the principal investigator as string or int. Gets converted to a string.
 
         reponame : string or list
             Name of the repositories as string or list.
@@ -138,7 +138,7 @@ class url_gen:
         Returns
         -------
         string
-            endpoint of the searchoperation, looks like '?query='searchstring&title=title&...&detailedList=true'.
+            endpoint of the 🤦‍♀️searchoperation, looks like '?query='searchstring&title=title&...&detailedList=true'.
         """
 
         url_string='?'
@@ -173,17 +173,17 @@ class url_gen:
 
         """Generates the URL endpoint for searching a query.
 
-        Generates the string of the URL endpoint to searching after queries. 
+        Generates the string of the URL endpoint to searching for queries. 
 
         Note
         ----
-        All parameters are allowed to pass to the function as lists, alltough openSpecimen can't handle them.
-        One need to know what values can be lists, the paramters section tells you if values can be lists.
+        All parameters are allowed to pass to the function as lists, although OpenSpecimen can't handle them.
+        One needs to know 🤦‍♀️what values can be lists, the parameters section tells you if values can be lists.
 
         Parameters
         ----------
         cpid : string or int
-            Id of the Colelction Protocol, where the query is assigned to. GEts converted to a string.
+            ID of the Collection Protocol, where the query is assigned to. Gets converted to a string.
 
         searchstring : string
             Substring of the query-title.
@@ -200,7 +200,7 @@ class url_gen:
         Returns
         -------
         string
-            The URL endpoint to search after queries.
+            The URL endpoint to search for queries.
         """
 
         url_string = '?'
@@ -229,13 +229,13 @@ class url_gen:
 
         """Generates the searchstring for Specimens
 
-        This function generates the string to search after colletion protocols, with the permissable values from OpenSpecimen. 
+        This function generates the string to search for collection protocols, with the permissable values from OpenSpecimen. 
         The values can be lists, they are handled as a logical OR. The values not passed to the function will be ignored.
 
         Note
         ----
-        All parameters are allowed to pass to the function as lists, alltough openSpecimen can't handle them.
-        One need to know what values can be lists, the paramters section tells you if values can be lists.
+        All parameters are allowed to pass to the function as lists, although OpenSpecimen can't handle them.
+        One needs to know 🤦‍♀️what values can be lists, the parameters section tells you if values can be lists.
 
         Parameters
         ----------
@@ -246,19 +246,19 @@ class url_gen:
             The Collection Protocol Registration ID of the specimen. Gets converted to a string.
 
         enventid : string or int
-            The Event Id of the anticipated Specimen. If searching with cprid the eventid or visitid is mandatory.
+            The Event ID of the anticipated Specimen. If searching with cprid the eventid or visitid is mandatory.
 
         visitid : string or int
-            The Visit Id of the anticipated Specimen. If searching with cprid the eventid or visitid is mandatory.
+            The Visit ID of the anticipated Specimen. If searching with cprid the eventid or visitid is mandatory.
         
         maxres : string or int
             The maximum results to display as int or string, gets converted to a string. The default value is 100.
         
         exact : string
-            Openspecimen's boolean true/false. If true the search parameters have to match exactly.
+            Openspecimen's boolean true/false. If true, the search parameters have to match exactly.
         
         extensions : string
-            Openspecimen's boolean value true/false. If true the extensionDetails will be shown in the results.
+            Openspecimen's boolean value true/false. If true, the extensionDetails will be shown in the results.
 
         Returns
         -------
@@ -295,7 +295,7 @@ class url_gen:
 
     def delete_specimens(self, specimenids):
 
-        """Generates the URL endpoint for deleting specimens
+        """Generates the URL endpoint for deleting Specimens
 
         Generates the string of the URL endpoint for deleting one or more specimens.
         Looks like '?id=specimenid1,...,specimenidx'
@@ -325,7 +325,7 @@ class url_gen:
 
     def search_visit_name_spr(self, visitname=None, sprnumber=None):
 
-    """Generates the URL endpoint for searching a visit
+    """Generates the URL endpoint for searching a Visit
 
         Generates the string of the URL endpoint for searching one or more visits by
         the name or surgical pathology number.It looks like '?name=visitname&sprNumber=sprnumber'
@@ -333,10 +333,10 @@ class url_gen:
         Parameters
         ----------
         visitname : string
-            The Visit Name which one wants to get.
+            The visit name which one wants to get.
 
         sprnumber : string or int
-            The Surgical pathology number as int or string, get converted to a string
+            The surgical pathology number as int or string, gets converted to a string
 
         Returns
         -------
@@ -358,13 +358,13 @@ class url_gen:
 
         """Generates the URL endpoint for searching a visit
 
-        Generates the string of the URL endpoint for searching a visits by the
-        Collection Protocol REgistration ID.It looks like '?cprId=cprid&includeStats=true/false'
+        Generates the string of the URL endpoint for searching visits by the
+        Collection Protocol Registration ID.It looks like '?cprId=cprid&includeStats=true/false'
 
         Parameters
         ----------
         cprid : string or int
-            The Visit Id which one wants to get. Gets converted to a string.
+            The Visit ID which one wants to get. Gets converted to a string.
 
         includestats : string
             OpenSpecimens boolean type true/false. Default is false and thus optional. 
