@@ -74,7 +74,7 @@ class participant:
         Returns
         -------
         JSON-dict
-            🤦‍♀️Details of the Participant with the specified PPID, or the OpenSpecimen error message.
+            Details of the Participant with the specified PPID, or the OpenSpecimen error message.
         """
 
         endpoint = '/participants/' + str(ppid)
@@ -90,7 +90,7 @@ class participant:
 
         """Get the Participants who matches the params.
 
-        Get one or more participants who matches the criteria 🤦‍♀️passed with params. This class can be used via
+        Get one or more participants who matches the criteria passed with params. This class can be used via
         the os_util class cpr_util.py.
         
         Note
