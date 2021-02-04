@@ -16,7 +16,7 @@ class csv_bulk:
     """Handles the OpenSpecimen CSV Bulk Importer via API.
 
     Handles the API calls of the OpenSpecimen's Bulk Importer for all the different schemas. 
-    This class can 🤦‍♀️get the templates to a schema, upload the csv-files, run the job, get the job status
+    This class can get the templates to a schema, upload the csv-files, run the job, get the job status
     and get the job report.
 
     Note
@@ -94,7 +94,7 @@ class csv_bulk:
 
         """Upload a CSV file to OpenSpecimen
 
-        🤦‍♀️First part of uploading a CSV file to OpenSpecimen. This creates a job with a file-ID.
+        This function handles the uploading of a CSV file to OpenSpecimen. This creates a job with a file-ID.
         With the file-ID the job then can be started via the function run_upload.
 
         Note
@@ -104,7 +104,7 @@ class csv_bulk:
         Parameters
         ----------
         filename : string
-            🤦‍♀️The name of the file which should get uploaded as string with the ending, here .csv . (is a string?)
+            The name of the file as string with the ending, here .csv . 
         
         file : binary
             The file itself which should get uploaded.
@@ -159,7 +159,7 @@ class csv_bulk:
         Returns
         -------
         string
-            🤦‍♀️A tupple with the format ('JOBID', 'Response Text'). (tuple?)
+            A tuple with the format ('JOBID', 'Response Text').
         """
 
         url = self.base_url
@@ -183,7 +183,7 @@ class csv_bulk:
         Parameters
         ----------
         jobid : string or int
-            🤦‍♀️ID of the job, which status has to be looked after.
+            ID of the job.
 
         Returns
         -------
@@ -213,7 +213,7 @@ class csv_bulk:
         Parameters
         ----------
         jobid : string or int
-            🤦‍♀️ID of the job, which status has to be looked after.
+            🤦‍♀️ID of the job.
 
         Returns
         -------
