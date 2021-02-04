@@ -198,6 +198,7 @@ class users:
         dict
             JSON dict with Details of the Roles of the User with ID userid or the OpenSpecimen's error message.
         """
+        
         endpoint = '/rbac/subjects/'+str(userid)+'/roles'
         url = self.base_url+endpoint
 
@@ -239,7 +240,7 @@ class users:
 
 
     def update_user(self, userid, params):
-        
+    
         """Update an user
 
         Update an User in OpenSpecimen. To use this function one has to know the parameters.

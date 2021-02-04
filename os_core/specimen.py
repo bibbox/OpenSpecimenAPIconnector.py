@@ -2,7 +2,7 @@
 
 # Import
 from datetime import datetime
-from ..os_core.req_util import OS_request_gen
+from os_core.req_util import OS_request_gen
 
 import json
 
