@@ -39,7 +39,7 @@ class collection_protocol_registration:
         """Testing of the URL and authentification.
 
         If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
-        The function prints the URL and login data and hand it over to the class to the output terminal.
+        The function prints the URL and login data and hands it over to the output terminal.
         """
 
         print(self.base_url, self.OS_request_gen.auth)
