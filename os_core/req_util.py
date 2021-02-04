@@ -34,7 +34,7 @@ class OS_request_gen():
         Parameters
         ----------
         auth : string
-            🤦‍♀️String as tupple with the format "( API-User, Password)"
+            String as tuple with the format "( API-User, Password)"
         """
         
         self.json_headers = {
@@ -55,14 +55,14 @@ class OS_request_gen():
         """Generates GET requests for OpenSpecimen
         
         Generates GET request for OpenSpecimen, which always contains the URL in the format
-        http(s)://<host>:<port>/openspecimen/rest/ng/... . 🤦‍♀️Is used for searching objects and 
+        http(s)://<host>:<port>/openspecimen/rest/ng/... . It is used for searching objects and 
         downloading templates or collections. If one downloads a larger file, the parameter
         stream has to be set to "True".
         
         Parameters
         ----------
         url : string
-            🤦‍♀️URL for the get request as string. Has the form: http(s)://<host>:<port>/openspecimen/rest/ng/...
+            URL for the get request as string has the form: http(s)://<host>:<port>/openspecimen/rest/ng/...
             
         stream : bool
             Can be set to "True" for larger files, which takes a while to download. Default value is "False".
@@ -98,7 +98,7 @@ class OS_request_gen():
         Parameters
         ----------
         url : string
-            🤦‍♀️URL for the get request as string. Has the form: http(s)://<host>:<port>/openspecimen/rest/ng/...
+            URL for the get request as string has the form: http(s)://<host>:<port>/openspecimen/rest/ng/...
             
         data : json-formatted strings
             Json-formatted string, with the keys from OpenSpecimen.
@@ -144,7 +144,7 @@ class OS_request_gen():
         Parameters
         ----------
         url : string
-            🤦‍♀️URL for the get request as string. Has the form: http(s)://<host>:<port>/openspecimen/rest/ng/...
+            URL for the get request as string has the form: http(s)://<host>:<port>/openspecimen/rest/ng/...
             
         data : json-formatted strings
             Json-formatted string, with the keys from OpenSpecimen.
@@ -172,7 +172,7 @@ class OS_request_gen():
         Parameters
         ----------
         url : string
-            🤦‍♀️URL for the get request as string. Has the form: http(s)://<host>:<port>/openspecimen/rest/ng/{entity}/{objectID}
+            URL for the get request as string has the form: http(s)://<host>:<port>/openspecimen/rest/ng/{entity}/{objectID}
             
         Returns
         -------
@@ -191,13 +191,13 @@ class OS_request_gen():
         """Generates HEAD requests for OpenSpecimen
         
         Generates a HEAD request for OpenSpecimen, which always contains the URL in the format
-        http(s)://<host>:<port>/openspecimen/rest/ng/{entity} . 🤦‍♀️Is used for getting
+        http(s)://<host>:<port>/openspecimen/rest/ng/{entity} . It is used for getting
         the header of an object. Usually OpenSpecimen requires the entity of the object in the URL.
         
         Parameters
         ----------
         url : string
-            🤦‍♀️URL for the get request as string. Has the form: http(s)://<host>:<port>/openspecimen/rest/ng/{entity}
+            URL for the get request as string has the form: http(s)://<host>:<port>/openspecimen/rest/ng/{entity}
             
         Returns
         -------
