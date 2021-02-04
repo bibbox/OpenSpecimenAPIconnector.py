@@ -449,8 +449,40 @@ class Json_factory():
 
         return json.dumps(data)
         
+    def create_user_json(self, first = None, last = None, email = None, phone = None, login = None, institute = None,
+                        type_ = None, address = None, domain = None):
 
+        data = {
+            "firstName" : first,
+            "lastName" : last,
+            "emailAddress" : email,
+            "phoneNumber" : phone,
+            "domainName" : domain,
+            "loginName" : login,
+            "instituteName" : institute,
+            "type" : type_,
+            "address" : address
+        }
+
+        return json.dumps(data)
+
+    def assign_user_role_json(self, siteid, cpid, role):
+        
+        data = {
+            "site":{"id":sitid},
+            "collectionProtocol":{"id":cpid},
+            "role":{"name":role}
+        }
+
+        return json.dumps(data)
     
+    def change_user_pw_json(self, userid, newpw, oldpw = None):
 
+        data = {
+            "userId" : userid,
+            "oldPassword" : oldpw,
+            "newPassword" : newpw
+        }
 
+        return json.dumps(data)
 

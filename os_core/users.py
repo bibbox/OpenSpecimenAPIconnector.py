@@ -3,7 +3,7 @@
 # imports
 import json
 
-from os_core.req_util import OS_request_gen
+from ..os_core.req_util import OS_request_gen
 
 class users:
 
@@ -198,6 +198,7 @@ class users:
         dict
             JSON dict with Details of the Roles of the User with ID userid or the OpenSpecimen's error message.
         """
+        
         endpoint = '/rbac/subjects/'+str(userid)+'/roles'
         url = self.base_url+endpoint
 
@@ -238,3 +239,35 @@ class users:
         return json.loads(r.text)
 
 
+    def update_user(self, userid, params):
+    
+        """Update an user
+
+        Update an User in OpenSpecimen. To use this function one has to know the parameters.
+        They are explained in the parameters section. Or one can use the os_util class user_util.
+        Also the Id of the user which gets updated has to be known.
+        This can be seen in the GUI if one click on the User and read from the URL which has
+        the format: http(s)://<host>:<port>/openspecimen/users/{userid}/... .
+        Or with the function get_all_users and then extract the ID to the wanted user.
+
+        Parameters
+        ----------
+        userid : int
+            Id of the User.
+
+        params : string
+            JSON formatted string with paramters: fisrtName, lastName, emailAddress, phoneNumber,
+            domainName, loginName, instituteName, type, address[optional], activitySatuts
+
+        Returns
+        -------
+        dict
+            JSON dict with Details of the updated User or the OpenSpecimen's error message.
+        """
+
+        endpoint = "/users/" + str(userid)
+        url = self.base_url+endpoint
+        payload = params
+        r = self.OS_request_gen.put_request(url=url, data=payload)
+
+        return json.loads(r.text)
