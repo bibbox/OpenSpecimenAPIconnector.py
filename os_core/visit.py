@@ -10,20 +10,20 @@ class visit:
 
     """Handles the API calls for Visits
     
-    This class handles the API calls for OpenSpecimen Visits. It can create, delete, 
-    search visits with different parameters, add visits to a collection protocol the Sytem.
-    The outputs are JSON dicts or the Error messages as dict. I
+    This class handles the API calls for OpenSpecimen visits. It can create, delete, 
+    search visits with different parameters, add visits to a 🤦‍♀️collection protocol the system.
+    The outputs are JSON dicts or the error messages as dict. 🤦‍♀️I
     
     Notes
     -----
     In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
-    just pass the parameters via JSON-formatted string. This means the user has to know the keywords.
+    just pass the parameters via a JSON-formatted string. This means the user has to know the keywords.
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
     
     Example
     -------
-    A code example, where the Visits are handled is in the Jupyter-Notebook::
+    A code example, where the visits are handled, is in the Jupyter-Notebook::
         $ jupyter notebook main.ipynb
     """
 
@@ -32,7 +32,7 @@ class visit:
         """Constructor of the Class visit
         
         Constructor of the class visit, can handle the basic API-calls
-        of the Visits in OpenSpecimen. Connects this class to OpenSpecimen
+        of the visits in OpenSpecimen. Connects this class to OpenSpecimen
         specific request handle (os_core.request_util.py).
         
         Parameters
@@ -40,7 +40,7 @@ class visit:
         base_url : string
             URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng
         auth : tuple
-            Consits of two strings ( loginname , password)
+            Consists of two strings ( loginname , password)
         """ 
 
         self.OS_request_gen = OS_request_gen(auth)
@@ -51,8 +51,8 @@ class visit:
 
         """Testing of the URL and authentification.
         
-        If there are unexpected errors one can easily test if the URL and login data is correctly spelled.
-        the function prints the URL and login data, handed over to the class, to the output terminal.
+        If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
+        The function prints the URL and login data and hand it over to the output terminal.
         """
 
         print(self.base_url, self.OS_request_gen.auth)        
@@ -63,7 +63,7 @@ class visit:
         """Add a visit to a Participant.
         
         Add a visit to a participant in OpenSpecimen via API call. To use this function, one has to know the
-        Parameters of the Participant, event and site.
+        parameters of the participant, event and site.
 
         Note
         ----
@@ -74,9 +74,9 @@ class visit:
         ----------
         params : string
             JSON formatted string with parameters: cprId, eventId, eventLabel, ppid, cptitle, cpShorttitle, name,
-            clinicalDiagnoses[optional], clinicalStatus[optional], acitivtyStatus [optional], site, status(permissable
+            clinicalDiagnoses[optional], clinicalStatus[optional], activityStatus [optional], site, status(permissable
             values: COMPLETE, PENDING, MISSED), missedReason[optional], missedBy[optional], comments[optional],
-            surgicalPathologyNumber[optional], cohort[optional], visitDate[optonal]
+            surgicalPathologyNumber[optional], cohort[optional], visitDate[optional]
         
         Returns
         -------
@@ -97,12 +97,12 @@ class visit:
         """Generate a visit and corresponding specimens
 
         Create a visit and specimens in one call. To use this function one has to know the parameters
-        of the Participants and event. Or one can use the create_visit_specimens function from the os_util
+        of the participants and events. Or one can use the create_visit_specimens function from the os_util
         class visit_util. 
 
         Note
         ----
-        The visit fields can be seen in add_visit and the ones for specimens in create specimen.
+        The visit fields can be seen in add_visit and the ones for specimens are in create specimen.
 
         Parameters
         ----------
@@ -129,15 +129,15 @@ class visit:
 
         """Delete a Visit from OpenSpecimen
 
-        Delete an existing Visit in OpenSpecimen with the Visit ID visitid. This has to be known and can
+        Delete an existing visit in OpenSpecimen with the Visit ID visitid. This has to be known and can
         be found out in the GUI by clicking on a participant and the visit. It looks like:
         http(s)://<host>:<port>/openspeicmen/cp-view/{cpid}/participant/{cprid}/visits/detail/ocerview?visitId={visitid}&eventId={eventId} .
-        Or via the function get_visit_namespr, when one know the name of the visit and then extract the id from there.
+        Or via the function get_visit_namespr, when one knows the name of the visit and then extract the ID from there.
 
         Parameters
         ----------
         visitid : string or int
-            Id of the visit, gets converted to a string.
+            ID of the visit, gets converted to a string.
 
         Returns
         -------
@@ -157,20 +157,20 @@ class visit:
 
         """Get a Visit from OpenSpecimen
 
-        Get an existing Visit in OpenSpecimen with the Visit ID visitid. This has to be known and can
+        Get an existing visit in OpenSpecimen with the Visit ID visitid. This has to be known and can
         be found out in the GUI by clicking on a participant and the visit. It looks like:
         http(s)://<host>:<port>/openspeicmen/cp-view/{cpid}/participant/{cprid}/visits/detail/ocerview?visitId={visitid}&eventId={eventId} .
-        Or via the function get_visit_namespr, when one know the name of the visit and then extract the id from there.
+        Or via the function get_visit_namespr, when one knows the name of the visit and then extract the id from there.
 
         Parameters
         ----------
         visitid : string or int
-            Id of the visit, gets converted to a string.
+            ID of the visit, gets converted to a string.
 
         Returns
         -------
         dict
-            JSON-dict with the details of the visit with Id visitid or the OpenSpecimen's error message
+            JSON-dict with the details of the visit with ID visitid or the OpenSpecimen's error message
         """
         endpoint = '/visits/' + str(visitid)
         url = self.base_url + endpoint
@@ -182,11 +182,11 @@ class visit:
 
     def get_visit_namespr(self, search_string)::
 
-        """Get a Visit by the name or the Surgical pathology number
+        """Get a Visit by the Name or the Surgical Pathology Number
 
         Get one or more visits by the name or the surgical pathology number. Those parameters have to be known 
-        in order to know this function. If just the visitname is passed one return a visit with the corresponding name.
-        If just the surgical pathology number is passed it returns all visits with this number. If both are passed
+        in order to 🤦‍♀️know this function. If just the visitname is passed, one returns a visit with the corresponding name.
+        If just the surgical pathology number is passed, it returns all visits with this number. If both are passed,
         it works as logical AND.
 
         Parameters
@@ -209,10 +209,10 @@ class visit:
 
     def get_visits_cpr(self, search_string):
 
-        """Get a Visit by the Collection protocol Registration Id.
+        """Get a Visit by the Collection Protocol Registration ID.
 
-        Get a visits by the colelction Protocoll Registration ID. Those parameters have to be known 
-        in order to know this function. They can be extracted from calling a search function in the 
+        Get a visit by the collection protocoll registration ID. Those parameters have to be known 
+        in order to 🤦‍♀️know this function. They can be extracted from calling a search function in the 
         os_core class visits.
 
         Parameters
@@ -237,12 +237,12 @@ class visit:
 
         """Updating a visit
 
-        Update an existing Visit with Id visitid and the parameters params. All parameters are
-        optional for updating and  those which are not passed stays the same. Those parameters and 
-        the visit Id have to be known to use this function and can
+        Update an existing visit with ID visitid and the parameters params. All parameters are
+        optional for updating and those which are not passed, stay the same. Those parameters and 
+        the visit ID have to be known to use this function and can
         be found out in the GUI by clicking on a participant and the visit. It looks like:
         http(s)://<host>:<port>/openspeicmen/cp-view/{cpid}/participant/{cprid}/visits/detail/ocerview?visitId={visitid}&eventId={eventId} .
-        Or via the function get_visit_namespr, when one know the name of the visit and then extract the id from there.
+        Or via the function get_visit_namespr, when one knows the name of the visit and then extract the ID from there.
 
         Note
         ----
@@ -252,18 +252,18 @@ class visit:
         Parameters
         ----------
         visitid : int or string
-            Id of the visit as int or string, gets converted to a string
+            ID of the visit as int or string, gets converted to a string
         
         params : string
             JSON- formatted string with parameters: cprId, eventId, eventLabel, eventPoint[optional], ppid, cptitle, cpShorttitle, name,
-            clinicalDiagnoses[optional], clinicalStatus[optional], acitivtyStatus [optional], site, status(permissable
+            clinicalDiagnoses[optional], clinicalStatus[optional], activityStatus [optional], site, status(permissable
             values: COMPLETE, PENDING, MISSED), missedReason[optional], missedBy[optional], comments[optional],
-            surgicalPathologyNumber[optional], cohort[optional], visitDate[optonal]
+            surgicalPathologyNumber[optional], cohort[optional], visitDate[optional]
 
         Returns
         -------
         dict
-            JSON-dict with details of the updated visit or OpenSpecimens Error message
+            JSON-dict with details of the updated visit or OpenSpecimens error message
         """
 
         endpoint = '/visits/' + str(visitid)
