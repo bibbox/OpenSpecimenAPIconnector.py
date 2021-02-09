@@ -9,7 +9,7 @@ class users:
 
     """Handles the API calls for Users
 
-    This class handles the API calls for users. It can get all users, get a specific user, create a user, change the password,
+    This class handles the API calls for users. It can 🤦‍♀️get all users, get a specific user, create a user, change the password,
     get the roles of a user and assign a role to a user.
 
     Notes
@@ -20,9 +20,9 @@ class users:
     """
     def __init__(self, base_url, auth):
 
-        """Constructor of the Class users
+        """Constructor of the Class Users
         
-        Constructor of the class users, can handle the basic API-calls of the users in OpenSpecimen.
+        Constructor of the class users can handle the basic API-calls of the users in OpenSpecimen.
         Connects this class to OpenSpecimen specific request handle (os_core.request_util.py).
         
         Parameters
@@ -30,7 +30,7 @@ class users:
         base_url : string
             URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng
         auth : tuple
-            Consits of two strings ( loginname , password)
+            Consists of two strings ( loginname , password)
         """ 
 
         self.OS_request_gen = OS_request_gen(auth) 
@@ -41,8 +41,8 @@ class users:
 
         """Testing of the URL and authentification.
         
-        If there are unexpected errors one can easily test if the URL and login data is correctly spelled.
-        the function prints the URL and login data, handed over to the class, to the output terminal.
+        If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
+        The function prints the URL and login data and hand it over to the output terminal.
         """
 
         print(self.base_url, self.OS_request_gen.auth)
@@ -72,8 +72,8 @@ class users:
 
         """ Get the User with ID
 
-        Get the User with ID from OpenSpecimen. To use this function one has to know ID of the user.
-        This can be seen in the GUI if one click on the User and read from the URL which has
+        Get the User with ID from OpenSpecimen. To use this function, one has to know the ID of the user.
+        This can be seen in the GUI if one clicks on the User and reads from the URL, which has
         the format: http(s)://<host>:<port>/openspecimen/users/{userid}/... .
         Or with the function get_all_users and then extract the ID to the wanted user.
 
@@ -85,7 +85,7 @@ class users:
         Returns
         -------
         dict
-            JSON dict of the details of the specified User with ID or the OpenSpecimen's error message
+            JSON dict of the details of the specified user with ID or the OpenSpecimen's error message
         """
 
         endpoint = "/users/"+str(userId)
@@ -100,16 +100,16 @@ class users:
  
     def change_password(self, params):
 
-        """ Change the password of an user
+        """ Change the password of a user
 
-        Change the Password of an user. If the API-User is Superadmin, the parameters are userId,newPassword.
-        If the User isn't a Superadmin nor the Superadmin changes his own password the parameters are userId,
+        Change the password of a user. If the API-User is Superadmin, the parameters are userId,newPassword.
+        If the user isn't a Superadmin nor the Superadmin changes his own password, the parameters are userId,
         oldPassword, newPassword.
 
-        Paramters
+        Parameters
         ---------
         params : string
-            JSON formatted string with parameters userId, oldPassword[mandatory if not SuperAdmin] newPassword
+            JSON formatted string with parameters userId, oldPassword[mandatory, if not SuperAdmin] newPassword
         
         Returns
         -------
@@ -127,21 +127,21 @@ class users:
 
     def create_user(self, params):
 
-        """Create an user
+        """Create a user
 
-        Create a User in OpenSpecimen. To use this function one has to know the parameters.
+        Create a user in OpenSpecimen. To use this function, one has to know the parameters.
         They are explained in the parameters section. Or one can use the os_util class user_util.
 
         Parameters
         ----------
         params : string
-            JSON formatted string with paramters: fisrtName, lastName, emailAddress, phoneNumber,
+            JSON formatted string with parameters: firstName, lastName, emailAddress, phoneNumber,
             domainName, loginName, instituteName, type, address[optional], activitySatuts
 
         Returns
         -------
         dict
-            JSON dict with Details of the created User or the OpenSpecimen's error message.
+            JSON dict with details of the created user or the OpenSpecimen's error message.
         """
 
         endpoint = "/users"
@@ -154,10 +154,10 @@ class users:
 
     def delete_user(self, userid):
 
-        """Delete an user
+        """Delete a user
 
-        Delete an User in OpenSpecimen. To use this function one has to know ID of the user.
-        This can be seen in the GUI if one click on the User and read from the URL which has
+        Delete a user in OpenSpecimen. To use this function, one has to know ID of the user.
+        This can be seen in the GUI, if one clicks on the user and reads from the URL, which has
         the format: http(s)://<host>:<port>/openspecimen/users/{userid}/... .
         Or with the function get_all_users and then extract the ID to the wanted user.
 
@@ -169,7 +169,7 @@ class users:
         Returns
         -------
         dict
-            JSON dict with Details of the deleted User or the OpenSpecimen's error message.
+            JSON dict with details of the deleted user or the OpenSpecimen's error message.
         """
 
         endpoint = "/users/"+str(userid)+"/?close=true"
@@ -181,10 +181,10 @@ class users:
 
     def get_roles(self, userid):
 
-        """Get the roles of an user
+        """Get the roles of a user
 
-        Get the roles of an User  with IDin OpenSpecimen. To use this function one has to know ID of 
-        the user. This can be seen in the GUI if one click on the User and read from the URL which has
+        Get the roles of a user with IDin OpenSpecimen. To use this function, one has to know the ID of 
+        the user. This can be seen in the GUI, if one clicks on the user and reads from the URL, which has
         the format: http(s)://<host>:<port>/openspecimen/users/{userid}/... .
         Or with the function get_all_users and then extract the ID to the wanted user.
 
@@ -208,17 +208,17 @@ class users:
 
     def assign_role(self, userid, params):
 
-        """Assign a role to an user
+        """Assign a role to a User
 
-        Assign a role to an User  with IDin OpenSpecimen. To use this function one has to know ID of 
-        the user. This can be seen in the GUI if one click on the User and read from the URL which has
+        Assign a role to a user with IDin OpenSpecimen. To use this function, one has to know the ID of 
+        the user. This can be seen in the GUI, if one clicks on the User and reads from the URL, which has
         the format: http(s)://<host>:<port>/openspecimen/users/{userid}/... .
         Or with the function get_all_users and then extract the ID to the wanted user.
 
         Parameters
         ----------
         userid : string or int
-            String or int of the User Id which one wants to delete. Gets converted to a string.
+            String or int of the User ID, which one wants to delete. Gets converted to a string.
         
         params : string
             JSON formatted string with parameters: site(dict with sitedetail), collectionProtocol
@@ -240,23 +240,23 @@ class users:
 
     def update_user(self, userid, params):
         
-        """Update an user
+        """Update a User
 
-        Update an User in OpenSpecimen. To use this function one has to know the parameters.
+        Update a User in OpenSpecimen. To use this function, one has to know the parameters.
         They are explained in the parameters section. Or one can use the os_util class user_util.
-        Also the Id of the user which gets updated has to be known.
-        This can be seen in the GUI if one click on the User and read from the URL which has
+        Also the ID of the user, which gets updated, has to be known.
+        This can be seen in the GUI, if one clicks on the User and reads from the URL, which has
         the format: http(s)://<host>:<port>/openspecimen/users/{userid}/... .
         Or with the function get_all_users and then extract the ID to the wanted user.
 
         Parameters
         ----------
         userid : int
-            Id of the User.
+            ID of the User.
 
         params : string
-            JSON formatted string with paramters: fisrtName, lastName, emailAddress, phoneNumber,
-            domainName, loginName, instituteName, type, address[optional], activitySatuts
+            JSON formatted string with parameters: firstName, lastName, emailAddress, phoneNumber,
+            domainName, loginName, instituteName, type, address[optional], activityStatus
 
         Returns
         -------
