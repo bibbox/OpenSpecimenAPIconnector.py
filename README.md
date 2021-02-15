@@ -14,3 +14,6 @@ Currently the new structure is applied to the initial code. Further the concept 
 
 run python API_query from within the initial code folder,py from root dir to see the first few methods in action <br>
 Make Sure to provide a valid OS URL
+
+To install the pip package after cloning run:<br>
+pip install dist/OpenSpecimenAPIconnector-0.9.1-py3-none-any.whl

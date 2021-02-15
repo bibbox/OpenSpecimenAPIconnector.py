@@ -1,0 +1,7 @@
+pandas
+numpy
+requests
+faker
+names
+xlsxwriter
+openpyxl
