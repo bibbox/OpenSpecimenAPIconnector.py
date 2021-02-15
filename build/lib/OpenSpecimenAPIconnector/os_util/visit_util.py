@@ -11,17 +11,17 @@ import time
 class visit_util:
 
     """Handles the API calls for Visits
-    
+
     This class handles the API calls for OpenSpecimen Visits. It can create, update, 
     search visits with different parameters, add visits and specimens in one call.
     The outputs are JSON dicts or the Error messages as dict. 
-    
+
     Notes
     -----
     In order to use this and also the other classes, the user has to know OpenSpecimen.
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
-    
+
     Example
     -------
     A code example, where the Visits are handled is in the Jupyter-Notebook::
@@ -54,7 +54,7 @@ class visit_util:
                         missedby=None, comments=None,pathologynumber=None,cohort=None, visitdate=None):
         
         """Add a visit to a Participant.
-        
+
         Add a visit to a participant in OpenSpecimen via API call. To use this function, one has to know the
         Parameters of the Participant, event and site.
 
@@ -67,16 +67,16 @@ class visit_util:
         ----------
         name : string
             Name of the Visit.
-        
+
         site : string
             Site to which the Visit belongs.
-        
+
         eventid : int
             ID of the event to which the visit belongs.[optional]
-        
+
         eventlabel : string
             Label of the event to which the visit belongs.[optional]
-        
+
         cprid : int
             Identifier of the Collection Protocoll Registration to which the Visit belongs.
             cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.
@@ -84,25 +84,25 @@ class visit_util:
         ppid : string
             Identifier of the Participant to whom the Visit belongs.
             cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.
-        
+
         cptitle : string
             Name of the Collection Protocol.
             cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.
-        
+
         cpshorttitle : title
             Acronym of the Collection Protocol.
             cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.
-        
+
         cpid : int
             Identifier of the Collection Protocol.
             cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.
 
         diagnosis : string
             Name of the diagnoses of the visit.
-        
+
         clinicalstatus : string
             Clinical Status of the visit.[optional]
-        
+
         activity : string
             Activity Status of the Visit.[optional]
 
@@ -117,10 +117,10 @@ class visit_util:
 
         comments : string
             Commets regarding the visit.[optional]
-        
+
         pathologynumber : string
             Surgical Pathology number. [optional]
-        
+
         cohort : string
             Cohorts to which the Visit belongs. [optional]
 
@@ -137,6 +137,7 @@ class visit_util:
                                         cpshorttitle=cpshorttitle, diagnosis=diagnosis,clinicalstatus=clinicalstatus, activity=acitivity,
                                         visitstatus=visitstatus, missedreason=missedreason, missedby=missedby, comments=comments,
                                         pathologynumber=pathologynumber, cohort=cohort, visitdate=visitdate, cpid=cpid)
+        
         r = self.visit.add_visit(params = vis)
 
         return r
@@ -147,10 +148,10 @@ class visit_util:
                         cpid = None, diagnosis=None, clinicalstatus=None, acitivity=None, visitstatus=None, missedreason=None,
                         missedby=None, comments=None, pathologynumber=None, cohort=None, visitdate=None, laterality=None, rec_qlt = None,                        
                         colltime = None, rectime = None, status="Collected", stor_name=None, storlocx =None, storlocy =None, concentration=None, 
-                        biohazrad = None, comments = None, collproc=None, conttype = None, extensionudn = 'false', extensionmap = None,
+                        biohazrad = None, collproc=None, conttype = None, extensionudn = 'false', extensionmap = None,
                         extensiondict = None):
 
-            """Add a visit and a specimen in one call.
+        """Add a visit and a specimen in one call.
         
         Add a visit and a specimen in OpenSpecimen via one API call. To use this function, one has to know the
         Parameters of the Participant, event and site.
@@ -308,19 +309,19 @@ class visit_util:
                                         cpshorttitle=cpshorttitle, diagnosis=diagnosis,clinicalstatus=clinicalstatus, activity=acitivity,
                                         visitstatus=visitstatus, missedreason=missedreason, missedby=missedby, comments=comments,
                                         pathologynumber=pathologynumber, cohort=cohort, visitdate=visitdate, cpid=cpid)
-        
+
         speci = self.jsons.create_spec_json(lineage=lineage,  av_qty=av_qty, user=user, visitDate=visitdate, init_qty=init_qty, visit_id=None,
                                         spec_class=spec_class, spec_type=spec_type, anat_site=anat_site, stor_name=stor_name,storlocx =xtorlocx,
                                         storlocy = storlocy, label=speclabel, status=status, cont = conttype, proced=proced, qual= rec_qual, concent=concent,
                                         path=path, laterality=laterality)
-        
+
         vis = json.loads(vis)
         speci= json.loads(speci)
-        
+
         params={}
         params={"visit":vis,
             "specimens":[speci]}
-        
+
         params=json.dumps(params)
 
         r = self.visit.add_visit_specimen(params)

@@ -325,7 +325,7 @@ class url_gen:
 
     def search_visit_name_spr(self, visitname=None, sprnumber=None):
 
-    """Generates the URL endpoint for searching a Visit
+        """Generates the URL endpoint for searching a Visit
 
         Generates the string of the URL endpoint for searching one or more visits by
         the name or surgical pathology number.It looks like '?name=visitname&sprNumber=sprnumber'
