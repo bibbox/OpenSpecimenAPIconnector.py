@@ -58,7 +58,7 @@ class Export_OP():
 
         Parameters
         ----------
-        entity : String representing the entity(collection protocoll) for identifying the necessary JSON data string
+        entity : String representing the entity(collection protocol, institute, etc.) for identifying the necessary JSON data string
         param: String representing the various additional neccesary parameters. E.g.: The Collection protocoll identifier 
 
         Returns
@@ -76,7 +76,11 @@ class Export_OP():
         elif entity == "site":
             data = self.Json_fac.create_site_export_job_json(record_ids=param)
         elif entity == "cp":
-            data = self.Json_fac.create_cp_export_job_json(cp_id=param)
+            objecttype = None
+            entitytype = None
+            formname = None
+            data = self.json.create_cp_csv_export_job(objecttype = objecttype, cpid = param,
+                entitytype = entitytype, formname = formname)
         elif entity == "cpr":
             data = self.Json_fac.create_cpr_export_job_json(cp_id=param)
         elif entity == "visit":
