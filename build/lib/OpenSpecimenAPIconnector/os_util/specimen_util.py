@@ -220,7 +220,7 @@ class specimen_util:
                 anatomic= anatomic, laterality = laterality, initqty = initqty, avaqty = avaqty, visitid = visitid, colltime = colltime,
                 userid = userid, comments = comments, collproc = collproc, conttype = conttype, recqlt = recqlt, rectime = rectime,
                 lineage = lineage, status = status, storloc = storloc, concentration = concetration, biohazard = biohazard,
-                comments = comments, collproc = collproc, conttype = conttype, extension = extension)
+                extension = extension)
         
         r = self.specimen.create_specimen(params = params)
 
@@ -346,7 +346,7 @@ class specimen_util:
                 anatomic= anatomic, laterality = laterality, initqty = initqty, avaqty = avaqty, visitid = visitid, colltime = colltime,
                 userid = userid, comments = comments, collproc = collproc, conttype = conttype, recqlt = recqlt, rectime = rectime,
                 lineage = lineage, status = status, storloc = storloc, concentration = concetration, biohazard = biohazard,
-                comments = comments, collproc = collproc, conttype = conttype, extension = extension)
+                extension = extension)
         
         r = self.specimen.update_specimen(specimenid = specimenid,params = params)
 

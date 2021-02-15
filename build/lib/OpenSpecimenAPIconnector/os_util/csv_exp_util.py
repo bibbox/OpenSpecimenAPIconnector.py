@@ -12,7 +12,7 @@ import time
 
 class csv_export:
 
-     """Handles the export of CSV files from open specimen for different entities like collection protocols, specimens etc etc.
+    """Handles the export of CSV files from open specimen for different entities like collection protocols, specimens etc etc.
 
     This class handles the CSV export of various different entities and creates CSV files of the requested entities like collection protocols, institutes etc.
     Notes
@@ -26,7 +26,7 @@ class csv_export:
 
     A code example, where the Institutes are handled is in the Jupyter-Notebook:
 
-        $ jupyter notebook main.ipynb
+    $ jupyter notebook main.ipynb
     """
     def __init__(self, base_url, auth):
 
