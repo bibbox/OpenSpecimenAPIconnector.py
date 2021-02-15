@@ -1,0 +1,21 @@
+Metadata-Version: 1.1
+Name: OpenSpecimenAPIconnector
+Version: 0.9.1
+Summary: Python API commands to interact with OpenSpecimen
+Home-page: https://github.com/bibbox/OpenSpecimenAPIconnector.py/tree/master
+Author: Christam Schorn and Simon Streit
+Author-email: simon.streit@medunigraz-at
+License: BSD 2-clause
+Description: UNKNOWN
+Keywords: Openspecimen,API,Python Openspecimen
+Platform: UNKNOWN
+Classifier: Development Status :: 3 -Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: API communication interface
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
