@@ -2,6 +2,8 @@
 Version 0.9.0
 python framework for importing, exporting and combining various data entries from Open Specimen and Molgenis
 
+SORCE code can be found in src/OpenSpecimenAPIconnector/
+
 Framework strucutre:
 
 In general the Framework is comprised of 2 individual Levels:<br>
