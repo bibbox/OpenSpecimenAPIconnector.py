@@ -209,7 +209,7 @@ class collection_protocol_util:
 
         return r
     
-    def update_cp(self, cpid, short_title=None, title=None, pi_mail=None, time_start=None, time_end=None, sites, man_id=False, coords=None,
+    def update_cp(self, cpid, short_title=None, title=None, pi_mail=None, time_start=None, time_end=None, sites=None, man_id=False, coords=None,
                            consentsWaived=False,eth_cons_id=None, part_no=None, desc_url=None, visitNameFmt=None,
                            man_visit_name=False, man_spec_label=True, aliquots_in_same=None, activity="Active"):
 

@@ -180,7 +180,7 @@ class visit:
         return json.loads(r.text)
 
 
-    def get_visit_namespr(self, search_string)::
+    def get_visit_namespr(self, search_string):
 
         """Get a Visit by the Name or the Surgical Pathology Number
 

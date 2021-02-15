@@ -10,7 +10,7 @@ import time
 
 class cpevent_util:
 
-   """Handles the Events of corresponding to a Colelction Protocol
+    """Handles the Events of corresponding to a Colelction Protocol
 
     This class allows you to handle the Events in Openspecimen. One can create an event,
     but first the corresponding Colelction Protocol have to create, for example via os_core.collection_protocol.py.
@@ -28,11 +28,11 @@ class cpevent_util:
 
     A code example, where also Events are handled is in the Jupyter-Notebook::
 
-        $ jupyter notebook main.ipynb
+    $ jupyter notebook main.ipynb
     """
 
     def __init__(self, base_url, auth):
-        
+
         """Constructor of the Class cpevent_util
 
         Constructor of the class cpevent_util, can handle the basic API-calls

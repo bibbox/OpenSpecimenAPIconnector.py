@@ -7,12 +7,12 @@ from .req_util import OS_request_gen
 
 class institutes():
 
-     """Handles the API calls for the institutes
+    """Handles the API calls for the institutes
 
     Handles the OpenSpecimen API calls for the institutes. This class can 
     create, delete, update institutes. One can search via different parameters for an institute and
     get all Collection protocols corresponding to an institute. Get one or all institutes.
-    
+
     Notes
     -----
     In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes, one can
@@ -30,7 +30,7 @@ class institutes():
 
     def __init__(self, base_url, auth):
 
-         """Constructor of the Class Institutes
+        """Constructor of the Class Institutes
 
         Constructor of the class institutes can handle the basic API-calls
         of the institutes in OpenSpecimen. Connects this class to OpenSpecimen
@@ -39,9 +39,9 @@ class institutes():
         Parameters
         ----------
         base_url : string
-            URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng
+        URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng
         auth : tuple
-            Consists of two strings ( loginname , password)
+        Consists of two strings ( loginname , password)
         """
 
         self.OS_request_gen = OS_request_gen(base_url, auth)
@@ -116,14 +116,14 @@ class institutes():
 
     def search_institutes(self, substring):
 
-       """Search for Institutes with specific substring.
+        """Search for Institutes with specific substring.
 
         Search for one or more institutes with the substring. The search URL looks like:
         http(s)://<host>:<port>/openspecimen/rest/np/institutes?{param_1}={value_1}&...&{param_x}={value_x}
 
         Parameters
         ----------
-        substring : string
+            substring : string
             Substring of the Institutename.
 
         Returns
