@@ -55,3 +55,10 @@ class institutes_util:
         ----------
         institutename : string
             the name of the institute.
+        """
+
+        params = self.jsons.create_institute(institutename = institutename)
+        r = self.institutes.create_institute(params = params)
+
+        return r
+        

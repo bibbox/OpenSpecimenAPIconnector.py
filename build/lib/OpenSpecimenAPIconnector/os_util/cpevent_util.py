@@ -79,7 +79,7 @@ class cpevent_util:
             Defines the permissable values of the clinical status.
         
         acitivity : string
-            DEfines the activity status of the event.
+            Defines the activity status of the event.
         
         unit : string
             Defines which unit has the starting point.
@@ -117,13 +117,13 @@ class cpevent_util:
 
         Parameters
         ----------
-        eventid : string or int
+        eventid : int
             The ID of the event. Gets converted to a string.
 
         label : string
             Label of the Event, has to be unique.
         
-        point : string or int
+        point : int
             Starting Point of the event, Value + unit (e.g. DAYS).
         
         cp : string

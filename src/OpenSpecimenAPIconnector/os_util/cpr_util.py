@@ -62,7 +62,7 @@ class cpr_util:
 
         Parameter
         ---------
-        cpid : string or int
+        cpid : int
             The collection protocols Id where the participant is at.
         
         registrationdate : string

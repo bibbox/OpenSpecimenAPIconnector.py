@@ -78,10 +78,10 @@ class collection_protocol_util:
         reponame : string
             Name of the Repository in which the Collection Protocol is[optional].
         
-        startat : int or string
+        startat : int
             Value which one of the outcomes is the first to show, if not specified OpenSpecimen takes 0.
         
-        maxresults : int or string
+        maxresults : int
             Value how many Collection Protocols are shown, if not specified OpenSpecimen takes 100.
         
         detailedList: string
@@ -224,7 +224,7 @@ class collection_protocol_util:
         
         Parameters
         ----------
-        cpid : int or string
+        cpid : int
             ID of the Colelction Protocol which should get updated.
 
         short_title : string
