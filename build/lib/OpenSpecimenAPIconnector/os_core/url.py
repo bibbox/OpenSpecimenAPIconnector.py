@@ -30,7 +30,7 @@ def _write_instance(entity, value, sep = '&'):
         for val in value:
             instance += str(entity) + '=' + str(val).replace(' ', '+') + str(sep)
     else:
-        instance += str(entity) + '=' + str(val).replace(' ', '+') + str(sep)
+        instance += str(entity) + '=' + str(value).replace(' ', '+') + str(sep)
 
         return instance
 
