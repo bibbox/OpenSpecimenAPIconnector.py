@@ -55,7 +55,7 @@ class collection_protocol():
         """Testing of the URL and authentification.
 
         If there are unexpected errors one can easily test if the URL and login data is correctly spelled.
-        the function prints the URL and login data, handed over to the class, to the output terminal.
+        The function prints the URL and login data  to the output terminal, which was handed over to the class.
         """
 
         print(self.base_url, self.OS_request_gen.auth)
@@ -104,7 +104,7 @@ class collection_protocol():
 
         Parameters
         ----------
-        cpid: string or int
+        cpid: int
             The unique ID of the collection protocol which OpenSpecimen creates itselfs as a string or integer. 
             It will get converted to a string.
 
@@ -178,7 +178,7 @@ class collection_protocol():
 
         Parameters
         ----------
-        cpid : string or int
+        cpid : int
             The System's ID of the Collection Protocol, will be converted to a string.
 
         Returns
@@ -226,11 +226,7 @@ class collection_protocol():
         return json.loads(r.text)
 
 
-#   Update colelction Protocol
-#   Input:  - cpid: ID of the Colelction Protocol which should get updated
-#           - params: Paramters which should get updated
-#   Output: - eiher details of the CP as json formatted  string
-#           - or error message
+
     def update_collection_protocol(self, cpid, params):
 
         """Updates a existing Collection Protocol with ID ::cpid:: with the Parameters ::params::
@@ -248,7 +244,7 @@ class collection_protocol():
 
         Parameter
         ---------
-        cpid : strinf or int
+        cpid : int
             Unique Collection Protocol ID which is generated automatically from the System. It will be converted to a string.
         
         params : string
