@@ -214,7 +214,7 @@ class Json_factory():
 
         data = {
             "useUdn": useudn,
-            "attryMap": attrsmap,
+            "attrsMap": attrsmap,
             "value": extensiondict
         }
 

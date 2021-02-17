@@ -55,7 +55,7 @@ class collection_protocol():
         """Testing of the URL and authentification.
 
         If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
-        The function prints the URL and login data and hand it over to the class to the output terminal.
+        The function prints the URL and login data to the output terminal, which was handed over to the class.
         """
 
         print(self.base_url, self.OS_request_gen.auth)
@@ -63,12 +63,12 @@ class collection_protocol():
 
     def create_collection_protocol(self, params):
 
-"""Creates a Collection Protocol
+        """Creates a Collection Protocol
 
         Creates a Collection Protocol in OpenSpecimen. In order to use this function, one has to know
         the parameters which OpenSpecimen needs to create a protocol. One can use it via the os_util class
         collection_protocol_util. This allows just the basic definition, if one has Extensions 
-        e.g. BBMRI contact, this fields has to be added separately. 
+        e.g. BBMRI contact, this fields have to be added separately. 
 
         Parameters
         ----------
@@ -104,7 +104,7 @@ class collection_protocol():
 
         Parameters
         ----------
-        cpid: string or int
+        cpid: int
             The unique ID of the collection protocol which OpenSpecimen creates itself as a string or integer. 
             It will get converted to a string.
 
@@ -178,7 +178,7 @@ class collection_protocol():
 
         Parameters
         ----------
-        cpid : string or int
+        cpid : int
             The System's ID of the Collection Protocol will be converted to a string.
 
         Returns
@@ -205,8 +205,8 @@ class collection_protocol():
 
         Note
         ----
-        Merging is restricted to Super Admins. The CPs must have the same format for PPI, visits and specimens. On the otherhand, the target CP 
-        has no specific formats. 
+        Merging is restricted to Super Admins. The CPs must have the same format for PPID, visits and specimens. 
+        Or the target CP has no specific formats. 
 
         Parameters
         ----------
@@ -241,7 +241,7 @@ class collection_protocol():
 
         Parameter
         ---------
-        cpid : string or int
+        cpid : int
             Unique Collection Protocol ID which is generated automatically from the System. It will be converted to a string.
         
         params : string
@@ -265,6 +265,7 @@ class collection_protocol():
         return json.loads(r.text)
 
     def get_cp_pandas_template(self):
+
         """Template for the Collection Protocol
 
         Template for the Collection Protocol as specified within the system. If, for example, some extension details
@@ -292,7 +293,8 @@ class collection_protocol():
 
         Parameter
         ---------
-        cpid : string; Id of the given collection protocoll
+        cpid : id 
+            Id of the given collection protocoll
 
         Returns
         -------

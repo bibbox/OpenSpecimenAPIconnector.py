@@ -64,8 +64,7 @@ class csv_export:
             Not really clear what exactly this signifies right now
         """
 
-        data = self.json.create_cp_csv_export_job(objecttype = objecttype, cpid = cpid,
-                entitytype = entitytype, formname = formname)
+        data = self.json.create_cp_csv_export_job(objecttype = objecttype, cpid = cpid)
         
         job_id = self.export.create_export_job(data = data)
 
