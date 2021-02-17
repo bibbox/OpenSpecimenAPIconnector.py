@@ -54,7 +54,7 @@ class CSV_exporter():
         data : JSON-formatted-string 
         Containing the information needed by the API. 
         See OpenSpecimenAPIconnector.os_util.Export_OP().export_file to find the JSON 
-        blueprint methods in OpenSpecimenAPIconnector.os_util.Json_Factory().
+        blueprint methods in OpenSpecimenAPIconnector.os_core.Json_Factory().
 
         Returns
         -------
