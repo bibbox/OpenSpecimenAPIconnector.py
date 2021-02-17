@@ -1,7 +1,7 @@
-pandas
-numpy
-requests
 faker
 names
-xlsxwriter
+numpy
 openpyxl
+pandas
+requests
+xlsxwriter

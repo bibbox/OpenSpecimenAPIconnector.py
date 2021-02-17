@@ -118,9 +118,8 @@ class sites():
         
         Parameters
         ----------
-        siid: string or int
-            The unique ID of the site which OpenSpecimen creates itselfs as a string or integer. 
-            It will get converted to a string.
+        siid: int
+            The unique ID of the site which OpenSpecimen creates itselfs as an integer. 
             
         Returns
         -------
@@ -188,8 +187,8 @@ class sites():
         
         Parameters
         ----------
-        siteid : string or int
-            The system wide unique ID of the side as int or string. It gets converted to a string.
+        siteid : int
+            The system wide unique ID of the side as int.
             
         Returns
         -------
@@ -221,8 +220,8 @@ class sites():
         
         Parameter
         ---------
-        siid : strinf or int
-            Unique site ID which is generated automatically from the system. It will be converted to a string.
+        siid : int
+            Unique site ID which is generated automatically from the system.
         
         params : string
             JSON-formatted string with the parameters which should get updated.The keys which can get updated are: 

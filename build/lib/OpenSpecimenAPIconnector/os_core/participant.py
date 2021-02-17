@@ -68,8 +68,8 @@ class participant:
 
         Parameters
         ----------
-        ppid : string
-            The Collection Protocol  wide unique Participant Protocol ID of the Institute.
+        ppid : int
+            The Collection Protocol  wide unique Participant Protocol ID of the Institute will be converted to a string.
 
         Returns
         -------

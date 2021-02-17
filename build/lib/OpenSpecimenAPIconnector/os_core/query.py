@@ -147,7 +147,7 @@ class query:
 
         Parameters
         ----------
-        qryid : int
+        qryid : string or int
             The system's ID of the query will be converted to a string.
 
         params : string

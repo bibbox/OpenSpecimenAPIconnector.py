@@ -42,7 +42,7 @@ class users:
         """Testing of the URL and authentification.
         
         If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
-        The function prints the URL and login data and hand it over to the output terminal.
+        The function prints the URL and login data  to the output terminal, which was handed over to the class.
         """
 
         print(self.base_url, self.OS_request_gen.auth)
@@ -79,7 +79,7 @@ class users:
 
         Parameters
         ----------
-        userId : string or int
+        userId : int
             ID of the User which one wants to get.
         
         Returns
@@ -163,7 +163,7 @@ class users:
 
         Parameters
         ----------
-        userid : string or int
+        userid : int
             String or int of the User Id which one wants to delete. Gets converted to a string.
 
         Returns
@@ -190,8 +190,8 @@ class users:
 
         Parameters
         ----------
-        userid : string or int
-            String or int of the User Id which one wants to delete. Gets converted to a string.
+        userid : int
+            Int of the User Id which one wants to delete. Gets converted to a string.
 
         Returns
         -------
@@ -217,8 +217,8 @@ class users:
 
         Parameters
         ----------
-        userid : string or int
-            String or int of the User ID, which one wants to delete. Gets converted to a string.
+        userid : int
+            Int of the User ID, which one wants to delete. Gets converted to a string.
         
         params : string
             JSON formatted string with parameters: site(dict with sitedetail), collectionProtocol

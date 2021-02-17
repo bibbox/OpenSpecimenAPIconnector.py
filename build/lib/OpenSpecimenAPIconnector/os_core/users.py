@@ -191,7 +191,7 @@ class users:
         Parameters
         ----------
         userid : int
-            String or int of the User Id which one wants to delete. Gets converted to a string.
+            Int of the User Id which one wants to delete. Gets converted to a string.
 
         Returns
         -------
@@ -218,7 +218,7 @@ class users:
         Parameters
         ----------
         userid : int
-            String or int of the User ID, which one wants to delete. Gets converted to a string.
+            Int of the User ID, which one wants to delete. Gets converted to a string.
         
         params : string
             JSON formatted string with parameters: site(dict with sitedetail), collectionProtocol

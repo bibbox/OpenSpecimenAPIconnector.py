@@ -52,7 +52,7 @@ class sites():
         
         """Testing of the URL and authentification.
         If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
-        TThe function prints the URL and login data  to the output terminal, which was handed over to the class.
+        The function prints the URL and login data and hand it over to the output terminal.
         """
 
         print(self.base_url, self.OS_request_gen.auth)
@@ -188,7 +188,7 @@ class sites():
         Parameters
         ----------
         siteid : int
-            The system wide unique ID of the side as int or string. It gets converted to a string.
+            The system wide unique ID of the side as int.
             
         Returns
         -------
@@ -221,7 +221,7 @@ class sites():
         Parameter
         ---------
         siid : int
-            Unique site ID which is generated automatically from the system. It will be converted to a string.
+            Unique site ID which is generated automatically from the system.
         
         params : string
             JSON-formatted string with the parameters which should get updated.The keys which can get updated are: 

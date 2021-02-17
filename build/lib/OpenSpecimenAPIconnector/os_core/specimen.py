@@ -71,7 +71,7 @@ class specimen:
         
         Parameters
         ----------
-        specimenid : int
+        specimenid : string or int
             The System's ID of the Specimen, which will be converted to a string.
         Returns
         -------
@@ -195,7 +195,7 @@ class specimen:
         Parameter
         ---------
         cpid : int
-            Unique Collection Protocol ID which is generated automatically from the System. It will be converted to a string.
+            Unique Collection Protocol ID which is generated automatically from the System.
         
         params : string
             JSON formatted string with parameters: label[mandatory if its created manually, leave empty if the System creates it
