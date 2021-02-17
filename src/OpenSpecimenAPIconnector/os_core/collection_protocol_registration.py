@@ -12,7 +12,21 @@ class collection_protocol_registration:
     Handles the OpenSpecimen API calls to registrate participants to an existing Collection Protocol.
     This class can create participants, delete participants, register existing participants to another protocol,
     merge participants, get the details of an existing participant or more existing participants, update a participant,
-     get the consent forms of a participant, download a consent form and delete consents form of participants.
+    get the consent forms of a participant, download a consent form and delete consents form of participants.
+
+    Notes
+    -----
+    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
+    just pass the parameters via JSON-formatted string. This means the user has to know the keywords.
+    The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
+    the calls refer to this site. More details can be seen in the documentation.
+
+    Example
+    -------
+
+    A code example, where also Participants are registrated is in the Jupyter-Notebook::
+
+        $ jupyter notebook main.ipynb
     """
 
     def __init__(self, base_url, auth):
@@ -39,7 +53,7 @@ class collection_protocol_registration:
         """Testing of the URL and authentification.
 
         If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
-        The function prints the URL and login data and hands it over to the output terminal.
+        The function prints the URL and login data to the output terminal, which was handed over to the class.
         """
 
         print(self.base_url, self.OS_request_gen.auth)
@@ -94,7 +108,7 @@ class collection_protocol_registration:
 
         Parameter
         ---------
-        cprid : int or string
+        cprid : int
             System generated unique ID of the participant. Will get converted to a string.
 
         Returns
@@ -121,7 +135,7 @@ class collection_protocol_registration:
 
         Parameter
         ---------
-        cprid : int or string
+        cprid : int
             System generated unique ID of the participant. Will get converted to a string.
 
         Returns
@@ -148,7 +162,7 @@ class collection_protocol_registration:
 
         Parameter
         ---------
-        cprid : int or string
+        cprid : int
             System generated unique ID of the participant. Will get converted to a string.
 
         Returns
@@ -175,7 +189,7 @@ class collection_protocol_registration:
 
         Parameter
         ---------
-        cprid : int or string
+        cprid : int
             System generated unique ID of the participant. Will get converted to a string.
 
         Returns
@@ -202,7 +216,7 @@ class collection_protocol_registration:
 
         Parameter
         ---------
-        cprid : int or string
+        cprid : int
             System generated unique ID of the participant. Will get converted to a string.
 
         Returns
@@ -291,10 +305,10 @@ class collection_protocol_registration:
 
         Parameters
         ----------
-        id_from : string or int
+        id_from : int
             System generated unique ID of the source participant. Will get converted to a string.
         
-        id_to : string or int
+        id_to : int
             System generated unique ID of the target participant. Will get converted to a string.
 
         Returns
@@ -324,7 +338,7 @@ class collection_protocol_registration:
 
         Parameters
         ----------
-        cprid : int or string
+        cprid : int
             System generated unique ID of the participant. Will get converted to a string.
 
         params : string
