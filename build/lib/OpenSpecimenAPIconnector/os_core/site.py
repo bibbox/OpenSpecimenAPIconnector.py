@@ -52,7 +52,7 @@ class sites():
         
         """Testing of the URL and authentification.
         If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
-        The function prints the URL and login data and hand it over to the output terminal.
+        TThe function prints the URL and login data  to the output terminal, which was handed over to the class.
         """
 
         print(self.base_url, self.OS_request_gen.auth)
@@ -118,9 +118,8 @@ class sites():
         
         Parameters
         ----------
-        siid: string or int
-            The unique ID of the site which OpenSpecimen creates itselfs as a string or integer. 
-            It will get converted to a string.
+        siid: int
+            The unique ID of the site which OpenSpecimen creates itselfs as an integer. 
             
         Returns
         -------
@@ -188,7 +187,7 @@ class sites():
         
         Parameters
         ----------
-        siteid : string or int
+        siteid : int
             The system wide unique ID of the side as int or string. It gets converted to a string.
             
         Returns
@@ -221,7 +220,7 @@ class sites():
         
         Parameter
         ---------
-        siid : strinf or int
+        siid : int
             Unique site ID which is generated automatically from the system. It will be converted to a string.
         
         params : string

@@ -53,7 +53,7 @@ class specimen:
         """Testing of the URL and authentification.
         
         If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
-        The function prints the URL and login data and hand it over to the output terminal.
+        The function prints the URL and login data  to the output terminal, which was handed over to the class.
         """
 
         print(self.base_url, self.OS_request_gen.auth)
@@ -71,7 +71,7 @@ class specimen:
         
         Parameters
         ----------
-        specimenid : string or int
+        specimenid : int
             The System's ID of the Specimen, which will be converted to a string.
         Returns
         -------
@@ -194,7 +194,7 @@ class specimen:
         
         Parameter
         ---------
-        cpid : strinf or int
+        cpid : int
             Unique Collection Protocol ID which is generated automatically from the System. It will be converted to a string.
         
         params : string

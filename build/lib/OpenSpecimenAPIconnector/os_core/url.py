@@ -138,7 +138,8 @@ class url_gen:
         Returns
         -------
         string
-            Paramter string specific for the given  searchoperation to be added to the URL endpoint the e.g.: '?query='searchstring&title=title&...&detailedList=true'.
+            Paramter string specific for the given  searchoperation to be added to the URL endpoint the e.g.: 
+            '?query='searchstring&title=title&...&detailedList=true'.
         """
 
         url_string='?'
