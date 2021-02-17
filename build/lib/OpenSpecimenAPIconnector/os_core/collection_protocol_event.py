@@ -18,11 +18,13 @@ class collection_protocol_event:
     -----
     In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
     just pass the parameters via JSON-formatted string. This means the user has to know the keywords.
+    The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
+    the calls refer to this site. More details can be seen in the documentation.
 
     Example
     -------
 
-    A code example, where also Events are handled is in the Jupyter-Notebook::
+    A code example, where the Collection protocols are handled is in the Jupyter-Notebook::
 
         $ jupyter notebook main.ipynb
     """
@@ -52,7 +54,7 @@ class collection_protocol_event:
         """Testing of the URL and authentification.
 
         If there are unexpected errors one can easily test if the URL and login data is correctly spelled.
-        the function prints the URL and login data, handed over to the class, to the output terminal.
+        The function prints the URL and login data  to the output terminal, which was handed over to the class.
         """
 
         print(self.base_url, self.OS_request_gen.auth)
@@ -100,7 +102,7 @@ class collection_protocol_event:
 
         Parameters
         ----------
-        eventid : int or string
+        eventid : int
             The unique ID of the event, which is created by OpenSpecimen.
 
         Returns
@@ -129,7 +131,7 @@ class collection_protocol_event:
 
         Parameters
         ----------
-        cpid : string or int
+        cpid : int
             Unique ID within OpenSpecimen from a given Collection Protocol. OpenSpecimen generates this ID automatically.
 
         Returns
@@ -158,7 +160,7 @@ class collection_protocol_event:
 
         Parameters
         ----------
-        eventid : string or int
+        eventid : int
             Unique ID of the event within OpenSpecimen, which is generated automatically.
         Returns
         -------
@@ -184,7 +186,7 @@ class collection_protocol_event:
 
         Parameters
         ----------
-        eventid : string or int
+        eventid : int
             Unique ID of the event within OpenSpecimen, which is generated automatically.
         params : string
             json-formatted string with parameters: eventLabel, eventPoint, collectionProtocol, defaultSite,
