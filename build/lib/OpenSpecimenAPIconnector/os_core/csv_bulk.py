@@ -45,7 +45,7 @@ class csv_bulk:
         """Testing of the URL and authentification.
 
         If there are unexpected errors one can easily test if the URL and login data is correctly spelled.
-        the function prints the URL and login data, handed over to the class, to the output terminal.
+        The function prints the URL and login data  to the output terminal, which was handed over to the class.
         """
 
         print(self.base_url, self.OS_request_gen.auth)
@@ -181,7 +181,7 @@ class csv_bulk:
 
         Parameters
         ----------
-        jobid : string or int
+        jobid : int
             ID of the job, which status has to be looked after.
 
         Returns
@@ -211,7 +211,7 @@ class csv_bulk:
 
         Parameters
         ----------
-        jobid : string or int
+        jobid : int
             ID of the job, which status has to be looked after.
 
         Returns
