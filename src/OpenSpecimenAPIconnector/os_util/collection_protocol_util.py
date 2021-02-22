@@ -73,7 +73,7 @@ class collection_protocol_util:
             Name of the desired Collection Protocol
         
         ppid : string or int
-            Id of the Pricincipal Investigator, gets converted to a string[optional].
+            Id of the Principal Investigator, gets converted to a string[optional].
         
         reponame : string
             Name of the Repository in which the Collection Protocol is[optional].
