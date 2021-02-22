@@ -9,7 +9,7 @@ class users:
 
     """Handles the API calls for Users
 
-    This class handles the API calls for users. Get all or specific user information, create a user, change his/her/their the password,
+    This class handles the API calls for users. Get all or specific user information, create a user, change his/her/their password,
     get user-roles of or assign a specific role to a user.
 
     Notes
@@ -136,7 +136,7 @@ class users:
         ----------
         params : string
             JSON formatted string with parameters: firstName, lastName, emailAddress, phoneNumber,
-            domainName, loginName, instituteName, type, address[optional], activitySatuts
+            domainName, loginName, instituteName, type, address[optional], activityStatus
 
         Returns
         -------
@@ -183,7 +183,7 @@ class users:
 
         """Get the roles of a user
 
-        Get the roles of a user with IDin OpenSpecimen. To use this function, one has to know the ID of 
+        Get the roles of a user with ID in OpenSpecimen. To use this function, one has to know the ID of 
         the user. This can be seen in the GUI, if one clicks on the user and reads from the URL, which has
         the format: http(s)://<host>:<port>/openspecimen/users/{userid}/... .
         Or with the function get_all_users and then extract the ID to the wanted user.
@@ -210,8 +210,8 @@ class users:
 
         """Assign a role to a User
 
-        Assign a role to a user with IDin OpenSpecimen. To use this function, one has to know the ID of 
-        the user. This can be seen in the GUI, if one clicks on the User and reads from the URL, which has
+        Assign a role to a user with ID in OpenSpecimen. To use this function, one has to know the ID of 
+        the user. This can be seen in the GUI, if one clicks on the user and reads from the URL, which has
         the format: http(s)://<host>:<port>/openspecimen/users/{userid}/... .
         Or with the function get_all_users and then extract the ID to the wanted user.
 
@@ -245,7 +245,7 @@ class users:
         Update a User in OpenSpecimen. To use this function, one has to know the parameters.
         They are explained in the parameters section. Or one can use the os_util class user_util.
         Also the ID of the user, which gets updated, has to be known.
-        This can be seen in the GUI, if one clicks on the User and reads from the URL, which has
+        This can be seen in the GUI, if one clicks on the user and reads from the URL, which has
         the format: http(s)://<host>:<port>/openspecimen/users/{userid}/... .
         Or with the function get_all_users and then extract the ID to the wanted user.
 
