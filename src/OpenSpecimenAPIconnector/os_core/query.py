@@ -148,7 +148,7 @@ class query:
         Parameters
         ----------
         qryid : string or int
-            The system's ID of the query will be converted to a string.
+            The systems ID of the query will be converted to a string.
 
         params : string
             JSON-formatted string with parameters: drivingForm, wideRowmode,
