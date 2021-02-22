@@ -10,11 +10,11 @@ import time
 
 class cpevent_util:
 
-    """Handles the Events of corresponding to a Colelction Protocol
+    """Handles the Events of corresponding to a Collection Protocol
 
-    This class allows you to handle the Events in Openspecimen. One can create an event,
-    but first the corresponding Colelction Protocol have to create, for example via os_core.collection_protocol.py.
-    And update an existing event. The other calls are in the os_core class collection_protocol_event.py.
+    This class allows you to handle the events in Openspecimen. One can create an event,
+    but first the corresponding Collection Protocol has to be created, for example via os_core.collection_protocol.py.
+   🤦‍♀️ And update an existing event. The other calls are in the os_core class collection_protocol_event.py.
     The output is a JSON dict with either details or the Openspecimen error message.
 
     Notes
@@ -26,7 +26,7 @@ class cpevent_util:
     Example
     -------
 
-    A code example, where also Events are handled is in the Jupyter-Notebook::
+    A code example, where also events are handled is in the Jupyter-Notebook::
 
     $ jupyter notebook main.ipynb
     """
@@ -44,7 +44,7 @@ class cpevent_util:
         base_url : string
             URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng
         auth : tuple
-            Consits of two strings ( loginname , password)
+            Consists of two strings ( loginname , password)
         """
 
         self.event = collection_protocol_event(base_url=base_url, auth=auth)
@@ -85,7 +85,7 @@ class cpevent_util:
             Defines which unit has the starting point.
         
         code : string
-            the Event code, is optional. In order to define condionals in the workflow, one need the Event code.
+            the event code, is optional. In order to define condionals in the workflow, one needs the event code.
 
         Returns
         -------
@@ -121,7 +121,7 @@ class cpevent_util:
             The ID of the event. Gets converted to a string.
 
         label : string
-            Label of the Event, has to be unique.
+            Label of the event, has to be unique.
         
         point : int
             Starting Point of the event, Value + unit (e.g. DAYS).
@@ -139,13 +139,13 @@ class cpevent_util:
             Defines the permissable values of the clinical status.
         
         acitivity : string
-            DEfines the activity status of the event.
+            Defines the activity status of the event.
         
         unit : string
             Defines which unit has the starting point.
         
         code : string
-            the Event code, is optional. In order to define condionals in the workflow, one need the Event code.
+            the event code, is optional. In order to define condionals in the workflow, one needs the event code.
 
         Returns
         -------
