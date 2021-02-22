@@ -38,7 +38,7 @@ class url_gen:
 
     """Generates the endpoint URL for search- and list operations
 
-    This class generates the paramter string used  in search operations. It can also be used on arrays an lists.
+    This class generates the parameter string used  in search operations. It can also be used on arrays and lists.
     For example deleting a list of specimens can be handled with this class. 
     Parameter strings look like '?entity1=value1&...&entityx=valuex'. To specify a list/array operation parameter string
     format follows the following rule '?entity=value1,...,valuex&'
@@ -83,7 +83,7 @@ class url_gen:
         Returns
         -------
         string
-            endpoint of the searchoperation, looks like '?name='sitename1&name=sitename2&...&institue=institutenamex'.
+            endpoint of the searchoperation, looks like '?name='sitename1&name=sitename2&...&institute=institutenamex'.
         """
    
         url_string = '/?'
@@ -109,7 +109,7 @@ class url_gen:
         Note
         ----
         All parameters can be passed to the function as lists and will be reformated to be accepted by Openspecimen.
-        Parameters permissibke to be lists are marked as such within the paramters section.
+        Parameters permissible to be lists are marked as such within the parameters section.
 
         Parameters
         ----------
@@ -117,7 +117,7 @@ class url_gen:
             Substring of the title and short title which want to be searched for as string or list.
 
         title : string or list
-            Substring of the title which want to be searched for as string or list.
+            Substring of the title which wants to be searched for as string or list.
         
         ppid : string or int
             The ID of the principal investigator as string or int. Gets converted to a string.
@@ -138,7 +138,7 @@ class url_gen:
         Returns
         -------
         string
-            Paramter string specific for the given  searchoperation to be added to the URL endpoint the e.g.: '?query='searchstring&title=title&...&detailedList=true'.
+            Parameter string specific for the given  searchoperation to be added to the URL endpoint the e.g.: '?query='searchstring&title=title&...&detailedList=true'.
         """
 
         url_string='?'
@@ -178,7 +178,7 @@ class url_gen:
         Note
         ----
         All parameters can be passed to the function as lists and will be reformated to be accepted by Openspecimen.
-        Parameters permissibke to be lists are marked as such within the paramters section.
+        Parameters permissible to be lists are marked as such within the parameters section.
 
         Parameters
         ----------
