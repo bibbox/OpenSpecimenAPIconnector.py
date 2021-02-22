@@ -23,7 +23,7 @@ class site_util:
     
     Example
     -------
-    A code example, where the Collection protocols are handled is in the Jupyter-Notebook::
+    A code example, where the collection protocols are handled is in the Jupyter-Notebook::
         $ jupyter notebook main.ipynb
     """
 
@@ -71,7 +71,7 @@ class site_util:
             Defines how many results will get returned maximally.
 
         siteExtension : boolean
-            If true returns also the extension details.
+            If true, returns also the extension details.
             
         Returns
         -------
