@@ -90,7 +90,7 @@ class participant:
 
         """Get the Participants who matches the params.
 
-        Get one or more participants, who match the criteria passed with params. This class can be used via
+        Get one or more participants who match the criteria passed with params. This class can be used via
         the os_util class cpr_util.py.
         
         Note
