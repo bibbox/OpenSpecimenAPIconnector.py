@@ -147,7 +147,6 @@ class Json_factory():
         return participantRegistration
 
     # Collection Protocoll
-
     def create_CP_json(self, short_title = None, title=None, pi_mail=None, time_start=None, time_end=None, sites=None, man_id=False, coords=None,
                            consentsWaived=False,eth_cons_id=None, part_no=None, desc_url=None, visitNameFmt=None,
                            man_visit_name=False, man_spec_label=True, aliquots_in_same=None, activity="Active"):
@@ -247,7 +246,6 @@ class Json_factory():
         return json.dumps(CP_reg)
 
     # Collection Protocol event
-
     def create_cp_event_json(self, label=None, point=None, cp=None, site=None, diagnosis=None, status=None, activity=None, unit=None, code=None):
         
          """Create JSON-formated string needed for event creation
@@ -437,120 +435,196 @@ class Json_factory():
     # Export Institute CSV
     def create_institue_export_job_json(self):
         
-        """Create JSON formated string neccesary for
+        """Create JSON formated string neccesary for exporting all institutes as a CSV table
         Parameters
-        cp_id: string Collection protocoll id pof export target
+        cp_id: string 
+            Collection protocol id of export target
         ----------
         Returns
         JSON-formated-string needed for creating an export job for the given entity
         -------
-        
+        """
         institute_json = {"objectType": "institute"}
         return json.dumps(institute_json)
+    
     # Export Sites CSV
     def create_site_export_job_json(self, record_ids=None):
         
-        """Create JSON formated string neccesary for
+        """Create JSON formated string neccesary for for exporting all user data as a CSV table
 
         Parameters
-        cp_id: string Collection protocoll id pof export target
+        cp_id: string 
+            Collection protocol id of export target
         ----------
         Returns
-        JSON-formated-string needed for creating an export job for the given entity
+        JSON-formated-string 
+            Json data needed for creating an export job for the given entity
         -------
+        """
         site_json = {"objectType": "site"}
-
         return json.dumps(site_json)
 
     # Export User CSV
     def create_user_export_job(self):
 
-        """Create JSON formated string neccesary for
+        """Create JSON formated string neccesary for exporting all user data as a CSV table
         Parameters
-        cp_id: string Collection protocoll id pof export target
+        cp_id: string 
+            Collection protocoll id of export target
         ----------
         Returns
-        JSON-formated-string needed for creating an export job for the given entity
+        JSON-formated-string 
+            Json data needed for creating an export job for the given entity
         -------
+        """
         user_json = {"objectType": "user"}
         return json.dumps(user_json)
-    # Export CP Registaration CSV
+    
+    # Export CP CSV duplicate since both jsons appear in internal OpenSpecimen calls and lead to the same error message
     def create_cp_export_job_json(self, cp_id=None):
-        """Create JSON formated string neccesary for
+        """Create JSON formated string neccesary for for exporting an collection protocol (should be implemented but is not see OpenSpecimen 7.2)
 
         Parameters
         cp_id: string Collection protocoll id pof export target
         ----------
         Returns
-        JSON-formated-string needed for creating an export job for the given entity
+        JSON-formated-string 
+            Json data needed for creating an export job for the given entity
         -------
-        json dict
+        """
+        
         cp_json = {"objectType": "cp", "params": {"cpId": cp_id}}
 
         return json.dumps(cp_json)
+    
+    def create_cp_csv_export_job(self, objecttype, cpid, entitytype=None, formname=None):
+    
+        """Create JSON formated string neccesary for exporting an collection protocol (should be implemented but is not see OpenSpecimen 7.2)
+
+        Parameters
+        cp_id: string 
+            Collection protocol id of export target
+        objecttype: string 
+            Identifying the general object to be exported
+        entitytype: string
+            Type of entity to be exported
+        formname: string
+            testing to clarify meaning of parameter needs to be done
+        ----------
+        Returns JSON-formated-string 
+            Json data needed for creating an export job for the given entity
+        -------
+        """
+        data = {
+            "objectType": objecttype,
+            "params":{
+                "entityType": entitytype,
+                "formName": formname,
+                "cpId": cpid
+            }
+        }
+
+        return json.dumps(data)
 
     # Export CP Registaration CSV
     def create_cpr_export_job_json(self, cp_id=None):
 
-        """Create JSON formated string neccesary for
+        """Create JSON formated string neccesary for exporting participant data (collection protocol registration)
+        
         Parameters
-        cp_id: string Collection protocoll id pof export target
+        cp_id: string 
+            Collection protocoll id of export target
         ----------
         Returns
-        JSON-formated-string needed for creating an export job for the given entity
+        JSON-formated-string 
+            Json data needed for creating an export job for the given entity
         -------
+        """
         cpr_json = {"objectType": "cpr", "params": {"cpId": cp_id}}
         return json.dumps(cpr_json)
+        
     # Export Vist CSV
     def create_visit_export_job_json(self, cp_id=None):
-        """Create JSON formated string neccesary for
+        """Create JSON formated string neccesary for exportin visit data as a CSV table
 
         Parameters
-        cp_id: string Collection protocoll id pof export target
+        cp_id: string 
+            Collection protocoll id of export target
         ----------
         Returns
-        JSON-formated-string needed for creating an export job for the given entity
+        JSON-formated-string 
+            Json data needed for creating an export job for the given entity
         -------
+        """
         visit_json = {"objectType": "specimen", "params": {"cpId": cp_id}}
-
         return json.dumps(visit_json)
-
+    
     # Export Specimen CSV
     def create_specimen_export_job_json(self, cp_id=None):
 
-        """Create JSON formated string neccesary for
+        """Create JSON formated string neccesary for specimen export as a CSV table
         Parameters
-        cp_id: string Collection protocoll id pof export target
+        cp_id: string 
+            Collection protocol(CP) id of export target CP
         ----------
         Returns
-        JSON-formated-string needed for creating an export job for the given entity
+        JSON-formated-string 
+            Json data needed for creating an export job for the given entity
         -------
+        """
         specimen_json = {"objectType": "specimen", "params": {"cpId": cp_id}}
         return json.dumps(specimen_json)
-    ##TODO
+    
     # Import collection protocols
     def create_site_import_job_json(self, record_ids=None):
-        """Create JSON formated string neccesary for
+        """Create JSON formated string neccesary for importing site data to OpenSpecimen
 
         Parameters
-        cp_id: string Collection protocoll id pof export target
+        cp_id: string 
+            Collection protocoll id of export target
+        record_ids: string
+            Record ids of data to be created to be tested 
         ----------
         Returns
-        JSON-formated-string needed for creating an import job for the given entity
+        JSON-formated-string 
+            Json data needed for creating an import job for the given entity
         -------
-
+        """
         site_json = {"objectType": "site", "recordIds": record_ids}
 
         return json.dumps(site_json)
     
-    # Create  Any AQL Query
-    def create_aql(self, cpid, aql, rowmode='OFF', coloumexpr='true', isodate='true'):
+    # Create Any AQL Query
+    def execute_aql(self, cpid, aql, rowmode='OFF', columnexpr='true', isodate='true'):
+        """Create JSON formated string to execute a specified query passed to teh method
 
+        Parameters
+        cp_id: string 
+            Collection protocoll id of export target
+        aql: string
+            query command in the OpenSpecimen Syntax (see OpenSpecimen API) 
+        rowmode: string
+           Specifies whether multi-valued attributes result in a single row or one row per value. 
+           Default value is OFF. Other permitted values are SHALLOW and DEEP. 
+           Try out to see what fits best for your use case. 
+        columnexpr: string 
+            Specifies whether the column labels or AQL expression needs to be included in the query response. 
+            By default, user friendly column labels are included in query response.	
+        isodate: string
+            Specifies how the date column values needs to be serialised in the query response. 
+            If true, then date/time values are serialised using ISO format: yyyy-MM-dd'T'HH:mm:ss. 
+            Otherwise, date/time values are serialised using the format specified in OS locale settings
+        ----------
+        Returns
+        JSON-formated-string 
+            Json data needed for executing a system query
+        -------
+        """
         params = {
             "cpId" : cpid,
             "aql" : aql,
             "wideRowMode" : rowmode,
-            "outputColoumnExprs" : coloumexpr,
+            "outputColumnExprs" : coloumexpr,
             "outputIsoDateTime" : isodate
         }
 
@@ -558,6 +632,25 @@ class Json_factory():
 
     # Execute Saved Query
     def execute_query(self, start, results, drivingform="Participant", rowmode="OFF"):
+        
+        """Create JSON formated string neccesary for execution of a saved query
+        Parameters
+        start: string 
+            Used for paginating the results. If start=5, the output result will start from row number 5.
+        resutls: string
+            Used for paginating the results. If results=10, the output result will be maximum 10 rows
+        drivingform: string
+            Driving form determines the search perspective. When left empty, it defaults to Participant.
+            (For example when drivingForm is Participant, the root table is 'catissue_coll_prot_reg' 
+            which is then used to join with the other tables.
+            Similarly when drivingForm is Specimen, the root table will be catissue_specimen, 
+            which will be joined with the other tables.) rowmode: string
+        ----------
+        Returns
+        JSON-formated-string 
+            Json data needed for executing a query saved within an Openspecimen appliance
+        -------
+        """
 
         params= {
             "drivingForm": drivingform,
@@ -568,18 +661,31 @@ class Json_factory():
 
         return json.dumps(params)
 
-    def create_cpr_part_import_job(self, schemaname=None, operation=None, fileid=None,
+    def create_bulk_import_job(self, schemaname=None, operation=None, fileid=None,
                                    dateformat=None, timeformat=None):
 
-        """Create JSON formated string neccesary for
+        """Create JSON formated string neccesary for creating a bulk import operation to be handled by OpenSpecimen
 
         Parameters
-        cp_id: string Collection protocoll id pof export target
+        schemaname : string
+            The Openspecimen schematype, that defines the expected CSV file structure for the entity to be created   
+        operation : string
+            Either CREATE or UPDATE duplicate entries will be ignored in case of creation. 
+        fileid: string
+            The file id created internally by OpenSpecimen, which needs to be passed to the API                      
+        dateformat: string
+            Specification of date format used in the OpenSpecimen API. See link for details
+            https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/68976690/Date+and+time+formats
+        timeformat: string
+            Specification of time format used in the OpenSpecimen API. See link for details
+            https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/68976690/Date+and+time+formats
         ----------
         Returns
-        JSON-formated-string needed for creating an export job for the given entity
+        JSON-formated-string 
+            Json data needed for creating an CSV file import job for the given entity
         -------
-
+        """
+        
         part_cpr_json = {"objectType": schemaname,
                     "importType": operation,
                     "inputFileId": fileid,
@@ -645,28 +751,6 @@ class Json_factory():
         }
 
         return json.dumps(params)
-
-    def create_cp_csv_export_job(self, objecttype, cpid, entitytype=None, formname=None):
-
-        """Create JSON formated string neccesary for
-
-        Parameters
-        cp_id: string Collection protocoll id pof export target
-        ----------
-        Returns
-        JSON-formated-string needed for creating an export job for the given entity
-        -------
-
-        data = {
-            "objectType": objecttype,
-            "params":{
-                "entityType": entitytype,
-                "formName": formname,
-                "cpId": cpid
-            }
-        }
-
-        return json.dumps(data)
 
     def merge_cps(self, src_cp, trg_cp):
         

@@ -162,7 +162,7 @@ class csv_bulk:
         """
 
         url = self.base_url
-        payload = self.Json_fact.create_cpr_part_import_job(schemaname=schemaname, operation=operation, fileid=fileid,
+        payload = self.Json_fact.create_bulk_import_job(schemaname=schemaname, operation=operation, fileid=fileid,
                                                             dateformat=dateformat, timeformat=timeformat)
         r = self.OS_request_gen.post_request(url, data=payload)
 
