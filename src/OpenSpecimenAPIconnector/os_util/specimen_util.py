@@ -17,7 +17,7 @@ class specimen_util:
     """Handles the calls for Specimens
     
     This class handles the API calls for OpenSpecimen Specimens. It can create, update, delete, 
-    search specimens with different parameters. The other calls are int the os_core class specimens
+    search specimens with different parameters. The other calls are in the os_core class specimens.
     The output is a JSON dict or the Error message as dict. It also can check if a
     specimen exists which returns a string which tells you if it exists.
     
@@ -46,7 +46,7 @@ class specimen_util:
         base_url : string
             URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng
         auth : tuple
-            Consits of two strings ( loginname , password)
+            Consists of two strings ( loginname , password)
         """
 
         self.req_gen =OS_request_gen(auth = auth)
@@ -57,7 +57,7 @@ class specimen_util:
 
     def search_specimens(self, label = None, cprid = None, eventid = None, visitid = None, maxres = "100", exact = "false", extension = "true"):
 
-        """Search for  Specimen with specific values.
+        """Search for Specimen with specific values.
         
         Search for one or more Specimens with the values in the search_string defined. The search string looks like:
         http(s)://<host>:<port>/openspecimen/rest/np/specimens?{param_1}={value_1}&...&{param_x}={value_x}
@@ -69,7 +69,7 @@ class specimen_util:
             Label of the specimen.
 
         cprid : int
-            Collection Protocol Registration ID to what Participant the specimen belongs.
+            Collection Protocol Registration ID to what Participant the specimen belongs to.
 
         eventid : int
             Unique systemwide Identifier of the event.
@@ -143,7 +143,7 @@ class specimen_util:
             The received quality.
         
         label : string
-            The Label of the specimen, if automatically generated leave it empty, else its mandatory.
+            The Label of the specimen, if automatically generated 🤦‍♀️leave it empty, else it is mandatory.
             
         colltime : string
             Date and Time of the collection event, the format is in the OpenSpecimen's System configuration.[optional]
@@ -164,7 +164,7 @@ class specimen_util:
             Position of the specimen in the Container in x direction.[optional]
 
         storlocy : int
-            Position of the specimen int the container in y direction.[optional]
+            Position of the specimen in the container in y direction.[optional]
             
         concetration  : int
             Concentration of the specimen[optional].
@@ -185,18 +185,18 @@ class specimen_util:
             Type of the storage conatiner.
             
         extensionudn : string
-            OpenSpecimen's boolean true/false. If true the extension keys are the udn values of the corresponding form.[optional]
+            OpenSpecimen's boolean true/false. If true the extension keys are the 🤦‍♀️udn values of the corresponding form.[optional]
         
         extensionmap : string
             The name of the Form which should be taken.[optional]
 
         extensiondict : dict
-            The dictornary of the extensions, has to be created manually. Either with udn or name (as defined before). [optional]
+            The dictionary of the extensions, has to be created manually. Either with udn or name (as defined before). [optional]
 
         Returns
         -------
         dict
-            Dictornary with details of the specimen or the OpenSpecimen's error meessage.
+            Dictionary with details of the specimen or the OpenSpecimen's error meessage.
         """
         
         if userid == None:
@@ -234,8 +234,8 @@ class specimen_util:
 
         """Update an existing Specimen
 
-        Update an existing Specimen In order to use this function one has to know the specimenid. This can be seen via the GUI
-        y clicking on the desired Specimen, and read from the URL: http(s)://<host>:<port>/openspecimen/cps/{cpid}/specimens/{specimenid}/... .
+        Update an existing Specimen in order to use this function one has to know the specimenid. This can be seen via the GUI
+        by clicking on the desired specimen, and read from the URL: http(s)://<host>:<port>/openspecimen/cps/{cpid}/specimens/{specimenid}/... .
         Or via search Specimen, for example by name and then extract the ID via key ["id"].
         
         Notes
@@ -296,7 +296,7 @@ class specimen_util:
             Position of the specimen in the Container in x direction.
 
         storlocy : int
-            Position of the specimen int the container in y direction.
+            Position of the specimen in the container in y direction.
             
         concetration  : int
             Concentration of the specimen.
@@ -314,21 +314,21 @@ class specimen_util:
             The procedure of the collection.
 
         conttype : string
-            Type of the storage conatiner.
+            Type of the storage container.
             
         extensionudn : string
-            OpenSpecimen's boolean true/false. If true the extension keys are the udn values of the corresponding form.
+            OpenSpecimen's boolean true/false. If true the extension keys are the 🤦‍♀️udn values of the corresponding form.
         
         extensionmap : string
             The name of the Form which should be taken.
 
         extensiondict : dict
-            The dictornary of the extensions, has to be created manually. Either with udn or name (as defined before). 
+            The dictionary of the extensions, has to be created manually. Either with udn or name (as defined before). 
 
         Returns
         -------
         dict
-            Dictornary with details of the specimen or the OpenSpecimen's error meessage.
+            Dictionary with details of the specimen or the OpenSpecimen's error meessage.
         """
 
         if userid != None:
@@ -360,19 +360,19 @@ class specimen_util:
         Derivative/Aliquot which is generated automatically from OpenSpecimen. To get the ID one can click in the GUI on the 
         Specimen/Derivative/Aliquot and read it from the URL, with format:
         http(s)://<host>:<port>/openspecimen/cp-view/{cpid}/specimen/{specimenid}/... .
-        An other possibility is to search via 'search_specimens' for a specific parameter and then extract the ID
+        Another possibility is to search via 'search_specimens' for a specific parameter and then extract the ID
         from the JSON-dict which get returned. The function allows also to delete a list of specimen
         
         Parameters
         ----------
         specimenids: list or int 
-            The unique ID(s) of the Specimen/Aliquot/Derivative which OpenSpecimen creates itselfs. 
-            Deleting specimens has the form "?id=specimenid_1+...+specimenid_n"
+            The unique ID(s) of the Specimen/Aliquot/Derivative which OpenSpecimen creates itself. 
+           🤦‍♀️ Deleting specimens has the form "?id=specimenid_1+...+specimenid_n"
             
         Returns
         -------
         JSON-dict
-            Details of the Specimens which is deleted or the OpenSpecimen error message as dict.
+            Details of the Specimens which are deleted or the OpenSpecimen error message as dict.
         """
 
         specids = self.url.delete_specimens(specimenids = specimenids)
