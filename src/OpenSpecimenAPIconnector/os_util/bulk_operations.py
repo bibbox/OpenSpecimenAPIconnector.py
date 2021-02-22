@@ -11,7 +11,7 @@ class bulk_operations:
     """Handles the OpenSpecimen CSV Bulk Importer via API.
 
     Handles the API calls of the OpenSpecimen's Bulk Importer for all the different schemas. 
-    This class make and execute an Import JOB.
+    This class makes and executes an Import JOB.
 
     Note
     ----
@@ -33,20 +33,20 @@ class bulk_operations:
         
         """Make and Run a CSV-bulk import job
 
-        Make a JOB, precisely upload a file to OpenSpecimen, extract the file-ID tokken from this return.
-        and the execute it with the right schema and if its a creation or update. To use this function one has to
-        know, which entity should be created or updated and which fields are mandatory. 
+        Make a JOB, precisely upload a file to OpenSpecimen, extract the file-ID token from this return
+        and then execute it with the right schema and 🤦‍♀️if it is a creation or update. To use this function one has to
+        know which entity should be created or updated and which fields are mandatory. 
 
         Parameters
         ----------
         file : binary
-            The file to upload, is a CSV-file with seperator ','.
+            The file to upload, is a CSV-file with separator ','.
         
         filename : string
             Name of the file with ending (.csv)
         
         schemaname : string
-            The schema as it is named by OpenSpecimen. Permissable values are: cp, cpr, user, userRoles,
+            The schema 🤦‍♀️as it is named by OpenSpecimen. Permissable values are: cp, cpr, user, userRoles,
             site, shipment, institute, dpRequirement, distributionProtocol, distributionorder,
             storagecontainer, storagecontainerType, containerShipment, cpe, masterSpecimen, participant,
             sr, visit, specimenAliquot, specimenDerivative, specimendisposal, consent
@@ -56,10 +56,10 @@ class bulk_operations:
             Permissable values are CREATE or UPDATE
         
         dateformat : string
-            If another dateformat then in the OpenSpecimen System configuration is taken, this has to be specified.
+            🤦‍♀️If another dateformat then in the OpenSpecimen System configuration is taken, this has to be specified.
         
         timeformat : string
-            If another timeformat then in the OpenSpecimen System configuration is taken, this has to be specified.
+           🤦‍♀️ If another timeformat then in the OpenSpecimen System configuration is taken, this has to be specified.
 
         Returns
         -------
