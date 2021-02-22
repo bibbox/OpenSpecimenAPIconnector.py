@@ -14,9 +14,9 @@ class user_util:
 
     def create_user(self, first, last, email, phone, login, institute, type_, address = None, domain = "openSpecimen"):
 
-        """Create an user
+        """Create a user
 
-        Create a User in OpenSpecimen. This function parses the input to a dict,
+        Create a User in OpenSpecimen. This function 🤦‍♀️parses the input to a dict,
         what OpenSpecimen can understand.
 
         Parameters
@@ -46,7 +46,7 @@ class user_util:
             Address of the user. [optional]
         
         domain : string
-            Domaninname, by default openSpecimen.
+            Domainname, by default OpenSpecimen.
         
         Returns
         -------
@@ -65,8 +65,8 @@ class user_util:
 
         """Update an user
 
-        Update an User in OpenSpecimen. To use this function one has to know ID of the user.
-        This can be seen in the GUI if one click on the User and read from the URL which has
+        Update an User in OpenSpecimen. To use this function one has to know the ID of the user.
+        This can be seen in the GUI if one clicks on the User and reads from the URL which has
         the format: http(s)://<host>:<port>/openspecimen/users/{userid}/... .
         Or with the function get_all_users and then extract the ID to the wanted user.
 
@@ -106,7 +106,7 @@ class user_util:
             Address of the user. [optional]
         
         domain : string
-            Domaninname, by default openSpecimen.
+            Domainname, by default OpenSpecimen.
         
         Returns
         -------
@@ -122,11 +122,11 @@ class user_util:
 
     def assign_role(self, userid, siteid, cpid, role):
 
-        """Assign a role to an user
+        """Assign a role to a user
 
-        Assign a role to an User with ID {userid} in OpenSpecimen. To use this function one has to know ID of 
+        Assign a role to a user with ID {userid} in OpenSpecimen. To use this function one has to know the ID of 
         the user, the site, the collection protocol and the name of the role. The user Id can be seen in the
-        GUI if one click on the User and read from the URL which has the format: 
+        GUI, if one clicks on the User and reads from the URL which has the format: 
         http(s)://<host>:<port>/openspecimen/users/{userid}/... .
         Or with the function get_all_users and then extract the ID to the wanted user.
 
