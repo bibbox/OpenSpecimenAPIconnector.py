@@ -31,7 +31,7 @@ class institutes_util:
         """Constructor of the Class institutes_util
 
         Constructor of the class institutes_util, can handle the  API-calls
-        🤦‍♀️create and update of the institutes in OpenSpecimen. Connects this class os_core
+        to create and update the institutes in OpenSpecimen. Connects this class os_core
         classes institutes and Json_factory
 
         Parameters
