@@ -14,7 +14,7 @@ class cpevent_util:
 
     This class allows you to handle the events in Openspecimen. One can create an event,
     but first the corresponding Collection Protocol has to be created, for example via os_core.collection_protocol.py.
-   🤦‍♀️ And update an existing event. The other calls are in the os_core class collection_protocol_event.py.
+    or one can update an existing event. The other calls are in the os_core class collection_protocol_event.py.
     The output is a JSON dict with either details or the Openspecimen error message.
 
     Notes
