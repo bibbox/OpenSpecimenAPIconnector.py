@@ -927,7 +927,7 @@ class Json_factory():
 
     def get_participants(self, lastname = None, uid = None, birthdate = None, pmi = None, empi = None, reqreginfo = None):
 
-         """Create JSON-formatted string to neccesary to retrieve storage location via API 
+        """Create JSON-formatted string to neccesary to retrieve storage location via API 
 
         Parameters
         ---------
