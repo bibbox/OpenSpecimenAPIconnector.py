@@ -111,8 +111,8 @@ class sites():
         """Delete a site with OpenSpecimen's uniques Site ID
         
         Delete an already existing site. The parameter ::siid:: is the uniqe ID of the site
-        which is generated automatically from OpenSpecimen. To get the ID, one can click in the GUI 🤦‍♀️on the sites
-        page on the desired site and read it from the URL, with format: http(s)://<host>:<port>/openspecimen/#/sites/{siid}/overview .
+        which is generated automatically from OpenSpecimen. To get the ID, one can click in the GUI on the sites
+        page of the desired site and read it from the URL, with format: http(s)://<host>:<port>/openspecimen/#/sites/{siid}/overview .
         Another possibility is to search via 'search_sites' for a specific parameter and then extract the ID
         from the JSON-dict which get returned.
         
