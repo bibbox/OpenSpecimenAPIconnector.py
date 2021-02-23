@@ -34,7 +34,7 @@ class bulk_operations:
         """Make and Run a CSV-bulk import job
 
         Make a JOB, precisely upload a file to OpenSpecimen, extract the file-ID token from this return
-        and then execute it with the right schema and 🤦‍♀️if it is a creation or update. To use this function one has to
+        and then execute it with the right schema and operation (Create or Update). To use this function one has to
         know which entity should be created or updated and which fields are mandatory. 
 
         Parameters
@@ -46,7 +46,7 @@ class bulk_operations:
             Name of the file with ending (.csv)
         
         schemaname : string
-            The schema 🤦‍♀️as it is named by OpenSpecimen. Permissable values are: cp, cpr, user, userRoles,
+            The schemaname in OpenSpecimen with permissable values are: cp, cpr, user, userRoles,
             site, shipment, institute, dpRequirement, distributionProtocol, distributionorder,
             storagecontainer, storagecontainerType, containerShipment, cpe, masterSpecimen, participant,
             sr, visit, specimenAliquot, specimenDerivative, specimendisposal, consent
@@ -56,10 +56,10 @@ class bulk_operations:
             Permissable values are CREATE or UPDATE
         
         dateformat : string
-            🤦‍♀️If another dateformat then in the OpenSpecimen System configuration is taken, this has to be specified.
+            If another dateformat than in the OpenSpecimen System configuration is taken, this has to be specified.
         
         timeformat : string
-           🤦‍♀️ If another timeformat then in the OpenSpecimen System configuration is taken, this has to be specified.
+           If another timeformat than in the OpenSpecimen System configuration is taken, this has to be specified.
 
         Returns
         -------
