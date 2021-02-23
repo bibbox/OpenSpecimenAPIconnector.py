@@ -30,9 +30,9 @@ class Export_OP():
     Example
     -------
 
-    Call export_file = export_file(**args) and provide a valid entity type. In 🤦‍♀️cases an additional 
-    parameter param can be passed to the JSON generator defining various things, for example, the
-    target collection protocoll. See the calls in .export_file() and the Json_factory blueprints to
+    Call export_file = export_file(**args) and provide a valid entity type. Additional 
+    parameter can be passed to identify details about the entity to be exported (e.g collection protocol id) 
+    See the calls in .export_file() and the Json_factory blueprints to
     get more information from the source code. 
     """
 
@@ -58,8 +58,10 @@ class Export_OP():
 
         Parameters
         ----------
-        entity : String representing the entity(collection protocol, institute, etc.) for identifying the necessary JSON data string
-        param: String representing the various additional necessary parameters. E.g.: The Collection protocoll identifier 
+        entity : String 
+            Representing the entity(collection protocol, institute, etc.) for identifying the necessary JSON data string
+        param: String 
+            Representing the various additional necessary parameters. E.g.: The Collection protocoll identifier 
 
         Returns
         -------
