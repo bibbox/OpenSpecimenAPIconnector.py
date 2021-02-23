@@ -16,7 +16,7 @@ class user_util:
 
         """Create a user
 
-        Create a User in OpenSpecimen. This function 🤦‍♀️parses the input to a dict,
+        Create a User in OpenSpecimen. This function parses the input to a dict,
         what OpenSpecimen can understand.
 
         Parameters
