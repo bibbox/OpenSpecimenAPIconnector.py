@@ -73,7 +73,7 @@ class query_util:
             Permissable values true/false. If true Userfriendly column labels are included in the response.
 
         isodate : string
-            Permissable values are true/false. If true ISO-date-format(yyy-MM-dd'T'HH:mm:ss), else 🤦‍♀️searlized with OS local settings.
+            Permissable values are true/false. If true, the API accepts a ISO-date-format(yyy-MM-dd'T'HH:mm:ss), or else it takes the format from the OS local settings.
 
         Returns
         -------
@@ -101,7 +101,7 @@ class query_util:
             The System's ID of the Query, will be converted to a string.
 
         start : int
-            Defines the row from which🤦‍♀️ on the outcomes will be displayed.
+            Defines the row of the outcomes from which they will be displayed.
         
         results : int
             Defines how many results will be displayed.
@@ -140,7 +140,7 @@ class query_util:
             Substring of the query title.
         
         start : int
-            Defines the row from which 🤦‍♀️on the outcomes will be displayed.
+            Defines the row of the outcomes from which they will be displayed.
         
         max_ : int
             Defines how many results will be displayed.

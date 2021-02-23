@@ -291,7 +291,7 @@ class visit_util:
             Type of the storage container.
             
         extensionudn : string
-            OpenSpecimen's boolean true/false. If true, the extension keys are the 🤦‍♀️udn values of the corresponding form.[optional]
+            OpenSpecimen's boolean true/false. If true, the extension keys are the udn values of the corresponding form.[optional]
         
         extensionmap : string
             The name of the form which should be taken.[optional]
@@ -470,7 +470,7 @@ class visit_util:
             Identifier of the collection protocol registration.
         
         includestats : string
-            OpenSpecimen's boolean true/false. If true the 🤦‍♀️sats of the participants, e.g. number of visits are included.
+            OpenSpecimen's boolean true/false. If true the stats of the participants, e.g. number of visits are included.
         
         Returns
         -------
