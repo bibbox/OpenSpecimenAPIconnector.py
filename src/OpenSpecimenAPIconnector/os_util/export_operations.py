@@ -24,7 +24,7 @@ class Export_OP():
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
 
-    Currently, not all entity types are implemented. 🤦‍♀️Further at the moment Collection protocoll still does not support 
+    Currently, not all entity types are implemented. Further, Collection protocoll still does not support 
     CSV export. 
 
     Example
