@@ -1002,3 +1002,15 @@ def create_site(self, name = None, institutename = None, type_ = None, coordinat
         data = {k: v for k, v in data.items() if v is not None}
 
         return json.dumps(data)
+
+    def change_user_pw_json(self, userid, newpw, oldpw = None):
+        
+        data = {
+            "userId" : userid,
+            "oldPassword" : oldpw,
+            "newPassword" : newpw
+        }
+
+        data = {k: v for k, v in data.items() if v is not None}
+
+        return json.dumps(data)
