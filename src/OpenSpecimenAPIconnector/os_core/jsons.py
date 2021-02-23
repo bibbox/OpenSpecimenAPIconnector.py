@@ -248,7 +248,7 @@ class Json_factory():
     # Collection Protocol event
     def create_cp_event_json(self, label=None, point=None, cp=None, site=None, diagnosis=None, status=None, activity=None, unit=None, code=None):
         
-         """Create JSON-formated string needed for event creation
+        """Create JSON-formated string needed for event creation
         
         Create an event for a given Collection Protocol. Details of the parameters can be found in
         the parameters section.
