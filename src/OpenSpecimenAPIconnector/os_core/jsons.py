@@ -969,3 +969,36 @@ class Json_factory():
         
         return json.dumps(data)
 
+
+def create_site(self, name = None, institutename = None, type_ = None, coordinators = None, address = None):
+    
+        data = {
+            "name" : name,
+            "instituteName" : institutename,
+            "coordinators" : coordinators,
+            "type" : type_,
+            "address" : address
+        }
+
+        data = {k: v for k, v in data.items() if v is not None}
+
+        return json.dumps(data)
+
+    def create_user_json(self, first = None, last = None, email = None, phone = None, login = None, institute = None,
+                        type_ = None, address = None, domain = None):
+
+        data = {
+            "firstName" : first,
+            "lastName" : last,
+            "emailAddress" : email,
+            "phoneNumber" : phone,
+            "domainName" : domain,
+            "loginName" : login,
+            "instituteName" : institute,
+            "type" : type_,
+            "address" : address
+        }
+
+        data = {k: v for k, v in data.items() if v is not None}
+
+        return json.dumps(data)

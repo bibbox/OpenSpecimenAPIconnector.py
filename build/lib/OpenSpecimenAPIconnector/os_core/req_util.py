@@ -115,7 +115,7 @@ class OS_request_gen():
         Returns
         -------
         http(s) response
-            The response of the request, consists of status code, header and body. The type of the body alters
+            The response of the request consists of status code, header and body. The type of the body alters
             for different requests.
         """
         
@@ -167,7 +167,7 @@ class OS_request_gen():
         
         Generates DELETE request for OpenSpecimen, which always contains the URL in the format
         http(s)://<host>:<port>/openspecimen/rest/ng/{entity}/{objectID} . Is used for deleting objects 
-        of a desired entities e.g. specimens. Usually OpenSpecimen requires the ID of the object in the URL.
+        of a desired entity e.g. specimens. Usually OpenSpecimen requires the ID of the object in the URL.
         
         Parameters
         ----------

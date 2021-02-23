@@ -36,7 +36,7 @@ class collection_protocol_util:
 
         """Constructor of the Class collection_protocol_util
 
-        Constructor of the class colelction_protocol, can handle the basic API-calls
+        Constructor of the class collection_protocol, can handle the basic API-calls
         of the collection protocol in OpenSpecimen. Connects this class to OpenSpecimen
         specific request handle (os_core.request_util.py) and the os_core classes
         Json_fatory, url_gen and collection_protocol
@@ -46,7 +46,7 @@ class collection_protocol_util:
         base_url : string
             URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng
         auth : tuple
-            Consits of two strings ( loginname , password)
+            Consists of two strings ( loginname , password)
         """
 
         self.OS_request_gen = OS_request_gen(auth)
@@ -57,12 +57,12 @@ class collection_protocol_util:
   
     def search_cps(self, searchstring = None, title = None, piid = None, reponame = None, startat = None, maxresults = None, detailedlist = None):
 
-        """Search for Colelction Protocols with specific values.
+        """Search for Collection Protocols with specific values.
 
         Search for one or more Collection Protocols with the search_string defined. The search string looks like:
         http(s)://<host>:<port>/openspecimen/rest/np/collection-protocols?{param_1}={value_1}&...&{param_x}={value_x}
         With the class collection_protocol_util from os_util and function ::search_cps:: the search string is generated
-        and this function is called. Not all keys from OpenSpecimen can be easily searched after.
+        and this function is called. Not all keys from OpenSpecimen can be easily searched for.
 
         Parameters
         ----------
@@ -73,7 +73,7 @@ class collection_protocol_util:
             Name of the desired Collection Protocol
         
         ppid : string or int
-            Id of the Pricincipal Investigator, gets converted to a string[optional].
+            Id of the Principal Investigator, gets converted to a string[optional].
         
         reponame : string
             Name of the Repository in which the Collection Protocol is[optional].
@@ -104,7 +104,7 @@ class collection_protocol_util:
 
         """Merge two Collection protocols
 
-        Merge two Colelction Protocols which are defined in src_cp and trg_cp together. To call this function the short titles of
+        Merge two Collection Protocols which are defined in src_cp and trg_cp together. To call this function the short titles of
         the source and target collection protocol has to be known. The merged Protocol is the one with short title tgtCpShortTitle,
         with merge logic outer. 
 
@@ -124,11 +124,11 @@ class collection_protocol_util:
         Returns
         -------
         JSON-dict
-            JSON dict with the short titles of the source and target Colelction Protocols.
+            JSON dict with the short titles of the source and target Collection Protocols.
         """
 
         data = self.jsons.merge_cps(src_cp = src_cp, trg_cp = trg_cp)
-        r = self.cps.merge_colelction_protocols(params = data)
+        r = self.cps.merge_collection_protocols(params = data)
 
         return r
 
@@ -159,7 +159,7 @@ class collection_protocol_util:
             String with the end_time of the collection Protocol in the timeformat specified in the System configuration.
 
         sites: list
-            Sites which are assigned to the collection Protocl.
+            Sites which are assigned to the collection Protocol.
         
         man_id : string
             OpenSpecimen's boolean true/false if the manual PPID creation is enabled.
@@ -171,13 +171,13 @@ class collection_protocol_util:
             OpenSpecimen's boolean true/false if consent should be waived.
 
         eth_cons_id : string
-            Ethical aproavel id.
+            Ethical approval id.
 
         part_no : string
             String with number of anticipated Participant count.
 
         desc_url = string
-            URL with the decription of the Collection Protocol.
+            URL with the description of the Collection Protocol.
         
         visitNameFMT : string
             String which contains the OpenSpecimen's token for creating Visit Names automatically.
@@ -192,7 +192,7 @@ class collection_protocol_util:
             String with OpenSpecimen's boolean format if the Aliquotes are stored in the same Container.
         
         activity : string
-            String with the acitivity status of the Specimen.
+            String with the activity status of the Specimen.
         
         Returns
         -------
@@ -225,7 +225,7 @@ class collection_protocol_util:
         Parameters
         ----------
         cpid : int
-            ID of the Colelction Protocol which should get updated.
+            ID of the Collection Protocol which should get updated.
 
         short_title : string
             Short title of the Collection Protocol.
@@ -243,7 +243,7 @@ class collection_protocol_util:
             String with the end_time of the collection Protocol in the timeformat specified in the System configuration.
 
         sites: list
-            Sites which are assigned to the Collection Protocl.
+            Sites which are assigned to the Collection Protocol.
         
         man_id : string
             OpenSpecimen's boolean true/false if the manual PPID creation is enabled.
@@ -255,13 +255,13 @@ class collection_protocol_util:
             OpenSpecimen's boolean true/false if consent should be waived.
 
         eth_cons_id : string
-            Ethical aproavel id.
+            Ethical approval id.
 
         part_no : string
             String with number of anticipated Participant count.
 
         desc_url = string
-            URL with the decription of the Collection Protocol.
+            URL with the description of the Collection Protocol.
         
         visitNameFMT : string
             String which contains the OpenSpecimen's token for creating Visit Names automatically.

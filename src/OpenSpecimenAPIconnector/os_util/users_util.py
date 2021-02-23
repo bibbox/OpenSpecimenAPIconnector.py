@@ -60,8 +60,8 @@ class user_util:
 
         return r
 
-    def update_user(self, userid, first = None, last = None, email = None, phone = None, login = None, institute = None,
-                    type_ = None, address = None, domain = None):
+    def update_user(self, userid, first, last, email, login, institute, phone = None,
+                    type_ = None, address = None, domain = 'openspecimen'):
 
         """Update a user
 

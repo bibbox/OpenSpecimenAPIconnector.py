@@ -11,7 +11,7 @@ class institutes_util:
     """Handles the API calls for the institutes
 
     Handles the OpenSpecimen API calls for the institutes. This class can 
-    create, and update Insitutes. The other calls are in the os_core class institutes.
+    create, and update institutes. The other calls are in the os_core class institutes.
     
     Notes
     -----
@@ -21,7 +21,7 @@ class institutes_util:
 
     Example
     -------
-    A code example, where the Institutes are handled is in the Jupyter-Notebook:
+    A code example, where the institutes are handled is in the Jupyter-Notebook:
 
         $ jupyter notebook main.ipynb
     """
@@ -31,7 +31,7 @@ class institutes_util:
         """Constructor of the Class institutes_util
 
         Constructor of the class institutes_util, can handle the  API-calls
-        create and update of the institutes in OpenSpecimen. Connects this class os_core
+        to create and update the institutes in OpenSpecimen. Connects this class os_core
         classes institutes and Json_factory
 
         Parameters
@@ -39,7 +39,7 @@ class institutes_util:
         base_url : string
             URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng
         auth : tuple
-            Consits of two strings ( loginname , password)
+            Consists of two strings ( loginname , password)
         """
 
         self.institutes = institutes(base_url = base_url, auth = auth)
@@ -47,7 +47,7 @@ class institutes_util:
 
     def create_institute(self, institutename):
 
-        """Creates an Insitute.
+        """Creates an Institute.
 
         Creates an Institute in OpenSpecimen. 
 

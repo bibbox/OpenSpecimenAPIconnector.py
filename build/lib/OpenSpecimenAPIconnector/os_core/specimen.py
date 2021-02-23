@@ -12,7 +12,7 @@ class specimen:
     """Handles the calls for Specimens
     
     This class handles the API calls for OpenSpecimen Specimens/Aliquots/Derivatives. It can create, delete, 
-    search, and determine the existance of specimens with different parameters. Further a list of all specimens in the system can be created.
+    search, and determine the existence of specimens with different parameters. Further, a list of all specimens in the system can be created.
     The output is a JSON dict or the error message as dict. 
     
     Notes
@@ -90,19 +90,19 @@ class specimen:
         
         """Check if a Specimen with Label exists
         
-        Check if a specimen with Llbel ::specimenLabel:: already exists in the System.
+        Check if a specimen with Label ::specimenLabel:: already exists in the System.
         Can be interesting if one manually creates a label to avoid specimens with the same label.
         
         Parameters
         ----------
         specimenLabel : string
-            Label which should be checked as string. Get converted to a string
+            Label which should be checked as string. Gets converted to a string
         
         Returns
         -------
         string
             If Specimen exists, returns "Specimen with label <specimenLabel> exists".
-            Else "Specimen with label <specimenLabel> does not exist".
+            Or Else "Specimen with label <specimenLabel> does not exist".
         """
 
         endpoint = '?label=' + str(specimenLabel)
@@ -133,7 +133,7 @@ class specimen:
             JSON formatted string with parameters: label[mandatory if its created manually, leave empty if the System creates it
             automatically], specimenclass, type, pathology, atomicSite, laterality, initialQty, availableQty, lineage,
             visitId,  status, storageLocation(dict with keys positionX[optional], 
-            positionY[optional])[optional], concetration[optional], biohazards[optional], comments[optional],
+            positionY[optional])[optional], concentration[optional], biohazards[optional], comments[optional],
             collectionEvent(DICT with keys user,time, container[otpional], procedure[optional]),
             receivedEvent(DICT with keys user, time, receivedQuality), extensionDetails(DICT with keys useUdn, attrsmap,
             DICT with extension keys)[optional]
@@ -201,7 +201,7 @@ class specimen:
             JSON formatted string with parameters: label[mandatory if its created manually, leave empty if the System creates it
             automatically], specimenclass, type, pathology, atomicSite, laterality, initialQty, availableQty, lineage,
             visitId, parentId[mandatory if Aliquot/Derivative], status, storageLocation(dict with keys positionX[optional],
-            positionY[optional])[optional], concetration[optional],         biohazards[optional], comments[optional],
+            positionY[optional])[optional], concentration[optional],         biohazards[optional], comments[optional],
             collectionEvent(DICT with keys user,time, container[otpional], procedure[optional]),
             receivedEvent(DICT with keys user, time, receivedQuality), extensionDetails(DICT with keys useUdn, attrsmap,
             DICT with extension keys)[optional]

@@ -263,7 +263,7 @@ class visit:
         Returns
         -------
         dict
-            JSON-dict with details of the updated visit or OpenSpecimens error message
+            JSON-dict with details of the updated visit or OpenSpecimens error message 
         """
 
         endpoint = '/visits/' + str(visitid)

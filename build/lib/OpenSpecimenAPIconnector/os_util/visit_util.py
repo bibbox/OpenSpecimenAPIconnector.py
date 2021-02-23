@@ -24,7 +24,7 @@ class visit_util:
 
     Example
     -------
-    A code example, where the Visits are handled is in the Jupyter-Notebook::
+    A code example, where the visits are handled is in the Jupyter-Notebook::
         $ jupyter notebook main.ipynb
     """
 
@@ -33,7 +33,7 @@ class visit_util:
         """Constructor of the Class visit
         
         Constructor of the class visit, can handle the basic API-calls
-        of the Visits in OpenSpecimen. It also connects this class to the os_core classes
+        of the visits in OpenSpecimen. It also connects this class to the os_core classes
         visit, Json_factory, url_gen.
         
         Parameters
@@ -41,7 +41,7 @@ class visit_util:
         base_url : string
             URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng
         auth : tuple
-            Consits of two strings ( loginname , password)
+            Consists of two strings ( loginname , password)
         """ 
 
         self.visit = visit(base_url=base_url, auth=auth)
@@ -69,20 +69,20 @@ class visit_util:
             Name of the Visit.
 
         site : string
-            Site to which the Visit belongs.
+            Site to which the Visit belongs to.
 
         eventid : int
-            ID of the event to which the visit belongs.[optional]
+            ID of the event to which the visit belongs to.[optional]
 
         eventlabel : string
-            Label of the event to which the visit belongs.[optional]
+            Label of the event to which the visit belongs to.[optional]
 
         cprid : int
-            Identifier of the Collection Protocoll Registration to which the Visit belongs.
+            Identifier of the Collection Protocoll Registration to which the visit belongs to.
             cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.
 
         ppid : string
-            Identifier of the Participant to whom the Visit belongs.
+            Identifier of the Participant to whom the visit belongs to.
             cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.
 
         cptitle : string
@@ -116,13 +116,13 @@ class visit_util:
             Details of the person who missed the visit.[optional]
 
         comments : string
-            Commets regarding the visit.[optional]
+            Comments regarding the visit.[optional]
 
         pathologynumber : string
             Surgical Pathology number. [optional]
 
         cohort : string
-            Cohorts to which the Visit belongs. [optional]
+            Cohorts to which the visit belongs to. [optional]
 
         visitdate : string
             Date when the visit will occur, if empty takes the current date.[optional]
@@ -154,7 +154,7 @@ class visit_util:
         """Add a visit and a specimen in one call.
         
         Add a visit and a specimen in OpenSpecimen via one API call. To use this function, one has to know the
-        Parameters of the Participant, event and site.
+        Parameters of the participant, event and site.
 
         Note
         ----
@@ -166,7 +166,7 @@ class visit_util:
         Parameters
         ----------
         cprid : int
-            Identifier of the Collection Protocoll Registration to which the Visit belongs.
+            Identifier of the Collection Protocoll Registration to which the visit belongs to.
             cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.
 
         name : string
@@ -194,16 +194,16 @@ class visit_util:
             The anatomic site of the specimen.
 
         site : string
-            Site to which the Visit belongs.
+            Site to which the visit belongs to.
         site,
         eventid : int
-            ID of the event to which the visit belongs.[optional]
+            ID of the event to which the visit belongs to.[optional]
         
         eventlabel : string
-            Label of the event to which the visit belongs.[optional]
+            Label of the event to which the visit belongs to.[optional]
         
         ppid : string
-            Identifier of the Participant to whom the Visit belongs.
+            Identifier of the Participant to whom the visit belongs to.
             cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.
         
         cptitle : string
@@ -225,7 +225,7 @@ class visit_util:
             Clinical Status of the visit.[optional]
         
         activity : stringsite,
-            Activity Status of the Visit.[optional]
+            Activity Status of the visit.[optional]
 
         visitstatus : string
             Status of the visit.[optional]
@@ -237,13 +237,13 @@ class visit_util:
             Details of the person who missed the visit.[optional]
 
         comments : string
-            Commets regarding the visit.[optional]
+            Comments regarding the visit.[optional]
         
         pathologynumber : string
             Surgical Pathology number. [optional]
         
         cohort : string
-            Cohorts to which the Visit belongs. [optional]
+            Cohorts to which the visit belongs to. [optional]
 
         visitdate : string
             Date when the visit will occur, if empty takes the current date.[optional]
@@ -273,7 +273,7 @@ class visit_util:
             Position of the specimen in the Container in x direction.[optional]
 
         storlocy : int
-            Position of the specimen int the container in y direction.[optional]
+            Position of the specimen in the container in y direction.[optional]
             
         concetration  : int
             Concentration of the specimen[optional].
@@ -288,16 +288,16 @@ class visit_util:
             The procedure of the collection[otpional].
 
         conttype : string
-            Type of the storage conatiner.
+            Type of the storage container.
             
         extensionudn : string
-            OpenSpecimen's boolean true/false. If true the extension keys are the udn values of the corresponding form.[optional]
+            OpenSpecimen's boolean true/false. If true, the extension keys are the udn values of the corresponding form.[optional]
         
         extensionmap : string
-            The name of the Form which should be taken.[optional]
+            The name of the form which should be taken.[optional]
 
         extensiondict : dict
-            The dictornary of the extensions, has to be created manually. Either with udn or name (as defined before). [optional]
+            The dictionary of the extensions, has to be created manually. Either with udn or name (as defined before). [optional]
 
         Returns
         -------
@@ -335,16 +335,16 @@ class visit_util:
         
         """Updating a visit
 
-        Update an existing Visit with Id visitid and the parameters params. All parameters are
-        optional for updating and  those which are not passed stays the same. Those parameters and 
+        Update an existing visit with ID visitid and the parameters params. All parameters are
+        optional for updating and  those which are not passed stay the same. Those parameters and 
         the visit Id have to be known to use this function and can
         be found out in the GUI by clicking on a participant and the visit. It looks like:
         http(s)://<host>:<port>/openspeicmen/cp-view/{cpid}/participant/{cprid}/visits/detail/ocerview?visitId={visitid}&eventId={eventId} .
-        Or via the function get_visit_namespr, when one know the name of the visit and then extract the id from there.
+        Or via the function get_visit_namespr, when one knows the name of the visit and then extracts the id from there.
 
         Note
         ----
-        All paramteres are optional, except the visitid. The parameters which are not passed will stay the same.
+        All parameters are optional, except the visitid. The parameters which are not passed will stay the same.
 
         Parameters
         ----------
@@ -352,23 +352,23 @@ class visit_util:
             Id of the visit, gets converted to a string
         
         name : string
-            Name of the Visit.
+            Name of the visit.
         
         site : string
-            Site to which the Visit belongs.
+            Site to which the visit belongs to.
         
         eventid : int
-            ID of the event to which the visit belongs.[optional]
+            ID of the event to which the visit belongs to.[optional]
         
         eventlabel : string
-            Label of the event to which the visit belongs.[optional]
+            Label of the event to which the visit belongs to.[optional]
         
         cprid : int
-            Identifier of the Collection Protocoll Registration to which the Visit belongs.
+            Identifier of the Collection Protocoll Registration to which the visit belongs to.
             cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.
 
         ppid : string
-            Identifier of the Participant to whom the Visit belongs.
+            Identifier of the Participant to whom the visit belongs to.
             cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.
         
         cptitle : string
@@ -390,7 +390,7 @@ class visit_util:
             Clinical Status of the visit.[optional]
         
         activity : string
-            Activity Status of the Visit.[optional]
+            Activity Status of the visit.[optional]
 
         visitstatus : string
             Status of the visit.[optional]
@@ -402,13 +402,13 @@ class visit_util:
             Details of the person who missed the visit.[optional]
 
         comments : string
-            Commets regarding the visit.[optional]
+            Comments regarding the visit.[optional]
         
         pathologynumber : string
             Surgical Pathology number. [optional]
         
         cohort : string
-            Cohorts to which the Visit belongs. [optional]
+            Cohorts to which the visit belongs to. [optional]
 
         visitdate : string
             Date when the visit will occur, if empty takes the current date.[optional]
@@ -432,7 +432,7 @@ class visit_util:
         """Get a Visit by the name or the Surgical pathology number
 
         Get one or more visits by the name or the surgical pathology number. Those parameters have to be known 
-        in order to know this function. If just the visitname is passed one return a visit with the corresponding name.
+        in order to know this function. If just the visitname is passed, one returns a visit with the corresponding name.
         If just the surgical pathology number is passed it returns all visits with this number. If both are passed
         it works as logical AND.
 
@@ -460,7 +460,7 @@ class visit_util:
         
         """Get a Visit by the Collection protocol Registration Id.
 
-        Get a visits by the colelction Protocoll Registration ID. Those parameters have to be known 
+        Get a visit by the Collection Protocoll Registration ID. Those parameters have to be known 
         in order to know this function. They can be extracted from calling a search function in the 
         os_core class visits.
 
@@ -470,7 +470,7 @@ class visit_util:
             Identifier of the collection protocol registration.
         
         includestats : string
-            OpenSpecimen's boolean true/false. If true the sats of the participants, e.g. number of visits are included.
+            OpenSpecimen's boolean true/false. If true the stats of the participants, e.g. number of visits are included.
         
         Returns
         -------
