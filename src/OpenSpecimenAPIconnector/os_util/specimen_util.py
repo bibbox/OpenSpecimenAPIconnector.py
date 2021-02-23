@@ -143,7 +143,7 @@ class specimen_util:
             The received quality.
         
         label : string
-            The Label of the specimen, if automatically generated 🤦‍♀️leave it empty, else it is mandatory.
+            The Label of the specimen, if automatically generated it has to be left empty, or else it is mandatory.
             
         colltime : string
             Date and Time of the collection event, the format is in the OpenSpecimen's System configuration.[optional]
@@ -185,7 +185,7 @@ class specimen_util:
             Type of the storage conatiner.
             
         extensionudn : string
-            OpenSpecimen's boolean true/false. If true the extension keys are the 🤦‍♀️udn values of the corresponding form.[optional]
+            OpenSpecimen's boolean true/false. If true, the extension keys are the udn values of the corresponding form.[optional]
         
         extensionmap : string
             The name of the Form which should be taken.[optional]
@@ -317,7 +317,7 @@ class specimen_util:
             Type of the storage container.
             
         extensionudn : string
-            OpenSpecimen's boolean true/false. If true the extension keys are the 🤦‍♀️udn values of the corresponding form.
+            OpenSpecimen's boolean true/false. If true the extension keys are the udn values of the corresponding form.
         
         extensionmap : string
             The name of the Form which should be taken.
@@ -367,7 +367,7 @@ class specimen_util:
         ----------
         specimenids: list or int 
             The unique ID(s) of the Specimen/Aliquot/Derivative which OpenSpecimen creates itself. 
-           🤦‍♀️ Deleting specimens has the form "?id=specimenid_1+...+specimenid_n"
+            The URL of the specimens, which should be deleted, has the form "?id=specimenid_1+...+specimenid_n"
             
         Returns
         -------
