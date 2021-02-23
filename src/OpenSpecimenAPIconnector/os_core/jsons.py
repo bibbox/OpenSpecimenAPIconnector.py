@@ -482,6 +482,7 @@ class Json_factory():
     
     # Export CP CSV duplicate since both jsons appear in internal OpenSpecimen calls and lead to the same error message
     def create_cp_export_job_json(self, cp_id=None):
+        
         """Create JSON formated string neccesary for for exporting an collection protocol (should be implemented but is not see OpenSpecimen 7.2)
 
         Parameters
@@ -545,6 +546,7 @@ class Json_factory():
         
     # Export Vist CSV
     def create_visit_export_job_json(self, cp_id=None):
+        
         """Create JSON formated string neccesary for exportin visit data as a CSV table
 
         Parameters
@@ -577,6 +579,7 @@ class Json_factory():
     
     # Import collection protocols
     def create_site_import_job_json(self, record_ids=None):
+        
         """Create JSON formated string neccesary for importing site data to OpenSpecimen
 
         Parameters
@@ -596,6 +599,7 @@ class Json_factory():
     
     # Create Any AQL Query
     def execute_aql(self, cpid, aql, rowmode='OFF', columnexpr='true', isodate='true'):
+        
         """Create JSON formated string to execute a specified query passed to teh method
 
         Parameters
@@ -696,7 +700,41 @@ class Json_factory():
         return json.dumps(part_cpr_json)
 
     def get_registrations(self, cpid=None, registrationdate=None, ppid=None, name=None, birthdate=None, uid=None, specimen=None,
-                                    includestats=None, startat=None,maxresults=None):
+                                    includestats=None, startat=None,maxresults=None, exactmatch=None):
+
+        """Create JSON formated string neccesary for creating a bulk import operation to be handled by OpenSpecimen
+
+        Parameters
+        cpid : string
+            Collection protol id of the participants to be queried
+        registrationdate: string
+            Date formatted string to query participants registered especially on this date
+        ppid: string
+            OpenSpecimen internal unique id or part of a unique id to be matched (exact matching is defind in exact match)
+        name: string
+            Name of the participant to be matched
+        birthdate: string
+            Date formatted string containing the birthdate of a particiapnt to be queried
+        uid: string
+            Social Security number  or different national identifier
+        specimen: string
+            Participants whose specimen labels or barcodes contain this parameter value as a substring will be matched
+        includestats: string
+            Include additional statitics within the response (visits specimens etc.)
+        startat: string
+            startat and maxResults are useful in implementing pagination of participants list. When not specified, 
+            startAt defaults to 0. When startAt = n, the first element of the response is (n + 1)th participant satisfying the query criteria.
+        maxresults: string
+            This parameter specifies how many participant records should be included in the API response. 
+        exactmatch: string
+            Specifies whether the PPID should be exact match or sub-string match. Boolean true means exact match. Otherwise it is substring match.
+        ----------
+        Returns
+        JSON-formated-string   trg_cp: string
+            CP id of target of merge action
+            Json data needed for creating an CSV file import job for the given entity
+        -------
+        """
 
         params = {
             "cpId": cpid,
@@ -708,14 +746,88 @@ class Json_factory():
             "specimen": specimen,
             "includeStats": includestats,
             "startAt": startat,
-            "maxResults": maxresults
+            "maxResults": maxresults,
+            "exactMatch": exactmatch
         }
 
         return json.dumps(params)
 
-    def add_visit_json(self,cprid, name, site,eventid=None,eventlabel=None,ppid=None, cptitle=None, cpshorttitle=None,
+    def add_visit_json(self, cprid, name, site, eventid=None,eventlabel=None,ppid=None, cptitle=None, cpshorttitle=None,
                         diagnosis=None, clinicalstatus=None, activity=None, visitstatus="COMPLETE", missedreason=None,
                         missedby=None, comments=None,pathologynumber=None,cohort=None, visitdate=None, cpid=None):
+
+    
+        """Create JSON formated string neccesary for adding an visit
+
+        Parameters
+        ----------
+         cprid : int
+            Identifier of the Collection Protocoll Registration to which the Visit belongs.
+            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.
+        
+        name : string
+            Name of the Visit.
+
+        site : string
+            Site to which the Visit belongs.
+
+        eventid : int
+            ID of the event to which the visit belongs.[optional]
+
+        eventlabel : string
+            Label of the event to which the visit belongs.[optional]
+
+        ppid : string
+            Identifier of the Participant to whom the Visit belongs.
+            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.
+
+        cptitle : string
+            Name of the Collection Protocol.
+            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.
+
+        cpshorttitle : title
+            Acronym of the Collection Protocol.
+            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.
+
+        diagnosis : string
+            Name of the diagnoses of the visit.
+
+        clinicalstatus : string
+            Clinical Status of the visit.[optional]
+
+        activity : string
+            Activity Status of the Visit.[optional]
+
+        visitstatus : string
+            Status of the visit.[optional]
+
+        missedreason : string
+            Reason why the visit was missed.[optional]
+
+        missedby : string
+            Details of the person who missed the visit.[optional]
+
+        comments : string
+            Commets regarding the visit.[optional]
+
+        pathologynumber : string
+            Surgical Pathology number. [optional]
+
+        cohort : string
+            Cohorts to which the Visit belongs. [optional]
+
+        visitdate : string
+            Date when the visit will occur, if empty takes the current date.[optional]
+
+        cpid : int
+            Identifier of the Collection Protocol.
+            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.
+
+        Returns
+        -------
+        JSON-formatted string
+            Json data necessary to add an visit via API call
+        """
 
         params = {
             "cprId": cprid,
@@ -742,7 +854,25 @@ class Json_factory():
         return json.dumps(params)
 
     def storage_location_json(self, id=None, name=None, xpos=None, ypos=None):
+        
+        """Create JSON-formatted string to neccesary to retrieve storage location via API 
 
+        Parameters
+        ----------
+        id: string
+            Identifier of the Storage Container within OpenSpecimen.
+        name: string
+            Storage Container name
+        xpos: string 
+            x-coordinate within the given storage conatiner grid (if applicable) 
+        ypos: string
+            y-coordinate within the given storage container grid (if applicable)     
+        Returns
+        -------
+        JSON-formated string
+            JSON foramted string that is needed to retrieve the storage location of a specimen 
+        """
+        
         params = {
             "id": id,
             "name": name,
@@ -754,6 +884,20 @@ class Json_factory():
 
     def merge_cps(self, src_cp, trg_cp):
         
+        """Create JSON-formatted string to neccesary to retrieve storage location via API 
+
+        Parameters
+        ----------
+        src_cp: string
+            CP id of source collection protocoll for merge
+        trg_cp: string
+            CP id of target of merge action
+        Returns
+        -------
+        JSON-formated string
+            JSON-formated string neccesary for merging to CP's via API
+        """
+
         data = {
             "srcCpShortTitle": src_cp,
             "tgtCpShortTitle": trg_cp
@@ -762,6 +906,18 @@ class Json_factory():
         return json.dumps(data)
 
     def create_institute(self, institutename):
+        """Create JSON-formatted string to neccesary to retrieve storage location via API 
+
+        Parameters
+        ----------
+        institutename: string
+            Name of the institute 
+        
+        Returns
+        -------
+        JSON-formated string
+            JSON-formated string neccesary for creating an institute
+        """
 
         data = {
             "name": institutename
@@ -770,6 +926,34 @@ class Json_factory():
         return json.dumps(data)
 
     def get_participants(self, lastname = None, uid = None, birthdate = None, pmi = None, empi = None, reqreginfo = None):
+
+         """Create JSON-formatted string to neccesary to retrieve storage location via API 
+
+        Parameters
+        ---------
+        lastname : string
+            Substring of the Lastname of a Paritcipant.
+        
+        uid : string
+            Country specific unique social security number.
+
+        birthdate : string
+            The date of registration in the format, which is defined in the System settings.
+        
+        pmi : dict
+            Dict with details of the Medical records number mrn and the assigned site with key siteName.
+
+        empi : string
+            Enterprise wide unique ID assigned to the participant.
+
+        reqreginfo : string
+            OpenSpecimen's boolean (true/false). If true it returns details of the participant
+        
+        Returns
+        -------
+        JSON-formated string
+            JSON-formated string neccesary for creating an institute
+        """
 
         data ={
             "lastName" : lastname,

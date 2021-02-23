@@ -60,7 +60,7 @@ class cpr_util:
         Get the details of one or more participants, which are sepecified with the parameters from the function.
         The parameters are optional and if its all empty 100 participants will get returned, default order is with PPID.
 
-        Parameter
+        Parameters
         ---------
         cpid : string or int
             The collection protocols Id where the participant is at.
@@ -115,7 +115,7 @@ class cpr_util:
         The parameters are optional and if its all empty 100 participants will get returned, default order is with PPID.
         This function should be used before creating a participant to see if an participant is already in the system.
 
-        Parameter
+        Parameters
         ---------
         lastname : string
             Substring of the Lastname of a Paritcipant.
