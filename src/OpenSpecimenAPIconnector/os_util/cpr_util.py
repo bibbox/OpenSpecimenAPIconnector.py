@@ -63,7 +63,7 @@ class cpr_util:
         Parameter
         ---------
         cpid : int
-            The collection protocols Id where the participant is 🤦‍♀️at.
+            The collection protocols Id where the participant is registrered.
         
         registrationdate : string
             The date of registration in the format, which is defined in the system settings.
@@ -84,7 +84,7 @@ class cpr_util:
             The label or barcode of a specimen from the participant.
         
         includestats : string
-            OpenSpecimen's boolean (true/false). If true, it returns additional specimen, 🤦‍♀️visit counts.
+            OpenSpecimen's boolean (true/false). If true, it returns the number of specimens and visits.
         
         startat : int
             Defines which line of the matches is the first to show, the rows before get ignored in the return.
@@ -127,7 +127,7 @@ class cpr_util:
             The date of registration in the format, which is defined in the system settings.
         
         pmi : dict
-            Dict with details of the Medical records number 🤦‍♀️mrn and the assigned site with key siteName.
+            Dict with details of the Medical records number mrn and the assigned site with key siteName.
 
         empi : string
             Enterprise wide unique ID assigned to the participant.
