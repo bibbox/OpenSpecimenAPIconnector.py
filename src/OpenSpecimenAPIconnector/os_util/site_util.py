@@ -1,7 +1,6 @@
 #! /bin/python3
 
 from ..os_core.site import sites
-from ..os_core.req_util import OS_request_gen
 from ..os_core.jsons import Json_factory
 from ..os_core.url import url_gen
 
@@ -27,7 +26,7 @@ class site_util:
         $ jupyter notebook main.ipynb
     """
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         """Constructor of the Class sites
 
@@ -44,14 +43,12 @@ class site_util:
         auth : tuple
             Consists of two strings ( loginname , password)
         """
-
-        self.OS_request_gen = OS_request_gen(auth)
+        
         self.jsons = Json_factory()
         self.urls = url_gen()
-        self.sites = sites(base_url = base_url, auth = auth)
+        self.sites = sites()
 
-
-    def search_sites(self, sitename = None, institutename = None, maxresults =100, siteExtension=True):
+    def search_sites(self, sitename = None, institutename = None, maxresults = 100, siteExtension=True):
 
         """Search for Sites with specific values.
 

@@ -1,7 +1,6 @@
 #! /bin/python3
 
 from ..os_core.query import query
-from ..os_core.req_util import OS_request_gen
 from ..os_core.jsons import Json_factory
 from ..os_core.url import url_gen
 import json
@@ -30,7 +29,7 @@ class query_util:
         $ jupyter notebook main.ipynb
     """
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         """Constructor of the Class query.
 
@@ -46,7 +45,7 @@ class query_util:
             Consists of two strings ( loginname , password)
         """
 
-        self.query = query(base_url=base_url, auth=auth)
+        self.query = query()
         self.jsons = Json_factory()
         self.url = url_gen()
         

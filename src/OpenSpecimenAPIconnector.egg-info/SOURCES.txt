@@ -3,6 +3,7 @@ README.md
 setup.cfg
 setup.py
 src/OpenSpecimenAPIconnector/__init__.py
+src/OpenSpecimenAPIconnector/config.py
 src/OpenSpecimenAPIconnector.egg-info/PKG-INFO
 src/OpenSpecimenAPIconnector.egg-info/SOURCES.txt
 src/OpenSpecimenAPIconnector.egg-info/dependency_links.txt
@@ -13,9 +14,9 @@ src/OpenSpecimenAPIconnector/mg_core/mappings.py
 src/OpenSpecimenAPIconnector/mg_util/OpenSpecimenBBMRImapping.py
 src/OpenSpecimenAPIconnector/mg_util/__init__.py
 src/OpenSpecimenAPIconnector/os_core/__init__.py
+src/OpenSpecimenAPIconnector/os_core/collection_protocol.py
 src/OpenSpecimenAPIconnector/os_core/collection_protocol_event.py
 src/OpenSpecimenAPIconnector/os_core/collection_protocol_registration.py
-src/OpenSpecimenAPIconnector/os_core/collection_protocoll.py
 src/OpenSpecimenAPIconnector/os_core/csv_bulk.py
 src/OpenSpecimenAPIconnector/os_core/csv_export.py
 src/OpenSpecimenAPIconnector/os_core/institute.py

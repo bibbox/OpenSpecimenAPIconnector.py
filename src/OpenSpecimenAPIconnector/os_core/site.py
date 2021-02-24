@@ -2,6 +2,7 @@
 
 #Import
 from .req_util import OS_request_gen
+from .. import config_manager
 
 import json
 
@@ -28,7 +29,7 @@ class sites():
         $ jupyter notebook main.ipynb
     """
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         """Constructor of the Class sites
 
@@ -43,10 +44,9 @@ class sites():
         auth : tuple
             Consists of two strings ( loginname , password)
         """
-        
-        self.OS_request_gen = OS_request_gen(auth)
-        self.base_url = base_url + '/sites'
-        
+        self.base_url = config_manager.get_url() + '/sites'
+        self.auth = config_manager.get_auth()
+        self.OS_request_gen = OS_request_gen(self.auth)
 
     def ausgabe(self):
         

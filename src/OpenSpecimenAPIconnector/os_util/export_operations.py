@@ -7,7 +7,6 @@ import time
 
 from ..os_core.csv_export import CSV_exporter
 from ..os_core.jsons import Json_factory
-from ..os_core.req_util import OS_request_gen
 
 class Export_OP():
 
@@ -36,7 +35,7 @@ class Export_OP():
     get more information from the source code. 
     """
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         """Constructor of the Class Export_OP        
 
@@ -48,10 +47,8 @@ class Export_OP():
         Consists of two strings (loginname , password)
         """
 
-        self.base_url = base_url
-        self.auth = auth
         self.Json_fac = Json_factory()
-        self.exporter = CSV_exporter(self.base_url, self.auth)
+        self.exporter = CSV_exporter()
 
     def export_file(self, entity=None, param=None):
         """Fetch the output 

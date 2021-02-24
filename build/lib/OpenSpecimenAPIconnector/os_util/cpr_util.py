@@ -1,7 +1,6 @@
 #! /bin/python3
 
 from ..os_core.collection_protocol_registration import collection_protocol_registration
-from ..os_core.req_util import OS_request_gen
 from ..os_core.jsons import Json_factory
 from ..os_core.participant import participant
 import json
@@ -31,7 +30,7 @@ class cpr_util:
         $ jupyter notebook main.ipynb
     """
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         """Constructor of the Class cpr_util
 
@@ -47,8 +46,8 @@ class cpr_util:
             Consists of two strings ( loginname , password)
         """
 
-        self.cpr = collection_protocol_registration(base_url=base_url, auth=auth)
-        self.participant = participant(base_url = base_url, auth = auth)
+        self.cpr = collection_protocol_registration()
+        self.participant = participant()
         self.jsons = Json_factory()
 
 

@@ -3,11 +3,11 @@
 import json
 from .req_util import OS_request_gen
 from .jsons import Json_factory
-
+from .. import config_manager
 
 class collection_protocol():
 
-"""Handles the calls Collection Protocol
+    """Handles the calls Collection Protocol
 
     This class handles the API calls for OpenSpecimen Collection Protocol. It can create, delete, 
     search a Protocol with different parameters, can get all Collection Protocols in the system and can 
@@ -24,15 +24,14 @@ class collection_protocol():
 
     Example
     -------
-
     A code example, where the Collection protocols are handled, is in the Jupyter-Notebook::
 
         $ jupyter notebook main.ipynb
     """
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
-        """"Constructor of the Class collection_protocol
+        """Constructor of the Class collection_protocol
 
         Constructor of the class collection_protocol can handle the basic API-calls
         of the collection protocol in OpenSpecimen. Connects this class to OpenSpecimen
@@ -43,11 +42,11 @@ class collection_protocol():
         base_url : string
             URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng
         auth : tuple
-            Consists of two strings ( loginname , password)
+            Consists of two strings (loginname , password)
         """
-
-        self.OS_request_gen = OS_request_gen(auth)
-        self.base_url = base_url + '/collection-protocols'
+        self.base_url = config_manager.get_url() + '/collection-protocols'
+        self.auth = config_manager.get_auth()
+        self.OS_request_gen = OS_request_gen(self.auth)
         self.jsons = Json_factory()
 
     def ausgabe(self):
@@ -229,21 +228,21 @@ class collection_protocol():
 
         """Updates an existing Collection Protocol with ID ::cpid:: with the Parameters ::params::
 
-        Updates an existing Collection Protocol with the automatically generated OpenSpecimen's system wide
-        unique Collection Protocol ID ::cpid::, with the Parameters ::params:: which are passed to the function.
-        The ID of the Collection Protocol has to be known and can, for example, be seen in the GUI by clicking on 
-        the Collection Protocol, which has the format http(s)://<host>:<port>/openspecimen/cps/{cpid}/... .
-        Or via the function search_collection_protocols or get_all_collection_protocols
+            Updates an existing Collection Protocol with the automatically generated OpenSpecimen's system wide
+            unique Collection Protocol ID ::cpid::, with the Parameters ::params:: which are passed to the function.
+            The ID of the Collection Protocol has to be known and can, for example, be seen in the GUI by clicking on 
+            the Collection Protocol, which has the format http(s)://<host>:<port>/openspecimen/cps/{cpid}/... .
+            Or via the function search_collection_protocols or get_all_collection_protocols
 
         Note
         ----
-        For updating, all parameters are optional. Those parameters which are not passed to the function, will stay the same as before.
+            For updating, all parameters are optional. Those parameters which are not passed to the function, will stay the same as before.
 
         Parameter
         ---------
         cpid : int
             Unique Collection Protocol ID which is generated automatically from the System. It will be converted to a string.
-        
+
         params : string
             JSON-formatted string with the parameters should get updated. The keys which can get updated are: 
             title, shortTitle, code[optional], startDate[optional], endDate[optional], principalInvestigator, 
@@ -285,21 +284,21 @@ class collection_protocol():
 
         return cp_pandas_template
 
-    def get_cp_def(self, cpid):
+def get_cp_def(self, cpid):
 
-	"""Definition of collection protocoll
+        """Definition of collection protocoll
 
         Alternative endpoint to get the definition of the collection protocoll; Similar to get_collection_protocoll
 
         Parameter
         ---------
         cpid : id 
-            Id of the given collection protocoll
+        Id of the given collection protocoll
 
         Returns
         -------
         JSON-dict
-            Details of the Collection Protocol with the specified ID, or the OpenSpecimen error message.
+        Details of the Collection Protocol with the specified ID, or the OpenSpecimen error message.
         """
 
         cp_endpoint = "/{}/definition".format(cpid)

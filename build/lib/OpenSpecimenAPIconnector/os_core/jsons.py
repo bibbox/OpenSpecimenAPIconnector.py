@@ -115,24 +115,24 @@ class Json_factory():
             Details of the updated Participant or the OpenSpecimen error message as Dictornary.
         """
 
-                part = {
-                "id": id_,
-                "firstName": firstname,
-                "middleName": middlename,
-                "lastName": lastname,
-                "uid":uid,
-                "birthDate": birthdate,
-                "vitalStatus": vitalstatus,
-                "deathDate": deathdate,
-                "gender": gender,
-                "race": race,
-                "sexGenotype": sexgenotype,
-                "ethnicities": ethnicities,
-                "pmis": pmis,
-                "mrn": mrn,
-                "siteName": sitename,
-                "empi": empi                
-            }
+        part = {
+            "id": id_,
+            "firstName": firstname,
+            "middleName": middlename,
+            "lastName": lastname,
+            "uid":uid,
+            "birthDate": birthdate,
+            "vitalStatus": vitalstatus,
+            "deathDate": deathdate,
+            "gender": gender,
+            "race": race,
+            "sexGenotype": sexgenotype,
+            "ethnicities": ethnicities,
+            "pmis": pmis,
+            "mrn": mrn,
+            "siteName": sitename,
+            "empi": empi                
+        }
 
         part = {k: v for k, v in part.items() if v is not None}
 
@@ -978,19 +978,19 @@ class Json_factory():
         return json.dumps(data)
 
 
-def create_site(self, name = None, institutename = None, type_ = None, coordinators = None, address = None):
-    
-        data = {
-            "name" : name,
-            "instituteName" : institutename,
-            "coordinators" : coordinators,
-            "type" : type_,
-            "address" : address
-        }
+    def create_site(self, name = None, institutename = None, type_ = None, coordinators = None, address = None):
+        
+            data = {
+                "name" : name,
+                "instituteName" : institutename,
+                "coordinators" : coordinators,
+                "type" : type_,
+                "address" : address
+            }
 
-        data = {k: v for k, v in data.items() if v is not None}
+            data = {k: v for k, v in data.items() if v is not None}
 
-        return json.dumps(data)
+            return json.dumps(data)
 
     def create_user_json(self, first = None, last = None, email = None, phone = None, login = None, institute = None,
                         type_ = None, address = None, domain = None):

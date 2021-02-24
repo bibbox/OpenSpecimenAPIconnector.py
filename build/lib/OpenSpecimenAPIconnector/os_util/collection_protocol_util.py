@@ -1,8 +1,6 @@
 #! /bin/python3
 
-
 from ..os_core.collection_protocoll import collection_protocol
-from ..os_core.req_util import OS_request_gen
 from ..os_core.jsons import Json_factory
 from ..os_core.url import url_gen
 
@@ -32,7 +30,7 @@ class collection_protocol_util:
         $ jupyter notebook main.ipynb
     """
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         """Constructor of the Class collection_protocol_util
 
@@ -49,10 +47,9 @@ class collection_protocol_util:
             Consits of two strings ( loginname , password)
         """
 
-        self.OS_request_gen = OS_request_gen(auth)
         self.jsons = Json_factory()
         self.urls = url_gen()
-        self.cps = collection_protocol(base_url = base_url, auth = auth)
+        self.cps = collection_protocol()
 
   
     def search_cps(self, searchstring = None, title = None, piid = None, reponame = None, startat = None, maxresults = None, detailedlist = None):

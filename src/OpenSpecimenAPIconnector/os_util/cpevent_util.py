@@ -1,7 +1,6 @@
 #! /bin/python3
 
 from ..os_core.collection_protocol_event import collection_protocol_event
-from ..os_core.req_util import OS_request_gen
 from ..os_core.jsons import Json_factory
 import json
 import io
@@ -31,7 +30,7 @@ class cpevent_util:
     $ jupyter notebook main.ipynb
     """
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         """Constructor of the Class cpevent_util
 
@@ -47,7 +46,7 @@ class cpevent_util:
             Consists of two strings ( loginname , password)
         """
 
-        self.event = collection_protocol_event(base_url=base_url, auth=auth)
+        self.event = collection_protocol_event()
         self.jsons = Json_factory()
 
 

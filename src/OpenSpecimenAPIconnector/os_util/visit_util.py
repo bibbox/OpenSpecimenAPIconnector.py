@@ -1,7 +1,6 @@
 #! /bin/python3
 
 from ..os_core.visit import visit
-from ..os_core.req_util import OS_request_gen
 from ..os_core.jsons import Json_factory
 from ..os_core.url import url_gen
 import json
@@ -29,7 +28,7 @@ class visit_util:
         $ jupyter notebook main.ipynb
     """
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         """Constructor of the Class visit
         
@@ -45,7 +44,7 @@ class visit_util:
             Consists of two strings ( loginname , password)
         """ 
 
-        self.visit = visit(base_url=base_url, auth=auth)
+        self.visit = visit()
         self.jsons = Json_factory()
         self.url = url_gen()
 

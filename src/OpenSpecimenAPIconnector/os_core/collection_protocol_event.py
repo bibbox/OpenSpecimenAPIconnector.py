@@ -4,6 +4,7 @@
 import json
 
 from .req_util import OS_request_gen
+from .. import config_manager
 
 class collection_protocol_event:
 
@@ -29,7 +30,7 @@ class collection_protocol_event:
         $ jupyter notebook main.ipynb
     """
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         """Constructor of the Class collection_protocol_event
 
@@ -44,14 +45,13 @@ class collection_protocol_event:
         auth : tuple
             Consits of two strings ( loginname , password)
         """
-        
-        self.OS_request_gen = OS_request_gen(auth)
-        self.base_url = base_url + '/collection-protocol-events'
-
+        self.base_url = config_manager.get_url() + '/collection-protocol-events' 
+        self.auth = config_manager.get_auth()
+        self.OS_request_gen = OS_request_gen(self.auth)
 
     def ausgabe(self):
 
-         """Testing of the URL and authentification.
+        """Testing of the URL and authentification.
 
         If there are any unexpected errors one can easily test if the URL and login data are spelled correctly.
         The function prints the URL and login data to the output terminal, which was handed over to the class.
@@ -62,7 +62,7 @@ class collection_protocol_event:
 
     def create_event(self, params):
 
-         """Create an event for a given Collection Protocol.
+        """Create an event for a given Collection Protocol.
 
         Create an event for a given Collection Protocol. In order to use this function one
         has to know the parameters, which OpenSpecimen needs for to create an event. Another way
@@ -150,7 +150,7 @@ class collection_protocol_event:
 
     def get_event(self, eventid):
 
-       """Get the details of an event with the unique ID eventid.
+        """Get the details of an event with the unique ID eventid.
 
         Get the details of an event, which is already in OpenSpecimen. The unique ID is generated from OpenSpecimen
         and can for example be seen in the URL, if one clicks on the event in the GUI. The URL looks like:

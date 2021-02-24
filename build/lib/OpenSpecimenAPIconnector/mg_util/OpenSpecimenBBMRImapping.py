@@ -21,12 +21,12 @@ from ..os_core.jsons import Json_factory
 from ..os_core.users import users
 from ..os_core.collection_protocol_registration import collection_protocol_registration
 from ..os_core.collection_protocoll import collection_protocol
+from .. import config_manager
 
 import json
 import pandas as pd
 import xlsxwriter
 from openpyxl import load_workbook
-
 
 class bbmri_connector:
 
@@ -34,10 +34,6 @@ class bbmri_connector:
         pass
 
     def execute(self, collection_protocol_ids):
-
-        # URL to OpenSpecimen and Logindata
-        base_url = 'http://biobank-7-2.silicolab.bibbox.org/openspecimen/rest/ng'
-        auth = ('admin', 'Login@123')
 
         # shhetnames:
         bb_sheet = "eu_bbmri_eric_biobanks"
@@ -64,9 +60,9 @@ class bbmri_connector:
         bbmri_file = pd.read_excel(template_file_name, sheet_name=None)
 
         # initialize Users,CollectionProtocols, Sites
-        protocols = collection_protocol(base_url=base_url, auth=auth)
-        user = users(base_url=base_url, auth=auth)
-        site = sites(base_url=base_url, auth=auth)
+        protocols = collection_protocol()
+        user = users()
+        site = sites()
 
 
         # index_ = 0

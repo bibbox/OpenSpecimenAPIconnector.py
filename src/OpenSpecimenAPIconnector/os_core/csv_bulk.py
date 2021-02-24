@@ -9,7 +9,7 @@ from datetime import datetime
 
 from .req_util import OS_request_gen
 from .jsons import Json_factory
-
+from .. import config_manager
 
 class csv_bulk:
     """Handles the OpenSpecimen CSV Bulk Importer via API.
@@ -26,19 +26,17 @@ class csv_bulk:
     function bulk_import from the os_util class bulk_operations these calls get one call.
     """
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         """Constructor of the class csv_bulk
 
         Constructor of the class csv_bulk. It also connects this class to the OpenSpecimen specific requests class
         OS_request_gen, and the OpenSpecimen standard JSON-dict generator class JSON_factory
         """
-       
-        self.OS_request_gen = OS_request_gen(auth)
+        self.base_url = config_manager.get_url() + '/import-jobs'
+        self.auth = config_manager.get_auth()
+        self.OS_request_gen = OS_request_gen(self.auth)
         self.Json_fact = Json_factory()
-        self.base_url = base_url + '/import-jobs'
-        self.auth = auth
-
 
     def ausgabe(self):
 

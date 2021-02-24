@@ -7,7 +7,6 @@ from datetime import date
 from ..os_core.specimen import specimen
 from ..os_core.url import url_gen
 from ..os_core.jsons import Json_factory
-from ..os_core.req_util import OS_request_gen
 from ..os_core.users import users
 
 
@@ -33,13 +32,13 @@ class specimen_util:
         $ jupyter notebook main.ipynb
     """
 
-    def __init__(self, bas_url, auth):
+    def __init__(self):
 
         """Constructor of the Class specimens_util
         
         Constructor of the class specimen_util, can handle the basic API-calls
         of the specimensin OpenSpecimen. It also connects this class to the os_core classes
-        OS_request_gen, specimen, url_gen and Json_factory.
+        specimen, url_gen and Json_factory.
         
         Parameters
         ----------
@@ -49,8 +48,7 @@ class specimen_util:
             Consists of two strings ( loginname , password)
         """
 
-        self.req_gen =OS_request_gen(auth = auth)
-        self.specimen = specimen(base_url = base_url, auth = auth)
+        self.specimen = specimen()
         self.url = url_gen()
         self.jsons = Json_factory()
 

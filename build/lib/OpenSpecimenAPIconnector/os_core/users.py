@@ -4,6 +4,7 @@
 import json
 
 from .req_util import OS_request_gen
+from .. import config_manager
 
 class users:
 
@@ -18,7 +19,7 @@ class users:
     are needed and what content should be uploaded. The API documentation of OpenSpecimen is in:
     https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs
     """
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         """Constructor of the Class Users
         
@@ -32,9 +33,9 @@ class users:
         auth : tuple
             Consists of two strings ( loginname , password)
         """ 
-
-        self.OS_request_gen = OS_request_gen(auth) 
-        self.base_url = base_url
+        self.base_url = config_manager.get_url()
+        self.auth = config_manager.get_auth()
+        self.OS_request_gen = OS_request_gen(self.auth)
 
 
     def ausgabe(self):

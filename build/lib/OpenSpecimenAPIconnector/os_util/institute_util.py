@@ -26,7 +26,7 @@ class institutes_util:
         $ jupyter notebook main.ipynb
     """
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         """Constructor of the Class institutes_util
 
@@ -42,7 +42,7 @@ class institutes_util:
             Consists of two strings ( loginname , password)
         """
 
-        self.institutes = institutes(base_url = base_url, auth = auth)
+        self.institutes = institutes()
         self.jsons = Json_factory()
 
     def create_institute(self, institutename):

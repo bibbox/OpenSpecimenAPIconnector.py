@@ -3,8 +3,8 @@
 # Import
 import json
 from datetime import datetime
-
 from .req_util import OS_request_gen
+from .. import config_manager
 
 class participant:
 
@@ -28,7 +28,7 @@ class participant:
         $ jupyter notebook main.ipynb
     """
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         """Constructor of the Class institutes
 
@@ -43,9 +43,9 @@ class participant:
         auth : tuple
             Consists of two strings ( loginname , password)
         """
-
-        self.OS_request_gen = OS_request_gen(auth)
-        self.base_url = base_url
+        self.base_url = config_manager.get_url()
+        self.auth = config_manager.get_auth()
+        self.OS_request_gen = OS_request_gen(self.auth)
 
 
     def ausgabe(self):

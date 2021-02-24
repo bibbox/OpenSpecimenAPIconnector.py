@@ -1,7 +1,6 @@
 #! /bin/python3
 
 from ..os_core.csv_bulk import csv_bulk
-from ..os_core.req_util import OS_request_gen
 import io
 import pandas
 import time
@@ -19,14 +18,13 @@ class bulk_operations:
     https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/440434702/Bulk+Import+via+API .
     """
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         """Constructor of the class csv_bulk
 
         Constructor of the class csv_bulk. It also connects this class to the os_core class csv_bulk.
         """
-
-        self.csv_bulk = csv_bulk(base_url=base_url, auth=auth)
+        self.csv_bulk = csv_bulk()
 
     def bulk_import(self, file, filename, schemaname, operation='CREATE',
                     dateformat=None, timeformat=None):

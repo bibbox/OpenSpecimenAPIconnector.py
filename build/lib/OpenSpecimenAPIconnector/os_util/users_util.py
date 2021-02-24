@@ -6,9 +6,9 @@ from ..os_core.url import url_gen
 
 class user_util:
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
-        self.users = users(base_url = base_url, auth = auth)
+        self.users = users()
         self.jsons = Json_factory()
         self.urls = url_gen()
 
