@@ -3,7 +3,7 @@
 
 import json
 from .req_util import OS_request_gen
-
+from .. import config_manager
 
 class query:
 
@@ -27,7 +27,7 @@ class query:
         $ jupyter notebook main.ipynb
     """
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         """Constructor of the Class query.
 
@@ -42,17 +42,16 @@ class query:
         auth : tuple
             Consists of two strings ( loginname , password)
         """
-
-        self.OS_request_gen = OS_request_gen(auth = auth)
-        self.base_url = base_url
-        
+        self.base_url = config_manager.get_url()
+        self.auth = config_manager.get_auth()
+        self.OS_request_gen = OS_request_gen(self.auth)        
 
     def ausgabe(self):
 
         """Testing of the URL and authentification.
 
         If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
-        The function prints the URL and login data and hand it over to the class, to the output terminal.
+        The function prints the URL and login data  to the output terminal, which was handed over to the class.
         """
 
         print(self.base_url, self.OS_request_gen.auth)
@@ -148,7 +147,7 @@ class query:
         Parameters
         ----------
         qryid : string or int
-            The system's ID of the query will be converted to a string.
+            The systems ID of the query will be converted to a string.
 
         params : string
             JSON-formatted string with parameters: drivingForm, wideRowmode,

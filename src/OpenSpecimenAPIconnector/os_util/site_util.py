@@ -1,7 +1,6 @@
 #! /bin/python3
 
 from ..os_core.site import sites
-from ..os_core.req_util import OS_request_gen
 from ..os_core.jsons import Json_factory
 from ..os_core.url import url_gen
 
@@ -23,16 +22,16 @@ class site_util:
     
     Example
     -------
-    A code example, where the Collection protocols are handled is in the Jupyter-Notebook::
+    A code example, where the collection protocols are handled is in the Jupyter-Notebook::
         $ jupyter notebook main.ipynb
     """
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         """Constructor of the Class sites
 
         Constructor of the class sites, can handle the basic API-calls
-        of the csites in OpenSpecimen. It connects this class to OpenSpecimen
+        of the sites in OpenSpecimen. It connects this class to OpenSpecimen
         specific request handle (os_core.request_util.py). Also it connects this class
         to the os_core classes, url_gen, Json_factory and sites.
 
@@ -42,22 +41,20 @@ class site_util:
         base_url : string
             URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng
         auth : tuple
-            Consits of two strings ( loginname , password)
+            Consists of two strings ( loginname , password)
         """
-
-        self.OS_request_gen = OS_request_gen(auth)
+        
         self.jsons = Json_factory()
         self.urls = url_gen()
-        self.sites = sites(base_url = base_url, auth = auth)
+        self.sites = sites()
 
+    def search_sites(self, sitename = None, institutename = None, maxresults = 100, siteExtension=True):
 
-    def search_sites(self, sitename = None, institutename = None, maxresults =100, siteExtension=True):
+        """Search for Sites with specific values.
 
-        """Search for  Sites with specific values.
-
-        Search for one or more Sites with the values in search_string defined. The search string looks like:
+        Search for one or more sites with the values in search_string defined. The search string looks like:
         http(s)://<host>:<port>/openspecimen/rest/np/sites?{param_1}={value_1}&...&{param_x}={value_x}
-        This string gets generated here. If siteExtension is true the detailed site parameters will get returned.
+        This string gets generated here. If siteExtension is true, the detailed site parameters will get returned.
         
         Parameters
         ----------
@@ -71,12 +68,12 @@ class site_util:
             Defines how many results will get returned maximally.
 
         siteExtension : boolean
-            If True returns also the extension details.
+            If true, returns also the extension details.
             
         Returns
         -------
         JSON-dict
-            Details of the matching Sites, if no one matches it is an empty list.
+            Details of the matching sites, if no one matches it is an empty list.
         """
 
         search_string = self.urls.site_search_url_gen(sitename = sitename, institutename = institutename, maxresults = maxresults)     
@@ -101,10 +98,10 @@ class site_util:
         Parameters
         ----------
         name : string
-            Name of the Site.
+            Name of the site.
 
         institutename : string
-            Name of the institute where the site belongs.
+            Name of the institute where the site belongs to.
         
         type_ : string
             Type of the site, permissable values are: collection site, repository, laboratory, not specified.
@@ -118,7 +115,7 @@ class site_util:
         Returns
         -------
         dict
-            Details of the created site as dictornary or the OpenSpecimen's error message.
+            Details of the created site as dictionary or the OpenSpecimen's error message.
         """ 
         params = self.jsons.create_site(name = name, institutename = institutename, type_ = type_,
                 coordinators = coordinators, address = address)
@@ -131,10 +128,10 @@ class site_util:
         
         """Update a site in OpenSpecimen
         
-        Update a site in OpenSpecimen with an API call. In order to update a Site one has to know
-        The ID of the Site which can be seen in the GUI, by clicking on the site, the URL looks like:
-        http(s)://<host>:<port>/openspecimen/sites/{siteid}/overview. Or it can be first searched after,
-        for example by name with the function search_sites and then the ID can be extracted from there.
+        Update a site in OpenSpecimen with an API call. In order to update a site one has to know
+        the ID of the site which can be seen in the GUI, by clicking on the site, the URL looks like:
+        http(s)://<host>:<port>/openspecimen/sites/{siteid}/overview. Or it can be first searched for,
+        for example, by name with the function search_sites and then the ID can be extracted from there.
                 
         Parameters
         ----------
@@ -145,7 +142,7 @@ class site_util:
             Name of the Site.
 
         institutename : string
-            Name of the institute where the site belongs.
+            Name of the institute where the site belongs to.
         
         type_ : string
             Type of the site, permissable values are: collection site, repository, laboratory, not specified.
@@ -159,7 +156,7 @@ class site_util:
         Returns
         -------
         dict
-            Details of the created site as dictornary or the OpenSpecimen's error message.
+            Details of the created site as dictionary or the OpenSpecimen's error message.
         """ 
         params = self.jsons.create_site(name = name, institutename = institutename, type_ = type_,
                 coordinators = coordinators, address = address)

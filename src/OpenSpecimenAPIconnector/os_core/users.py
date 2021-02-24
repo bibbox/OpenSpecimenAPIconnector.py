@@ -4,12 +4,13 @@
 import json
 
 from .req_util import OS_request_gen
+from .. import config_manager
 
 class users:
 
     """Handles the API calls for Users
 
-    This class handles the API calls for users. Get all or specific user information, create a user, change his/her/their the password,
+    This class handles the API calls for users. Get all or specific user information, create a user, change his/her/their password,
     get user-roles of or assign a specific role to a user.
 
     Notes
@@ -18,7 +19,7 @@ class users:
     are needed and what content should be uploaded. The API documentation of OpenSpecimen is in:
     https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs
     """
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         """Constructor of the Class Users
         
@@ -32,9 +33,9 @@ class users:
         auth : tuple
             Consists of two strings ( loginname , password)
         """ 
-
-        self.OS_request_gen = OS_request_gen(auth) 
-        self.base_url = base_url
+        self.base_url = config_manager.get_url()
+        self.auth = config_manager.get_auth()
+        self.OS_request_gen = OS_request_gen(self.auth)
 
 
     def ausgabe(self):
@@ -136,7 +137,7 @@ class users:
         ----------
         params : string
             JSON formatted string with parameters: firstName, lastName, emailAddress, phoneNumber,
-            domainName, loginName, instituteName, type, address[optional], activitySatuts
+            domainName, loginName, instituteName, type, address[optional], activityStatus
 
         Returns
         -------
@@ -183,7 +184,7 @@ class users:
 
         """Get the roles of a user
 
-        Get the roles of a user with IDin OpenSpecimen. To use this function, one has to know the ID of 
+        Get the roles of a user with ID in OpenSpecimen. To use this function, one has to know the ID of 
         the user. This can be seen in the GUI, if one clicks on the user and reads from the URL, which has
         the format: http(s)://<host>:<port>/openspecimen/users/{userid}/... .
         Or with the function get_all_users and then extract the ID to the wanted user.
@@ -210,8 +211,8 @@ class users:
 
         """Assign a role to a User
 
-        Assign a role to a user with IDin OpenSpecimen. To use this function, one has to know the ID of 
-        the user. This can be seen in the GUI, if one clicks on the User and reads from the URL, which has
+        Assign a role to a user with ID in OpenSpecimen. To use this function, one has to know the ID of 
+        the user. This can be seen in the GUI, if one clicks on the user and reads from the URL, which has
         the format: http(s)://<host>:<port>/openspecimen/users/{userid}/... .
         Or with the function get_all_users and then extract the ID to the wanted user.
 
@@ -245,7 +246,7 @@ class users:
         Update a User in OpenSpecimen. To use this function, one has to know the parameters.
         They are explained in the parameters section. Or one can use the os_util class user_util.
         Also the ID of the user, which gets updated, has to be known.
-        This can be seen in the GUI, if one clicks on the User and reads from the URL, which has
+        This can be seen in the GUI, if one clicks on the user and reads from the URL, which has
         the format: http(s)://<host>:<port>/openspecimen/users/{userid}/... .
         Or with the function get_all_users and then extract the ID to the wanted user.
 

@@ -3,6 +3,7 @@
 # Import
 import json
 from datetime import datetime
+from .. import config_manager
 
 from .req_util import OS_request_gen
 
@@ -27,7 +28,7 @@ class visit:
         $ jupyter notebook main.ipynb
     """
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         """Constructor of the Class visit
         
@@ -42,17 +43,16 @@ class visit:
         auth : tuple
             Consists of two strings ( loginname , password)
         """ 
-
-        self.OS_request_gen = OS_request_gen(auth)
-        self.base_url = base_url
-
+        self.base_url = config_manager.get_url()
+        self.auth = config_manager.get_auth()
+        self.OS_request_gen = OS_request_gen(self.auth)
 
     def ausgabe(self):
 
         """Testing of the URL and authentification.
         
         If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
-        The function prints the URL and login data and hand it over to the output terminal.
+        The function prints the URL and login data  to the output terminal, which was handed over to the class.
         """
 
         print(self.base_url, self.OS_request_gen.auth)        
@@ -136,7 +136,7 @@ class visit:
 
         Parameters
         ----------
-        visitid : string or int
+        visitid : int
             ID of the visit, gets converted to a string.
 
         Returns
@@ -164,7 +164,7 @@ class visit:
 
         Parameters
         ----------
-        visitid : string or int
+        visitid : int
             ID of the visit, gets converted to a string.
 
         Returns
@@ -251,7 +251,7 @@ class visit:
 
         Parameters
         ----------
-        visitid : int or string
+        visitid : int
             ID of the visit as int or string, gets converted to a string
         
         params : string
@@ -263,7 +263,7 @@ class visit:
         Returns
         -------
         dict
-            JSON-dict with details of the updated visit or OpenSpecimens error message
+            JSON-dict with details of the updated visit or OpenSpecimens error message 
         """
 
         endpoint = '/visits/' + str(visitid)

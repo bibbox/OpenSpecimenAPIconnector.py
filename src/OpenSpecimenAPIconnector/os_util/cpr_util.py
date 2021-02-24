@@ -1,7 +1,6 @@
 #! /bin/python3
 
 from ..os_core.collection_protocol_registration import collection_protocol_registration
-from ..os_core.req_util import OS_request_gen
 from ..os_core.jsons import Json_factory
 from ..os_core.participant import participant
 import json
@@ -13,9 +12,9 @@ class cpr_util:
 
     """Handles the API calls to registrate participants to a Collection Protocol
 
-    Handles the OpenSpecimen API calls to registrate paritcipants to a existing Collection Protocol.
+    Handles the OpenSpecimen API calls to registrate participants to an existing Collection Protocol.
     This class can create participants, register existing participants to another protocol,
-    get the details of an existing participant or more existing pariticpants, update a participant.
+    get the details of an existing participant or more existing participants, update a participant.
 
     Notes
     -----
@@ -31,7 +30,7 @@ class cpr_util:
         $ jupyter notebook main.ipynb
     """
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         """Constructor of the Class cpr_util
 
@@ -44,11 +43,11 @@ class cpr_util:
         base_url : string
             URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng
         auth : tuple
-            Consits of two strings ( loginname , password)
+            Consists of two strings ( loginname , password)
         """
 
-        self.cpr = collection_protocol_registration(base_url=base_url, auth=auth)
-        self.participant = participant(base_url = base_url, auth = auth)
+        self.cpr = collection_protocol_registration()
+        self.participant = participant()
         self.jsons = Json_factory()
 
 
@@ -62,11 +61,11 @@ class cpr_util:
 
         Parameter
         ---------
-        cpid : string or int
-            The collection protocols Id where the participant is at.
+        cpid : int
+            The collection protocols Id where the participant is registrered.
         
         registrationdate : string
-            The date of registration in the format, which is defined in the System settings.
+            The date of registration in the format, which is defined in the system settings.
         
         ppid : string
             The Participant protocoll ID.
@@ -75,16 +74,16 @@ class cpr_util:
             Substring of the first, middle or last name.
         
         birthdate : string
-            The date of registration in the format, which is defined in the System settings.
+            The date of registration in the format, which is defined in the system settings.
         
         uid : string
-            Social Security Number or an other unique national ID.
+            Social Security Number or another unique national ID.
         
         specimen : string
             The label or barcode of a specimen from the participant.
         
         includestats : string
-            OpenSpecimen's boolean (true/false). If true it returns additional specimen, visit counts.
+            OpenSpecimen's boolean (true/false). If true, it returns the number of specimens and visits.
         
         startat : int
             Defines which line of the matches is the first to show, the rows before get ignored in the return.
@@ -113,18 +112,18 @@ class cpr_util:
 
         Get the details of one or more participants, which are sepecified with the parameters from the function.
         The parameters are optional and if its all empty 100 participants will get returned, default order is with PPID.
-        This function should be used before creating a participant to see if an participant is already in the system.
+        This function should be used before creating a participant to see if a participant is already in the system.
 
         Parameter
         ---------
         lastname : string
-            Substring of the Lastname of a Paritcipant.
+            Substring of the Lastname of a Participant.
         
         uid : string
             Country specific unique social security number.
 
         birthdate : string
-            The date of registration in the format, which is defined in the System settings.
+            The date of registration in the format, which is defined in the system settings.
         
         pmi : dict
             Dict with details of the Medical records number mrn and the assigned site with key siteName.
@@ -134,12 +133,12 @@ class cpr_util:
 
                
         reqreginfo : string
-            OpenSpecimen's boolean (true/false). If true it returns details of the participant
+            OpenSpecimen's boolean (true/false). If true, it returns details of the participant
         
         Returns
         -------
         JSON-dict
-            Details of the matching parameter, if reqreginfo is true return additional the participant info.
+            Details of the matching parameter, if reqreginfo is true, return additional the participant info.
         """
 
         params = self.jsons.get_participants(lastname = lastname, uid = uid, birthdate = birthdate,
@@ -149,7 +148,7 @@ class cpr_util:
         return r
 
 
-    def create_registration(self, regdate, cpid = None, cptitle = None, cpshorttile = None, ppid = None,
+    def create_registration(self, regdate, cpid = None, cptitle = None, cpshorttitle = None, ppid = None,
                 firstname = None, middlename = None, lastname = None, uid = None, birthdate = None, vitalstatus = None,
                 deathdate = None, gender = None, race = None, ethnicities = None, sexgenotype = None, pmis = None,
                 mrn = None, sitename = None, empi = None):
@@ -157,7 +156,7 @@ class cpr_util:
         """Register a participant to a Collection Protocol.
 
         This function can create a new participant to an already existing Collection Protocol. To use this function one
-        has to known either the Colelction Protocoll id ::cpId::,the title of the Collection Protocol ::cpTitle:: or 
+        has to known either the Collection Protocoll id ::cpId::,the title of the Collection Protocol ::cpTitle:: or 
         the short title of the Collection Protocol ::cpshorttitle:: .
         Those values can be seen via GUI, extracted from the responses with the class collection_protocol in os_core or
         collection_protocol_util in os_util. 
@@ -165,14 +164,14 @@ class cpr_util:
         Notes
         ----- 
         Either cpid or cptitle or cpshorttitle are mandatory to identify the Collection Protocol.
-        ppid has to be leaved empty if PPID is auto-generated at protocol level, else it is mandatory.
+        ppid has to be left empty if PPID is auto-generated at protocol level, else it is mandatory.
         regdate is mandatory.
         For creating a Participant, all Participant fields can be left empty, except the first five have special rules.
 
         Parameters
         ----------
         regdate : string
-            Mandatory field with date of registration in the format which is defined in the systemsettings of openSpecimen.
+            Mandatory field with date of registration in the format which is defined in the systemsettings of OpenSpecimen.
         
         cpid : int
             Unique ID of the Collection Protocol, which is autogenerated from OpenSpecimen. cpid or cptitle or cpshorttile is mandatory.
@@ -184,7 +183,7 @@ class cpr_util:
             Unique Acronym of the Collection Protocol. cpid or cptitle or cpshorttile is mandatory.
         
         ppid : string
-            Participant protocol ID, is mandatory if created manaully and have to be empty if it is autogenerated.
+            Participant protocol ID, is mandatory if created manually and have to be empty if it is autogenerated.
             This is a protocol setting.
         
         firstname : string
@@ -212,8 +211,8 @@ class cpr_util:
             Gender of the participant, permissable values are Male, Female, Unknown, Unspecified.
         
         race : string
-            Participants racial origination, permissable values are {American Indian or Alaska Native, Asian, black or Afro American, Native Hawaiian
-            or other Pacific Islander, Not REported, Unknown, White}
+            Participants racial origination, permissable values are {American Indian or Alaska Native, Asian, Black or Afro American, Native Hawaiian
+            or other Pacific Islander, Not Reported, Unknown, White}
         
         ethnicities : string
             Participants ethnicities, permissable values are: {Hispanic or Latino, Not Hispanic or Latino, Not Reported, Unknown}
@@ -223,13 +222,13 @@ class cpr_util:
             XXYY syndrome, Mosaic including XXXXY, Penta X syndrome}
         
         pmis : string
-            Collection of the Participants medical record numner.
+            Collection of the Participants medical record number.
         
         mrn : string
             Participants medical record number.
 
         sitename : string
-            Name of the site, where the participant is registrated.
+            Name of the site, where the participant is registered.
 
         empi : string
             Enterprise master patient index number
@@ -237,7 +236,7 @@ class cpr_util:
         Returns
         -------
         JSON-dict
-            Details of the created Participant or the OpenSpecimen error message as Dictornary.
+            Details of the created Participant or the OpenSpecimen error message as Dictionary.
         """
 
         params = self.jsons.create_participant_json(regdate = regdate, cpid = cpid, cptitle = cptitle, cpshorttitle =cpshorttitle,
@@ -250,15 +249,15 @@ class cpr_util:
         return r
 
 
-    def update_registration(self, regdate, cprid, cpid = None, cptitle = None, cpshorttile = None, ppid = None,
+    def update_registration(self, regdate, cprid, cpid = None, cptitle = None, cpshorttitle = None, ppid = None,
             firstname = None, middlename = None, lastname = None, uid = None, birthdate = None, vitalstatus = None,
             deathdate = None, gender = None, race = None, ethnicities = None, sexgenotype = None, pmis = None,
             mrn = None, sitename = None, empi = None):
             
-        """Register a participant to a Collection Protocol.
+        """Register a Participant to a Collection Protocol.
 
         This function can create a new participant to an already existing Collection Protocol. To use this function one
-        has to known either the Colelction Protocoll id ::cpId::,the title of the Collection Protocol ::cpTitle:: or 
+        has to know either the Collection Protocoll id ::cpId::,the title of the Collection Protocol ::cpTitle:: or 
         the short title of the Collection Protocol ::cpshorttitle:: .
         Those values can be seen via GUI, extracted from the responses with the class collection_protocol in os_core or
         collection_protocol_util in os_util.  For updating a participant the cprid has to be known. This can be seen via GUI
@@ -267,14 +266,14 @@ class cpr_util:
         Notes
         ----- 
         Either cpid or cptitle or cpshorttitle are mandatory to identify the Collection Protocol.
-        ppid has to be leaved empty if PPID is auto-generated at protocol level, else it is mandatory.
+        ppid has to be left empty, if PPID is auto-generated at protocol level, else it is mandatory.
         regdate is mandatory.
-        For creating a Participant, all Participant fields can be left empty, except the first five have special rules.
+        For creating a participant, all participant fields can be left empty, except the first five have special rules.
 
         Parameters
         ----------
         regdate : string
-            Mandatory field with date of registration in the format which is defined in the systemsettings of openSpecimen.
+            Mandatory field with date of registration in the format which is defined in the systemsettings of OpenSpecimen.
 
         cprid : int
             Unique ID of the Participant's Registration.
@@ -289,7 +288,7 @@ class cpr_util:
             Unique Acronym of the Collection Protocol. cpid or cptitle or cpshorttile is mandatory.
         
         ppid : string
-            Participant protocol ID, is mandatory if created manaully and have to be empty if it is autogenerated.
+            Participant protocol ID, is mandatory if created manually and has to be empty if it is autogenerated.
             This is a protocol setting.
         
         firstname : string
@@ -317,8 +316,8 @@ class cpr_util:
             Gender of the participant, permissable values are Male, Female, Unknown, Unspecified.
         
         race : string
-            Participants racial origination, permissable values are {American Indian or Alaska Native, Asian, black or Afro American, Native Hawaiian
-            or other Pacific Islander, Not REported, Unknown, White}
+            Participants racial origination, permissable values are {American Indian or Alaska Native, Asian, Black or Afro American, Native Hawaiian
+            or other Pacific Islander, Not Reported, Unknown, White}
         
         ethnicities : string
             Participants ethnicities, permissable values are: {Hispanic or Latino, Not Hispanic or Latino, Not Reported, Unknown}
@@ -328,13 +327,13 @@ class cpr_util:
             XXYY syndrome, Mosaic including XXXXY, Penta X syndrome}
         
         pmis : string
-            Collection of the Participants medical record numner.
+            Collection of the Participants medical record number.
         
         mrn : string
             Participants medical record number.
 
         sitename : string
-            Name of the site, where the participant is registrated.
+            Name of the site, where the participant is registered.
 
         empi : string
             Enterprise master patient index number.
@@ -342,7 +341,7 @@ class cpr_util:
         Returns
         -------
         JSON-dict
-            Details of the updated Participant or the OpenSpecimen error message as Dictornary.
+            Details of the updated Participant or the OpenSpecimen error message as Dictionary.
         """
 
         params = self.jsons.create_participant_json(regdate = regdate, id = cprid, cpid = cpid, cptitle = cptitle, 

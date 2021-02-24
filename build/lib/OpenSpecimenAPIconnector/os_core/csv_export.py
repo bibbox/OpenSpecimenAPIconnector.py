@@ -3,6 +3,7 @@ import zipfile
 import json
 import time
 from .req_util import OS_request_gen
+from .. import config_manager
 
 class CSV_exporter():
     """Handles the API calls for CSV file export
@@ -25,7 +26,7 @@ class CSV_exporter():
     my_pd_data_frame = CSV_exporter().get_job_output(*args) to retrieve a pandas data frame
     """
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
         
         """Constructor of the Class CSV_exporter
 
@@ -39,10 +40,9 @@ class CSV_exporter():
         auth : tuple
         Consits of two strings (loginname , password)
         """
-
-        self.OS_request_gen = OS_request_gen(auth)
-        self.base_url = base_url
-        self.auth = auth
+        self.base_url = config_manager.get_url()
+        self.auth = config_manager.get_auth()
+        self.OS_request_gen = OS_request_gen(self.auth)
 
     def create_export_job(self, data):
 
@@ -54,7 +54,7 @@ class CSV_exporter():
         data : JSON-formatted-string 
         Containing the information needed by the API. 
         See OpenSpecimenAPIconnector.os_util.Export_OP().export_file to find the JSON 
-        blueprint methods in OpenSpecimenAPIconnector.os_util.Json_Factory().
+        blueprint methods in OpenSpecimenAPIconnector.os_core.Json_Factory().
 
         Returns
         -------

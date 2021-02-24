@@ -1,7 +1,6 @@
 #! /bin/python3
 
 from ..os_core.query import query
-from ..os_core.req_util import OS_request_gen
 from ..os_core.jsons import Json_factory
 from ..os_core.url import url_gen
 import json
@@ -25,12 +24,12 @@ class query_util:
     Example
     -------
 
-    A code example, where the Queries are handled is in the Jupyter-Notebook:
+    A code example, where the queries are handled is in the Jupyter-Notebook:
 
         $ jupyter notebook main.ipynb
     """
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         """Constructor of the Class query.
 
@@ -43,10 +42,10 @@ class query_util:
         base_url : string
             URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng
         auth : tuple
-            Consits of two strings ( loginname , password)
+            Consists of two strings ( loginname , password)
         """
 
-        self.query = query(base_url=base_url, auth=auth)
+        self.query = query()
         self.jsons = Json_factory()
         self.url = url_gen()
         
@@ -73,7 +72,7 @@ class query_util:
             Permissable values true/false. If true Userfriendly column labels are included in the response.
 
         isodate : string
-            Permiisable values are true/false. If true ISO-date-format(yyy-MM-dd'T'HH:mm:ss), else searlized with OS local settings.
+            Permissable values are true/false. If true, the API accepts a ISO-date-format(yyy-MM-dd'T'HH:mm:ss), or else it takes the format from the OS local settings.
 
         Returns
         -------
@@ -91,7 +90,7 @@ class query_util:
 
         """Execute a saved Query.
 
-        Execute a already existing Query with the OpenSpecimen's unique Query ID ::qryid:: .
+        Execute an already existing Query with the OpenSpecimen's unique Query ID ::qryid:: .
         The query ID can be seen via clicking on the Queries in OpenSpecimen and it is the
         number after # in the title.
 
@@ -101,7 +100,7 @@ class query_util:
             The System's ID of the Query, will be converted to a string.
 
         start : int
-            Defines the row from which on the outcomes will be displayed.
+            Defines the row of the outcomes from which they will be displayed.
         
         results : int
             Defines how many results will be displayed.
@@ -110,7 +109,7 @@ class query_util:
             Permissable values are DEEP/SHALLOW/OFF.  If OFF all values of a multivalued field are shown in one row.
         
         drivingform : string
-            Defines the search perspective, precissely which tables are searched at, permissable values are Participant, Specimen.
+            Defines the search perspective, precisely which tables are searched at, permissable values are Participant, Specimen.
 
         Returns
         -------
@@ -128,7 +127,7 @@ class query_util:
 
         """Search for list of queries with specific suburl.
 
-        Search for one or more queries with the parameters in thesuburl defined. The search URL looks like:
+        Search for one or more queries with the parameters in the suburl defined. The search URL looks like:
         http(s)://<host>:<port>/openspecimen/rest/np/saved-queries?{param_1}={value_1}&...&{param_x}={value_x}
 
         Parameters
@@ -140,13 +139,13 @@ class query_util:
             Substring of the query title.
         
         start : int
-            Defines the row from which on the outcomes will be displayed.
+            Defines the row of the outcomes from which they will be displayed.
         
         max_ : int
             Defines how many results will be displayed.
 
         countreq : string
-            OpenSpecimen's boolean, if true toal number of saved queries will be shown.
+            OpenSpecimen's boolean, if true total number of saved queries will be shown.
 
         Returns
         -------

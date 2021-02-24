@@ -2,6 +2,7 @@
 
 #Import
 from .req_util import OS_request_gen
+from .. import config_manager
 
 import json
 
@@ -28,7 +29,7 @@ class sites():
         $ jupyter notebook main.ipynb
     """
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         """Constructor of the Class sites
 
@@ -43,10 +44,9 @@ class sites():
         auth : tuple
             Consists of two strings ( loginname , password)
         """
-        
-        self.OS_request_gen = OS_request_gen(auth)
-        self.base_url = base_url + '/sites'
-        
+        self.base_url = config_manager.get_url() + '/sites'
+        self.auth = config_manager.get_auth()
+        self.OS_request_gen = OS_request_gen(self.auth)
 
     def ausgabe(self):
         
@@ -91,7 +91,7 @@ class sites():
         ----------
         params : string
             JSON-formatted string with parameters: name, instituteName, coordinators, type, 
-            acitvityStatus, address
+            activityStatus, address
         
         Returns
         -------
@@ -108,19 +108,18 @@ class sites():
 
     def delete_sites(self, siid):
         
-        """Delete a site with OpenSpeimen's uniques Site ID
+        """Delete a site with OpenSpecimen's uniques Site ID
         
         Delete an already existing site. The parameter ::siid:: is the uniqe ID of the site
         which is generated automatically from OpenSpecimen. To get the ID, one can click in the GUI on the sites
-        page on the desired site and read it from the URL, with format: http(s)://<host>:<port>/openspecimen/#/sites/{siid}/overview .
+        page of the desired site and read it from the URL, with format: http(s)://<host>:<port>/openspecimen/#/sites/{siid}/overview .
         Another possibility is to search via 'search_sites' for a specific parameter and then extract the ID
         from the JSON-dict which get returned.
         
         Parameters
         ----------
-        siid: string or int
-            The unique ID of the site which OpenSpecimen creates itselfs as a string or integer. 
-            It will get converted to a string.
+        siid: int
+            The unique ID of the site which OpenSpecimen creates itself as an integer. 
             
         Returns
         -------
@@ -188,8 +187,8 @@ class sites():
         
         Parameters
         ----------
-        siteid : string or int
-            The system wide unique ID of the side as int or string. It gets converted to a string.
+        siteid : int
+            The system wide unique ID of the side as int.
             
         Returns
         -------
@@ -210,7 +209,7 @@ class sites():
         
         Updates an existing site with the automatically generated OpsenSpecimen's system wide
         unique site ID ::siid::, with the parameters ::params:: which are passed to the function.
-        The ID of the site has to be known and can for example be seen in the GUI by clicking on 
+        The ID of the site has to be known and can, for example, be seen in the GUI by clicking on 
         the site, which has the format http(s)://<host>:<port>/openspecimen/site/{cpid}/... .
         Or via the function search_sites or get_all_sites and extracted with key ["id"]
         
@@ -221,12 +220,12 @@ class sites():
         
         Parameter
         ---------
-        siid : strinf or int
-            Unique site ID which is generated automatically from the system. It will be converted to a string.
+        siid : int
+            Unique site ID which is generated automatically from the system.
         
         params : string
             JSON-formatted string with the parameters which should get updated.The keys which can get updated are: 
-            name, instituteName, coordinators, type, acitvityStatus, address
+            name, instituteName, coordinators, type, activityStatus, address
             
         Returns
         -------

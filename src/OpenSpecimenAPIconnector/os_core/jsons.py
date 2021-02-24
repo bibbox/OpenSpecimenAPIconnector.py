@@ -115,41 +115,46 @@ class Json_factory():
             Details of the updated Participant or the OpenSpecimen error message as Dictornary.
         """
 
-        if registeredCps is None:
-            registeredCps = []
+        part = {
+            "id": id_,
+            "firstName": firstname,
+            "middleName": middlename,
+            "lastName": lastname,
+            "uid":uid,
+            "birthDate": birthdate,
+            "vitalStatus": vitalstatus,
+            "deathDate": deathdate,
+            "gender": gender,
+            "race": race,
+            "sexGenotype": sexgenotype,
+            "ethnicities": ethnicities,
+            "pmis": pmis,
+            "mrn": mrn,
+            "siteName": sitename,
+            "empi": empi                
+        }
 
-        participantRegistration = {
-            "participant": {
-                "id": id,
-                "firstName": firstname,
-                "middleName": middlename,
-                "lastName": lastname,
-                "uid":uid,
-                "birthDate": birthdate,
-                "vitalStatus": vitalstatus,
-                "deathDate": death_date,
-                "gender": gender,
-                "race": race,
-                "sexGenotype": sexgenotype,
-                "ethnicities": ethnicities,
-                "pmis": pmis,
-                "mrn": mrn,
-                "siteName": sitename,
-                "empi": empi                
-            },
-            "cpId": cp_id,
+        part = {k: v for k, v in part.items() if v is not None}
+
+        data = {
+            "cpId": str(cpid),
             "registrationDate": regdate,
-            "ppid": pp_id,
-            "cpShortTitle": cpshorttile,
+            "ppid": str(ppid),
+            "cpShortTitle": cpshorttitle,
             "cpTitle": cptitle
         }
 
-        return participantRegistration
+        data = {k: v for k, v in data.items() if v is not None}
+
+        data['participant']=part
+
+        return json.dumps(data)
 
     # Collection Protocoll
     def create_CP_json(self, short_title = None, title=None, pi_mail=None, time_start=None, time_end=None, sites=None, man_id=False, coords=None,
-                           consentsWaived=False,eth_cons_id=None, part_no=None, desc_url=None, visitNameFmt=None,
-                           man_visit_name=False, man_spec_label=True, aliquots_in_same=None, activity="Active"):
+                           consentsWaived=None,eth_cons_id=None, part_no=None, desc_url=None, visitNameFmt=None, specimenLabelFmt=None, 
+                           derivativeLabelFmt =None, man_visit_name=False, man_spec_label=True, aliquots_in_same=None, activity=None,
+                           aliquotLabelFmt = None, ppidFmt= None, specimenCentric = None):
 
         """Creates the JSON-formated string corresponding to the collection_protocol_util funciton create_CP
         
@@ -208,13 +213,12 @@ class Json_factory():
         site_arr = []
         for item in sites:
             site_arr.append(
-                {
-                    "siteName": item[0],
-                    "code": item[1]
-                }
+                
+                    {"siteName": item},
+                
             )
-
-        CP_reg = {
+        
+        data = {
             "shortTitle": short_title,
             "title": title,
             "code": None,
@@ -225,25 +229,29 @@ class Json_factory():
                 },
             "startDate": time_start,
             "endDate": time_end,
-            "ppidFmt": "DWP%05d",
+            "ppidFmt": ppidFmt,
             "manualPpidEnabled": man_id,
-            "coordinators": coords,
             "cpSites": site_arr,
             "consentsWaived": consentsWaived,
             "irbId": eth_cons_id,
             "anticipatedParticipantsCount": part_no,
             "descriptionUrl": desc_url,
-            "specimenLabelFmt": "%PPI%.%SP_TYPE%.%SYS_UID%",
-            "derivativeLabelFmt": "%PPI%.%SP_TYPE%.%SYS_UID%",
-            "aliquotLabelFmt": "%PSPEC_LABEL%.%PSPEC_UID%",
+            "specimenLabelFmt": specimenLabelFmt,
+            "derivativeLabelFmt": derivativeLabelFmt,
+            "aliquotLabelFmt": aliquotLabelFmt,
             "visitNameFmt": visitNameFmt,
             "manualVisitNameEnabled": man_visit_name,
             "manualSpecLabelEnabled": man_spec_label,
             "aliquotsInSameContainer": aliquots_in_same,
-            "activityStatus": activity
+            "activityStatus": activity,
+            "specimenCentric": specimenCentric
         }
+        if coords != None:
+            data["coordinators"] = {"loginName" : coords,"domain" : "openspecimen"}
 
-        return json.dumps(CP_reg)
+        data = {k: v for k, v in data.items() if v is not None}
+
+        return json.dumps(data)
 
     # Collection Protocol event
     def create_cp_event_json(self, label=None, point=None, cp=None, site=None, diagnosis=None, status=None, activity=None, unit=None, code=None):
@@ -402,22 +410,22 @@ class Json_factory():
             "availableQty": avaqty,
             "visitId": visitid,
             "status": status,
-            "storageLocation": {storloc},
+            "storageLocation": storloc,
             "concetration": concentration,
             "biohazard": biohazard,
             "comments": comments,
-            "collevent": {
-                "user": {"id": user},
+            "collectionEvent": {
+                "user": {"id": userid},
                     "time": colltime,
                     "container": conttype,
-                    "procedure": procedure
+                    "procedure": collproc
                      },
             "receivedEvent":{
                 "user":{"id": userid},
                 "time": rectime,
                 "receivedQuality": recqlt
             },
-            "extensionDetail": {extension}
+            "extensionDetail": extension
             }
 
         return json.dumps(spec)
@@ -753,7 +761,7 @@ class Json_factory():
         return json.dumps(params)
 
     def add_visit_json(self, cprid, name, site, eventid=None,eventlabel=None,ppid=None, cptitle=None, cpshorttitle=None,
-                        diagnosis=None, clinicalstatus=None, activity=None, visitstatus="COMPLETE", missedreason=None,
+                        diagnosis=None, clinicalstatus=None, activity=None, visitstatus="Complete", missedreason=None,
                         missedby=None, comments=None,pathologynumber=None,cohort=None, visitdate=None, cpid=None):
 
     
@@ -969,3 +977,48 @@ class Json_factory():
         
         return json.dumps(data)
 
+
+    def create_site(self, name = None, institutename = None, type_ = None, coordinators = None, address = None):
+        
+            data = {
+                "name" : name,
+                "instituteName" : institutename,
+                "coordinators" : coordinators,
+                "type" : type_,
+                "address" : address
+            }
+
+            data = {k: v for k, v in data.items() if v is not None}
+
+            return json.dumps(data)
+
+    def create_user_json(self, first = None, last = None, email = None, phone = None, login = None, institute = None,
+                        type_ = None, address = None, domain = None):
+
+        data = {
+            "firstName" : first,
+            "lastName" : last,
+            "emailAddress" : email,
+            "phoneNumber" : phone,
+            "domainName" : domain,
+            "loginName" : login,
+            "instituteName" : institute,
+            "type" : type_,
+            "address" : address
+        }
+
+        data = {k: v for k, v in data.items() if v is not None}
+
+        return json.dumps(data)
+
+    def change_user_pw_json(self, userid, newpw, oldpw = None):
+        
+        data = {
+            "userId" : userid,
+            "oldPassword" : oldpw,
+            "newPassword" : newpw
+        }
+
+        data = {k: v for k, v in data.items() if v is not None}
+
+        return json.dumps(data)

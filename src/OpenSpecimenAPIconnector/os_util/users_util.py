@@ -6,22 +6,22 @@ from ..os_core.url import url_gen
 
 class user_util:
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
-        self.users = users(base_url = base_url, auth = auth)
+        self.users = users()
         self.jsons = Json_factory()
         self.urls = url_gen()
 
     def create_user(self, first, last, email, phone, login, institute, type_, address = None, domain = "openSpecimen"):
 
-        """Create an user
+        """Create a user
 
         Create a User in OpenSpecimen. This function parses the input to a dict,
         what OpenSpecimen can understand.
 
         Parameters
         ----------
-        frist : string
+        first : string
             Firstname of the User.
         
         last : string
@@ -46,7 +46,7 @@ class user_util:
             Address of the user. [optional]
         
         domain : string
-            Domaninname, by default openSpecimen.
+            Domainname, by default OpenSpecimen.
         
         Returns
         -------
@@ -60,19 +60,19 @@ class user_util:
 
         return r
 
-    def update_user(self, userid, first = None, last = None, email = None, phone = None, login = None, institute = None,
-                    type_ = None, address = None, domain = None):
+    def update_user(self, userid, first, last, email, login, institute, phone = None,
+                    type_ = None, address = None, domain = 'openspecimen'):
 
-        """Update an user
+        """Update a user
 
-        Update an User in OpenSpecimen. To use this function one has to know ID of the user.
-        This can be seen in the GUI if one click on the User and read from the URL which has
+        Update a User in OpenSpecimen. To use this function one has to know the ID of the user.
+        This can be seen in the GUI if one clicks on the user and reads from the URL which has
         the format: http(s)://<host>:<port>/openspecimen/users/{userid}/... .
         Or with the function get_all_users and then extract the ID to the wanted user.
 
         Notes
         -----
-        For updating the user has to be identified with its unique id {userid},
+        For updating, the user has to be identified with its unique id {userid},
         all the other parameters of the user are optional. If they are not passed
         to the function, they stay the same.
 
@@ -81,7 +81,7 @@ class user_util:
         userid : int
             Unique Id of the user.
 
-        frist : string
+        first : string
             Firstname of the User.
         
         last : string
@@ -94,10 +94,10 @@ class user_util:
             Phonenumber of the user.
         
         login : string
-            Loginename of the user, which has to be  unique within the domain.
+            Loginename of the user, which has to be unique within the domain.
 
         institute : string
-            Name of the institute where the user belongs.
+            Name of the institute where the user belongs to.
         
         type_ : string
             Name of the usertype, defined in the OpenSpecimen distribution.
@@ -106,7 +106,7 @@ class user_util:
             Address of the user. [optional]
         
         domain : string
-            Domaninname, by default openSpecimen.
+            Domainname, by default OpenSpecimen.
         
         Returns
         -------
@@ -122,24 +122,24 @@ class user_util:
 
     def assign_role(self, userid, siteid, cpid, role):
 
-        """Assign a role to an user
+        """Assign a role to a user
 
-        Assign a role to an User with ID {userid} in OpenSpecimen. To use this function one has to know ID of 
+        Assign a role to a user with ID {userid} in OpenSpecimen. To use this function one has to know the ID of 
         the user, the site, the collection protocol and the name of the role. The user Id can be seen in the
-        GUI if one click on the User and read from the URL which has the format: 
+        GUI, if one clicks on the user and reads from the URL which has the format: 
         http(s)://<host>:<port>/openspecimen/users/{userid}/... .
         Or with the function get_all_users and then extract the ID to the wanted user.
 
         Parameters
         ----------
         userid : int
-            The Id of the user.
+            The ID of the user.
         
         siteid : int
-            The Id of the site.
+            The ID of the site.
 
         cpid : int
-            The Id of the collection protocol.
+            The ID of the collection protocol.
         
         role : string
             The name of the role.
@@ -157,26 +157,26 @@ class user_util:
 
     def change_password(self, userid, newpw, oldpw = None):
 
-        """Change the password of an user
+        """Change the password of a user
 
-        Change the Password of an user. If the API-User is Superadmin, the parameters are userid, newpassword.
-        If the User isn't a Superadmin nor the Superadmin changes his own password the parameters are userid,
+        Change the Password of a user. If the API-User is Superadmin, the parameters are userid, newpassword.
+        If the User isn't the Superadmin, nor the Superadmin changes his own password the parameters are userid,
         oldpassword, new password.
 
         Notes
         -----
-        In the Systemsetting the Superadmin can define the passwords complexity.
+        In the Systemsetting the Superadmin can define the passwords' complexity.
 
-        Paramters
+        Parameters
         ---------
         userid : int
-            Id of the user, whos password should be changed.
+            ID of the user, whose password should be changed.
         
         newpw : string
             The  new password of the user.
 
         oldpw : string
-            The old password of user, has to be specified if the API user is not the Superadmin or
+            The old password of the user, has to be specified if the API user is not the Superadmin or
             the Superadmin changes his password.
         
         Returns

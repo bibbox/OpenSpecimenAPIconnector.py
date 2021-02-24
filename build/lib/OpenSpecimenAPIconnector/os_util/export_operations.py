@@ -7,14 +7,13 @@ import time
 
 from ..os_core.csv_export import CSV_exporter
 from ..os_core.jsons import Json_factory
-from ..os_core.req_util import OS_request_gen
 
 class Export_OP():
 
     """Handles the API calls for Export_OP
 
-    This class weaves together the base mehtods defined in OpenSpecimenAPIconnector.os_core.csv_export(*args)
-    and providing the neccesary JSON-formated data string, which is fetched in OpenSpecimenAPIconnector.os_core.Json_factory().
+    This class weaves together the base methods defined in OpenSpecimenAPIconnector.os_core.csv_export(*args)
+    and provides the necessary JSON-formated data string, which is fetched in OpenSpecimenAPIconnector.os_core.Json_factory().
     Returns a pandas.DataFrame() containing the file information.    
 
     Notes
@@ -24,19 +23,19 @@ class Export_OP():
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
 
-    Currently not all entitiy types are implemented. Further at the moment Collection protocoll still does not support 
+    Currently, not all entity types are implemented. Further, Collection protocoll still does not support 
     CSV export. 
 
     Example
     -------
 
-    Call export_file = export_file(**args) and provide a valid entity type. In cases an additional 
-    parameter param can be passed to the JSON generator definig various things like for example the
-    target collection protocoll. See the calls in .export_file() and the Json_factory blueprints to
+    Call export_file = export_file(**args) and provide a valid entity type. Additional 
+    parameter can be passed to identify details about the entity to be exported (e.g collection protocol id) 
+    See the calls in .export_file() and the Json_factory blueprints to
     get more information from the source code. 
     """
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         """Constructor of the Class Export_OP        
 
@@ -45,21 +44,21 @@ class Export_OP():
         base_url : string
         URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng
         auth : tuple
-        Consits of two strings (loginname , password)
+        Consists of two strings (loginname , password)
         """
 
-        self.base_url = base_url
-        self.auth = auth
         self.Json_fac = Json_factory()
-        self.exporter = CSV_exporter(self.base_url, self.auth)
+        self.exporter = CSV_exporter()
 
     def export_file(self, entity=None, param=None):
         """Fetch the output 
 
         Parameters
         ----------
-        entity : String representing the entity(collection protocol, institute, etc.) for identifying the necessary JSON data string
-        param: String representing the various additional neccesary parameters. E.g.: The Collection protocoll identifier 
+        entity : String 
+            Representing the entity(collection protocol, institute, etc.) for identifying the necessary JSON data string
+        param: String 
+            Representing the various additional necessary parameters. E.g.: The Collection protocoll identifier 
 
         Returns
         -------

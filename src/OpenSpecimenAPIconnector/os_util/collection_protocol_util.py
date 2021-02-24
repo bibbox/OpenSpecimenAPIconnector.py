@@ -1,8 +1,6 @@
 #! /bin/python3
 
-
 from ..os_core.collection_protocoll import collection_protocol
-from ..os_core.req_util import OS_request_gen
 from ..os_core.jsons import Json_factory
 from ..os_core.url import url_gen
 
@@ -32,7 +30,7 @@ class collection_protocol_util:
         $ jupyter notebook main.ipynb
     """
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         """Constructor of the Class collection_protocol_util
 
@@ -49,10 +47,9 @@ class collection_protocol_util:
             Consits of two strings ( loginname , password)
         """
 
-        self.OS_request_gen = OS_request_gen(auth)
         self.jsons = Json_factory()
         self.urls = url_gen()
-        self.cps = collection_protocol(base_url = base_url, auth = auth)
+        self.cps = collection_protocol()
 
   
     def search_cps(self, searchstring = None, title = None, piid = None, reponame = None, startat = None, maxresults = None, detailedlist = None):
@@ -78,10 +75,10 @@ class collection_protocol_util:
         reponame : string
             Name of the Repository in which the Collection Protocol is[optional].
         
-        startat : int or string
+        startat : int
             Value which one of the outcomes is the first to show, if not specified OpenSpecimen takes 0.
         
-        maxresults : int or string
+        maxresults : int
             Value how many Collection Protocols are shown, if not specified OpenSpecimen takes 100.
         
         detailedList: string
@@ -93,8 +90,8 @@ class collection_protocol_util:
             [Details of the matching Collection Protocols, if no one matches it is an empty list.
         """
 
-        search_string = self.urls.cp_search_url_gen(searchstring = None, title = None, piid = None, reponame = None,
-                                                    startat = none, maxresults = None, detailedlist = None)
+        search_string = self.urls.cp_search_url_gen(searchstring = searchstring, title = title, piid = piid, reponame = reponame,
+                                                    startat = startat, maxresults = maxresults, detailedlist = detailedlist)
         
         r = self.cps.search_collection_protocols(search_string = search_string)
 
@@ -132,10 +129,11 @@ class collection_protocol_util:
 
         return r
 
-    
-    def create_cp(self, short_title, title, pi_mail, time_start, time_end, sites, man_id=False, coords=None,
-                           consentsWaived=False,eth_cons_id=None, part_no=None, desc_url=None, visitNameFmt=None,
-                           man_visit_name=False, man_spec_label=True, aliquots_in_same=None, activity="Active"):
+
+    def create_cp(self, short_title , title, pi_mail, sites, time_start=None, time_end=None,  man_id=None, coords=None,
+                           consentsWaived=None,eth_cons_id=None, part_no=None, desc_url=None, visitNameFmt=None, specimenLabelFmt=None, 
+                           derivativeLabelFmt =None, man_visit_name=None, man_spec_label=None, aliquots_in_same=None, activity=None,
+                           aliquotLabelFmt = None, ppidFmt= None, specimenCentric = None):
         
         """Create a Collection protocol with the given Parameters
         
@@ -200,18 +198,20 @@ class collection_protocol_util:
             Details of the created Collection Protocol, or the OpenSpecimen's error message.
         """
 
-        params = self.jsons.create_CP_json(short_title = short_title, title = title, time_start = time_start, sites = sites,
-                man_id = man_id, coords = coords, consentsWaived = consentsWaived, eth_cons_id = eth_cons_id,
-                part_no = part_no, desc_url = desc_url, visitNameFmt = visitNameFmt, man_visit_name = man_visit_name,
-                man_spec_label = man_spec_label, aliquots_in_same = aliquots_in_same, activity = activity)
+        params = self.jsons.create_CP_json(short_title=short_title, title=title, pi_mail=pi_mail, time_start=time_start, time_end=time_end,
+                    sites=sites, man_id=man_id, coords=coords, consentsWaived=consentsWaived, eth_cons_id=eth_cons_id, part_no=part_no,
+                    desc_url=desc_url, visitNameFmt=visitNameFmt, specimenLabelFmt=specimenLabelFmt, derivativeLabelFmt=derivativeLabelFmt,
+                    man_visit_name=man_visit_name, man_spec_label=man_spec_label, aliquots_in_same=aliquots_in_same, activity=activity,
+                    aliquotLabelFmt=aliquotLabelFmt, ppidFmt=ppidFmt, specimenCentric=specimenCentric)
         
         r = self.cps.create_collection_protocol(params = params)
 
         return r
     
-    def update_cp(self, cpid, short_title=None, title=None, pi_mail=None, time_start=None, time_end=None, sites=None, man_id=False, coords=None,
-                           consentsWaived=False,eth_cons_id=None, part_no=None, desc_url=None, visitNameFmt=None,
-                           man_visit_name=False, man_spec_label=True, aliquots_in_same=None, activity="Active"):
+    def update_cp(self, cpid, short_title = None, title=None, pi_mail=None, time_start=None, time_end=None, sites=None, man_id=False, coords=None,
+                           consentsWaived=None,eth_cons_id=None, part_no=None, desc_url=None, visitNameFmt=None, specimenLabelFmt=None, 
+                           derivativeLabelFmt =None, man_visit_name=False, man_spec_label=True, aliquots_in_same=None, activity=None,
+                           aliquotLabelFmt = None, ppidFmt= None, specimenCentric = None):
 
         """Update a Collection protocol with the given Parameters.
         
@@ -224,7 +224,7 @@ class collection_protocol_util:
         
         Parameters
         ----------
-        cpid : int or string
+        cpid : int
             ID of the Colelction Protocol which should get updated.
 
         short_title : string
@@ -284,10 +284,11 @@ class collection_protocol_util:
             Details of the created Collection Protocol, or the OpenSpecimen's error message.
         """
     
-        params = self.jsons.create_CP_json(short_title = short_title, title = title, time_start = time_start, sites = sites,
-                man_id = man_id, coords = coords, consentsWaived = consentsWaived, eth_cons_id = eth_cons_id,
-                part_no = part_no, desc_url = desc_url, visitNameFmt = visitNameFmt, man_visit_name = man_visit_name,
-                man_spec_label = man_spec_label, aliquots_in_same = aliquots_in_same, activity = activity)
+        params = self.jsons.create_CP_json(short_title=short_title, title=title, pi_mail=pi_mail, time_start=time_start, time_end=time_end,
+                    sites=sites, man_id=man_id, coords=coords, consentsWaived=consentsWaived, eth_cons_id=eth_cons_id, part_no=part_no,
+                    desc_url=desc_url, visitNameFmt=visitNameFmt, specimenLabelFmt=specimenLabelFmt, derivativeLabelFmt=derivativeLabelFmt,
+                    man_visit_name=man_visit_name, man_spec_label=man_spec_label, aliquots_in_same=aliquots_in_same, activity=activity,
+                    aliquotLabelFmt=aliquotLabelFmt, ppidFmt=ppidFmt, specimenCentric=specimenCentric)
         
         r = self.cps.update_collection_protocol(cpid =cpid, params = params)
 

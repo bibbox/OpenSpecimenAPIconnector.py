@@ -3,7 +3,7 @@
 # Import
 from datetime import datetime
 from .req_util import OS_request_gen
-
+from .. import config_manager
 import json
 
 
@@ -12,7 +12,7 @@ class specimen:
     """Handles the calls for Specimens
     
     This class handles the API calls for OpenSpecimen Specimens/Aliquots/Derivatives. It can create, delete, 
-    search, and determine the existance of specimens with different parameters. Further a list of all specimens in the system can be created.
+    search, and determine the existence of specimens with different parameters. Further, a list of all specimens in the system can be created.
     The output is a JSON dict or the error message as dict. 
     
     Notes
@@ -28,7 +28,7 @@ class specimen:
         $ jupyter notebook main.ipynb
     """
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         """Constructor of the Class collection_protocol
         
@@ -43,17 +43,16 @@ class specimen:
         auth : tuple
             Consists of two strings ( loginname , password)
         """ 
-        
-        self.OS_request_gen = OS_request_gen(auth)
-        self.base_url = base_url + '/specimens'
-
+        self.base_url = config_manager.get_url() + '/specimens'
+        self.auth = config_manager.get_auth()
+        self.OS_request_gen = OS_request_gen(self.auth)
 
     def ausgabe(self):
         
         """Testing of the URL and authentification.
         
         If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
-        The function prints the URL and login data and hand it over to the output terminal.
+        The function prints the URL and login data  to the output terminal, which was handed over to the class.
         """
 
         print(self.base_url, self.OS_request_gen.auth)
@@ -90,19 +89,19 @@ class specimen:
         
         """Check if a Specimen with Label exists
         
-        Check if a specimen with Llbel ::specimenLabel:: already exists in the System.
+        Check if a specimen with Label ::specimenLabel:: already exists in the System.
         Can be interesting if one manually creates a label to avoid specimens with the same label.
         
         Parameters
         ----------
         specimenLabel : string
-            Label which should be checked as string. Get converted to a string
+            Label which should be checked as string. Gets converted to a string
         
         Returns
         -------
         string
             If Specimen exists, returns "Specimen with label <specimenLabel> exists".
-            Else "Specimen with label <specimenLabel> does not exist".
+            Or Else "Specimen with label <specimenLabel> does not exist".
         """
 
         endpoint = '?label=' + str(specimenLabel)
@@ -133,7 +132,7 @@ class specimen:
             JSON formatted string with parameters: label[mandatory if its created manually, leave empty if the System creates it
             automatically], specimenclass, type, pathology, atomicSite, laterality, initialQty, availableQty, lineage,
             visitId,  status, storageLocation(dict with keys positionX[optional], 
-            positionY[optional])[optional], concetration[optional], biohazards[optional], comments[optional],
+            positionY[optional])[optional], concentration[optional], biohazards[optional], comments[optional],
             collectionEvent(DICT with keys user,time, container[otpional], procedure[optional]),
             receivedEvent(DICT with keys user, time, receivedQuality), extensionDetails(DICT with keys useUdn, attrsmap,
             DICT with extension keys)[optional]
@@ -194,14 +193,14 @@ class specimen:
         
         Parameter
         ---------
-        cpid : strinf or int
-            Unique Collection Protocol ID which is generated automatically from the System. It will be converted to a string.
+        cpid : int
+            Unique Collection Protocol ID which is generated automatically from the System.
         
         params : string
             JSON formatted string with parameters: label[mandatory if its created manually, leave empty if the System creates it
             automatically], specimenclass, type, pathology, atomicSite, laterality, initialQty, availableQty, lineage,
             visitId, parentId[mandatory if Aliquot/Derivative], status, storageLocation(dict with keys positionX[optional],
-            positionY[optional])[optional], concetration[optional],         biohazards[optional], comments[optional],
+            positionY[optional])[optional], concentration[optional],         biohazards[optional], comments[optional],
             collectionEvent(DICT with keys user,time, container[otpional], procedure[optional]),
             receivedEvent(DICT with keys user, time, receivedQuality), extensionDetails(DICT with keys useUdn, attrsmap,
             DICT with extension keys)[optional]

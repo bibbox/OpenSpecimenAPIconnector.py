@@ -1,7 +1,6 @@
 #! /bin/python3
 
 from ..os_core.csv_export import CSV_exporter
-from ..os_core.req_util import OS_request_gen
 from ..os_core.jsons import Json_factory
 import json
 import io
@@ -28,7 +27,7 @@ class csv_export:
 
     $ jupyter notebook main.ipynb
     """
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         """Constructor of the Class csv_export
 
@@ -39,16 +38,16 @@ class csv_export:
         base_url : string
             URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng
         auth : tuple
-            Consits of two strings ( loginname , password)
+            Consists of two strings ( loginname , password)
         """
 
-        self.export = CSV_exporter(base_url = base_url, auth = auth)
+        self.export = CSV_exporter()
         self.json = Json_factory()
 
 
     def cp_csv_export(self, objecttype, cpid, entitytype=None, formname=None):
 
-        """Export CV for entitiy collection protocol
+        """Export CV for entity collection protocol
 
         Export function for collection protocols 
 
@@ -59,7 +58,7 @@ class csv_export:
         cpid : string
             OpenSpecimen ID of the collection protocol to be exported
         entitype : None
-            Not really clear what this is needed for since the function exports Collection protocols
+            Not really clear what this is needed for, since the function exports Collection protocols
         formname : None
             Not really clear what exactly this signifies right now
         """

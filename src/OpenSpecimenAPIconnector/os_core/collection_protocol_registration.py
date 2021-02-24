@@ -4,6 +4,7 @@
 import json
 
 from .req_util import OS_request_gen
+from .. import config_manager
 
 class collection_protocol_registration:
 
@@ -29,7 +30,7 @@ class collection_protocol_registration:
         $ jupyter notebook main.ipynb
     """
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         """Constructor of the core class collection_protocol_registration
 
@@ -43,10 +44,9 @@ class collection_protocol_registration:
         auth : tuple
             Consists of two strings ( loginname , password)
         """
-
-        self.OS_request_gen = OS_request_gen(auth)
-        self.base_url = base_url + '/collection-protocol-registrations'
-
+        self.base_url = config_manager.get_url() + '/collection-protocol-registrations'
+        self.auth = config_manager.get_auth() 
+        self.OS_request_gen = OS_request_gen(self.auth)
 
     def ausgabe(self):
 

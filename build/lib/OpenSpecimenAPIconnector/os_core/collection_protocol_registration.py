@@ -4,22 +4,37 @@
 import json
 
 from .req_util import OS_request_gen
+from .. import config_manager
 
 class collection_protocol_registration:
 
     """Handles the API calls to registrate participants to a Collection Protocol
 
-    Handles the OpenSpecimen API calls to registrate paritcipants to a existing Collection Protocol.
+    Handles the OpenSpecimen API calls to registrate participants to an existing Collection Protocol.
     This class can create participants, delete participants, register existing participants to another protocol,
-    merge participants, get the details of an existing participant or more existing pariticpants, update a participant,
-     get the consent forms of a participant, download a consent form and delete consents form a participants.
+    merge participants, get the details of an existing participant or more existing participants, update a participant,
+    get the consent forms of a participant, download a consent form and delete consents form of participants.
+
+    Notes
+    -----
+    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
+    just pass the parameters via JSON-formatted string. This means the user has to know the keywords.
+    The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
+    the calls refer to this site. More details can be seen in the documentation.
+
+    Example
+    -------
+
+    A code example, where also Participants are registrated is in the Jupyter-Notebook::
+
+        $ jupyter notebook main.ipynb
     """
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         """Constructor of the core class collection_protocol_registration
 
-        Constructor of the class colelction_protocol_event. Connects this class to OpenSpecimen
+        Constructor of the class collection_protocol_event. Connects this class to OpenSpecimen
         specific request handle (os_core.request_util.py).
 
         Parameters
@@ -27,19 +42,18 @@ class collection_protocol_registration:
         base_url : string
             URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng
         auth : tuple
-            Consits of two strings ( loginname , password)
+            Consists of two strings ( loginname , password)
         """
-
-        self.OS_request_gen = OS_request_gen(auth)
-        self.base_url = base_url + '/collection-protocol-registrations'
-
+        self.base_url = config_manager.get_url() + '/collection-protocol-registrations'
+        self.auth = config_manager.get_auth() 
+        self.OS_request_gen = OS_request_gen(self.auth)
 
     def ausgabe(self):
 
         """Testing of the URL and authentification.
 
-        If there are unexpected errors one can easily test if the URL and login data is correctly spelled.
-        the function prints the URL and login data, handed over to the class, to the output terminal.
+        If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
+        The function prints the URL and login data to the output terminal, which was handed over to the class.
         """
 
         print(self.base_url, self.OS_request_gen.auth)
@@ -50,30 +64,30 @@ class collection_protocol_registration:
         """Create or update a participant to a Collection Protocol.
 
         This function can create a new participant or update an existing participant to an already existing
-        Collection Protocol. To use this function one has to known either the Colelction Protocoll id ::cpId::,
+        Collection Protocol. To use this function one has to know either the Collection Protocoll id ::cpId::,
         the title of the Collection Protocol ::cpTitle:: or the short title of the Collection Protocol ::cpshorttitle:: .
         Those values can be seen via GUI, extracted from the responses with the class collection_protocol in os_core or
-        collection_protocol_util in os_util. To update a participant one has to specify the unique ID of the participant.
+        collection_protocol_util in os_util. To update a participant, one has to specify the unique ID of the participant.
         This Id can be searched via the function get_participant_matches in the os_core class participants.
 
         Parameters
         ----------
         params : string
             JSON formatted string with the parameters of the participant. The paramter participant is a JSON-formatted string itself,
-            for creating a participant it can left empty, for updating the ID of the participant is needed. The keys of the participant
+            for creating a participant it can be left empty; for updating the ID of the participant is needed. The keys of the participant
             dict are id[mandatory for updating], firstName, middleName, lastName, uid, birthdate, vitalStatus, deathDate, gender,
             race, ethnicities, sexGenotype, pmis, mrn, siteName, empi.
 
         One of the following keys is mandatory to identify the protocol where the participant is created or updated cpId, cpTitle or cpShortTitle.
 
-            The key ppid have to be left blank, if its set to be autogenerated by the system and is mandatory if its manually created.
+            The key ppid has to be left blank, if it is set to be autogenerated by the system and is mandatory, if it is created manually.
 
-        registrationDate is amandatory key, the date format is YYYY-MM-DD .
+        registrationDate is a mandatory key, the date format is YYYY-MM-DD .
 
         Returns
         -------
         JSON-dict
-            Details of the created or updated Participant or the OpenSpecimen error message as Dictornary.
+            Details of the created or updated Participant or the OpenSpecimen error message as Dictionary.
         """
 
         url = self.base_url + '/'
@@ -87,14 +101,14 @@ class collection_protocol_registration:
 
         """Delete a consent form of a participant.
 
-        Deletes a consent form of a existing participant with the uniquely participant ID ::cprid::
+        Deletes a consent form of an existing participant with the uniquely participant ID ::cprid::
         which is generated from the system. The ID has to be known and can be seen for example via 
         the GUI in the URL: http(s)://<host>:<port>/openspecimen/cp-view/{cpId}/participants/{cprid}/...
         or with the function get_participant_matches in the os_core class participants.
 
         Parameter
         ---------
-        cprid : int or string
+        cprid : int
             System generated unique ID of the participant. Will get converted to a string.
 
         Returns
@@ -114,14 +128,14 @@ class collection_protocol_registration:
 
         """Delete a participant from a Collection Protocol
 
-        Deletes an  existing participant with the uniquely participant ID ::cprid::
+        Deletes an existing participant with the uniquely participant ID ::cprid::
         which is generated from the system. The ID has to be known and can be seen for example via 
         the GUI in the URL: http(s)://<host>:<port>/openspecimen/cp-view/{cpId}/participants/{cprid}/...
         or with the function get_participant_matches in the os_core class participants.
 
         Parameter
         ---------
-        cprid : int or string
+        cprid : int
             System generated unique ID of the participant. Will get converted to a string.
 
         Returns
@@ -141,14 +155,14 @@ class collection_protocol_registration:
 
         """Download the consent form of a participant.
 
-        Downloads the consent form of a existing participant with the uniquely participant ID ::cprid::
+        Downloads the consent form of an existing participant with the uniquely participant ID ::cprid::
         which is generated from the system. The ID has to be known and can be seen for example via 
         the GUI in the URL: http(s)://<host>:<port>/openspecimen/cp-view/{cpId}/participants/{cprid}/...
         or with the function get_participant_matches in the os_core class participants.
 
         Parameter
         ---------
-        cprid : int or string
+        cprid : int
             System generated unique ID of the participant. Will get converted to a string.
 
         Returns
@@ -168,14 +182,14 @@ class collection_protocol_registration:
 
         """Get the consent form of a participant.
 
-        Get the consent form of a existing participant with the uniquely participant ID ::cprid::
+        Gets the consent form of an existing participant with the uniquely participant ID ::cprid::
         which is generated from the system. The ID has to be known and can be seen for example via 
         the GUI in the URL: http(s)://<host>:<port>/openspecimen/cp-view/{cpId}/participants/{cprid}/...
         or with the function get_participant_matches in the os_core class participants.
 
         Parameter
         ---------
-        cprid : int or string
+        cprid : int
             System generated unique ID of the participant. Will get converted to a string.
 
         Returns
@@ -195,14 +209,14 @@ class collection_protocol_registration:
 
         """Get the details form of a participant.
 
-        Get the details as JSON-dict form of a existing participant with the uniquely participant ID ::cprid::
+        Gets the details as JSON-dict form of an existing participant with the uniquely participant ID ::cprid::
         which is generated from the system. The ID has to be known and can be seen for example via 
         the GUI in the URL: http(s)://<host>:<port>/openspecimen/cp-view/{cpId}/participants/{cprid}/...
         or with the function get_participant_matches in the os_core class participants.
 
         Parameter
         ---------
-        cprid : int or string
+        cprid : int
             System generated unique ID of the participant. Will get converted to a string.
 
         Returns
@@ -222,14 +236,14 @@ class collection_protocol_registration:
 
         """Search for one or more participants
 
-        Get the details of one or more participants, which are sepecified in the parameters.
-        The Parameters are passed via JSON-formatted string. This function is used in the 
+        Gets the details of one or more participants, which are specified in the parameters.
+        The Parameters are passed via a JSON-formatted string. This function is used in the 
         os_util class cpr_util, where the specific parameters can be passed.
 
         Parameter
         ---------
         params : string
-            Json formatted string with keys: cpId, registrationDate[optiona], name(substring of first, last or middlename)[optional],
+            Json formatted string with keys: cpId, registrationDate[optional], name(substring of first, last or middlename)[optional],
             ppid[optional], participantId[optional], dob[optional], specimen[optional], startAt(default=0)[optional],
             maxResults(default=100)[optional], includeStats(default=false)[optional], exactMatch(default=false)[optional]
 
@@ -251,11 +265,11 @@ class collection_protocol_registration:
 
         """Register a participant to another Collection Protocol
 
-        Register an already existing Participant to antoher Collection Protocol.
-        The Participants unique ID have to be known nd can be seen for example via 
+        Registers an already existing Participant to another Collection Protocol.
+        The Participants unique ID has to be known and can be seen for example via 
         the GUI in the URL: http(s)://<host>:<port>/openspecimen/cp-view/{cpId}/participants/{cprid}/...
         or with the function get_participant_matches in the os_core class participants.
-        Also the collection protocol ID of the Protocol which the participant is registered at has to be known.
+        Also, the collection protocol ID of the Protocol in which the participant is registered at has to be known.
 
         Parameter
         ---------
@@ -282,25 +296,25 @@ class collection_protocol_registration:
 
         """Merge Participant x to Participant y
 
-        Merge Participant with the unique Participant ID ::id_from:: to the Participant with
-        unique Participant ID ::id_to::. This will move all visits and specimens to the participant
-        which is merged to and delete the participant which is merged from.
-        The Participants unique ID have to be known nd can be seen for example via 
+        Merges Participant with the unique Participant ID ::id_from:: to the Participant with
+        unique Participant ID ::id_to::. This will move data from all visits and specimens from the source participant to the target participant
+        and then deletes the source participant.
+        The Participants unique ID has to be known and can be seen for example via 
         the GUI in the URL: http(s)://<host>:<port>/openspecimen/cp-view/{cpId}/participants/{cprid}/...
         or with the function get_participant_matches in the os_core class participants.
 
         Parameters
         ----------
-        id_from : string or int
-            System generated unique ID of the participant who is merged from. Will get converted to a string.
+        id_from : int
+            System generated unique ID of the source participant. Will get converted to a string.
         
-        id_to : string or int
-            System generated unique ID of the participant who is merged to. Will get converted to a string.
+        id_to : int
+            System generated unique ID of the target participant. Will get converted to a string.
 
         Returns
         -------
         JSON-dict
-            Details of the participant which is merged from as JSON-dict or OpenSpecimen's error message.
+           Returns details of the merged participants as JSON-dict or OpenSpecimen's error message.
         """
 
         endpoint = '/'+ str(id_from)
@@ -315,16 +329,16 @@ class collection_protocol_registration:
 
         """Update a participant already in a Collection Protocol.
 
-        This function can update an existing participant with unique Participant ID ::cprid:: to an already existing
-        Collection Protocol. To use this function one has to known either the Colelction Protocoll id ::cpId::,
+        This function can update an existing participant with a unique Participant ID ::cprid:: to an already existing
+        Collection Protocol. To use this function one has to know either the Collection Protocoll id ::cpId::,
         the title of the Collection Protocol ::cpTitle:: or the short title of the Collection Protocol ::cpshorttitle:: .
         Those values can be seen via GUI, extracted from the responses with the class collection_protocol in os_core or
-        collection_protocol_util in os_util. To update a participant one has to specify the unique ID of the participant.
+        collection_protocol_util in os_util. To update a participant, one has to specify the unique ID of the participant.
         This Id can be searched via the function get_participant_matches in the os_core class participants.
 
         Parameters
         ----------
-        cprid : int or string
+        cprid : int
             System generated unique ID of the participant. Will get converted to a string.
 
         params : string
@@ -333,16 +347,16 @@ class collection_protocol_registration:
             dict are id[mandatory], firstName, middleName, lastName, uid, birthdate, vitalStatus, deathDate, gender,
             race, ethnicities, sexGenotype, pmis, mrn, siteName, empi.
 
-        One of the following keys is mandatory to identify the protocol where the participant is created or updated cpId, cpTitle or cpShortTitle.
+        One of the following keys is mandatory to identify the protocol, where the participant is created or updated cpId, cpTitle or cpShortTitle.
 
-            The key ppid have to be left blank, if its set to be autogenerated by the system and is mandatory if its manually created.
+            The key ppid has to be left blank, if it is set to be autogenerated by the system and is mandatory, if it is created manually.
 
-        registrationDate is amandatory key, the date format is YYYY-MM-DD .
+        registrationDate is a mandatory key, the date format is YYYY-MM-DD .
 
         Returns
         -------
         JSON-dict
-            Details of the created or updated Participant or the OpenSpecimen error message as Dictornary.
+            Details of the created or updated Participant or the OpenSpecimen error message as Dictionary.
         """
 
         endpoint = '/' + str(cprid)
