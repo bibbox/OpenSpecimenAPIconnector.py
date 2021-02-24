@@ -149,7 +149,7 @@ class cpr_util:
         return r
 
 
-    def create_registration(self, regdate, cpid = None, cptitle = None, cpshorttile = None, ppid = None,
+    def create_registration(self, regdate, cpid = None, cptitle = None, cpshorttitle = None, ppid = None,
                 firstname = None, middlename = None, lastname = None, uid = None, birthdate = None, vitalstatus = None,
                 deathdate = None, gender = None, race = None, ethnicities = None, sexgenotype = None, pmis = None,
                 mrn = None, sitename = None, empi = None):
@@ -250,7 +250,7 @@ class cpr_util:
         return r
 
 
-    def update_registration(self, regdate, cprid, cpid = None, cptitle = None, cpshorttile = None, ppid = None,
+    def update_registration(self, regdate, cprid, cpid = None, cptitle = None, cpshorttitle = None, ppid = None,
             firstname = None, middlename = None, lastname = None, uid = None, birthdate = None, vitalstatus = None,
             deathdate = None, gender = None, race = None, ethnicities = None, sexgenotype = None, pmis = None,
             mrn = None, sitename = None, empi = None):

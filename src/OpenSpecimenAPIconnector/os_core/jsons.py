@@ -115,19 +115,15 @@ class Json_factory():
             Details of the updated Participant or the OpenSpecimen error message as Dictornary.
         """
 
-        if registeredCps is None:
-            registeredCps = []
-
-        participantRegistration = {
-            "participant": {
-                "id": id,
+                part = {
+                "id": id_,
                 "firstName": firstname,
                 "middleName": middlename,
                 "lastName": lastname,
                 "uid":uid,
                 "birthDate": birthdate,
                 "vitalStatus": vitalstatus,
-                "deathDate": death_date,
+                "deathDate": deathdate,
                 "gender": gender,
                 "race": race,
                 "sexGenotype": sexgenotype,
@@ -136,15 +132,23 @@ class Json_factory():
                 "mrn": mrn,
                 "siteName": sitename,
                 "empi": empi                
-            },
-            "cpId": cp_id,
+            }
+
+        part = {k: v for k, v in part.items() if v is not None}
+
+        data = {
+            "cpId": str(cpid),
             "registrationDate": regdate,
-            "ppid": pp_id,
-            "cpShortTitle": cpshorttile,
+            "ppid": str(ppid),
+            "cpShortTitle": cpshorttitle,
             "cpTitle": cptitle
         }
 
-        return participantRegistration
+        data = {k: v for k, v in data.items() if v is not None}
+
+        data['participant']=part
+
+        return json.dumps(data)
 
     # Collection Protocoll
     def create_CP_json(self, short_title = None, title=None, pi_mail=None, time_start=None, time_end=None, sites=None, man_id=False, coords=None,
