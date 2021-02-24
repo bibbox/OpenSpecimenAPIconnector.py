@@ -3,6 +3,7 @@
 from ..os_core.visit import visit
 from ..os_core.req_util import OS_request_gen
 from ..os_core.jsons import Json_factory
+from ..os_core.url import url_gen
 import json
 import io
 import pandas
@@ -50,7 +51,7 @@ class visit_util:
 
 
     def add_visit(self, name, site, eventid=None, eventlabel=None, cprid= None, ppid=None, cptitle=None, cpshorttitle=None,
-                        cpid=None, diagnosis=None, clinicalstatus=None, activity=None, visitstatus="COMPLETE", missedreason=None,
+                        cpid=None, diagnosis=None, clinicalstatus=None, activity=None, visitstatus="Complete", missedreason=None,
                         missedby=None, comments=None,pathologynumber=None,cohort=None, visitdate=None):
         
         """Add a visit to a Participant.
@@ -134,7 +135,7 @@ class visit_util:
         """
 
         vis = self.jsons.add_visit_json(cprid=cprid, name=name, site=site, eventid=eventid, eventlabel=eventlabel, ppid=ppid, cptitle=cptitle, 
-                                        cpshorttitle=cpshorttitle, diagnosis=diagnosis,clinicalstatus=clinicalstatus, activity=acitivity,
+                                        cpshorttitle=cpshorttitle, diagnosis=diagnosis,clinicalstatus=clinicalstatus, activity=activity,
                                         visitstatus=visitstatus, missedreason=missedreason, missedby=missedby, comments=comments,
                                         pathologynumber=pathologynumber, cohort=cohort, visitdate=visitdate, cpid=cpid)
         
@@ -145,7 +146,7 @@ class visit_util:
 
     def add_visit_speci(self,  name, lineage, av_qty, user, init_qty, spec_class, spec_type, anat_site, site,
                         speclabel = None, eventid=None, eventlabel=None, cprid = None, ppid=None, cptitle=None, cpshorttitle=None,
-                        cpid = None, diagnosis=None, clinicalstatus=None, acitivity=None, visitstatus=None, missedreason=None,
+                        cpid = None, diagnosis=None, clinicalstatus=None, activity=None, visitstatus=None, missedreason=None,
                         missedby=None, comments=None, pathologynumber=None, cohort=None, visitdate=None, laterality=None, rec_qlt = None,                        
                         colltime = None, rectime = None, status="Collected", stor_name=None, storlocx =None, storlocy =None, concentration=None, 
                         biohazrad = None, collproc=None, conttype = None, extensionudn = 'false', extensionmap = None,
@@ -306,7 +307,7 @@ class visit_util:
         """
 
         vis = self.jsons.add_visit_json(cprid=cprid, name=name, site=site, eventid=eventid, eventlabel=eventlabel, ppid=ppid, cptitle=cptitle, 
-                                        cpshorttitle=cpshorttitle, diagnosis=diagnosis,clinicalstatus=clinicalstatus, activity=acitivity,
+                                        cpshorttitle=cpshorttitle, diagnosis=diagnosis,clinicalstatus=clinicalstatus, activity=activity,
                                         visitstatus=visitstatus, missedreason=missedreason, missedby=missedby, comments=comments,
                                         pathologynumber=pathologynumber, cohort=cohort, visitdate=visitdate, cpid=cpid)
 
@@ -420,7 +421,7 @@ class visit_util:
         """
         
         vis = self.jsons.add_visit_json(cprid=cprid, name=name, site=site, eventid=eventid, eventlabel=eventlabel, ppid=ppid, cptitle=cptitle, 
-                                        cpshorttitle=cpshorttitle, diagnosis=diagnosis,clinicalstatus=clinicalstatus, activity=acitivity,
+                                        cpshorttitle=cpshorttitle, diagnosis=diagnosis,clinicalstatus=clinicalstatus, activity=activity,
                                         visitstatus=visitstatus, missedreason=missedreason, missedby=missedby, comments=comments,
                                         pathologynumber=pathologynumber, cohort=cohort, visitdate=visitdate, cpid=cpid)
         r = self.visit.update_visit(visitid = visitid, params = vis)

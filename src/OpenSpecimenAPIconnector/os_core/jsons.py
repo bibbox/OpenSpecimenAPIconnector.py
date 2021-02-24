@@ -761,7 +761,7 @@ class Json_factory():
         return json.dumps(params)
 
     def add_visit_json(self, cprid, name, site, eventid=None,eventlabel=None,ppid=None, cptitle=None, cpshorttitle=None,
-                        diagnosis=None, clinicalstatus=None, activity=None, visitstatus="COMPLETE", missedreason=None,
+                        diagnosis=None, clinicalstatus=None, activity=None, visitstatus="Complete", missedreason=None,
                         missedby=None, comments=None,pathologynumber=None,cohort=None, visitdate=None, cpid=None):
 
     
