@@ -148,8 +148,9 @@ class Json_factory():
 
     # Collection Protocoll
     def create_CP_json(self, short_title = None, title=None, pi_mail=None, time_start=None, time_end=None, sites=None, man_id=False, coords=None,
-                           consentsWaived=False,eth_cons_id=None, part_no=None, desc_url=None, visitNameFmt=None,
-                           man_visit_name=False, man_spec_label=True, aliquots_in_same=None, activity="Active"):
+                           consentsWaived=None,eth_cons_id=None, part_no=None, desc_url=None, visitNameFmt=None, specimenLabelFmt=None, 
+                           derivativeLabelFmt =None, man_visit_name=False, man_spec_label=True, aliquots_in_same=None, activity=None,
+                           aliquotLabelFmt = None, ppidFmt= None, specimenCentric = None):
 
         """Creates the JSON-formated string corresponding to the collection_protocol_util funciton create_CP
         
@@ -208,13 +209,12 @@ class Json_factory():
         site_arr = []
         for item in sites:
             site_arr.append(
-                {
-                    "siteName": item[0],
-                    "code": item[1]
-                }
+                
+                    {"siteName": item},
+                
             )
-
-        CP_reg = {
+        
+        data = {
             "shortTitle": short_title,
             "title": title,
             "code": None,
@@ -225,25 +225,29 @@ class Json_factory():
                 },
             "startDate": time_start,
             "endDate": time_end,
-            "ppidFmt": "DWP%05d",
+            "ppidFmt": ppidFmt,
             "manualPpidEnabled": man_id,
-            "coordinators": coords,
             "cpSites": site_arr,
             "consentsWaived": consentsWaived,
             "irbId": eth_cons_id,
             "anticipatedParticipantsCount": part_no,
             "descriptionUrl": desc_url,
-            "specimenLabelFmt": "%PPI%.%SP_TYPE%.%SYS_UID%",
-            "derivativeLabelFmt": "%PPI%.%SP_TYPE%.%SYS_UID%",
-            "aliquotLabelFmt": "%PSPEC_LABEL%.%PSPEC_UID%",
+            "specimenLabelFmt": specimenLabelFmt,
+            "derivativeLabelFmt": derivativeLabelFmt,
+            "aliquotLabelFmt": aliquotLabelFmt,
             "visitNameFmt": visitNameFmt,
             "manualVisitNameEnabled": man_visit_name,
             "manualSpecLabelEnabled": man_spec_label,
             "aliquotsInSameContainer": aliquots_in_same,
-            "activityStatus": activity
+            "activityStatus": activity,
+            "specimenCentric": specimenCentric
         }
+        if coords != None:
+            data["coordinators"] = {"loginName" : coords,"domain" : "openspecimen"}
 
-        return json.dumps(CP_reg)
+        data = {k: v for k, v in data.items() if v is not None}
+
+        return json.dumps(data)
 
     # Collection Protocol event
     def create_cp_event_json(self, label=None, point=None, cp=None, site=None, diagnosis=None, status=None, activity=None, unit=None, code=None):

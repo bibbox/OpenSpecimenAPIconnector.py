@@ -36,7 +36,7 @@ class collection_protocol_util:
 
         """Constructor of the Class collection_protocol_util
 
-        Constructor of the class collection_protocol, can handle the basic API-calls
+        Constructor of the class colelction_protocol, can handle the basic API-calls
         of the collection protocol in OpenSpecimen. Connects this class to OpenSpecimen
         specific request handle (os_core.request_util.py) and the os_core classes
         Json_fatory, url_gen and collection_protocol
@@ -46,7 +46,7 @@ class collection_protocol_util:
         base_url : string
             URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng
         auth : tuple
-            Consists of two strings ( loginname , password)
+            Consits of two strings ( loginname , password)
         """
 
         self.OS_request_gen = OS_request_gen(auth)
@@ -57,12 +57,12 @@ class collection_protocol_util:
   
     def search_cps(self, searchstring = None, title = None, piid = None, reponame = None, startat = None, maxresults = None, detailedlist = None):
 
-        """Search for Collection Protocols with specific values.
+        """Search for Colelction Protocols with specific values.
 
         Search for one or more Collection Protocols with the search_string defined. The search string looks like:
         http(s)://<host>:<port>/openspecimen/rest/np/collection-protocols?{param_1}={value_1}&...&{param_x}={value_x}
         With the class collection_protocol_util from os_util and function ::search_cps:: the search string is generated
-        and this function is called. Not all keys from OpenSpecimen can be easily searched for.
+        and this function is called. Not all keys from OpenSpecimen can be easily searched after.
 
         Parameters
         ----------
@@ -73,7 +73,7 @@ class collection_protocol_util:
             Name of the desired Collection Protocol
         
         ppid : string or int
-            Id of the Principal Investigator, gets converted to a string[optional].
+            Id of the Pricincipal Investigator, gets converted to a string[optional].
         
         reponame : string
             Name of the Repository in which the Collection Protocol is[optional].
@@ -93,8 +93,8 @@ class collection_protocol_util:
             [Details of the matching Collection Protocols, if no one matches it is an empty list.
         """
 
-        search_string = self.urls.cp_search_url_gen(searchstring = None, title = None, piid = None, reponame = None,
-                                                    startat = none, maxresults = None, detailedlist = None)
+        search_string = self.urls.cp_search_url_gen(searchstring = searchstring, title = title, piid = piid, reponame = reponame,
+                                                    startat = startat, maxresults = maxresults, detailedlist = detailedlist)
         
         r = self.cps.search_collection_protocols(search_string = search_string)
 
@@ -104,7 +104,7 @@ class collection_protocol_util:
 
         """Merge two Collection protocols
 
-        Merge two Collection Protocols which are defined in src_cp and trg_cp together. To call this function the short titles of
+        Merge two Colelction Protocols which are defined in src_cp and trg_cp together. To call this function the short titles of
         the source and target collection protocol has to be known. The merged Protocol is the one with short title tgtCpShortTitle,
         with merge logic outer. 
 
@@ -124,18 +124,19 @@ class collection_protocol_util:
         Returns
         -------
         JSON-dict
-            JSON dict with the short titles of the source and target Collection Protocols.
+            JSON dict with the short titles of the source and target Colelction Protocols.
         """
 
         data = self.jsons.merge_cps(src_cp = src_cp, trg_cp = trg_cp)
-        r = self.cps.merge_collection_protocols(params = data)
+        r = self.cps.merge_colelction_protocols(params = data)
 
         return r
 
-    
-    def create_cp(self, short_title, title, pi_mail, time_start, time_end, sites, man_id=False, coords=None,
-                           consentsWaived=False,eth_cons_id=None, part_no=None, desc_url=None, visitNameFmt=None,
-                           man_visit_name=False, man_spec_label=True, aliquots_in_same=None, activity="Active"):
+
+    def create_cp(self, short_title , title, pi_mail, sites, time_start=None, time_end=None,  man_id=None, coords=None,
+                           consentsWaived=None,eth_cons_id=None, part_no=None, desc_url=None, visitNameFmt=None, specimenLabelFmt=None, 
+                           derivativeLabelFmt =None, man_visit_name=None, man_spec_label=None, aliquots_in_same=None, activity=None,
+                           aliquotLabelFmt = None, ppidFmt= None, specimenCentric = None):
         
         """Create a Collection protocol with the given Parameters
         
@@ -159,7 +160,7 @@ class collection_protocol_util:
             String with the end_time of the collection Protocol in the timeformat specified in the System configuration.
 
         sites: list
-            Sites which are assigned to the collection Protocol.
+            Sites which are assigned to the collection Protocl.
         
         man_id : string
             OpenSpecimen's boolean true/false if the manual PPID creation is enabled.
@@ -171,13 +172,13 @@ class collection_protocol_util:
             OpenSpecimen's boolean true/false if consent should be waived.
 
         eth_cons_id : string
-            Ethical approval id.
+            Ethical aproavel id.
 
         part_no : string
             String with number of anticipated Participant count.
 
         desc_url = string
-            URL with the description of the Collection Protocol.
+            URL with the decription of the Collection Protocol.
         
         visitNameFMT : string
             String which contains the OpenSpecimen's token for creating Visit Names automatically.
@@ -192,7 +193,7 @@ class collection_protocol_util:
             String with OpenSpecimen's boolean format if the Aliquotes are stored in the same Container.
         
         activity : string
-            String with the activity status of the Specimen.
+            String with the acitivity status of the Specimen.
         
         Returns
         -------
@@ -200,18 +201,20 @@ class collection_protocol_util:
             Details of the created Collection Protocol, or the OpenSpecimen's error message.
         """
 
-        params = self.jsons.create_CP_json(short_title = short_title, title = title, time_start = time_start, sites = sites,
-                man_id = man_id, coords = coords, consentsWaived = consentsWaived, eth_cons_id = eth_cons_id,
-                part_no = part_no, desc_url = desc_url, visitNameFmt = visitNameFmt, man_visit_name = man_visit_name,
-                man_spec_label = man_spec_label, aliquots_in_same = aliquots_in_same, activity = activity)
+        params = self.jsons.create_CP_json(short_title=short_title, title=title, pi_mail=pi_mail, time_start=time_start, time_end=time_end,
+                    sites=sites, man_id=man_id, coords=coords, consentsWaived=consentsWaived, eth_cons_id=eth_cons_id, part_no=part_no,
+                    desc_url=desc_url, visitNameFmt=visitNameFmt, specimenLabelFmt=specimenLabelFmt, derivativeLabelFmt=derivativeLabelFmt,
+                    man_visit_name=man_visit_name, man_spec_label=man_spec_label, aliquots_in_same=aliquots_in_same, activity=activity,
+                    aliquotLabelFmt=aliquotLabelFmt, ppidFmt=ppidFmt, specimenCentric=specimenCentric)
         
         r = self.cps.create_collection_protocol(params = params)
 
         return r
     
-    def update_cp(self, cpid, short_title=None, title=None, pi_mail=None, time_start=None, time_end=None, sites=None, man_id=False, coords=None,
-                           consentsWaived=False,eth_cons_id=None, part_no=None, desc_url=None, visitNameFmt=None,
-                           man_visit_name=False, man_spec_label=True, aliquots_in_same=None, activity="Active"):
+    def update_cp(self, cpid, short_title = None, title=None, pi_mail=None, time_start=None, time_end=None, sites=None, man_id=False, coords=None,
+                           consentsWaived=None,eth_cons_id=None, part_no=None, desc_url=None, visitNameFmt=None, specimenLabelFmt=None, 
+                           derivativeLabelFmt =None, man_visit_name=False, man_spec_label=True, aliquots_in_same=None, activity=None,
+                           aliquotLabelFmt = None, ppidFmt= None, specimenCentric = None):
 
         """Update a Collection protocol with the given Parameters.
         
@@ -225,7 +228,7 @@ class collection_protocol_util:
         Parameters
         ----------
         cpid : int
-            ID of the Collection Protocol which should get updated.
+            ID of the Colelction Protocol which should get updated.
 
         short_title : string
             Short title of the Collection Protocol.
@@ -243,7 +246,7 @@ class collection_protocol_util:
             String with the end_time of the collection Protocol in the timeformat specified in the System configuration.
 
         sites: list
-            Sites which are assigned to the Collection Protocol.
+            Sites which are assigned to the Collection Protocl.
         
         man_id : string
             OpenSpecimen's boolean true/false if the manual PPID creation is enabled.
@@ -255,13 +258,13 @@ class collection_protocol_util:
             OpenSpecimen's boolean true/false if consent should be waived.
 
         eth_cons_id : string
-            Ethical approval id.
+            Ethical aproavel id.
 
         part_no : string
             String with number of anticipated Participant count.
 
         desc_url = string
-            URL with the description of the Collection Protocol.
+            URL with the decription of the Collection Protocol.
         
         visitNameFMT : string
             String which contains the OpenSpecimen's token for creating Visit Names automatically.
@@ -284,10 +287,11 @@ class collection_protocol_util:
             Details of the created Collection Protocol, or the OpenSpecimen's error message.
         """
     
-        params = self.jsons.create_CP_json(short_title = short_title, title = title, time_start = time_start, sites = sites,
-                man_id = man_id, coords = coords, consentsWaived = consentsWaived, eth_cons_id = eth_cons_id,
-                part_no = part_no, desc_url = desc_url, visitNameFmt = visitNameFmt, man_visit_name = man_visit_name,
-                man_spec_label = man_spec_label, aliquots_in_same = aliquots_in_same, activity = activity)
+        params = self.jsons.create_CP_json(short_title=short_title, title=title, pi_mail=pi_mail, time_start=time_start, time_end=time_end,
+                    sites=sites, man_id=man_id, coords=coords, consentsWaived=consentsWaived, eth_cons_id=eth_cons_id, part_no=part_no,
+                    desc_url=desc_url, visitNameFmt=visitNameFmt, specimenLabelFmt=specimenLabelFmt, derivativeLabelFmt=derivativeLabelFmt,
+                    man_visit_name=man_visit_name, man_spec_label=man_spec_label, aliquots_in_same=aliquots_in_same, activity=activity,
+                    aliquotLabelFmt=aliquotLabelFmt, ppidFmt=ppidFmt, specimenCentric=specimenCentric)
         
         r = self.cps.update_collection_protocol(cpid =cpid, params = params)
 
