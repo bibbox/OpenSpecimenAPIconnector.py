@@ -51,7 +51,7 @@ class collection_protocol_event:
 
     def ausgabe(self):
 
-         """Testing of the URL and authentification.
+        """Testing of the URL and authentification.
 
         If there are any unexpected errors one can easily test if the URL and login data are spelled correctly.
         The function prints the URL and login data to the output terminal, which was handed over to the class.
@@ -62,7 +62,7 @@ class collection_protocol_event:
 
     def create_event(self, params):
 
-         """Create an event for a given Collection Protocol.
+        """Create an event for a given Collection Protocol.
 
         Create an event for a given Collection Protocol. In order to use this function one
         has to know the parameters, which OpenSpecimen needs for to create an event. Another way
@@ -150,7 +150,7 @@ class collection_protocol_event:
 
     def get_event(self, eventid):
 
-       """Get the details of an event with the unique ID eventid.
+        """Get the details of an event with the unique ID eventid.
 
         Get the details of an event, which is already in OpenSpecimen. The unique ID is generated from OpenSpecimen
         and can for example be seen in the URL, if one clicks on the event in the GUI. The URL looks like:
