@@ -310,11 +310,13 @@ class visit_util:
                                         cpshorttitle=cpshorttitle, diagnosis=diagnosis,clinicalstatus=clinicalstatus, activity=activity,
                                         visitstatus=visitstatus, missedreason=missedreason, missedby=missedby, comments=comments,
                                         pathologynumber=pathologynumber, cohort=cohort, visitdate=visitdate, cpid=cpid)
+        
+        storloc = self.jsons.storage_location_json(name= stor_name, xpos=storlocx, ypos= storlocy)
 
-        speci = self.jsons.create_spec_json(lineage=lineage,  av_qty=av_qty, user=user, visitDate=visitdate, init_qty=init_qty, visit_id=None,
-                                        spec_class=spec_class, spec_type=spec_type, anat_site=anat_site, stor_name=stor_name,storlocx =xtorlocx,
-                                        storlocy = storlocy, label=speclabel, status=status, cont = conttype, proced=proced, qual= rec_qual, concent=concent,
-                                        path=path, laterality=laterality)
+        speci = self.jsons.create_specimen_json(lineage=lineage,  avaqty=av_qty, userid=user, initqty=init_qty, colltime=colltime,
+                                        specimenclass=spec_class, specimentype=spec_type, anatomic=anat_site, storloc = storloc,
+                                        label=speclabel, status=status, conttype = conttype, collproc=collproc, recqlt=rec_qlt,
+                                        concentration=concentration, pathology=path, laterality=laterality)
 
         vis = json.loads(vis)
         speci= json.loads(speci)

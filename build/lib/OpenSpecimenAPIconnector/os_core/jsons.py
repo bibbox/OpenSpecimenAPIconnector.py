@@ -410,22 +410,22 @@ class Json_factory():
             "availableQty": avaqty,
             "visitId": visitid,
             "status": status,
-            "storageLocation": {storloc},
+            "storageLocation": storloc,
             "concetration": concentration,
             "biohazard": biohazard,
             "comments": comments,
-            "collevent": {
-                "user": {"id": user},
+            "collectionEvent": {
+                "user": {"id": userid},
                     "time": colltime,
                     "container": conttype,
-                    "procedure": procedure
+                    "procedure": collproc
                      },
             "receivedEvent":{
                 "user":{"id": userid},
                 "time": rectime,
                 "receivedQuality": recqlt
             },
-            "extensionDetail": {extension}
+            "extensionDetail": extension
             }
 
         return json.dumps(spec)
