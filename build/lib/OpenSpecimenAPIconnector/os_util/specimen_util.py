@@ -97,9 +97,9 @@ class specimen_util:
 
         return r
 
-    def create_specimen(self, specimenclass, specimentype , pathology , anatomic, laterality, initqty, avaqty, visitid, recqlt, userid,
+    def create_specimen(self, specimenclass, specimentype , pathology , anatomic, laterality, initqty, avaqty, visitid, recqlt, userid, 
                         colltime = None, rectime = None, lineage = 'New', status = 'Collected', stor_name = None, storlocx = None,
-                        storlocy = None, concetration = None, biohazard = None, label = None, comments = None,  collproc=None, 
+                        storlocy = None, concetration = None, biohazard = None,  comments = None,  collproc=None, label = None,
                         conttype=None, extensionudn="false", extensionmap=None, extensiondict =None):
 
         """Create a Specimen to a visit
@@ -197,15 +197,16 @@ class specimen_util:
         dict
             Dictionary with details of the specimen or the OpenSpecimen's error meessage.
         """
-        
-         
+               
         if rectime == None:
             rectime = date.today()
         
         if colltime == None:
             colltime = date.today()
 
-        storloc = self.jsons.storage_location_json(name = stor_name, xpos = storlocx, ypos = storlocy)
+        storloc = None
+        if stor_name != None:
+            storloc = self.jsons.storage_location_json(name = stor_name, xpos = storlocx, ypos = storlocy)
 
         extension = self.jsons.create_extension(attrsmap = extensionmap, extensiondict = extensiondict, useudn = extensionudn)
 

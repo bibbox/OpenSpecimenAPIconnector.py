@@ -245,7 +245,7 @@ class integrationTest:
         self.names['speci2']="IntegrationTestSpeci2"
         response = self.vis_util.add_visit_speci(name = self.names["visit2"], lineage = "New", av_qty = 10, user = 2, init_qty = 10, spec_class ='Fluid', 
                     spec_type = "Bile", anat_site ="Anal Canal", path='Malignant', site = self.names['site'], speclabel=self.names['speci2'],cpid=self.ID['CP'],
-                     ppid="IntegrationPPID", cprid=self.ID['cpr'])
+                     ppid="IntegrationPPID", cprid=self.ID['cpr'],colltime="2021-03-01",rectime='2021-03-01')
         assert bool(response), "Error adding a Visit and a Specimen in one turn"
         self.ID['visit2']=response['visit']['id']
         self.ID['speci2']=response['specimens'][0]['id']
@@ -257,8 +257,8 @@ class integrationTest:
         self.logFile.write('-Add a Specimen- \n')
         self.names['speci']="IntegrationTestSpeci"
         response = self.spec_util.create_specimen(specimenclass = 'Fluid', specimentype = 'Bile', pathology = 'Malignant', anatomic = 'Anal Canal',  
-                 laterality = 'Left', initqty = 10, avaqty =10, visitid = self.ID['visit'], recqlt = 'Acceptable', userid = 2)
-        print(response)
+                 laterality = 'Left', initqty = 10, avaqty =10, visitid = self.ID['visit'], recqlt = 'Acceptable', userid = 2, label = self.names['speci'],
+                 colltime = '2021-03-01', rectime = '2021-03-01')
         assert bool(response), "Error creating Specimen"
         self.ID['speci']=response['id']
         self.logFile.write(str(response)+ ' \n')
@@ -279,13 +279,13 @@ class integrationTest:
 
         #delete Specimen
         self.logFile.write('-Delete a Specimen- \n')
-        response = self.spec.delete_specimens(visitid = self.ID['speci'])
+        response = self.spec_util.delete_specimens(specimenids = self.ID['speci'])
         assert bool(response), "Error deleting a Specimen"
         self.logFile.write(str(response) + ' \n')
 
         #delete Specimen
         self.logFile.write('-Delete a Specimen- \n')
-        response = self.spec.delete_specimens(visitid = self.ID['speci2'])
+        response = self.spec_util.delete_specimens(specimenids = self.ID['speci2'])
         assert bool(response), "Error deleting a Specimen"
         self.logFile.write(str(response) + ' \n')
 

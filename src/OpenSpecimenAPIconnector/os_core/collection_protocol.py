@@ -284,26 +284,4 @@ class collection_protocol():
 
         return cp_pandas_template
 
-def get_cp_def(self, cpid):
 
-        """Definition of collection protocoll
-
-        Alternative endpoint to get the definition of the collection protocoll; Similar to get_collection_protocoll
-
-        Parameter
-        ---------
-        cpid : id 
-        Id of the given collection protocoll
-
-        Returns
-        -------
-        JSON-dict
-        Details of the Collection Protocol with the specified ID, or the OpenSpecimen error message.
-        """
-
-        cp_endpoint = "/{}/definition".format(cpid)
-        cp_url = self.base_url + cp_endpoint
-        r = self.OS_request_gen.get_request(cp_url)
-        cp_def_json = json.loads(r.text)
-
-        return cp_def_json
