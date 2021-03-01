@@ -51,6 +51,7 @@ class specimen_util:
         self.specimen = specimen()
         self.url = url_gen()
         self.jsons = Json_factory()
+        self.users = users()
 
 
     def search_specimens(self, label = None, cprid = None, eventid = None, visitid = None, maxres = "100", exact = "false", extension = "true"):
@@ -96,9 +97,9 @@ class specimen_util:
 
         return r
 
-    def create_specimen(self, specimenclass, specimentype , pathology , anatomic, laterality, initqty, avaqty, visitid, recqlt, label = None,
+    def create_specimen(self, specimenclass, specimentype , pathology , anatomic, laterality, initqty, avaqty, visitid, recqlt, userid,
                         colltime = None, rectime = None, lineage = 'New', status = 'Collected', stor_name = None, storlocx = None,
-                        storlocy = None, concetration = None, biohazard = None, userid = None, comments = None,  collproc=None, 
+                        storlocy = None, concetration = None, biohazard = None, label = None, comments = None,  collproc=None, 
                         conttype=None, extensionudn="false", extensionmap=None, extensiondict =None):
 
         """Create a Specimen to a visit
@@ -197,13 +198,7 @@ class specimen_util:
             Dictionary with details of the specimen or the OpenSpecimen's error meessage.
         """
         
-        if userid == None:
-            users = users.get_all_users()
-            logname= self.req_gen.user_name()
-            for user in users:
-                if user['loginName'] == logname:
-                    userid = user['id']
-        
+         
         if rectime == None:
             rectime = date.today()
         
@@ -329,12 +324,7 @@ class specimen_util:
             Dictionary with details of the specimen or the OpenSpecimen's error meessage.
         """
 
-        if userid != None:
-            users = users.get_all_users()
-            logname= self.req_gen.user_name()
-            for user in users:
-                if user['loginName'] == logname:
-                    userid = user['id']
+
 
         storloc = self.jsons.storage_location_json(name = stor_name, xpos = storlocx, ypos = storlocy)
 

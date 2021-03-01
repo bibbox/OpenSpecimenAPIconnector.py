@@ -60,6 +60,9 @@ class integrationTest:
 
         self.vis = os_core.visit()
         self.vis_util = os_util.visit_util()
+
+        self.spec = os_core.specimen()
+        self.spec_util = os_util.specimen_util()
         
         self.jsons = os_core.Json_factory()
         self.url = os_core.url_gen()
@@ -248,6 +251,18 @@ class integrationTest:
         self.ID['speci2']=response['specimens'][0]['id']
         self.logFile.write(str(response)+ ' \n')
 
+
+        ##Specimens
+        #Add a Specimen
+        self.logFile.write('-Add a Specimen- \n')
+        self.names['speci']="IntegrationTestSpeci"
+        response = self.spec_util.create_specimen(specimenclass = 'Fluid', specimentype = 'Bile', pathology = 'Malignant', anatomic = 'Anal Canal',  
+                 laterality = 'Left', initqty = 10, avaqty =10, visitid = self.ID['visit'], recqlt = 'Acceptable', userid = 2)
+        print(response)
+        assert bool(response), "Error creating Specimen"
+        self.ID['speci']=response['id']
+        self.logFile.write(str(response)+ ' \n')
+
         
 
 
@@ -264,7 +279,13 @@ class integrationTest:
 
         #delete Specimen
         self.logFile.write('-Delete a Specimen- \n')
-        response = self.vis.delete_visit(visitid = self.ID['speci2'])
+        response = self.spec.delete_specimens(visitid = self.ID['speci'])
+        assert bool(response), "Error deleting a Specimen"
+        self.logFile.write(str(response) + ' \n')
+
+        #delete Specimen
+        self.logFile.write('-Delete a Specimen- \n')
+        response = self.spec.delete_specimens(visitid = self.ID['speci2'])
         assert bool(response), "Error deleting a Specimen"
         self.logFile.write(str(response) + ' \n')
 
@@ -384,8 +405,10 @@ class integrationTest:
 
     def cleanUp(self):
 
+        if 'speci' in self.ID.keys():
+            self.spec_util.delete_specimens(specimenids =self.ID['speci'])
         if 'speci2' in self.ID.keys():
-            self.vis.delete_visit(visitid = self.ID['speci2'])
+            self.spec_util.delete_specimens(specimenids = self.ID['speci2'])
         if 'visit2' in self.ID.keys():
             self.vis.delete_visit(visitid = self.ID['visit2'])
         if 'visit' in self.ID.keys():

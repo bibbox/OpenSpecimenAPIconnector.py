@@ -154,7 +154,7 @@ class Json_factory():
     def create_CP_json(self, short_title = None, title=None, pi_mail=None, time_start=None, time_end=None, sites=None, man_id=False, coords=None,
                            consentsWaived=None,eth_cons_id=None, part_no=None, desc_url=None, visitNameFmt=None, specimenLabelFmt=None, 
                            derivativeLabelFmt =None, man_visit_name=False, man_spec_label=True, aliquots_in_same=None, activity=None,
-                           aliquotLabelFmt = None, ppidFmt= None, specimenCentric = None):
+                           aliquotLabelFmt = None, ppidFmt= None, specimenCentric = None,cpid=None):
 
         """Creates the JSON-formated string corresponding to the collection_protocol_util funciton create_CP
         
@@ -219,6 +219,7 @@ class Json_factory():
             )
         
         data = {
+            "id": cpid,
             "shortTitle": short_title,
             "title": title,
             "code": None,

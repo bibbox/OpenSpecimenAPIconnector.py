@@ -203,9 +203,9 @@ class collection_protocol_util:
                     desc_url=desc_url, visitNameFmt=visitNameFmt, specimenLabelFmt=specimenLabelFmt, derivativeLabelFmt=derivativeLabelFmt,
                     man_visit_name=man_visit_name, man_spec_label=man_spec_label, aliquots_in_same=aliquots_in_same, activity=activity,
                     aliquotLabelFmt=aliquotLabelFmt, ppidFmt=ppidFmt, specimenCentric=specimenCentric)
-
+        print('####'+str(params))
         r = self.cps.create_collection_protocol(params = params)
-
+        print('wtf'+str(r))
         return r
     
     def update_cp(self, cpid, short_title = None, title=None, pi_mail=None, time_start=None, time_end=None, sites=None, man_id=False, coords=None,
@@ -284,7 +284,7 @@ class collection_protocol_util:
             Details of the created Collection Protocol, or the OpenSpecimen's error message.
         """
     
-        params = self.jsons.create_CP_json(short_title=short_title, title=title, pi_mail=pi_mail, time_start=time_start, time_end=time_end,
+        params = self.jsons.create_CP_json(cpid =cpid, short_title=short_title, title=title, pi_mail=pi_mail, time_start=time_start, time_end=time_end,
                     sites=sites, man_id=man_id, coords=coords, consentsWaived=consentsWaived, eth_cons_id=eth_cons_id, part_no=part_no,
                     desc_url=desc_url, visitNameFmt=visitNameFmt, specimenLabelFmt=specimenLabelFmt, derivativeLabelFmt=derivativeLabelFmt,
                     man_visit_name=man_visit_name, man_spec_label=man_spec_label, aliquots_in_same=aliquots_in_same, activity=activity,
