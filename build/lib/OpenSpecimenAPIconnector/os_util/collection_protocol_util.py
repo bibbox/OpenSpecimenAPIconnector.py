@@ -203,9 +203,9 @@ class collection_protocol_util:
                     desc_url=desc_url, visitNameFmt=visitNameFmt, specimenLabelFmt=specimenLabelFmt, derivativeLabelFmt=derivativeLabelFmt,
                     man_visit_name=man_visit_name, man_spec_label=man_spec_label, aliquots_in_same=aliquots_in_same, activity=activity,
                     aliquotLabelFmt=aliquotLabelFmt, ppidFmt=ppidFmt, specimenCentric=specimenCentric)
-        print('####'+str(params))
+
         r = self.cps.create_collection_protocol(params = params)
-        print('wtf'+str(r))
+
         return r
     
     def update_cp(self, cpid, short_title = None, title=None, pi_mail=None, time_start=None, time_end=None, sites=None, man_id=False, coords=None,
