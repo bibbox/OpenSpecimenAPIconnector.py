@@ -86,7 +86,7 @@ class collection_protocol():
 
         url = self.base_url + '/'
         payload = params
-        r = self.OS_request_gen.get_request(url)
+        r = self.OS_request_gen.post_request(url,payload)
 
         return json.loads(r.text)
 
@@ -193,7 +193,7 @@ class collection_protocol():
         return json.loads(r.text)
 
 
-    def merge_colelction_protocols(self, params):
+    def merge_collection_protocols(self, params):
 
         """Merge two Collection Protocols
 
@@ -283,27 +283,3 @@ class collection_protocol():
         cp_pandas_template = pd.DataFrame(columns=[r.content.decode()])
 
         return cp_pandas_template
-
-def get_cp_def(self, cpid):
-
-        """Definition of collection protocoll
-
-        Alternative endpoint to get the definition of the collection protocoll; Similar to get_collection_protocoll
-
-        Parameter
-        ---------
-        cpid : id 
-        Id of the given collection protocoll
-
-        Returns
-        -------
-        JSON-dict
-        Details of the Collection Protocol with the specified ID, or the OpenSpecimen error message.
-        """
-
-        cp_endpoint = "/{}/definition".format(cpid)
-        cp_url = self.base_url + cp_endpoint
-        r = self.OS_request_gen.get_request(cp_url)
-        cp_def_json = json.loads(r.text)
-
-        return cp_def_json

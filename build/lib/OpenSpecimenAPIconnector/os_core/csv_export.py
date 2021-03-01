@@ -2,6 +2,7 @@ import pandas as pd
 import zipfile
 import json
 import time
+import os
 from .req_util import OS_request_gen
 from .. import config_manager
 

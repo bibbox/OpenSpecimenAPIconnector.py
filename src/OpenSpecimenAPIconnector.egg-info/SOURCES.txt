@@ -17,7 +17,6 @@ src/OpenSpecimenAPIconnector/os_core/__init__.py
 src/OpenSpecimenAPIconnector/os_core/collection_protocol.py
 src/OpenSpecimenAPIconnector/os_core/collection_protocol_event.py
 src/OpenSpecimenAPIconnector/os_core/collection_protocol_registration.py
-src/OpenSpecimenAPIconnector/os_core/collection_protocoll.py
 src/OpenSpecimenAPIconnector/os_core/csv_bulk.py
 src/OpenSpecimenAPIconnector/os_core/csv_export.py
 src/OpenSpecimenAPIconnector/os_core/institute.py

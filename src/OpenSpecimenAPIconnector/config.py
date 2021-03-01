@@ -20,6 +20,7 @@ class config():
         return self.auth
     def get_conf_obj(self):
         return self
+    
     def check_login(self):
         
         base_url = self.get_url() + "/sessions"
@@ -33,11 +34,12 @@ class config():
 
         return True
     
-    def set_login(self, url, auth):
+    def set_login(self, url, auth, reset=False):
         
-        assert self.set_token, "This instances login data is already set please"
+        if not reset:
+            assert self.set_token, "This instances login data is already set please reimport or create or pass keyword argument reset=True"
 
         self.set_base_url(url)
         self.set_auth(auth)
-        self.check_login()
-        set_token = False
+        if self.check_login():
+            self.set_token = False
