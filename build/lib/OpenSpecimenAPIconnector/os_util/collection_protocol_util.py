@@ -1,6 +1,6 @@
 #! /bin/python3
 
-from ..os_core.collection_protocoll import collection_protocol
+from ..os_core.collection_protocol import collection_protocol
 from ..os_core.jsons import Json_factory
 from ..os_core.url import url_gen
 
@@ -92,7 +92,7 @@ class collection_protocol_util:
 
         search_string = self.urls.cp_search_url_gen(searchstring = searchstring, title = title, piid = piid, reponame = reponame,
                                                     startat = startat, maxresults = maxresults, detailedlist = detailedlist)
-        
+
         r = self.cps.search_collection_protocols(search_string = search_string)
 
         return r
@@ -203,7 +203,7 @@ class collection_protocol_util:
                     desc_url=desc_url, visitNameFmt=visitNameFmt, specimenLabelFmt=specimenLabelFmt, derivativeLabelFmt=derivativeLabelFmt,
                     man_visit_name=man_visit_name, man_spec_label=man_spec_label, aliquots_in_same=aliquots_in_same, activity=activity,
                     aliquotLabelFmt=aliquotLabelFmt, ppidFmt=ppidFmt, specimenCentric=specimenCentric)
-        
+
         r = self.cps.create_collection_protocol(params = params)
 
         return r

@@ -12,7 +12,7 @@ class user_util:
         self.jsons = Json_factory()
         self.urls = url_gen()
 
-    def create_user(self, first, last, email, phone, login, institute, type_, address = None, domain = "openSpecimen"):
+    def create_user(self, first, last, email,  login, institute, type_, phone=None, address = None, domain = "openSpecimen"):
 
         """Create a user
 
@@ -188,3 +188,4 @@ class user_util:
         params = self.jsons.change_user_pw_json(userid = userid, newpw = newpw, oldpw = oldpw)
         r = self.users.change_password(params = params)
 
+        return r

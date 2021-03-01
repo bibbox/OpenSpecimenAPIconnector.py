@@ -10,6 +10,7 @@ from .site_util import site_util
 from .specimen_util import specimen_util
 from .users_util import user_util
 from .visit_util import visit_util
+from .institute_util import institutes_util
 
 # module imports from core outside
 from ..mg_util.OpenSpecimenBBMRImapping import bbmri_connector

@@ -3,6 +3,7 @@
 
 import json
 from .req_util import OS_request_gen
+from .url import url_gen
 from .. import config_manager
 
 class institutes():

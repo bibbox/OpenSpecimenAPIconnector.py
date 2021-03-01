@@ -36,7 +36,7 @@ class Json_factory():
 
     # creation jsons:
     # participant
-    def create_participant_json(self, regdate = None, id = None, cpid = None, cptitle = None, 
+    def create_participant_json(self, regdate = None, id_ = None, cpid = None, cptitle = None, 
                         cpshorttitle =None, ppid = None, firstname = None, middlename = None, 
                         lastname = None, uid = None, birthdate = None, vitalstatus = None, 
                         deathdate = None, gender = None, race = None, ethnicities = None, 
@@ -861,7 +861,7 @@ class Json_factory():
         
         return json.dumps(params)
 
-    def storage_location_json(self, id=None, name=None, xpos=None, ypos=None):
+    def storage_location_json(self, id_=None, name=None, xpos=None, ypos=None):
         
         """Create JSON-formatted string to neccesary to retrieve storage location via API 
 
@@ -881,14 +881,16 @@ class Json_factory():
             JSON foramted string that is needed to retrieve the storage location of a specimen 
         """
         
-        params = {
-            "id": id,
+        data = {
+            "id": id_,
             "name": name,
             "positionX": xpos,
             "positionY": ypos
         }
 
-        return json.dumps(params)
+        data = {k: v for k, v in data.items() if v is not None}
+        
+        return json.dumps(data)
 
     def merge_cps(self, src_cp, trg_cp):
         

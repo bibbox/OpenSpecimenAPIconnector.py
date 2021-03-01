@@ -28,11 +28,7 @@ class config():
             'content-type': "application/json", 'cache-control': "no-cache"}
         data = {"domainName":self.domainName,"loginName":auth[0],"password":auth[1]}
         data = json.dumps(data)
-        print(data)
-        print(base_url)
         r = requests.request("POST", base_url, data=data,headers=json_headers)
-        print(r.headers)
-        print(r.status_code)
         assert r.status_code == 200, "Invalid url or login data"
 
         return True

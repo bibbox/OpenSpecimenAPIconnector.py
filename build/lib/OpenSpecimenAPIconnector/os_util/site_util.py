@@ -160,7 +160,7 @@ class site_util:
         """ 
         params = self.jsons.create_site(name = name, institutename = institutename, type_ = type_,
                 coordinators = coordinators, address = address)
-        r = self.sites.create_sites(siteid = siteid, params = params)
+        r = self.sites.update_site(siid = siteid, params = params)
 
         return r
 

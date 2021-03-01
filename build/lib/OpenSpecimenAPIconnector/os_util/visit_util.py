@@ -143,7 +143,7 @@ class visit_util:
         return r
 
 
-    def add_visit_speci(self,  name, lineage, av_qty, user, init_qty, spec_class, spec_type, anat_site, site,
+    def add_visit_speci(self,  name, lineage, av_qty, user, init_qty, spec_class, spec_type, anat_site, site, path,
                         speclabel = None, eventid=None, eventlabel=None, cprid = None, ppid=None, cptitle=None, cpshorttitle=None,
                         cpid = None, diagnosis=None, clinicalstatus=None, activity=None, visitstatus=None, missedreason=None,
                         missedby=None, comments=None, pathologynumber=None, cohort=None, visitdate=None, laterality=None, rec_qlt = None,                        
@@ -310,7 +310,10 @@ class visit_util:
                                         visitstatus=visitstatus, missedreason=missedreason, missedby=missedby, comments=comments,
                                         pathologynumber=pathologynumber, cohort=cohort, visitdate=visitdate, cpid=cpid)
         
-        storloc = self.jsons.storage_location_json(name= stor_name, xpos=storlocx, ypos= storlocy)
+        if stor_name!=None:
+            storloc = self.jsons.storage_location_json(name= stor_name, xpos=storlocx, ypos= storlocy)
+        else:
+            storloc=None
 
         speci = self.jsons.create_specimen_json(lineage=lineage,  avaqty=av_qty, userid=user, initqty=init_qty, colltime=colltime,
                                         specimenclass=spec_class, specimentype=spec_type, anatomic=anat_site, storloc = storloc,

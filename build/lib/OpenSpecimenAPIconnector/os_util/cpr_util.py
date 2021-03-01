@@ -344,7 +344,7 @@ class cpr_util:
             Details of the updated Participant or the OpenSpecimen error message as Dictionary.
         """
 
-        params = self.jsons.create_participant_json(regdate = regdate, id = cprid, cpid = cpid, cptitle = cptitle, 
+        params = self.jsons.create_participant_json(regdate = regdate, id_ = cprid, cpid = cpid, cptitle = cptitle, 
                         cpshorttitle =cpshorttitle, ppid = ppid, firstname = firstname, middlename = middlename, 
                         lastname = lastname, uid = uid, birthdate = birthdate, vitalstatus = vitalstatus, 
                         deathdate = deathdate, gender = gender, race = race, ethnicities = ethnicities, 

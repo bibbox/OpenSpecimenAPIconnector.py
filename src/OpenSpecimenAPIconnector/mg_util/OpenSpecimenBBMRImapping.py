@@ -20,7 +20,7 @@ from ..os_core.site import sites
 from ..os_core.jsons import Json_factory
 from ..os_core.users import users
 from ..os_core.collection_protocol_registration import collection_protocol_registration
-from ..os_core.collection_protocoll import collection_protocol
+from ..os_core.collection_protocol import collection_protocol
 from .. import config_manager
 
 import json
