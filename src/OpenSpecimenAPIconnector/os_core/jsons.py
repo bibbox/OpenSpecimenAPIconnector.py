@@ -641,7 +641,7 @@ class Json_factory():
             "cpId" : cpid,
             "aql" : aql,
             "wideRowMode" : rowmode,
-            "outputColumnExprs" : coloumexpr,
+            "outputColumnExprs" : columnexpr,
             "outputIsoDateTime" : isodate
         }
 

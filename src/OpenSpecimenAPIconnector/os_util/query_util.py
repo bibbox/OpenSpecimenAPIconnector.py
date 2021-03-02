@@ -80,13 +80,13 @@ class query_util:
             Details of the saved query or the OpenSpecimen's error message.
         """
 
-        params = self.jsons.create_aql(cpid, aql, rowmode, columnexpr, isodate)
-        r = self.query.create_aql(params)
+        params = self.jsons.execute_aql(cpid, aql, rowmode, columnexpr, isodate)
+        r = self.query.execute_aql(params)
 
         return r
 
 
-    def execute_query(self, qryid, start, results, rowmode="OFF", drivingform="Participant"):
+    def execute_query(self, qryid, start='0', results='100', rowmode="OFF", drivingform="Participant"):
 
         """Execute a saved Query.
 
@@ -155,6 +155,6 @@ class query_util:
 
         params = self.url.query_url_gen(cpid = cpid, searchstring = searchstring, start = start,
                                         max_ = max_, countreq = countreq)
-        r = self.query.search_query(search_params = params)
+        r = self.query.search_query(suburl = params)
 
         return r

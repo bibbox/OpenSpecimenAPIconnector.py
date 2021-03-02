@@ -63,6 +63,9 @@ class integrationTest:
 
         self.spec = os_core.specimen()
         self.spec_util = os_util.specimen_util()
+
+        self.qry = os_core.query()
+        self.qry_util = os_util.query_util()
         
         self.jsons = os_core.Json_factory()
         self.url = os_core.url_gen()
@@ -263,6 +266,42 @@ class integrationTest:
         self.ID['speci']=response['id']
         self.logFile.write(str(response)+ ' \n')
 
+        #check label
+        self.logFile.write('-Check if label exist- \n')
+        response = self.spec.check_specimen(specimenLabel = self.names['speci'])
+        assert bool(response), "Error checking Specimen"
+        self.logFile.write(str(response)+ ' \n')
+
+        #update Specimen
+        self.logFile.write('-Update Specimen- \n')
+        self.names['speci']="IntegrationTestSpeci1"
+        response = self.spec_util.update_specimen(specimenid = self.ID['speci'], specimenclass = 'Fluid', specimentype = 'Bile', pathology = 'Malignant', anatomic = 'Anal Canal',  
+                 laterality = 'Left', initqty = 10, avaqty =10, visitid = self.ID['visit'], recqlt = 'Acceptable', userid = 2, label = self.names['speci'],
+                 colltime = '2021-03-01', rectime = '2021-03-01')
+        assert bool(response), "Error updating Specimen"
+        self.logFile.write(str(response) + ' \n')
+
+        #Queries
+        #Create AQL
+        self.logFile.write('-Executing AQL- \n')
+        response = self.qry_util.create_aql(cpid = self.ID['CP'], aql = "select Participant.ppid, SpecimenCollectionGroup.collectionDate, count(distinct Specimen.id) where Specimen.lineage = \"New\"")
+        assert bool(response), "Error executing AQL"
+        self.logFile.write(str(response) + ' \n')
+
+        #Search Queries
+        self.logFile.write('-Searching for queries- \n')
+        response = self.qry_util.search_query()
+        assert bool(response), "Error searching for queries"
+        self.logFile.write(str(response) + ' \n')
+
+        #Executing saved queries
+        self.logFile.write('-Executing a saved query- \n')
+        response = self.qry_util.execute_query(qryid = '1')
+        assert bool(response), "Error executing saved query"
+        self.logFile.write(str(response) + ' \n')
+
+
+
         
 
 
@@ -281,6 +320,12 @@ class integrationTest:
         self.logFile.write('-Delete a Specimen- \n')
         response = self.spec_util.delete_specimens(specimenids = self.ID['speci'])
         assert bool(response), "Error deleting a Specimen"
+        self.logFile.write(str(response) + ' \n')
+
+        #get a Specimen
+        self.logFile.write('-Get Specimen by ID(already deleted)- \n')
+        response = self.spec.get_specimen(specimenid = self.ID['speci'])
+        assert bool(response), "Error getting a Specimen"
         self.logFile.write(str(response) + ' \n')
 
         #delete Specimen

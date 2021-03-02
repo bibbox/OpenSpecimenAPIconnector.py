@@ -208,7 +208,7 @@ class url_gen:
         if cpid != None:
             url_string += _write_instance(entity = 'cpId', value = cpid)
         
-        if searchString != None:
+        if searchstring != None:
             url_string += _write_instance(entity = 'searchString', value = searchstring)
 
         if start != None:

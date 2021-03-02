@@ -57,33 +57,7 @@ class query:
         print(self.base_url, self.OS_request_gen.auth)
 
 
-    def create_query(self, params):
-
-        """Create a Query in OpenSpecimen
-
-        Creates a query which is stored in the queries in OpenSpecimen. The query language 
-        can be extracted from the OpenSpecimen GUI query generator.
-
-        Parameter
-        ---------
-        params : string
-            JSON-formatted string with the desired parameters.
-
-        Returns
-        -------
-        JSON-dict
-            Details of the saved query or the OpenSpecimen's error message.
-        """
-
-        endpoint = "/saved-queries/"
-        url = self.base_url + endpoint
-        data = params
-        r = self.OS_request_gen.post_request(url,data)
-
-        return json.loads(r.text)
-
-
-    def create_aql(self, params):
+    def execute_aql(self, params):
 
 
         """Write and Execute a Query in OpenSpecimen
