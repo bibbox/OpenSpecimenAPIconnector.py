@@ -176,7 +176,7 @@ class specimen:
 
         return json.loads(r.text)
 
-    def update_specimen(self, specimenid, updateparams):
+    def update_specimen(self, specimenid, params):
         
         """Updates an existing Specimen/Aliquot/Derivative
         
@@ -213,7 +213,7 @@ class specimen:
 
         endpoint = '/'+str(specimenid)
         url = self.base_url + endpoint
-        data = updateparams
+        data = params
         r = self.OS_request_gen.put_request(url, data)
         
         return json.loads(r.text)
