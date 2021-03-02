@@ -433,13 +433,15 @@ class Json_factory():
 
         return json.dumps(data)
 
-    def create_extension(self, attrsmap, extensiondict, useudn="false"):
+    def create_extension(self, attrsmap=None, extensiondict=None, useudn=None):
 
         data = {
             "useUdn": useudn,
             "attryMap": attrsmap,
             "value": extensiondict
         }
+
+        data = {k: v for k, v in data.items() if v is not None}
 
         return json.dumps(data)
 

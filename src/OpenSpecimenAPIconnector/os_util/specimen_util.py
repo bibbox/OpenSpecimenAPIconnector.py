@@ -100,7 +100,7 @@ class specimen_util:
     def create_specimen(self, specimenclass, specimentype , pathology , anatomic, laterality, initqty, avaqty, visitid, recqlt, userid, 
                         colltime = None, rectime = None, lineage = 'New', status = 'Collected', stor_name = None, storlocx = None,
                         storlocy = None, concetration = None, biohazard = None,  comments = None,  collproc=None, label = None,
-                        conttype=None, extensionudn="false", extensionmap=None, extensiondict =None):
+                        conttype=None, extensionudn=None, extensionmap=None, extensiondict =None):
 
         """Create a Specimen to a visit
 
@@ -208,7 +208,9 @@ class specimen_util:
         if stor_name != None:
             storloc = self.jsons.storage_location_json(name = stor_name, xpos = storlocx, ypos = storlocy)
 
-        extension = self.jsons.create_extension(attrsmap = extensionmap, extensiondict = extensiondict, useudn = extensionudn)
+        extension =None
+        if extensiondict != None:
+            extension = self.jsons.create_extension(attrsmap = extensionmap, extensiondict = extensiondict, useudn = extensionudn)
 
         params = self.jsons.create_specimen_json(label = label, specimenclass = specimenclass, specimentype = specimentype, pathology =pathology,
                 anatomic= anatomic, laterality = laterality, initqty = initqty, avaqty = avaqty, visitid = visitid, colltime = colltime,
@@ -224,7 +226,7 @@ class specimen_util:
     def update_specimen(self, specimenid, label = None, specimenclass = None, specimentype = None, pathology = None, anatomic = None, laterality = None,
                             initqty = None, avaqty = None, visitid = None, recqlt = None, colltime = None, rectime = None, lineage = 'New',
                             status = 'Collected', stor_name = None, storlocx = None, storlocy = None, concetration = None, biohazard = None,
-                            userid = None, comments = None,  collproc=None, conttype=None, extensionudn="false", extensionmap=None, extensiondict =None):
+                            userid = None, comments = None,  collproc=None, conttype=None, extensionudn=None, extensionmap=None, extensiondict =None):
 
         """Update an existing Specimen
 
@@ -325,11 +327,13 @@ class specimen_util:
             Dictionary with details of the specimen or the OpenSpecimen's error meessage.
         """
 
+        storloc = None
+        if stor_name != None:
+            storloc = self.jsons.storage_location_json(name = stor_name, xpos = storlocx, ypos = storlocy)
 
-
-        storloc = self.jsons.storage_location_json(name = stor_name, xpos = storlocx, ypos = storlocy)
-
-        extension = self.jsons.create_extension(attrsmap = extensionmap, extensiondict = extensiondict, useudn = extensionudn)
+        extension =None
+        if extensiondict != None:
+            extension = self.jsons.create_extension(attrsmap = extensionmap, extensiondict = extensiondict, useudn = extensionudn)
 
         params = self.jsons.create_specimen_json(label = label, specimenclass = specimenclass, specimentype = specimentype, pathology =pathology,
                 anatomic= anatomic, laterality = laterality, initqty = initqty, avaqty = avaqty, visitid = visitid, colltime = colltime,
