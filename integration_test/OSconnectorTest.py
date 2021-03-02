@@ -31,7 +31,7 @@ class integrationTest:
         self.base_url = base_url
         self.auth = auth
         if filename == None:
-            filename = "OSapiConnIntTest2_"+str(datetime.now())+".txt"
+            filename = "OSapiConnIntTest_"+str(datetime.now())+".txt"
         self.logFile = open(path +filename, "a")
 
         self.ID = {}
@@ -111,8 +111,23 @@ class integrationTest:
         assert bool(response), "error updating an institute"
         self.logFile.write(str(response) + " \n")
         
+        #Get all institutes
+        self.logFile.write('-Get all institutes- \n')
+        response = self.inst.get_all_institutes()
+        assert str(response).lower().find('error')==-1, "Error getting all institutes: "+str(response)
+        assert bool(response), "error getting all institutes"
+        self.logFile.write(str(response) + " \n")
+        
 
         ## Sites
+        #Get Template
+        self.logFile.write('-Get pandas template- \n')
+        response = self.site.get_site_pandas_template()
+        response = str(response)
+        assert str(response).lower().find('error')==-1, "Error getting pandas template for sites: "+str(response)
+        assert bool(response), "error getting all pandas template for sites"
+        self.logFile.write(str(response) + " \n")
+        
         # Create a Site
         self.logFile.write("-Creating a Site- \n")
         response = self.site_util.create_sites(name = "IntegrationTestSite", institutename = self.names["institute"],type_="not specified")
@@ -136,7 +151,13 @@ class integrationTest:
         assert bool(response), "error updating site"
         self.logFile.write(str(response) + ' \n')
 
-        
+        #Get all sites
+        self.logFile.write('-Get all sites- \n')
+        response = self.inst.get_all_institutes()
+        assert str(response).lower().find('error')==-1, "Error getting all sites: "+str(response)
+        assert bool(response), "error getting all sites"
+        self.logFile.write(str(response) + " \n")
+
         ## Users
         #Creating a user
         self.logFile.write("-create an User- \n")
@@ -163,7 +184,20 @@ class integrationTest:
         assert bool(response), "Error changing password"
         self.logFile.write(str(response) + ' \n')
 
-        
+        #Get all users
+        self.logFile.write('-get all users- \n')
+        response = self.user.get_all_users()
+        assert str(response).lower().find('error')==-1, "Error getting all users: "+str(response)
+        assert bool(response), "Error getting all users"
+        self.logFile.write(str(response) + ' \n')
+
+        #Get Roles
+        self.logFile.write('-get roles- \n')
+        response = self.user.get_roles(userid=self.ID['user'])
+        assert str(response).lower().find('error')==-1, "Error getting roles: "+str(response)
+        self.logFile.write(str(response) + ' \n')
+
+       
         ##Collection protocol
         # create collection protocol
         self.logFile.write("-Create Collection protocol- \n")
@@ -172,9 +206,32 @@ class integrationTest:
         assert str(response).lower().find('error')==-1, "Error creating Colelction protocol: "+str(response)
         assert bool(response), "Error creating Colelction protocol"
         self.logFile.write(str(response) + ' \n')
+
+        # create collection protocol
+        self.logFile.write("-Create Collection protocol- \n")
+        self.names['CP2']="IntegrationTestCP2"
+        response = self.cp_util.create_cp(short_title = "IntTestCP2", title = self.names['CP2'], pi_mail = "admin", sites = [self.names["site"]])
+        assert str(response).lower().find('error')==-1, "Error creating Colelction protocol: "+str(response)
+        assert bool(response), "Error creating Colelction protocol"
+        self.logFile.write(str(response) + ' \n')
+        self.ID['CP2']=response['id']
+
+        #merge Collection protocols
+        self.logFile.write('-Merge Colletion Protocol- \n')
+        response = self.cp_util.merge_cps(src_cp = "IntTestCP2", trg_cp ="IntTestCP")
+        assert str(response).lower().find('error')==-1, "Error merging Colelction protocols: "+str(response)
+        assert bool(response), "Error merging Colelction protocols"
+        self.logFile.write(str(response) + ' \n')
+
+        #getting all Collection Protocols
+        self.logFile.write('-Getting all Collection protocols- \n')
+        response = self.cp.get_all_collection_protocols()
+        assert str(response).lower().find('error')==-1, "Error getting all Collection protocols: "+str(response)
+        assert bool(response), "Error getting all Colelction protocols"
+        self.logFile.write(str(response) + ' \n')
         
         #search cp
-        self.logFile.write("-Search CPS- \n")
+        self.logFile.write("-Search CP- \n")
         response = self.cp_util.search_cps(title=self.names['CP'])
         assert str(response).lower().find('error')==-1, "Error searching for a Collection protocol: "+str(response)
         assert bool(response), "Error searching for a Collection protocol"
@@ -189,31 +246,66 @@ class integrationTest:
         assert bool(response), "Error updating CP"
         self.logFile.write(str(response)+ ' \n')
 
+        #assign roles
+        self.logFile.write('-assign role- \n')
+        response = self.user_util.assign_role(userid = self.ID['user'], siteid = self.ID['site'], cpid = self.ID['CP'], role = 'Technician')
+        assert str(response).lower().find('error')==-1, "Error assigning role: "+str(response)
+        assert bool(response), "Error assigning role"
+        self.logFile.write(str(response)+ ' \n')
 
         ##Collection Protocol Registration
         #Create a Registration
         self.logFile.write('-Create Registration- \n')
-        response = self.cpr_util.create_registration(regdate = "2021-02-24", cpid = self.ID['CP'], ppid = "IntegrationTestPPID")
+        response = self.cpr_util.create_registration(regdate = "2021-02-24", cpid = self.ID['CP'], ppid = "IntegrationTestPPID",lastname = "Sepp")
         assert str(response).lower().find('error')==-1, "Error creating Participant: "+str(response)
         assert bool(response), "Error creating Participant"
         self.ID['cpr']=response['id']
+        self.ID['part']=response['participant']['id']
         self.logFile.write(str(response)+ ' \n')
 
         #Update a Registration
         self.logFile.write('-Update Registration- \n')
         self.ID['ppid']="IntegrationTestPPID1"
-        response = self.cpr_util.update_registration(cprid= self.ID['cpr'], regdate = "2021-02-24", cpid = self.ID['CP'], ppid = self.ID['ppid'])
+        response = self.cpr_util.update_registration(cprid= self.ID['cpr'], id_=self.ID['part'],regdate = "2021-02-24", cpid = self.ID['CP'],
+                         ppid = self.ID['ppid'],lastname = "Sepp")
         assert str(response).lower().find('error')==-1, "Error updating Participant: "+str(response)
         assert bool(response), "Error updating Participant"
         self.logFile.write(str(response)+ ' \n')
 
         #Get Participant
-        self.logFile.write('-Get Participant via PPID- \n')
-        response = self.part.get_participant(ppid = self.ID['ppid'])
+        self.logFile.write('-Get Participant via CPRID- \n')
+        response = self.part.get_participant(ppid = self.ID['part'])
         assert str(response).lower().find('error')==-1, "Error getting Participant: "+str(response)
         assert bool(response), "Error getting Participant"
         self.logFile.write(str(response)+ ' \n')
 
+        #Register to CP
+        self.logFile.write('-Register Participant to protocol- \n')
+        response = self.cpr_util.register_to_cp(cprid =self.ID['part'], regdate = "2021-03-02", cpid = self.ID['CP2'], ppid = self.ID['ppid'])
+        assert str(response).lower().find('error')==-1, "Error register Participant to another CP: "+str(response)
+        assert bool(response), "Error register Participant to another CP"
+        self.logFile.write(str(response)+ ' \n')
+        self.ID['cpr2']=response['id']
+
+        #Get Participants
+        self.logFile.write('-Getting Participants- \n')
+        response = self.cpr_util.get_participants(lastname="Sepp")
+        assert str(response).lower().find('error')==-1, "Error getting participants: "+str(response)
+        self.logFile.write(str(response)+ ' \n')
+
+        #merge Pariticipants
+        self.logFile.write('-Merge participants')
+        response = self.cpr.merge_participants(id_from = self.ID['cpr2'], id_to = self.ID['cpr'])
+        assert str(response).lower().find('error')==-1, "Error merging Participants: "+str(response)
+        assert bool(response), "Error merging Participants"
+        self.logFile.write(str(response)+ ' \n')
+
+        #get regisrtations
+        self.logFile.write('-get registrations')
+        response = self.cpr_util.get_registrations(cpid = self.ID['CP'])
+        assert str(response).lower().find('error')==-1, "Error getting registrations: "+str(response)
+        assert bool(response), "Error getting registrations"
+        self.logFile.write(str(response)+ ' \n')
         
         ## Events
         #Create an Event
@@ -247,11 +339,24 @@ class integrationTest:
         self.ID['visit']=response['id']
         self.logFile.write(str(response)+ ' \n')
 
+        #searchvisits
+        self.logFile.write('-search for visits- \n')
+        response = self.vis_util.search_visit_namespr(visitname = self.names['visit'])
+        assert str(response).lower().find('error')==-1, "Error searching for a Visit: "+str(response)
+        self.logFile.write(str(response)+ ' \n')
+
         #Get visit with cprID
         self.logFile.write('- Get visit by CPRID- \n')
         response = self.vis_util.search_visit_cprid(cprid = self.ID['cpr'])
         assert str(response).lower().find('error')==-1, "Error getting visit: "+str(response)
         assert bool(response), "Error getting visit"
+        self.logFile.write(str(response)+ ' \n')
+        
+        #Get all events
+        self.logFile.write('-Get all Events- \n')
+        response = self.cpe.get_all_events(cpid=self.ID['CP'])
+        assert str(response).lower().find('error')==-1, "Error getting all Events: "+str(response)
+        assert bool(response), "Error getting all events"
         self.logFile.write(str(response)+ ' \n')
 
         #Update a Visit
@@ -303,6 +408,13 @@ class integrationTest:
                  colltime = '2021-03-01', rectime = '2021-03-01')
         assert str(response).lower().find('error')==-1, "Error updating Specimen: "+str(response)
         assert bool(response), "Error updating Specimen"
+        self.logFile.write(str(response) + ' \n')
+
+        #search Specimens
+        self.logFile.write('Search Specimens- \n')
+        response = self.spec_util.search_specimens(label=self.names['speci'])
+        assert str(response).lower().find('error')==-1, "Error searching for a Specimen: "+str(response)
+        assert bool(response), "Error searching for a Specimen"
         self.logFile.write(str(response) + ' \n')
 
         #Queries
@@ -477,10 +589,14 @@ class integrationTest:
             self.vis.delete_visit(visitid = self.ID['visit'])
         if 'event' in self.ID.keys():
             self.cpe.delete_event(eventid = self.ID['event'])
+        if 'cpr2' in self.ID.keys():
+            self.cpr.delete_participant(cprid = self.ID['cpr2'])
         if 'cpr' in self.ID.keys():
             self.cpr.delete_participant(cprid = self.ID["cpr"])
         if 'CP' in self.ID.keys():
             self.cp.delete_collection_protocol(cpid = self.ID['CP'])
+        if 'CP2' in self.ID.keys():
+            self.cp.delete_collection_protocol(cpid = self.ID['CP2'])
         if 'user' in self.ID.keys():
             self.user.delete_user(userid = self.ID['user'])
         if 'site' in self.ID.keys():

@@ -3,6 +3,7 @@
 #Import
 from .req_util import OS_request_gen
 from .. import config_manager
+import pandas as pd
 
 import json
 
@@ -73,7 +74,7 @@ class sites():
 
         site_template_endpoint = "/import-jobs/input-file-template?schema=site"
         site_template_url = self.base_url + site_template_endpoint
-        r = self.Req_Fac.get_request(site_template_url)
+        r = self.OS_request_gen.get_request(site_template_url)
         site_pandas_template = pd.DataFrame(columns=[r.content.decode()])
 
         return site_pandas_template

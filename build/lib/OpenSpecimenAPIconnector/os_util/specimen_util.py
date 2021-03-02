@@ -91,7 +91,7 @@ class specimen_util:
             Details of the matching Specimens, if no one matches it is an empty list.
         """
 
-        search_string = self.url.search_specimen(self, label = label, cprid = cprid, eventid = eventid, visitid = visitid,
+        search_string = self.url.search_specimen(label = label, cprid = cprid, eventid = eventid, visitid = visitid,
                                              maxres = maxres, exact = exact, extension = extension)
         r = self.specimen.search_specimens(search_string = search_string)
 

@@ -39,7 +39,7 @@ class Json_factory():
     def create_participant_json(self, regdate = None, id_ = None, cpid = None, cptitle = None, 
                         cpshorttitle =None, ppid = None, firstname = None, middlename = None, 
                         lastname = None, uid = None, birthdate = None, vitalstatus = None, 
-                        deathdate = None, gender = None, race = None, ethnicities = None, 
+                        deathdate = None, gender = None, race = None, ethnicities = None, cprid=None,
                         sexgenotype = None, pmis = None, mrn = None, sitename = None, empi =None):
 
         """Creates a JSON-formated string for participant creation
@@ -970,34 +970,40 @@ class Json_factory():
             JSON-formated string neccesary for creating an institute
         """
 
+        
         data ={
             "lastName" : lastname,
-            "pmi":{
-                "mrn" : str(pmi[0]),
-                "siteName" : pmi[1]
-            },
             "birthDate" : birthdate,
             "uid" : uid,
             "empi" : empi,
             "reqRegInfo" : reqreginfo
         }
+        if pmi==None:
+            data['pmi']=None
+        else:
+            data["pmi"]={
+                "mrn" : str(pmi[0]),
+                "siteName" : pmi[1]
+            }
+
+        data = {k: v for k, v in data.items() if v is not None}
         
         return json.dumps(data)
 
 
     def create_site(self, name = None, institutename = None, type_ = None, coordinators = None, address = None):
         
-            data = {
-                "name" : name,
-                "instituteName" : institutename,
-                "coordinators" : coordinators,
-                "type" : type_,
-                "address" : address
-            }
+        data = {
+            "name" : name,
+            "instituteName" : institutename,
+            "coordinators" : coordinators,
+            "type" : type_,
+            "address" : address
+        }
 
-            data = {k: v for k, v in data.items() if v is not None}
+        data = {k: v for k, v in data.items() if v is not None}
 
-            return json.dumps(data)
+        return json.dumps(data)
 
     def create_user_json(self, first = None, last = None, email = None, phone = None, login = None, institute = None,
                         type_ = None, address = None, domain = None):
@@ -1027,5 +1033,26 @@ class Json_factory():
         }
 
         data = {k: v for k, v in data.items() if v is not None}
+
+        return json.dumps(data)
+
+    def assign_user_role_json(self, siteid, cpid, role):
+
+        data = {
+            "site":{"id":siteid},
+            "collectionProtocol":{"id":cpid},
+            "role":{"name":role}
+        }
+
+        return json.dumps(data)
+
+    def register_to_cp(self, cprid, regdate, cpid, ppid):
+
+        data = {
+            "participant":{"id":cprid},
+            "registrationDate":regdate,
+            "cpId":cpid,
+            "ppid":ppid
+        }
 
         return json.dumps(data)
