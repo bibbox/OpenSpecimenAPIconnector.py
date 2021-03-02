@@ -328,7 +328,7 @@ class visit_util:
             "specimens":[speci]}
 
         params=json.dumps(params)
-        print(params)
+        
         r = self.visit.add_visit_specimen(params)
 
         return r

@@ -400,7 +400,7 @@ class Json_factory():
             JSON-formated-string with the complete specimen to be created
         """
 
-        spec = {
+        data = {
             "label": label,
             "specimenClass": specimenclass,
             "type": specimentype,
@@ -428,8 +428,10 @@ class Json_factory():
             },
             "extensionDetail": extension
             }
+        
+        data = {k: v for k, v in data.items() if v is not None}
 
-        return json.dumps(spec)
+        return json.dumps(data)
 
     def create_extension(self, attrsmap, extensiondict, useudn="false"):
 
