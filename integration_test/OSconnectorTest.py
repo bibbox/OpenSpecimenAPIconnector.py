@@ -120,14 +120,6 @@ class integrationTest:
         
 
         ## Sites
-        #Get Template
-        self.logFile.write('-Get pandas template- \n')
-        response = self.site.get_site_pandas_template()
-        response = str(response)
-        assert str(response).lower().find('error')==-1, "Error getting pandas template for sites: "+str(response)
-        assert bool(response), "error getting all pandas template for sites"
-        self.logFile.write(str(response) + " \n")
-        
         # Create a Site
         self.logFile.write("-Creating a Site- \n")
         response = self.site_util.create_sites(name = "IntegrationTestSite", institutename = self.names["institute"],type_="not specified")
