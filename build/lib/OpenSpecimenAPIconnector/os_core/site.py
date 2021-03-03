@@ -59,27 +59,6 @@ class sites():
         print(self.base_url, self.OS_request_gen.auth)
 
 
-    def get_site_pandas_template(self):
-        
-        """Get the template for sites
-        
-        Get the template for creating sites as empty pandas dataframe, where the OpenSpecimen keys
-        for sites are the header. 
-
-        Returns
-        -------
-        pandas dataframe
-            Empty pandas dataframe, with the OpenSpecimen keys of the sites as header.
-        """
-
-        site_template_endpoint = "/import-jobs/input-file-template?schema=site"
-        site_template_url = self.base_url + site_template_endpoint
-        r = self.OS_request_gen.get_request(site_template_url)
-        site_pandas_template = pd.DataFrame(columns=[r.content.decode()])
-
-        return site_pandas_template
-
-
     def create_sites(self, params):
         
         """Create a site in OpenSpecimen
