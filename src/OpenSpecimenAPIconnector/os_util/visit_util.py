@@ -148,7 +148,7 @@ class visit_util:
                         cpid = None, diagnosis=None, clinicalstatus=None, activity=None, visitstatus=None, missedreason=None,
                         missedby=None, comments=None, pathologynumber=None, cohort=None, visitdate=None, laterality=None, rec_qlt = None,                        
                         colltime = None, rectime = None, status="Collected", stor_name=None, storlocx =None, storlocy =None, concentration=None, 
-                        biohazrad = None, collproc=None, conttype = None, extensionudn = 'false', extensionmap = None,
+                        biohazrad = None, collproc=None, conttype = None, extensionudn = None, extensionmap = None,
                         extensiondict = None):
 
         """Add a visit and a specimen in one call.
