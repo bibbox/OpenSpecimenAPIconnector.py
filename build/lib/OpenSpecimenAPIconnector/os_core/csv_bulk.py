@@ -73,17 +73,26 @@ class csv_bulk:
         -------
         pandas core dataframe
             Empty dataframe with OpenSpecimen's keys to the corresponding schema.
+        data binary csv file
+            The raw csv file 
         """
+
+        schemes = ["cp", "specimen", "cpr", "user", "userRoles", "site", "shipment",
+            "institute", "dpRequirement", "distributionProtocol", "distributionOrder", "storageContainer", "storageContainerType",
+            "containerShipment", "cpe", "masterSpecimen", "participant", "sr", "visit", "specimenAliquot", "specimenDerivative",
+            "specimenDisposal", "consent"]
+       
+        assert schemaname in schemes, "Non permissible schema please check documentation for permissible values"
 
         endpoint = '/input-file-template?schema=' + str(schemaname)
         url = self.base_url + endpoint
 
         r = self.OS_request_gen.get_request(url)
-
+    
         data = io.StringIO(r.text)
         ret_val = pandas.read_csv(data, sep=",",encoding='UTF-8', engine='python')
-
-        return ret_val
+       
+        return ret_val, data
 
 
 
@@ -160,10 +169,10 @@ class csv_bulk:
         """
 
         url = self.base_url
-        payload = self.Json_fact.create_cpr_part_import_job(schemaname=schemaname, operation=operation, fileid=fileid,
+        payload = self.Json_fact.create_bulk_import_job(schemaname=schemaname, operation=operation, fileid=fileid,
                                                             dateformat=dateformat, timeformat=timeformat)
         r = self.OS_request_gen.post_request(url, data=payload)
-
+        print(r.text)
         return (json.loads(r.text)["id"], r.text)
 
 

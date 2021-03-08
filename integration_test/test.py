@@ -1,4 +1,4 @@
-#! /bin/python3
+#! ~/simon/anaconda3/envs/py39/bin/python3
 from OSconnectorTest import integrationTest
 
 

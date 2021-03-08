@@ -36,8 +36,10 @@ class integrationTest:
         self.auth = auth
         
         # create paths for log, csv-template file checkups
-        self.base_path = Path(os.getcwd() + "/integration_test/")
+        p = Path(__file__)
+        self.base_path = p.resolve().parent
         self.log_path = self.base_path.joinpath(logpath)
+        print(self.log_path.absolute())
         self.csv_template_path = self.base_path.joinpath("csv/template")
         if not self.csv_template_path.is_dir():
             self.csv_template_path.mkdir(parents=True, exist_ok=True)
@@ -53,6 +55,9 @@ class integrationTest:
         # Set Login 
         OSconn.config_manager.set_login(url = base_url, auth = auth)
         
+        # Json/pandas template class 
+        self.json_template = os_core.Json_factory()
+
         # Institute API
         self.inst = os_core.institutes()
         self.inst_util = os_util.institutes_util()
@@ -120,7 +125,7 @@ class integrationTest:
             "specimenDisposal", "consent"]
         
         for scheme in schemes:
-            csv_pandas, csv_raw = self.csv_core_import.get_template(scheme)
+            pandas, csv_raw = self.csv_core_import.get_template(scheme)
             print(scheme)
             with open(self.csv_template_path.joinpath("{}_template.csv".format(scheme)), "w") as f:
                 csv_raw.seek(0)
@@ -142,83 +147,111 @@ class integrationTest:
             self.logFile.write("-Error fetching templates- \n" + str(error) + "\n")
             raise AssertionError("-Error fetching templates- \n" + str(error) + "\n") 
         self.logFile.write("-Fetching templates complete- \n")
-    
-        input()
 
         ## Hierarchially ordered
         #######################################################################################################
         ########################### C R E A T I N G / U P D A T I N G #########################################
         #######################################################################################################
         # Institutes
+        
         # First Create an Institute
         self.logFile.write("-Creating an Institute- \n")
         response = self.inst_util.create_institute(institutename = "IntegrationTestInstitute")
         assert str(response).lower().find('error')==-1, "Error creating institute: "+str(response)
-        assert bool(response), "error creating institute"
+        assert bool(response), "Error creating institute"
         self.logFile.write(str(response)+ " \n")
 
         # Searching for an institute by name
         self.logFile.write("-Search for an Institute via Substring- \n")
         response = self.inst.search_institutes(substring = "IntegrationTestInstitute")
         assert str(response).lower().find('error')==-1, "Error searchin for an institute: "+str(response)
-        assert bool(response), "error searchin for an institute"
+        assert bool(response), "Error searchin for an institute"
         self.logFile.write(str(response) + " \n")
         self.ID['institute'] = response[0]["id"]
+
+        # Updating an institute
+        self.logFile.write("-Updating an Institute- \n")
+        self.names['institute']= "IntegrationTestInstitute1"
+        params = self.jsons.create_institute(institutename = self.names['institute'])
+        response = self.inst.update_institute(inid = self.ID['institute'], params = params)
+        assert str(response).lower().find('error')==-1, "Error updating an institute: "+str(response)
+        assert bool(response), "error updating an institute"
+        self.logFile.write(str(response) + " \n")
 
         # delete Institute
         self.logFile.write("- Delete Institute- \n")
         response = self.inst.delete_institute(inid = self.ID['institute'])
-        assert str(response).lower().find('error')==-1, "Error deleting Site: "+str(response)
+        assert str(response).lower().find('error')==-1, "Error deleting Institute: "+str(response)
+        assert bool(response), "Error deleting Institute"
+        self.logFile.write(str(response)+ ' \n')
+        
+        # Create an Institute by CSV
+        csv = self.json_template.create_institute(institutename = "IntegrationTestInstitute", get_csv=True)
+        response = self.csv_util_import.bulk_import(csv, filename="integration_test.csv", schemaname="institute", operation="CREATE")
+        assert str(response).lower().find('error')==-1, "Error creating Institute by CSV: "+str(response)
+        assert bool(response), "Error creating institute by CSV"
+        self.logFile.write(str(response)+ " \n")
+        
+        # Updating an institute via CSV
+        self.logFile.write("-Updating an Institute- \n")
+        csv = self.json_template.create_institute(institutename = self.names['institute'], get_csv=True)
+        response = self.csv_util_import.bulk_import(csv, filename="integration_test.csv", schemaname="institute", operation="UPDATE")
+        assert str(response).lower().find('error')==-1, "Error institute institute via CSV: "+str(response)
+        assert bool(response), "Error updating an Institute by CSV"
+        self.logFile.write(str(response)+ " \n")
+
+        # Delete Institute
+        self.logFile.write("- Delete Institute- \n")
+        response = self.inst.delete_institute(inid = self.ID['institute'])
+        assert str(response).lower().find('error')==-1, "Error deleting Institute: "+str(response)
         assert bool(response), "Error deleting Institute"
         self.logFile.write(str(response)+ ' \n')
 
-        # create an by Institute CSV
-        # #Updating and institute
-        # self.logFile.write("-Updating an Institute- \n")
-        # self.names['institute']= "IntegrationTestInstitute1"
-        # params = self.jsons.create_institute(institutename = self.names['institute'])
-        # response = self.inst.update_institute(inid = self.ID['institute'], params = params)
-        # assert str(response).lower().find('error')==-1, "Error updating an institute: "+str(response)
-        # assert bool(response), "error updating an institute"
-        # self.logFile.write(str(response) + " \n")
+        #Get all institutes
+        self.logFile.write('-Get all institutes- \n')
+        response = self.inst.get_all_institutes()
+        assert str(response).lower().find('error')==-1, "Error getting all institutes: "+str(response)
+        assert bool(response), "error getting all institutes"
+        self.logFile.write(str(response) + " \n")
         
-        # #Get all institutes
-        # self.logFile.write('-Get all institutes- \n')
-        # response = self.inst.get_all_institutes()
-        # assert str(response).lower().find('error')==-1, "Error getting all institutes: "+str(response)
-        # assert bool(response), "error getting all institutes"
-        # self.logFile.write(str(response) + " \n")
-        
-        # ## Sites
-        # # Create a Site
-        # self.logFile.write("-Creating a Site- \n")
-        # response = self.site_util.create_sites(name = "IntegrationTestSite", institutename = self.names["institute"],type_="not specified")
-        # assert str(response).lower().find('error')==-1, "Error creating a site: "+str(response)
-        # assert bool(response), " error creating a site"
-        # self.logFile.write(str(response) + ' \n')
+        ## Sites
+        # Create a Site
+        self.logFile.write("-Creating a Site- \n")
+        response = self.site_util.create_sites(name = "IntegrationTestSite", institutename = self.names["institute"],type_="not specified")
+        assert str(response).lower().find('error')==-1, "Error creating a site: "+str(response)
+        assert bool(response), " error creating a site"
+        self.logFile.write(str(response) + ' \n')
 
-        # #Search a site by attributes
-        # self.logFile.write("-Searching for a site- \n")
-        # response = self.site_util.search_sites(sitename ="IntegrationTestSite")
-        # assert str(response).lower().find('error')==-1, "Error searching for sites by attributes: "+str(response)
-        # assert  bool(response), "error searching for sites by attributes"
-        # self.ID['site'] = response[0]['id']
-        # self.logFile.write(str(response)+ ' \n')
+        #delete site
+        self.logFile.write("-Delete Site- \n")
+        response = self.site.delete_sites(siid = self.ID['site'])
+        assert str(response).lower().find('error')==-1, "Error deleting Site: "+str(response)
+        assert bool(response), "Error deleting Site"
+        self.logFile.write(str(response) + " \n")
 
-        # #Updating a site
-        # self.logFile.write("-Updating a site- \n")
-        # self.names["site"] = "IntegrationTestSite1"
-        # response = self.site_util.update_sites(siteid = self.ID["site"], name = self.names['site'], institutename=self.names['institute'], type_='not specified')
-        # assert str(response).lower().find('error')==-1, "Error updating site: "+str(response)
-        # assert bool(response), "error updating site"
-        # self.logFile.write(str(response) + ' \n')
 
-        # #Get all sites
-        # self.logFile.write('-Get all sites- \n')
-        # response = self.inst.get_all_institutes()
-        # assert str(response).lower().find('error')==-1, "Error getting all sites: "+str(response)
-        # assert bool(response), "error getting all sites"
-        # self.logFile.write(str(response) + " \n")
+        #Search a site by attributes
+        self.logFile.write("-Searching for a site- \n")
+        response = self.site_util.search_sites(sitename ="IntegrationTestSite")
+        assert str(response).lower().find('error')==-1, "Error searching for sites by attributes: "+str(response)
+        assert  bool(response), "error searching for sites by attributes"
+        self.ID['site'] = response[0]['id']
+        self.logFile.write(str(response)+ ' \n')
+
+        #Updating a site
+        self.logFile.write("-Updating a site- \n")
+        self.names["site"] = "IntegrationTestSite1"
+        response = self.site_util.update_sites(siteid = self.ID["site"], name = self.names['site'], institutename=self.names['institute'], type_='not specified')
+        assert str(response).lower().find('error')==-1, "Error updating site: "+str(response)
+        assert bool(response), "error updating site"
+        self.logFile.write(str(response) + ' \n')
+
+        #Get all sites
+        self.logFile.write('-Get all sites- \n')
+        response = self.inst.get_all_institutes()
+        assert str(response).lower().find('error')==-1, "Error getting all sites: "+str(response)
+        assert bool(response), "error getting all sites"
+        self.logFile.write(str(response) + " \n")
 
         # ## Users
         # #Creating a user

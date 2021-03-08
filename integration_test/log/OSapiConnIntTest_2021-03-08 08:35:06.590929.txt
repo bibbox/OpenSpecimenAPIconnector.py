@@ -1,0 +1,10 @@
+-Fetching templates- 
+-Fetching templates complete- 
+-Creating an Institute- 
+[{'code': 'INSTITUTE_DUP_NAME', 'message': 'Institute with same name already exists.'}] 
+-Search for an Institute via Substring- 
+[{'id': 18, 'name': 'IntegrationTestInstitute', 'activityStatus': 'Active', 'usersCount': 0}] 
+-Updating an Institute- 
+{'id': 18, 'name': 'IntegrationTestInstitute1', 'activityStatus': 'Active', 'usersCount': 0} 
+- Delete Institute- 
+{'id': 18, 'name': 'IntegrationTestInstitute1_1615188909568', 'activityStatus': 'Disabled', 'usersCount': 0} 

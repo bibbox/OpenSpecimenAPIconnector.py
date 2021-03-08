@@ -1,22 +1,8 @@
-import requests
 import json
-import pickle
-import json
-import requests
-import uuid
-import faker
-from faker import Factory
-import names
-import random
-import time
-import datetime
 from datetime import date
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-
-from datetime import date
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
+import pandas as pd
 
 
 
@@ -26,14 +12,13 @@ class Json_factory():
     def __init__(self):
         pass
 
+    ## first approach to be overhauled
     ##TODO Decide upon way of json creation/storage for OS operations, the current idea is to set mandatory values to
     ## boolean true by default. than a random generator can create the values in fixed order and they can be set
     ## according to the boolean. Even better would be the restriction to use pandas data frames directly and create the
     ## json once data entry is done. Another important question is how to deal with custom value fields in various cases.
     ## Further, where possible, the csv import option should be used and json creation should be left to the numerous
     ## methods within Open Specimen
-    ## first approach to be overhauled
-
     # creation jsons:
     # participant
     def create_participant_json(self, regdate = None, id_ = None, cpid = None, cptitle = None, 
@@ -923,7 +908,7 @@ class Json_factory():
 
         return json.dumps(data)
 
-    def create_institute(self, institutename):
+    def create_institute(self, institutename, get_csv = False):
         """Create JSON-formatted string to neccesary to retrieve storage location via API 
 
         Parameters
@@ -940,8 +925,10 @@ class Json_factory():
         data = {
             "name": institutename
         }
-
-        return json.dumps(data)
+        if get_csv:
+            return pd.DataFrame(data, index=[0]).to_csv(index=False)
+        else:
+            return json.dumps(data)
 
     def get_participants(self, lastname = None, uid = None, birthdate = None, pmi = None, empi = None, reqreginfo = None):
 
@@ -994,7 +981,7 @@ class Json_factory():
         return json.dumps(data)
 
 
-    def create_site(self, name = None, institutename = None, type_ = None, coordinators = None, address = None):
+    def create_site(self, name = None, institutename = None, type_ = None, coordinators = None, address = None, get_csv=False):
 
         """Create a Site
 
@@ -1028,8 +1015,11 @@ class Json_factory():
         }
 
         data = {k: v for k, v in data.items() if v is not None}
-
-        return json.dumps(data)
+        if get_csv:
+            return pd.DataFrame(data, index=[0]).to_csv(index=False)
+        else:    
+            return json.dumps(data)
+        
 
     def create_user_json(self, first = None, last = None, email = None, phone = None, login = None, institute = None,
                         type_ = None, address = None, domain = None):
