@@ -26,20 +26,197 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">#Create User
+<pre><code class="python">#! /bin/python3
 
-#payload = &#34;{\&#34;dnd\&#34;:&#34;+dnd+&#34;,\&#34;domainName\&#34;:\&#34;&#34;+domainname+&#34;\&#34;,\&#34;instituteName\&#34;:\&#34;&#34;+institutename+&#34;\&#34;,\&#34;type\&#34;:\&#34;&#34;+type +\
-#            &#34;\&#34;,\&#34;firstName\&#34;:\&#34;&#34;+firstname+&#34;\&#34;,\&#34;lastName\&#34;:\&#34;&#34;+lastname+&#34;\&#34;,\&#34;emailAddress\&#34;:\&#34;&#34;+emailaddress +\
-#            &#34;\&#34;,\&#34;phoneNumber\&#34;:\&#34;&#34;+phonenumber+&#34;\&#34;,\&#34;loginName\&#34;:\&#34;&#34; + \
-#            loginname+&#34;\&#34;,\&#34;address\&#34;:\&#34;&#34;+address+&#34;\&#34;}&#34;
+from ..os_core.users import users
+from ..os_core.jsons import Json_factory
+from ..os_core.url import url_gen
 
-#Create password as superuser
-#payload = &#34;{\&#34;userId\&#34;:\&#34;&#34; + \
-#            str(userId)+&#34;\&#34;,\&#34;newPassword\&#34;:\&#34;&#34;+newPassword+&#34;\&#34;}&#34;
+class user_util:
 
-    #   assign role to users
-#payload = &#34;{\n  \&#34;site\&#34;:{\&#34;id\&#34;:\&#34;&#34;+str(siteid)+&#34;\&#34;},\n  \&#34;collectionProtocol\&#34;:{\&#34;id\&#34;:\&#34;&#34;+str(
-#            cpid)+&#34;\&#34;},\n  \&#34;role\&#34;:{\&#34;name\&#34;:\&#34;&#34;+role+&#34;\&#34;}\n}&#34;    </code></pre>
+    def __init__(self):
+
+        self.users = users()
+        self.jsons = Json_factory()
+        self.urls = url_gen()
+
+    def create_user(self, first, last, email,  login, institute, type_, phone=None, address = None, domain = &#34;openSpecimen&#34;):
+
+        &#34;&#34;&#34;Create a user
+
+        Create a User in OpenSpecimen. This function parses the input to a dict,
+        what OpenSpecimen can understand.
+
+        Parameters
+        ----------
+        first : string
+            Firstname of the User.
+        
+        last : string
+            Lastname of the User.
+
+        email : string
+            Emailaddress of the user.
+
+        phone : string
+            Phonenumber of the user.
+        
+        login : string
+            Loginename of the user, which has to be  unique within the domain.
+
+        institute : string
+            Name of the institute where the user belongs.
+        
+        type_ : string
+            Name of the usertype, defined in the OpenSpecimen distribution.
+        
+        address : string
+            Address of the user. [optional]
+        
+        domain : string
+            Domainname, by default OpenSpecimen.
+        
+        Returns
+        -------
+        dict
+            JSON dict with Details of the created User or the OpenSpecimen&#39;s error message.
+        &#34;&#34;&#34;
+
+        params = self.jsons.create_user_json(first = first, last = last, email = email, phone = phone, login = login,
+                                         institute = institute, type_ = type_, address = address, domain = domain)
+        r = self.users.create_user(params = params)
+
+        return r
+
+    def update_user(self, userid, first, last, email, login, institute, phone = None,
+                    type_ = None, address = None, domain = &#39;openspecimen&#39;):
+
+        &#34;&#34;&#34;Update a user
+
+        Update a User in OpenSpecimen. To use this function one has to know the ID of the user.
+        This can be seen in the GUI if one clicks on the user and reads from the URL which has
+        the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/users/{userid}/... .
+        Or with the function get_all_users and then extract the ID to the wanted user.
+
+        Notes
+        -----
+        For updating, the user has to be identified with its unique id {userid},
+        all the other parameters of the user are optional. If they are not passed
+        to the function, they stay the same.
+
+        Parameters
+        ----------
+        userid : int
+            Unique Id of the user.
+
+        first : string
+            Firstname of the User.
+        
+        last : string
+            Lastname of the User.
+
+        email : string
+            Emailaddress of the user.
+
+        phone : string
+            Phonenumber of the user.
+        
+        login : string
+            Loginename of the user, which has to be unique within the domain.
+
+        institute : string
+            Name of the institute where the user belongs to.
+        
+        type_ : string
+            Name of the usertype, defined in the OpenSpecimen distribution.
+        
+        address : string
+            Address of the user. [optional]
+        
+        domain : string
+            Domainname, by default OpenSpecimen.
+        
+        Returns
+        -------
+        dict
+            JSON dict with Details of the created User or the OpenSpecimen&#39;s error message.
+        &#34;&#34;&#34;
+
+        params = self.jsons.create_user_json(first = first, last = last, email = email, phone = phone, login = login,
+                                         institute = institute, type_ = type_, address = address, domain = domain)
+        r = self.users.update_user(userid = userid, params = params)
+
+        return r
+
+    def assign_role(self, userid, siteid, cpid, role):
+
+        &#34;&#34;&#34;Assign a role to a user
+
+        Assign a role to a user with ID {userid} in OpenSpecimen. To use this function one has to know the ID of 
+        the user, the site, the collection protocol and the name of the role. The user Id can be seen in the
+        GUI, if one clicks on the user and reads from the URL which has the format: 
+        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/users/{userid}/... .
+        Or with the function get_all_users and then extract the ID to the wanted user.
+
+        Parameters
+        ----------
+        userid : int
+            The ID of the user.
+        
+        siteid : int
+            The ID of the site.
+
+        cpid : int
+            The ID of the collection protocol.
+        
+        role : string
+            The name of the role.
+
+        Returns
+        -------
+        dict
+            JSON dict with Details of the Roles of the User with ID userid or the OpenSpecimen&#39;s error message.
+        &#34;&#34;&#34;
+
+        params = self.jsons.assign_user_role_json(siteid = siteid, cpid = cpid, role = role)
+        r = self.users.assign_role(userid = userid, params = params)
+
+        return r
+
+    def change_password(self, userid, newpw, oldpw = None):
+
+        &#34;&#34;&#34;Change the password of a user
+
+        Change the Password of a user. If the API-User is Superadmin, the parameters are userid, newpassword.
+        If the User isn&#39;t the Superadmin, nor the Superadmin changes his own password the parameters are userid,
+        oldpassword, new password.
+
+        Notes
+        -----
+        In the Systemsetting the Superadmin can define the passwords&#39; complexity.
+
+        Parameters
+        ---------
+        userid : int
+            ID of the user, whose password should be changed.
+        
+        newpw : string
+            The  new password of the user.
+
+        oldpw : string
+            The old password of the user, has to be specified if the API user is not the Superadmin or
+            the Superadmin changes his password.
+        
+        Returns
+        -------
+        dict
+            Dict with status code. 200 password updated, 400 invalid Parameters, 500 unknown error.
+        &#34;&#34;&#34;
+
+        params = self.jsons.change_user_pw_json(userid = userid, newpw = newpw, oldpw = oldpw)
+        r = self.users.change_password(params = params)
+
+        return r</code></pre>
 </details>
 </section>
 <section>
@@ -49,6 +226,533 @@
 <section>
 </section>
 <section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="OpenSpecimenAPIconnector.os_util.users_util.user_util"><code class="flex name class">
+<span>class <span class="ident">user_util</span></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class user_util:
+
+    def __init__(self):
+
+        self.users = users()
+        self.jsons = Json_factory()
+        self.urls = url_gen()
+
+    def create_user(self, first, last, email,  login, institute, type_, phone=None, address = None, domain = &#34;openSpecimen&#34;):
+
+        &#34;&#34;&#34;Create a user
+
+        Create a User in OpenSpecimen. This function parses the input to a dict,
+        what OpenSpecimen can understand.
+
+        Parameters
+        ----------
+        first : string
+            Firstname of the User.
+        
+        last : string
+            Lastname of the User.
+
+        email : string
+            Emailaddress of the user.
+
+        phone : string
+            Phonenumber of the user.
+        
+        login : string
+            Loginename of the user, which has to be  unique within the domain.
+
+        institute : string
+            Name of the institute where the user belongs.
+        
+        type_ : string
+            Name of the usertype, defined in the OpenSpecimen distribution.
+        
+        address : string
+            Address of the user. [optional]
+        
+        domain : string
+            Domainname, by default OpenSpecimen.
+        
+        Returns
+        -------
+        dict
+            JSON dict with Details of the created User or the OpenSpecimen&#39;s error message.
+        &#34;&#34;&#34;
+
+        params = self.jsons.create_user_json(first = first, last = last, email = email, phone = phone, login = login,
+                                         institute = institute, type_ = type_, address = address, domain = domain)
+        r = self.users.create_user(params = params)
+
+        return r
+
+    def update_user(self, userid, first, last, email, login, institute, phone = None,
+                    type_ = None, address = None, domain = &#39;openspecimen&#39;):
+
+        &#34;&#34;&#34;Update a user
+
+        Update a User in OpenSpecimen. To use this function one has to know the ID of the user.
+        This can be seen in the GUI if one clicks on the user and reads from the URL which has
+        the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/users/{userid}/... .
+        Or with the function get_all_users and then extract the ID to the wanted user.
+
+        Notes
+        -----
+        For updating, the user has to be identified with its unique id {userid},
+        all the other parameters of the user are optional. If they are not passed
+        to the function, they stay the same.
+
+        Parameters
+        ----------
+        userid : int
+            Unique Id of the user.
+
+        first : string
+            Firstname of the User.
+        
+        last : string
+            Lastname of the User.
+
+        email : string
+            Emailaddress of the user.
+
+        phone : string
+            Phonenumber of the user.
+        
+        login : string
+            Loginename of the user, which has to be unique within the domain.
+
+        institute : string
+            Name of the institute where the user belongs to.
+        
+        type_ : string
+            Name of the usertype, defined in the OpenSpecimen distribution.
+        
+        address : string
+            Address of the user. [optional]
+        
+        domain : string
+            Domainname, by default OpenSpecimen.
+        
+        Returns
+        -------
+        dict
+            JSON dict with Details of the created User or the OpenSpecimen&#39;s error message.
+        &#34;&#34;&#34;
+
+        params = self.jsons.create_user_json(first = first, last = last, email = email, phone = phone, login = login,
+                                         institute = institute, type_ = type_, address = address, domain = domain)
+        r = self.users.update_user(userid = userid, params = params)
+
+        return r
+
+    def assign_role(self, userid, siteid, cpid, role):
+
+        &#34;&#34;&#34;Assign a role to a user
+
+        Assign a role to a user with ID {userid} in OpenSpecimen. To use this function one has to know the ID of 
+        the user, the site, the collection protocol and the name of the role. The user Id can be seen in the
+        GUI, if one clicks on the user and reads from the URL which has the format: 
+        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/users/{userid}/... .
+        Or with the function get_all_users and then extract the ID to the wanted user.
+
+        Parameters
+        ----------
+        userid : int
+            The ID of the user.
+        
+        siteid : int
+            The ID of the site.
+
+        cpid : int
+            The ID of the collection protocol.
+        
+        role : string
+            The name of the role.
+
+        Returns
+        -------
+        dict
+            JSON dict with Details of the Roles of the User with ID userid or the OpenSpecimen&#39;s error message.
+        &#34;&#34;&#34;
+
+        params = self.jsons.assign_user_role_json(siteid = siteid, cpid = cpid, role = role)
+        r = self.users.assign_role(userid = userid, params = params)
+
+        return r
+
+    def change_password(self, userid, newpw, oldpw = None):
+
+        &#34;&#34;&#34;Change the password of a user
+
+        Change the Password of a user. If the API-User is Superadmin, the parameters are userid, newpassword.
+        If the User isn&#39;t the Superadmin, nor the Superadmin changes his own password the parameters are userid,
+        oldpassword, new password.
+
+        Notes
+        -----
+        In the Systemsetting the Superadmin can define the passwords&#39; complexity.
+
+        Parameters
+        ---------
+        userid : int
+            ID of the user, whose password should be changed.
+        
+        newpw : string
+            The  new password of the user.
+
+        oldpw : string
+            The old password of the user, has to be specified if the API user is not the Superadmin or
+            the Superadmin changes his password.
+        
+        Returns
+        -------
+        dict
+            Dict with status code. 200 password updated, 400 invalid Parameters, 500 unknown error.
+        &#34;&#34;&#34;
+
+        params = self.jsons.change_user_pw_json(userid = userid, newpw = newpw, oldpw = oldpw)
+        r = self.users.change_password(params = params)
+
+        return r</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="OpenSpecimenAPIconnector.os_util.users_util.user_util.assign_role"><code class="name flex">
+<span>def <span class="ident">assign_role</span></span>(<span>self, userid, siteid, cpid, role)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Assign a role to a user</p>
+<p>Assign a role to a user with ID {userid} in OpenSpecimen. To use this function one has to know the ID of
+the user, the site, the collection protocol and the name of the role. The user Id can be seen in the
+GUI, if one clicks on the user and reads from the URL which has the format:
+http(s)://<host>:<port>/openspecimen/users/{userid}/&hellip; .
+Or with the function get_all_users and then extract the ID to the wanted user.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>userid</code></strong> :&ensp;<code>int</code></dt>
+<dd>The ID of the user.</dd>
+<dt><strong><code>siteid</code></strong> :&ensp;<code>int</code></dt>
+<dd>The ID of the site.</dd>
+<dt><strong><code>cpid</code></strong> :&ensp;<code>int</code></dt>
+<dd>The ID of the collection protocol.</dd>
+<dt><strong><code>role</code></strong> :&ensp;<code>string</code></dt>
+<dd>The name of the role.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>JSON dict with Details of the Roles of the User with ID userid or the OpenSpecimen's error message.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def assign_role(self, userid, siteid, cpid, role):
+
+    &#34;&#34;&#34;Assign a role to a user
+
+    Assign a role to a user with ID {userid} in OpenSpecimen. To use this function one has to know the ID of 
+    the user, the site, the collection protocol and the name of the role. The user Id can be seen in the
+    GUI, if one clicks on the user and reads from the URL which has the format: 
+    http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/users/{userid}/... .
+    Or with the function get_all_users and then extract the ID to the wanted user.
+
+    Parameters
+    ----------
+    userid : int
+        The ID of the user.
+    
+    siteid : int
+        The ID of the site.
+
+    cpid : int
+        The ID of the collection protocol.
+    
+    role : string
+        The name of the role.
+
+    Returns
+    -------
+    dict
+        JSON dict with Details of the Roles of the User with ID userid or the OpenSpecimen&#39;s error message.
+    &#34;&#34;&#34;
+
+    params = self.jsons.assign_user_role_json(siteid = siteid, cpid = cpid, role = role)
+    r = self.users.assign_role(userid = userid, params = params)
+
+    return r</code></pre>
+</details>
+</dd>
+<dt id="OpenSpecimenAPIconnector.os_util.users_util.user_util.change_password"><code class="name flex">
+<span>def <span class="ident">change_password</span></span>(<span>self, userid, newpw, oldpw=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Change the password of a user</p>
+<p>Change the Password of a user. If the API-User is Superadmin, the parameters are userid, newpassword.
+If the User isn't the Superadmin, nor the Superadmin changes his own password the parameters are userid,
+oldpassword, new password.</p>
+<h2 id="notes">Notes</h2>
+<p>In the Systemsetting the Superadmin can define the passwords' complexity.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>userid</code></strong> :&ensp;<code>int</code></dt>
+<dd>ID of the user, whose password should be changed.</dd>
+<dt><strong><code>newpw</code></strong> :&ensp;<code>string</code></dt>
+<dd>The
+new password of the user.</dd>
+<dt><strong><code>oldpw</code></strong> :&ensp;<code>string</code></dt>
+<dd>The old password of the user, has to be specified if the API user is not the Superadmin or
+the Superadmin changes his password.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>Dict with status code. 200 password updated, 400 invalid Parameters, 500 unknown error.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def change_password(self, userid, newpw, oldpw = None):
+
+    &#34;&#34;&#34;Change the password of a user
+
+    Change the Password of a user. If the API-User is Superadmin, the parameters are userid, newpassword.
+    If the User isn&#39;t the Superadmin, nor the Superadmin changes his own password the parameters are userid,
+    oldpassword, new password.
+
+    Notes
+    -----
+    In the Systemsetting the Superadmin can define the passwords&#39; complexity.
+
+    Parameters
+    ---------
+    userid : int
+        ID of the user, whose password should be changed.
+    
+    newpw : string
+        The  new password of the user.
+
+    oldpw : string
+        The old password of the user, has to be specified if the API user is not the Superadmin or
+        the Superadmin changes his password.
+    
+    Returns
+    -------
+    dict
+        Dict with status code. 200 password updated, 400 invalid Parameters, 500 unknown error.
+    &#34;&#34;&#34;
+
+    params = self.jsons.change_user_pw_json(userid = userid, newpw = newpw, oldpw = oldpw)
+    r = self.users.change_password(params = params)
+
+    return r</code></pre>
+</details>
+</dd>
+<dt id="OpenSpecimenAPIconnector.os_util.users_util.user_util.create_user"><code class="name flex">
+<span>def <span class="ident">create_user</span></span>(<span>self, first, last, email, login, institute, type_, phone=None, address=None, domain='openSpecimen')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create a user</p>
+<p>Create a User in OpenSpecimen. This function parses the input to a dict,
+what OpenSpecimen can understand.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>first</code></strong> :&ensp;<code>string</code></dt>
+<dd>Firstname of the User.</dd>
+<dt><strong><code>last</code></strong> :&ensp;<code>string</code></dt>
+<dd>Lastname of the User.</dd>
+<dt><strong><code>email</code></strong> :&ensp;<code>string</code></dt>
+<dd>Emailaddress of the user.</dd>
+<dt><strong><code>phone</code></strong> :&ensp;<code>string</code></dt>
+<dd>Phonenumber of the user.</dd>
+<dt><strong><code>login</code></strong> :&ensp;<code>string</code></dt>
+<dd>Loginename of the user, which has to be
+unique within the domain.</dd>
+<dt><strong><code>institute</code></strong> :&ensp;<code>string</code></dt>
+<dd>Name of the institute where the user belongs.</dd>
+<dt><strong><code>type_</code></strong> :&ensp;<code>string</code></dt>
+<dd>Name of the usertype, defined in the OpenSpecimen distribution.</dd>
+<dt><strong><code>address</code></strong> :&ensp;<code>string</code></dt>
+<dd>Address of the user. [optional]</dd>
+<dt><strong><code>domain</code></strong> :&ensp;<code>string</code></dt>
+<dd>Domainname, by default OpenSpecimen.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>JSON dict with Details of the created User or the OpenSpecimen's error message.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_user(self, first, last, email,  login, institute, type_, phone=None, address = None, domain = &#34;openSpecimen&#34;):
+
+    &#34;&#34;&#34;Create a user
+
+    Create a User in OpenSpecimen. This function parses the input to a dict,
+    what OpenSpecimen can understand.
+
+    Parameters
+    ----------
+    first : string
+        Firstname of the User.
+    
+    last : string
+        Lastname of the User.
+
+    email : string
+        Emailaddress of the user.
+
+    phone : string
+        Phonenumber of the user.
+    
+    login : string
+        Loginename of the user, which has to be  unique within the domain.
+
+    institute : string
+        Name of the institute where the user belongs.
+    
+    type_ : string
+        Name of the usertype, defined in the OpenSpecimen distribution.
+    
+    address : string
+        Address of the user. [optional]
+    
+    domain : string
+        Domainname, by default OpenSpecimen.
+    
+    Returns
+    -------
+    dict
+        JSON dict with Details of the created User or the OpenSpecimen&#39;s error message.
+    &#34;&#34;&#34;
+
+    params = self.jsons.create_user_json(first = first, last = last, email = email, phone = phone, login = login,
+                                     institute = institute, type_ = type_, address = address, domain = domain)
+    r = self.users.create_user(params = params)
+
+    return r</code></pre>
+</details>
+</dd>
+<dt id="OpenSpecimenAPIconnector.os_util.users_util.user_util.update_user"><code class="name flex">
+<span>def <span class="ident">update_user</span></span>(<span>self, userid, first, last, email, login, institute, phone=None, type_=None, address=None, domain='openspecimen')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Update a user</p>
+<p>Update a User in OpenSpecimen. To use this function one has to know the ID of the user.
+This can be seen in the GUI if one clicks on the user and reads from the URL which has
+the format: http(s)://<host>:<port>/openspecimen/users/{userid}/&hellip; .
+Or with the function get_all_users and then extract the ID to the wanted user.</p>
+<h2 id="notes">Notes</h2>
+<p>For updating, the user has to be identified with its unique id {userid},
+all the other parameters of the user are optional. If they are not passed
+to the function, they stay the same.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>userid</code></strong> :&ensp;<code>int</code></dt>
+<dd>Unique Id of the user.</dd>
+<dt><strong><code>first</code></strong> :&ensp;<code>string</code></dt>
+<dd>Firstname of the User.</dd>
+<dt><strong><code>last</code></strong> :&ensp;<code>string</code></dt>
+<dd>Lastname of the User.</dd>
+<dt><strong><code>email</code></strong> :&ensp;<code>string</code></dt>
+<dd>Emailaddress of the user.</dd>
+<dt><strong><code>phone</code></strong> :&ensp;<code>string</code></dt>
+<dd>Phonenumber of the user.</dd>
+<dt><strong><code>login</code></strong> :&ensp;<code>string</code></dt>
+<dd>Loginename of the user, which has to be unique within the domain.</dd>
+<dt><strong><code>institute</code></strong> :&ensp;<code>string</code></dt>
+<dd>Name of the institute where the user belongs to.</dd>
+<dt><strong><code>type_</code></strong> :&ensp;<code>string</code></dt>
+<dd>Name of the usertype, defined in the OpenSpecimen distribution.</dd>
+<dt><strong><code>address</code></strong> :&ensp;<code>string</code></dt>
+<dd>Address of the user. [optional]</dd>
+<dt><strong><code>domain</code></strong> :&ensp;<code>string</code></dt>
+<dd>Domainname, by default OpenSpecimen.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>JSON dict with Details of the created User or the OpenSpecimen's error message.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def update_user(self, userid, first, last, email, login, institute, phone = None,
+                type_ = None, address = None, domain = &#39;openspecimen&#39;):
+
+    &#34;&#34;&#34;Update a user
+
+    Update a User in OpenSpecimen. To use this function one has to know the ID of the user.
+    This can be seen in the GUI if one clicks on the user and reads from the URL which has
+    the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/users/{userid}/... .
+    Or with the function get_all_users and then extract the ID to the wanted user.
+
+    Notes
+    -----
+    For updating, the user has to be identified with its unique id {userid},
+    all the other parameters of the user are optional. If they are not passed
+    to the function, they stay the same.
+
+    Parameters
+    ----------
+    userid : int
+        Unique Id of the user.
+
+    first : string
+        Firstname of the User.
+    
+    last : string
+        Lastname of the User.
+
+    email : string
+        Emailaddress of the user.
+
+    phone : string
+        Phonenumber of the user.
+    
+    login : string
+        Loginename of the user, which has to be unique within the domain.
+
+    institute : string
+        Name of the institute where the user belongs to.
+    
+    type_ : string
+        Name of the usertype, defined in the OpenSpecimen distribution.
+    
+    address : string
+        Address of the user. [optional]
+    
+    domain : string
+        Domainname, by default OpenSpecimen.
+    
+    Returns
+    -------
+    dict
+        JSON dict with Details of the created User or the OpenSpecimen&#39;s error message.
+    &#34;&#34;&#34;
+
+    params = self.jsons.create_user_json(first = first, last = last, email = email, phone = phone, login = login,
+                                     institute = institute, type_ = type_, address = address, domain = domain)
+    r = self.users.update_user(userid = userid, params = params)
+
+    return r</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
 </section>
 </article>
 <nav id="sidebar">
@@ -60,6 +764,19 @@
 <li><h3>Super-module</h3>
 <ul>
 <li><code><a title="OpenSpecimenAPIconnector.os_util" href="index.html">OpenSpecimenAPIconnector.os_util</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="OpenSpecimenAPIconnector.os_util.users_util.user_util" href="#OpenSpecimenAPIconnector.os_util.users_util.user_util">user_util</a></code></h4>
+<ul class="">
+<li><code><a title="OpenSpecimenAPIconnector.os_util.users_util.user_util.assign_role" href="#OpenSpecimenAPIconnector.os_util.users_util.user_util.assign_role">assign_role</a></code></li>
+<li><code><a title="OpenSpecimenAPIconnector.os_util.users_util.user_util.change_password" href="#OpenSpecimenAPIconnector.os_util.users_util.user_util.change_password">change_password</a></code></li>
+<li><code><a title="OpenSpecimenAPIconnector.os_util.users_util.user_util.create_user" href="#OpenSpecimenAPIconnector.os_util.users_util.user_util.create_user">create_user</a></code></li>
+<li><code><a title="OpenSpecimenAPIconnector.os_util.users_util.user_util.update_user" href="#OpenSpecimenAPIconnector.os_util.users_util.user_util.update_user">update_user</a></code></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

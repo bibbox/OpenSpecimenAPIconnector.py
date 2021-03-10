@@ -31,8 +31,8 @@
 # Import
 import json
 from datetime import datetime
-
 from .req_util import OS_request_gen
+from .. import config_manager
 
 class participant:
 
@@ -43,24 +43,24 @@ class participant:
     
     Notes
     -----
-    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
-    just pass the parameters via JSON-formatted string. This means the user has to know the keywords.
+    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes, one can
+    just pass the parameters via a JSON-formatted string. This means the user has to know the keywords.
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
 
     Example
     -------
 
-    A code example, where the Institutes are handled is in the Jupyter-Notebook:
+    A code example, where the institutes are handled, is in the Jupyter-Notebook:
 
         $ jupyter notebook main.ipynb
     &#34;&#34;&#34;
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         &#34;&#34;&#34;Constructor of the Class institutes
 
-        Constructor of the class institutes, can handle the basic API-calls
+        Constructor of the class institutes can handle the basic API-calls
         of the institutes in OpenSpecimen. Connects this class to OpenSpecimen
         specific URL Generator Class (os_core/url.py) and the os_util class participant_util
 
@@ -69,19 +69,19 @@ class participant:
         base_url : string
             URL to openspecimen, has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng
         auth : tuple
-            Consits of two strings ( loginname , password)
+            Consists of two strings ( loginname , password)
         &#34;&#34;&#34;
-
-        self.OS_request_gen = OS_request_gen(auth)
-        self.base_url = base_url
+        self.base_url = config_manager.get_url()
+        self.auth = config_manager.get_auth()
+        self.OS_request_gen = OS_request_gen(self.auth)
 
 
     def ausgabe(self):
 
         &#34;&#34;&#34;Testing of the URL and authentification.
 
-        If there are unexpected errors one can easily test if the URL and login data is correctly spelled.
-        the function prints the URL and login data, handed over to the class, to the output terminal.
+        If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
+        The function prints the URL and login data  to the output terminal, which was handed over to the class.
         &#34;&#34;&#34;
 
         print(self.base_url, self.OS_request_gen.auth)        
@@ -91,18 +91,18 @@ class participant:
         &#34;&#34;&#34;Get the participant with the Participant Protocol ID ::ppid::
 
         Get the details of the Participant with the Collection protocol wide unique ID ::ppid::.
-        This ID can generated automatically from OpenSpecimen or generated manually, which has
+        This ID can be generated automatically from OpenSpecimen or generated manually, which has
         to be specified when the Collection Protocol is created.
 
         Parameters
         ----------
-        ppid : string or int
-            The Collection Protocol  wide unique Participant Protocol ID of the Institute, will be converted to a string.
+        ppid : int
+            The Collection Protocol  wide unique Participant Protocol ID of the Institute will be converted to a string.
 
         Returns
         -------
         JSON-dict
-            Details of the PArticipant with the specified PPID, or the OpenSpecimen error message.
+            Details of the Participant with the specified PPID, or the OpenSpecimen error message.
         &#34;&#34;&#34;
 
         endpoint = &#39;/participants/&#39; + str(ppid)
@@ -116,14 +116,14 @@ class participant:
 
     def get_participant_matches(self, params):
 
-        &#34;&#34;&#34;Get the  Participants which matches the params.
+        &#34;&#34;&#34;Get the Participants who matches the params.
 
-        Get one or more Participants which matches the criteria passed with params. This class can be used via
+        Get one or more participants who match the criteria passed with params. This class can be used via
         the os_util class cpr_util.py.
         
         Note
         ----
-        In the response, the matching attributes are listed.
+        In the response the matching attributes are listed.
 
         Parameters
         ----------
@@ -134,7 +134,7 @@ class participant:
         Returns
         -------
         JSON-dict
-            Details of all matching Participants or the OpenSpecimen&#39;s error message.
+            Details of all matching participants or the OpenSpecimen&#39;s error message.
         &#34;&#34;&#34;
 
         endpoint = &#39;/participants/match&#39;
@@ -156,23 +156,22 @@ class participant:
 <dl>
 <dt id="OpenSpecimenAPIconnector.os_core.participant.participant"><code class="flex name class">
 <span>class <span class="ident">participant</span></span>
-<span>(</span><span>base_url, auth)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Handles the API calls for the participant</p>
 <p>Handles the OpenSpecimen API calls for the participants. This class can
 get a participant with a Participant Protocoll ID PPID or via search parameters.</p>
 <h2 id="notes">Notes</h2>
-<p>In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
-just pass the parameters via JSON-formatted string. This means the user has to know the keywords.
+<p>In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes, one can
+just pass the parameters via a JSON-formatted string. This means the user has to know the keywords.
 The API calls are documented in <a href="https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs">https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs</a> and
 the calls refer to this site. More details can be seen in the documentation.</p>
 <h2 id="example">Example</h2>
-<p>A code example, where the Institutes are handled is in the Jupyter-Notebook:</p>
+<p>A code example, where the institutes are handled, is in the Jupyter-Notebook:</p>
 <pre><code>$ jupyter notebook main.ipynb
 </code></pre>
 <p>Constructor of the Class institutes</p>
-<p>Constructor of the class institutes, can handle the basic API-calls
+<p>Constructor of the class institutes can handle the basic API-calls
 of the institutes in OpenSpecimen. Connects this class to OpenSpecimen
 specific URL Generator Class (os_core/url.py) and the os_util class participant_util</p>
 <h2 id="parameters">Parameters</h2>
@@ -180,7 +179,7 @@ specific URL Generator Class (os_core/url.py) and the os_util class participant_
 <dt><strong><code>base_url</code></strong> :&ensp;<code>string</code></dt>
 <dd>URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng</dd>
 <dt><strong><code>auth</code></strong> :&ensp;<code>tuple</code></dt>
-<dd>Consits of two strings ( loginname , password)</dd>
+<dd>Consists of two strings ( loginname , password)</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -195,24 +194,24 @@ specific URL Generator Class (os_core/url.py) and the os_util class participant_
     
     Notes
     -----
-    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
-    just pass the parameters via JSON-formatted string. This means the user has to know the keywords.
+    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes, one can
+    just pass the parameters via a JSON-formatted string. This means the user has to know the keywords.
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
 
     Example
     -------
 
-    A code example, where the Institutes are handled is in the Jupyter-Notebook:
+    A code example, where the institutes are handled, is in the Jupyter-Notebook:
 
         $ jupyter notebook main.ipynb
     &#34;&#34;&#34;
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         &#34;&#34;&#34;Constructor of the Class institutes
 
-        Constructor of the class institutes, can handle the basic API-calls
+        Constructor of the class institutes can handle the basic API-calls
         of the institutes in OpenSpecimen. Connects this class to OpenSpecimen
         specific URL Generator Class (os_core/url.py) and the os_util class participant_util
 
@@ -221,19 +220,19 @@ specific URL Generator Class (os_core/url.py) and the os_util class participant_
         base_url : string
             URL to openspecimen, has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng
         auth : tuple
-            Consits of two strings ( loginname , password)
+            Consists of two strings ( loginname , password)
         &#34;&#34;&#34;
-
-        self.OS_request_gen = OS_request_gen(auth)
-        self.base_url = base_url
+        self.base_url = config_manager.get_url()
+        self.auth = config_manager.get_auth()
+        self.OS_request_gen = OS_request_gen(self.auth)
 
 
     def ausgabe(self):
 
         &#34;&#34;&#34;Testing of the URL and authentification.
 
-        If there are unexpected errors one can easily test if the URL and login data is correctly spelled.
-        the function prints the URL and login data, handed over to the class, to the output terminal.
+        If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
+        The function prints the URL and login data  to the output terminal, which was handed over to the class.
         &#34;&#34;&#34;
 
         print(self.base_url, self.OS_request_gen.auth)        
@@ -243,18 +242,18 @@ specific URL Generator Class (os_core/url.py) and the os_util class participant_
         &#34;&#34;&#34;Get the participant with the Participant Protocol ID ::ppid::
 
         Get the details of the Participant with the Collection protocol wide unique ID ::ppid::.
-        This ID can generated automatically from OpenSpecimen or generated manually, which has
+        This ID can be generated automatically from OpenSpecimen or generated manually, which has
         to be specified when the Collection Protocol is created.
 
         Parameters
         ----------
-        ppid : string or int
-            The Collection Protocol  wide unique Participant Protocol ID of the Institute, will be converted to a string.
+        ppid : int
+            The Collection Protocol  wide unique Participant Protocol ID of the Institute will be converted to a string.
 
         Returns
         -------
         JSON-dict
-            Details of the PArticipant with the specified PPID, or the OpenSpecimen error message.
+            Details of the Participant with the specified PPID, or the OpenSpecimen error message.
         &#34;&#34;&#34;
 
         endpoint = &#39;/participants/&#39; + str(ppid)
@@ -268,14 +267,14 @@ specific URL Generator Class (os_core/url.py) and the os_util class participant_
 
     def get_participant_matches(self, params):
 
-        &#34;&#34;&#34;Get the  Participants which matches the params.
+        &#34;&#34;&#34;Get the Participants who matches the params.
 
-        Get one or more Participants which matches the criteria passed with params. This class can be used via
+        Get one or more participants who match the criteria passed with params. This class can be used via
         the os_util class cpr_util.py.
         
         Note
         ----
-        In the response, the matching attributes are listed.
+        In the response the matching attributes are listed.
 
         Parameters
         ----------
@@ -286,7 +285,7 @@ specific URL Generator Class (os_core/url.py) and the os_util class participant_
         Returns
         -------
         JSON-dict
-            Details of all matching Participants or the OpenSpecimen&#39;s error message.
+            Details of all matching participants or the OpenSpecimen&#39;s error message.
         &#34;&#34;&#34;
 
         endpoint = &#39;/participants/match&#39;
@@ -303,8 +302,9 @@ specific URL Generator Class (os_core/url.py) and the os_util class participant_
 </code></dt>
 <dd>
 <div class="desc"><p>Testing of the URL and authentification.</p>
-<p>If there are unexpected errors one can easily test if the URL and login data is correctly spelled.
-the function prints the URL and login data, handed over to the class, to the output terminal.</p></div>
+<p>If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
+The function prints the URL and login data
+to the output terminal, which was handed over to the class.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -313,8 +313,8 @@ the function prints the URL and login data, handed over to the class, to the out
 
     &#34;&#34;&#34;Testing of the URL and authentification.
 
-    If there are unexpected errors one can easily test if the URL and login data is correctly spelled.
-    the function prints the URL and login data, handed over to the class, to the output terminal.
+    If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
+    The function prints the URL and login data  to the output terminal, which was handed over to the class.
     &#34;&#34;&#34;
 
     print(self.base_url, self.OS_request_gen.auth)        </code></pre>
@@ -326,18 +326,18 @@ the function prints the URL and login data, handed over to the class, to the out
 <dd>
 <div class="desc"><p>Get the participant with the Participant Protocol ID ::ppid::</p>
 <p>Get the details of the Participant with the Collection protocol wide unique ID ::ppid::.
-This ID can generated automatically from OpenSpecimen or generated manually, which has
+This ID can be generated automatically from OpenSpecimen or generated manually, which has
 to be specified when the Collection Protocol is created.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>ppid</code></strong> :&ensp;<code>string</code> or <code>int</code></dt>
+<dt><strong><code>ppid</code></strong> :&ensp;<code>int</code></dt>
 <dd>The Collection Protocol
-wide unique Participant Protocol ID of the Institute, will be converted to a string.</dd>
+wide unique Participant Protocol ID of the Institute will be converted to a string.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>JSON-dict</code></dt>
-<dd>Details of the PArticipant with the specified PPID, or the OpenSpecimen error message.</dd>
+<dd>Details of the Participant with the specified PPID, or the OpenSpecimen error message.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -348,18 +348,18 @@ wide unique Participant Protocol ID of the Institute, will be converted to a str
     &#34;&#34;&#34;Get the participant with the Participant Protocol ID ::ppid::
 
     Get the details of the Participant with the Collection protocol wide unique ID ::ppid::.
-    This ID can generated automatically from OpenSpecimen or generated manually, which has
+    This ID can be generated automatically from OpenSpecimen or generated manually, which has
     to be specified when the Collection Protocol is created.
 
     Parameters
     ----------
-    ppid : string or int
-        The Collection Protocol  wide unique Participant Protocol ID of the Institute, will be converted to a string.
+    ppid : int
+        The Collection Protocol  wide unique Participant Protocol ID of the Institute will be converted to a string.
 
     Returns
     -------
     JSON-dict
-        Details of the PArticipant with the specified PPID, or the OpenSpecimen error message.
+        Details of the Participant with the specified PPID, or the OpenSpecimen error message.
     &#34;&#34;&#34;
 
     endpoint = &#39;/participants/&#39; + str(ppid)
@@ -375,12 +375,11 @@ wide unique Participant Protocol ID of the Institute, will be converted to a str
 <span>def <span class="ident">get_participant_matches</span></span>(<span>self, params)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Get the
-Participants which matches the params.</p>
-<p>Get one or more Participants which matches the criteria passed with params. This class can be used via
+<div class="desc"><p>Get the Participants who matches the params.</p>
+<p>Get one or more participants who match the criteria passed with params. This class can be used via
 the os_util class cpr_util.py.</p>
 <h2 id="note">Note</h2>
-<p>In the response, the matching attributes are listed.</p>
+<p>In the response the matching attributes are listed.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>params</code></strong> :&ensp;<code>string</code></dt>
@@ -390,7 +389,7 @@ pmi(dict with keys mrn[optional], siteName[optional]) [optional], empi[optional]
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>JSON-dict</code></dt>
-<dd>Details of all matching Participants or the OpenSpecimen's error message.</dd>
+<dd>Details of all matching participants or the OpenSpecimen's error message.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -398,14 +397,14 @@ pmi(dict with keys mrn[optional], siteName[optional]) [optional], empi[optional]
 </summary>
 <pre><code class="python">def get_participant_matches(self, params):
 
-    &#34;&#34;&#34;Get the  Participants which matches the params.
+    &#34;&#34;&#34;Get the Participants who matches the params.
 
-    Get one or more Participants which matches the criteria passed with params. This class can be used via
+    Get one or more participants who match the criteria passed with params. This class can be used via
     the os_util class cpr_util.py.
     
     Note
     ----
-    In the response, the matching attributes are listed.
+    In the response the matching attributes are listed.
 
     Parameters
     ----------
@@ -416,7 +415,7 @@ pmi(dict with keys mrn[optional], siteName[optional]) [optional], empi[optional]
     Returns
     -------
     JSON-dict
-        Details of all matching Participants or the OpenSpecimen&#39;s error message.
+        Details of all matching participants or the OpenSpecimen&#39;s error message.
     &#34;&#34;&#34;
 
     endpoint = &#39;/participants/match&#39;

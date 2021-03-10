@@ -432,176 +432,71 @@ class Json_factory():
         data = {k: v for k, v in data.items() if v is not None}
 
         return json.dumps(data)
-
-    # Export Institute CSV
-    def create_institue_export_job_json(self):
-        
-        """Create JSON formated string neccesary for exporting all institutes as a CSV table
-        Parameters
-        cp_id: string 
-            Collection protocol id of export target
-        ----------
-        Returns
-        JSON-formated-string needed for creating an export job for the given entity
-        -------
-        """
-        institute_json = {"objectType": "institute"}
-        return json.dumps(institute_json)
     
-    # Export Sites CSV
-    def create_site_export_job_json(self, record_ids=None):
-        
-        """Create JSON formated string neccesary for for exporting all user data as a CSV table
-
-        Parameters
-        cp_id: string 
-            Collection protocol id of export target
-        ----------
-        Returns
-        JSON-formated-string 
-            Json data needed for creating an export job for the given entity
-        -------
-        """
-        site_json = {"objectType": "site"}
-        return json.dumps(site_json)
-
-    # Export User CSV
-    def create_user_export_job(self):
-
-        """Create JSON formated string neccesary for exporting all user data as a CSV table
-        Parameters
-        cp_id: string 
-            Collection protocoll id of export target
-        ----------
-        Returns
-        JSON-formated-string 
-            Json data needed for creating an export job for the given entity
-        -------
-        """
-        user_json = {"objectType": "user"}
-        return json.dumps(user_json)
-    
-    # Export CP CSV duplicate since both jsons appear in internal OpenSpecimen calls and lead to the same error message
-    def create_cp_export_job_json(self, cp_id=None):
-        
-        """Create JSON formated string neccesary for for exporting an collection protocol (should be implemented but is not see OpenSpecimen 7.2)
-
-        Parameters
-        cp_id: string Collection protocoll id pof export target
-        ----------
-        Returns
-        JSON-formated-string 
-            Json data needed for creating an export job for the given entity
-        -------
-        """
-        
-        cp_json = {"objectType": "cp", "params": {"cpId": cp_id}}
-
-        return json.dumps(cp_json)
-    
-    def create_cp_csv_export_job(self, objecttype, cpid, entitytype=None, formname=None):
+    # Create CSV export job  
+    def create_csv_export_job(self, objecttype=None, recordids=None, cpid=None, ppids=None,  entitytype=None, formname=None, 
+                            specimenlabels=None):
     
         """Create JSON formated string neccesary for exporting an collection protocol (should be implemented but is not see OpenSpecimen 7.2)
 
         Parameters
-        cp_id: string 
-            Collection protocol id of export target
         objecttype: string 
-            Identifying the general object to be exported
+            Identifying the general object to be exported.
+            Permissible Values: "institute", "site", "user", "cpr", "specimen", "extensions", "storageContainer"
+        recordids: list or string
+            Comma seperated list of record ids for fetching selected entries by their identifier. (Sites, Institutes, Users and Containers) 
+        cp_id: string 
+            Collection protocol id of export target not neccesary for objects higher in the hierachy like institue or site.
+            For all others it can be specified or set to "-1" which means all data in the system.
+        ppids: list or string
+            List of comma seperated participant identifiers; String if its a singular participant to be exported
+            Used in combination with specimen object type as a paramter
         entitytype: string
-            Type of entity to be exported
+            Paramter defining the entity for data extraction (e.g.: attached form at participant level)
+            used with the extension object type
         formname: string
-            testing to clarify meaning of parameter needs to be done
+            Defines the form to be downloaded in context of the extension object type together with the specified entity 
+        specimenlabels: list or string
+            List of comma seperated specimen identifiers; str if its a singular specimen to be exported        
         ----------
         Returns JSON-formated-string 
             Json data needed for creating an export job for the given entity
         -------
         """
-        data = {
-            "objectType": objecttype,
-            "params":{
+        object_types = ["institute", "site", "user", "cpr", "specimen", "extensions", "storageContainer", "distributionProtocol", "cp", "cpe"]
+        entity_types = ["Participant", "Visit", "Specimen", "SpecimenEvent", "SpecimenCollectionGroup", "CollectionProtocol"]
+        objecttype = objecttype.lower()
+        
+        assert objecttype in object_types, "Object Type {} not allowed check documentation".format(objecttype)
+        if entitytype is not None:
+            assert entitytype in entity_types, "Entity Type {} not allowed check documentation".format(entitytype)
+        
+        if objecttype == "cpr" or objecttype == "specimen":
+            assert cpid is not None , "cpid may not be none with objecttype {}".format(objecttype)
+        elif objecttype == "extensions":
+            assert formname is not None and entitytype is not None, "Please specify formname and the entitytype the given form is attached to"
+            assert cpid is not None , "cpid may not be none with objecttype {}".format(objecttype)
+
+        params = {
+                "ppids": ppids,
+                "specimenLabels": specimenlabels,
                 "entityType": entitytype,
                 "formName": formname,
                 "cpId": cpid
             }
+        params = {k: v for k, v in params.items() if v is not None}
+        data = {
+            "objectType": objecttype,
+            "recordIds": recordids,
+            "params": params
         }
-
+        data = {k: v for k, v in data.items() if v is not None}
         return json.dumps(data)
-
-    # Export CP Registaration CSV
-    def create_cpr_export_job_json(self, cp_id=None):
-
-        """Create JSON formated string neccesary for exporting participant data (collection protocol registration)
-        
-        Parameters
-        cp_id: string 
-            Collection protocoll id of export target
-        ----------
-        Returns
-        JSON-formated-string 
-            Json data needed for creating an export job for the given entity
-        -------
-        """
-        cpr_json = {"objectType": "cpr", "params": {"cpId": cp_id}}
-        return json.dumps(cpr_json)
-        
-    # Export Vist CSV
-    def create_visit_export_job_json(self, cp_id=None):
-        
-        """Create JSON formated string neccesary for exportin visit data as a CSV table
-
-        Parameters
-        cp_id: string 
-            Collection protocoll id of export target
-        ----------
-        Returns
-        JSON-formated-string 
-            Json data needed for creating an export job for the given entity
-        -------
-        """
-        visit_json = {"objectType": "specimen", "params": {"cpId": cp_id}}
-        return json.dumps(visit_json)
-    
-    # Export Specimen CSV
-    def create_specimen_export_job_json(self, cp_id=None):
-
-        """Create JSON formated string neccesary for specimen export as a CSV table
-        Parameters
-        cp_id: string 
-            Collection protocol(CP) id of export target CP
-        ----------
-        Returns
-        JSON-formated-string 
-            Json data needed for creating an export job for the given entity
-        -------
-        """
-        specimen_json = {"objectType": "specimen", "params": {"cpId": cp_id}}
-        return json.dumps(specimen_json)
-    
-    # Import collection protocols
-    def create_site_import_job_json(self, record_ids=None):
-        
-        """Create JSON formated string neccesary for importing site data to OpenSpecimen
-
-        Parameters
-        cp_id: string 
-            Collection protocoll id of export target
-        record_ids: string
-            Record ids of data to be created to be tested 
-        ----------
-        Returns
-        JSON-formated-string 
-            Json data needed for creating an import job for the given entity
-        -------
-        """
-        site_json = {"objectType": "site", "recordIds": record_ids}
-
-        return json.dumps(site_json)
     
     # Create Any AQL Query
     def execute_aql(self, cpid, aql, rowmode='OFF', columnexpr='true', isodate='true'):
         
-        """Create JSON formated string to execute a specified query passed to teh method
+        """Create JSON formated string to execute a specified query passed to the method
 
         Parameters
         cp_id: string 
@@ -632,7 +527,8 @@ class Json_factory():
             "outputColumnExprs" : columnexpr,
             "outputIsoDateTime" : isodate
         }
-
+        
+        params = {k: v for k, v in params.items() if v is not None}
         return json.dumps(params)
 
     # Execute Saved Query
@@ -663,7 +559,7 @@ class Json_factory():
             "startAt": start,
             "maxResults":results
         }
-
+        params = {k: v for k, v in params.items() if v is not None}
         return json.dumps(params)
 
     def create_bulk_import_job(self, schemaname=None, operation=None, fileid=None,
@@ -691,14 +587,15 @@ class Json_factory():
         -------
         """
         
-        part_cpr_json = {"objectType": schemaname,
+        data = {"objectType": schemaname,
                     "importType": operation,
                     "inputFileId": fileid,
                     "dateFormat":dateformat,
                     "timeFormat":timeformat
                     }
 
-        return json.dumps(part_cpr_json)
+        data = {k: v for k, v in data.items() if v is not None}
+        return json.dumps(data)
 
     def get_registrations(self, cpid=None, registrationdate=None, ppid=None, name=None, birthdate=None, uid=None, specimen=None,
                                     includestats=None, startat=None,maxresults=None, exactmatch=None):
@@ -751,6 +648,7 @@ class Json_factory():
             "exactMatch": exactmatch
         }
 
+        params = {k: v for k, v in params.items() if v is not None}
         return json.dumps(params)
 
     def add_visit_json(self, cprid, name, site, eventid=None,eventlabel=None,ppid=None, cptitle=None, cpshorttitle=None,
@@ -852,6 +750,7 @@ class Json_factory():
             "visitDate": visitdate
         }
         
+        params = {k: v for k, v in params.items() if v is not None}
         return json.dumps(params)
 
     def storage_location_json(self, id_=None, name=None, xpos=None, ypos=None):
@@ -908,13 +807,17 @@ class Json_factory():
 
         return json.dumps(data)
 
-    def create_institute(self, institutename, get_csv = False):
+    def create_institute(self, institutename=None, inst_id=None, get_csv = False):
         """Create JSON-formatted string to neccesary to retrieve storage location via API 
 
         Parameters
         ----------
         institutename: string
-            Name of the institute 
+            Name of the institute
+        inst_id:
+            institute_id needed for updating when creating an institute via csv
+        get_csv: bool
+            Return a CSV for creating an institute
         
         Returns
         -------
@@ -925,9 +828,15 @@ class Json_factory():
         data = {
             "name": institutename
         }
+        
+        data = {k: v for k, v in data.items() if v is not None}
+        
         if get_csv:
+            data["identifier"] = inst_id
+            data = {k: v for k, v in data.items() if v is not None}
             return pd.DataFrame(data, index=[0]).to_csv(index=False)
         else:
+            data = {k: v for k, v in data.items() if v is not None}
             return json.dumps(data)
 
     def get_participants(self, lastname = None, uid = None, birthdate = None, pmi = None, empi = None, reqreginfo = None):
@@ -977,11 +886,10 @@ class Json_factory():
             }
 
         data = {k: v for k, v in data.items() if v is not None}
-        
         return json.dumps(data)
 
 
-    def create_site(self, name = None, institutename = None, type_ = None, coordinators = None, address = None, get_csv=False):
+    def create_site(self, name = None, institutename = None, type_ = None, coordinators = None, address = None):
 
         """Create a Site
 
@@ -999,6 +907,8 @@ class Json_factory():
             String with the login-name of the coordinators.
         address : string
             String with the address of the institute.
+        site_id: string
+            String with site id for upadting via csv
 
         Returns
         -------
@@ -1013,12 +923,9 @@ class Json_factory():
             "type" : type_,
             "address" : address
         }
-
+            
         data = {k: v for k, v in data.items() if v is not None}
-        if get_csv:
-            return pd.DataFrame(data, index=[0]).to_csv(index=False)
-        else:    
-            return json.dumps(data)
+        return json.dumps(data)
         
 
     def create_user_json(self, first = None, last = None, email = None, phone = None, login = None, institute = None,

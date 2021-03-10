@@ -34,7 +34,7 @@ from ..os_core.mandatory import mark_mandatory
 from ..os_core.csv_bulk import csv_bulk
 from ..os_core.visit import visit
 from ..os_core.participant import participant
-from ..os_core.collection_protocoll import collection_protocol
+from ..os_core.collection_protocol import collection_protocol
 from ..os_core.collection_protocol_registration import collection_protocol_registration
 from ..os_core.collection_protocol_event import collection_protocol_event
 from ..os_core.query import query
@@ -49,19 +49,40 @@ import json
 import pandas
 import random
 import numpy as np
+from datetime import datetime
 
 class aggregator():
 
-    def __init__(self, base_url, auth):
-        self.OS_request_gen = OS_request_gen(auth)
-        self.base_url = base_url
-        self.auth = auth
+    def __init__(self):
+        
         self.jsons = Json_factory()
+        self.schemes = [&#39;cp&#39;, &#39;specimen&#39;, &#39;cpr&#39;, &#39;user&#39;, &#39;userRoles&#39;, &#39;site&#39;, &#39;shipment&#39;, 
+              &#39;institute&#39;, &#39;dpRequirement&#39;, &#39;distributionProtocol&#39;, &#39;distributionOrder&#39;, 
+              &#39;storageContainer&#39;, &#39;storagecontainerType&#39;, &#39;containerShipment&#39;, &#39;cpe&#39;,
+              &#39;masterSpecimen&#39;, &#39;participant&#39;, &#39;sr&#39;, &#39;visit&#39;, &#39;specimenAliquot&#39;, 
+              &#39;specimenDerivative&#39;, &#39;specimenDisposal&#39;, &#39;consent&#39;]
+        self.now = datetime.now()
+        
 
-    def extract_age_fields(self):
-        pass
+    def extract_age_fields(self, cp_csv, cp_data, cp_id):
 
-    def run_aggregation(self, cp_ids):
+        age_array = []
+        for date in cp_csv[&#34;Date Of Birth&#34;]:
+            age_array.append(float(self.now.year) - float(date.split(&#34;-&#34;)[-1]))
+        age_array = np.array(age_array)
+        print(&#34;Age high: &#34;,np.max(age_array))
+        print(&#34;Age low: &#34;, np.min(age_array))
+        print(&#34;Age mean: &#34;, age_array.mean())
+        for i, item in enumerate(cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;]):
+            if cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;name&#34;] == &#34;AgeLow&#34;:
+                cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;value&#34;] = str(int(np.min(age_array)))
+                cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;displayValue&#34;] = str(int(np.min(age_array)))
+            elif cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;name&#34;] == &#34;AgeHigh&#34;:
+                cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;value&#34;] = str(int(np.max(age_array)))
+                cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;displayValue&#34;] = str(int(np.max(age_array)))
+        return cp_data
+
+    def run_aggregation(self, sel_schema, ids=None):
         &#34;&#34;&#34;
         General purpose aggreation for fields in attached forms 
         under developement. 
@@ -69,54 +90,18 @@ class aggregator():
         -
         and where to use&#39;&#39;--_&#39;
         &#34;&#34;&#34;
-
-        cp_tools = collection_protocol(self.base_url, self.auth)
-        csv_files= csv_bulk(self.base_url, self.auth)
-        bulk_op= bulk_operations(self.base_url, self.auth)
-        csv_export = Export_OP(self.base_url, self.auth)
-        
-        export_cps_csv = []
-        export_cps_def = []
-        if len(cp_ids) != 1:
-            for cp_id in cp_ids:
-                export_cps_csv.append(csv_export_7_2.export_file(sel_schema, cp_id))
-                export_cps_def.append(cp_tools_target.get_cp_def(cp_id))
+        cp_tools = collection_protocol()
+        csv_export = Export_OP()
+        if sel_schema == &#34;cpr&#34;:
+            for i, cp_id in enumerate(ids):
+                up_cp_data = self.extract_age_fields(csv_export.export_file(sel_schema, cp_id), 
+                                                    cp_tools.get_collection_protocol(cp_id), cp_id)
+                r = cp_tools.update_collection_protocol(str(cp_id), json.dumps(up_cp_data)) 
+            if r.get(&#34;extensionDetail&#34;):
+                print(&#34;Aggregation sucessfull&#34;)
         else:
-            export = csv_export.export_file(sel_schema, cp_id_target)
-            cp_def = cp_tools.get_cp_def(cp_id)
-
-        if export_cps_csv:
-            for i, cp in enumerate(export_cps_csv):
-                age_array = []
-                for date in cp[&#34;Date Of Birth&#34;]:
-                    age_array.append(2020 - float(date.split(&#34;-&#34;)[-1]))
-                age_array = np.array(age_array)
-                cp_data = export_cps_def[i]
-                for j, item in enumerate(cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;]):
-                    if cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][j][&#34;name&#34;] == &#34;AgeLow&#34;:
-                        cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][j][&#34;value&#34;] = str(int(np.min(age_array)))
-                        cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][j][&#34;displayValue&#34;] = str(np.min(age_array))
-                    elif cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][j][&#34;name&#34;] == &#34;AgeHigh&#34;:
-                        cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][j][&#34;value&#34;] = str(int(np.max(age_array)))
-                        cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][j][&#34;displayValue&#34;] = str(np.max(age_array))
-            
-        # in case of only one target:
-        else: 
-            age_array = []
-            # crude example of age calculation
-            for item in export[&#34;Date Of Birth&#34;]:
-                age_array.append(2020 - float(item.split(&#34;-&#34;)[-1]))
-
-            age_array = np.array(age_array)
-            #rewrite our custom Aggregtion fields (there is a better way to do this)
-            for i, item in enumerate(cp_target[&#34;extensionDetail&#34;][&#34;attrs&#34;]):
-
-                if cp_def[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;name&#34;] == &#34;AgeLow&#34;:
-                    cp_def[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;value&#34;] = str(int(np.min(age_array)))
-                    cp_def[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;displayValue&#34;] = str(np.min(age_array))
-                elif cp_def[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;name&#34;] == &#34;AgeHigh&#34;:
-                    cp_def[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;value&#34;] = str(int(np.max(age_array)))
-                    cp_def[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;displayValue&#34;] = str(np.max(age_array))</code></pre>
+            print(&#34;In this Demo the only fields to be aggregated are &#34;, 
+            &#34;attached to Collection Protocols&#34;)</code></pre>
 </details>
 </section>
 <section>
@@ -130,7 +115,6 @@ class aggregator():
 <dl>
 <dt id="OpenSpecimenAPIconnector.os_util.aggregated_fields.aggregator"><code class="flex name class">
 <span>class <span class="ident">aggregator</span></span>
-<span>(</span><span>base_url, auth)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -140,16 +124,36 @@ class aggregator():
 </summary>
 <pre><code class="python">class aggregator():
 
-    def __init__(self, base_url, auth):
-        self.OS_request_gen = OS_request_gen(auth)
-        self.base_url = base_url
-        self.auth = auth
+    def __init__(self):
+        
         self.jsons = Json_factory()
+        self.schemes = [&#39;cp&#39;, &#39;specimen&#39;, &#39;cpr&#39;, &#39;user&#39;, &#39;userRoles&#39;, &#39;site&#39;, &#39;shipment&#39;, 
+              &#39;institute&#39;, &#39;dpRequirement&#39;, &#39;distributionProtocol&#39;, &#39;distributionOrder&#39;, 
+              &#39;storageContainer&#39;, &#39;storagecontainerType&#39;, &#39;containerShipment&#39;, &#39;cpe&#39;,
+              &#39;masterSpecimen&#39;, &#39;participant&#39;, &#39;sr&#39;, &#39;visit&#39;, &#39;specimenAliquot&#39;, 
+              &#39;specimenDerivative&#39;, &#39;specimenDisposal&#39;, &#39;consent&#39;]
+        self.now = datetime.now()
+        
 
-    def extract_age_fields(self):
-        pass
+    def extract_age_fields(self, cp_csv, cp_data, cp_id):
 
-    def run_aggregation(self, cp_ids):
+        age_array = []
+        for date in cp_csv[&#34;Date Of Birth&#34;]:
+            age_array.append(float(self.now.year) - float(date.split(&#34;-&#34;)[-1]))
+        age_array = np.array(age_array)
+        print(&#34;Age high: &#34;,np.max(age_array))
+        print(&#34;Age low: &#34;, np.min(age_array))
+        print(&#34;Age mean: &#34;, age_array.mean())
+        for i, item in enumerate(cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;]):
+            if cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;name&#34;] == &#34;AgeLow&#34;:
+                cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;value&#34;] = str(int(np.min(age_array)))
+                cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;displayValue&#34;] = str(int(np.min(age_array)))
+            elif cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;name&#34;] == &#34;AgeHigh&#34;:
+                cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;value&#34;] = str(int(np.max(age_array)))
+                cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;displayValue&#34;] = str(int(np.max(age_array)))
+        return cp_data
+
+    def run_aggregation(self, sel_schema, ids=None):
         &#34;&#34;&#34;
         General purpose aggreation for fields in attached forms 
         under developement. 
@@ -157,59 +161,23 @@ class aggregator():
         -
         and where to use&#39;&#39;--_&#39;
         &#34;&#34;&#34;
-
-        cp_tools = collection_protocol(self.base_url, self.auth)
-        csv_files= csv_bulk(self.base_url, self.auth)
-        bulk_op= bulk_operations(self.base_url, self.auth)
-        csv_export = Export_OP(self.base_url, self.auth)
-        
-        export_cps_csv = []
-        export_cps_def = []
-        if len(cp_ids) != 1:
-            for cp_id in cp_ids:
-                export_cps_csv.append(csv_export_7_2.export_file(sel_schema, cp_id))
-                export_cps_def.append(cp_tools_target.get_cp_def(cp_id))
+        cp_tools = collection_protocol()
+        csv_export = Export_OP()
+        if sel_schema == &#34;cpr&#34;:
+            for i, cp_id in enumerate(ids):
+                up_cp_data = self.extract_age_fields(csv_export.export_file(sel_schema, cp_id), 
+                                                    cp_tools.get_collection_protocol(cp_id), cp_id)
+                r = cp_tools.update_collection_protocol(str(cp_id), json.dumps(up_cp_data)) 
+            if r.get(&#34;extensionDetail&#34;):
+                print(&#34;Aggregation sucessfull&#34;)
         else:
-            export = csv_export.export_file(sel_schema, cp_id_target)
-            cp_def = cp_tools.get_cp_def(cp_id)
-
-        if export_cps_csv:
-            for i, cp in enumerate(export_cps_csv):
-                age_array = []
-                for date in cp[&#34;Date Of Birth&#34;]:
-                    age_array.append(2020 - float(date.split(&#34;-&#34;)[-1]))
-                age_array = np.array(age_array)
-                cp_data = export_cps_def[i]
-                for j, item in enumerate(cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;]):
-                    if cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][j][&#34;name&#34;] == &#34;AgeLow&#34;:
-                        cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][j][&#34;value&#34;] = str(int(np.min(age_array)))
-                        cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][j][&#34;displayValue&#34;] = str(np.min(age_array))
-                    elif cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][j][&#34;name&#34;] == &#34;AgeHigh&#34;:
-                        cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][j][&#34;value&#34;] = str(int(np.max(age_array)))
-                        cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][j][&#34;displayValue&#34;] = str(np.max(age_array))
-            
-        # in case of only one target:
-        else: 
-            age_array = []
-            # crude example of age calculation
-            for item in export[&#34;Date Of Birth&#34;]:
-                age_array.append(2020 - float(item.split(&#34;-&#34;)[-1]))
-
-            age_array = np.array(age_array)
-            #rewrite our custom Aggregtion fields (there is a better way to do this)
-            for i, item in enumerate(cp_target[&#34;extensionDetail&#34;][&#34;attrs&#34;]):
-
-                if cp_def[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;name&#34;] == &#34;AgeLow&#34;:
-                    cp_def[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;value&#34;] = str(int(np.min(age_array)))
-                    cp_def[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;displayValue&#34;] = str(np.min(age_array))
-                elif cp_def[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;name&#34;] == &#34;AgeHigh&#34;:
-                    cp_def[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;value&#34;] = str(int(np.max(age_array)))
-                    cp_def[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;displayValue&#34;] = str(np.max(age_array))</code></pre>
+            print(&#34;In this Demo the only fields to be aggregated are &#34;, 
+            &#34;attached to Collection Protocols&#34;)</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
 <dt id="OpenSpecimenAPIconnector.os_util.aggregated_fields.aggregator.extract_age_fields"><code class="name flex">
-<span>def <span class="ident">extract_age_fields</span></span>(<span>self)</span>
+<span>def <span class="ident">extract_age_fields</span></span>(<span>self, cp_csv, cp_data, cp_id)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -217,12 +185,27 @@ class aggregator():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def extract_age_fields(self):
-    pass</code></pre>
+<pre><code class="python">def extract_age_fields(self, cp_csv, cp_data, cp_id):
+
+    age_array = []
+    for date in cp_csv[&#34;Date Of Birth&#34;]:
+        age_array.append(float(self.now.year) - float(date.split(&#34;-&#34;)[-1]))
+    age_array = np.array(age_array)
+    print(&#34;Age high: &#34;,np.max(age_array))
+    print(&#34;Age low: &#34;, np.min(age_array))
+    print(&#34;Age mean: &#34;, age_array.mean())
+    for i, item in enumerate(cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;]):
+        if cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;name&#34;] == &#34;AgeLow&#34;:
+            cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;value&#34;] = str(int(np.min(age_array)))
+            cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;displayValue&#34;] = str(int(np.min(age_array)))
+        elif cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;name&#34;] == &#34;AgeHigh&#34;:
+            cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;value&#34;] = str(int(np.max(age_array)))
+            cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;displayValue&#34;] = str(int(np.max(age_array)))
+    return cp_data</code></pre>
 </details>
 </dd>
 <dt id="OpenSpecimenAPIconnector.os_util.aggregated_fields.aggregator.run_aggregation"><code class="name flex">
-<span>def <span class="ident">run_aggregation</span></span>(<span>self, cp_ids)</span>
+<span>def <span class="ident">run_aggregation</span></span>(<span>self, sel_schema, ids=None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>General purpose aggreation for fields in attached forms
@@ -234,7 +217,7 @@ and where to use''&ndash;_'</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def run_aggregation(self, cp_ids):
+<pre><code class="python">def run_aggregation(self, sel_schema, ids=None):
     &#34;&#34;&#34;
     General purpose aggreation for fields in attached forms 
     under developement. 
@@ -242,54 +225,18 @@ and where to use''&ndash;_'</p></div>
     -
     and where to use&#39;&#39;--_&#39;
     &#34;&#34;&#34;
-
-    cp_tools = collection_protocol(self.base_url, self.auth)
-    csv_files= csv_bulk(self.base_url, self.auth)
-    bulk_op= bulk_operations(self.base_url, self.auth)
-    csv_export = Export_OP(self.base_url, self.auth)
-    
-    export_cps_csv = []
-    export_cps_def = []
-    if len(cp_ids) != 1:
-        for cp_id in cp_ids:
-            export_cps_csv.append(csv_export_7_2.export_file(sel_schema, cp_id))
-            export_cps_def.append(cp_tools_target.get_cp_def(cp_id))
+    cp_tools = collection_protocol()
+    csv_export = Export_OP()
+    if sel_schema == &#34;cpr&#34;:
+        for i, cp_id in enumerate(ids):
+            up_cp_data = self.extract_age_fields(csv_export.export_file(sel_schema, cp_id), 
+                                                cp_tools.get_collection_protocol(cp_id), cp_id)
+            r = cp_tools.update_collection_protocol(str(cp_id), json.dumps(up_cp_data)) 
+        if r.get(&#34;extensionDetail&#34;):
+            print(&#34;Aggregation sucessfull&#34;)
     else:
-        export = csv_export.export_file(sel_schema, cp_id_target)
-        cp_def = cp_tools.get_cp_def(cp_id)
-
-    if export_cps_csv:
-        for i, cp in enumerate(export_cps_csv):
-            age_array = []
-            for date in cp[&#34;Date Of Birth&#34;]:
-                age_array.append(2020 - float(date.split(&#34;-&#34;)[-1]))
-            age_array = np.array(age_array)
-            cp_data = export_cps_def[i]
-            for j, item in enumerate(cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;]):
-                if cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][j][&#34;name&#34;] == &#34;AgeLow&#34;:
-                    cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][j][&#34;value&#34;] = str(int(np.min(age_array)))
-                    cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][j][&#34;displayValue&#34;] = str(np.min(age_array))
-                elif cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][j][&#34;name&#34;] == &#34;AgeHigh&#34;:
-                    cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][j][&#34;value&#34;] = str(int(np.max(age_array)))
-                    cp_data[&#34;extensionDetail&#34;][&#34;attrs&#34;][j][&#34;displayValue&#34;] = str(np.max(age_array))
-        
-    # in case of only one target:
-    else: 
-        age_array = []
-        # crude example of age calculation
-        for item in export[&#34;Date Of Birth&#34;]:
-            age_array.append(2020 - float(item.split(&#34;-&#34;)[-1]))
-
-        age_array = np.array(age_array)
-        #rewrite our custom Aggregtion fields (there is a better way to do this)
-        for i, item in enumerate(cp_target[&#34;extensionDetail&#34;][&#34;attrs&#34;]):
-
-            if cp_def[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;name&#34;] == &#34;AgeLow&#34;:
-                cp_def[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;value&#34;] = str(int(np.min(age_array)))
-                cp_def[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;displayValue&#34;] = str(np.min(age_array))
-            elif cp_def[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;name&#34;] == &#34;AgeHigh&#34;:
-                cp_def[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;value&#34;] = str(int(np.max(age_array)))
-                cp_def[&#34;extensionDetail&#34;][&#34;attrs&#34;][i][&#34;displayValue&#34;] = str(np.max(age_array))</code></pre>
+        print(&#34;In this Demo the only fields to be aggregated are &#34;, 
+        &#34;attached to Collection Protocols&#34;)</code></pre>
 </details>
 </dd>
 </dl>

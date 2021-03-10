@@ -2,6 +2,7 @@ import pandas as pd
 import zipfile
 import json
 import time
+import io
 from .req_util import OS_request_gen
 from .. import config_manager
 
@@ -64,11 +65,18 @@ class CSV_exporter():
 
         job_endpoint = "/export-jobs/"
         job_url = self.base_url + job_endpoint
-        r = self.OS_request_gen.post_request(job_url, data)
-        req_json = json.loads(r.text)
-        if req_json["status"] == "IN_PROGRESS":
-            print("Waiting for job to finish")
-            time.sleep(35)
+        done = False
+        
+        while not done:
+            r = self.OS_request_gen.post_request(job_url, data)
+            assert r.status_code == 200, "Error creating Job:\n {}".format(r.text)
+            req_json = json.loads(r.text)
+            if req_json["status"] == "IN_PROGRESS":
+                print("Waiting for job to finish")
+                time.sleep(5)
+            else:
+                done = True
+        
         job_id = req_json["id"]
         
         return job_id
@@ -79,13 +87,14 @@ class CSV_exporter():
 
         Parameters
         ----------
-        job_id : String representing the ID for identifying the output file
+        job_id : 
+            String representing the ID for identifying the output file
 
         Returns
         -------
         job_data: pandas.DataFrame()
-        A pandas data frame containing the CSV files information. You can easily recover the original file
-        by using the pandas.to_csv() method.
+            A pandas data frame containing the CSV files information. You can easily recover the original file
+            by using the pandas.to_csv() method.
         """        
 	
 
@@ -93,12 +102,12 @@ class CSV_exporter():
         job_out_url = self.base_url + job_out_endpoint
 
         r = self.OS_request_gen.get_request(job_out_url, stream=True)
-        with open("testfile", "wb") as fp:
-            fp.write(r.content)
-        with zipfile.ZipFile("testfile", "r") as archive:
+        assert isinstance(r.content, bytes), "Error getting job Output either check job status or see attached error:\n {}".format(r.text)
+        file = io.BytesIO(r.content)
+
+        with zipfile.ZipFile(file, "r") as archive:
             job_data = archive.open("output.csv", "r")
             job_data = pd.read_csv(job_data)
-        os.remove("testfile")
 
         return job_data
 

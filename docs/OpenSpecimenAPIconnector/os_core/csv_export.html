@@ -31,49 +31,111 @@ import zipfile
 import json
 import time
 import io
-import requests
-import json
-import tempfile
-import os
-from json.decoder import JSONDecodeError
-
-from datetime import datetime
-
 from .req_util import OS_request_gen
+from .. import config_manager
 
 class CSV_exporter():
+    &#34;&#34;&#34;Handles the API calls for CSV file export
 
-    def __init__(self, base_url, auth):
-        # define class members here
-        self.OS_request_gen = OS_request_gen(auth)
-        self.base_url = base_url
-        self.auth = auth
+    This class provides methods to create and fetch the resutls of an internal OpenSpecimen export job.
+
+
+    Notes
+    -----
+    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
+    just pass the parameters via JSON-formatted string. This means the user has to know the keywords.
+    The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
+    the calls refer to this site. More details can be seen in the documentation.
+
+    Example
+    -------
+
+    Just call create export job with the correct data json String like
+    my_id = CSV_exporter().create_export_job(*args) or supply a job id to call
+    my_pd_data_frame = CSV_exporter().get_job_output(*args) to retrieve a pandas data frame
+    &#34;&#34;&#34;
+
+    def __init__(self):
+        
+        &#34;&#34;&#34;Constructor of the Class CSV_exporter
+
+        Handles the basic API-calls for export-job fetching and creation. Either creates or fetches the outcome of an 
+        specific export job
+
+        Parameters
+        ----------
+        base_url : string
+        URL to openspecimen, has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng
+        auth : tuple
+        Consits of two strings (loginname , password)
+        &#34;&#34;&#34;
+        self.base_url = config_manager.get_url()
+        self.auth = config_manager.get_auth()
+        self.OS_request_gen = OS_request_gen(self.auth)
 
     def create_export_job(self, data):
 
+        &#34;&#34;&#34;Create export job method with the entity (Collection Protocoll, Institutes etc.)
+        encoded within the data JSON-formated-strig.
+
+        Parameters
+        ----------
+        data : JSON-formatted-string 
+        Containing the information needed by the API. 
+        See OpenSpecimenAPIconnector.os_util.Export_OP().export_file to find the JSON 
+        blueprint methods in OpenSpecimenAPIconnector.os_core.Json_Factory().
+
+        Returns
+        -------
+        job_id: String
+        A string representing the id (integer number) assigned by the OpenSpecimen API
+        &#34;&#34;&#34;        
+
         job_endpoint = &#34;/export-jobs/&#34;
         job_url = self.base_url + job_endpoint
-        r = self.OS_request_gen.post_request(job_url, data)
-        req_json = json.loads(r.text)
-        if req_json[&#34;status&#34;] == &#34;IN_PROGRESS&#34;:
-            print(&#34;Waiting for job to finish&#34;)
-            time.sleep(35)
+        done = False
+        
+        while not done:
+            r = self.OS_request_gen.post_request(job_url, data)
+            assert r.status_code == 200, &#34;Error creating Job:\n {}&#34;.format(r.text)
+            req_json = json.loads(r.text)
+            if req_json[&#34;status&#34;] == &#34;IN_PROGRESS&#34;:
+                print(&#34;Waiting for job to finish&#34;)
+                time.sleep(5)
+            else:
+                done = True
+        
         job_id = req_json[&#34;id&#34;]
         
         return job_id
 
     def get_job_output(self, job_id):
 
+        &#34;&#34;&#34;Fetch the output 
+
+        Parameters
+        ----------
+        job_id : 
+            String representing the ID for identifying the output file
+
+        Returns
+        -------
+        job_data: pandas.DataFrame()
+            A pandas data frame containing the CSV files information. You can easily recover the original file
+            by using the pandas.to_csv() method.
+        &#34;&#34;&#34;        
+        
+
         job_out_endpoint = &#34;/export-jobs/{}/output&#34;.format(job_id)
         job_out_url = self.base_url + job_out_endpoint
 
         r = self.OS_request_gen.get_request(job_out_url, stream=True)
-        with open(&#34;testfile&#34;, &#34;wb&#34;) as fp:
-            fp.write(r.content)
-        with zipfile.ZipFile(&#34;testfile&#34;, &#34;r&#34;) as archive:
+        assert isinstance(r.content, bytes), &#34;Error getting job Output either check job status or see attached error:\n {}&#34;.format(r.text)
+        file = io.BytesIO(r.content)
+
+        with zipfile.ZipFile(file, &#34;r&#34;) as archive:
             job_data = archive.open(&#34;output.csv&#34;, &#34;r&#34;)
             job_data = pd.read_csv(job_data)
-        os.remove(&#34;testfile&#34;)
 
         return job_data</code></pre>
 </details>
@@ -89,47 +151,137 @@ class CSV_exporter():
 <dl>
 <dt id="OpenSpecimenAPIconnector.os_core.csv_export.CSV_exporter"><code class="flex name class">
 <span>class <span class="ident">CSV_exporter</span></span>
-<span>(</span><span>base_url, auth)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Handles the API calls for CSV file export</p>
+<p>This class provides methods to create and fetch the resutls of an internal OpenSpecimen export job.</p>
+<h2 id="notes">Notes</h2>
+<p>In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
+just pass the parameters via JSON-formatted string. This means the user has to know the keywords.
+The API calls are documented in <a href="https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs">https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs</a> and
+the calls refer to this site. More details can be seen in the documentation.</p>
+<h2 id="example">Example</h2>
+<p>Just call create export job with the correct data json String like
+my_id = CSV_exporter().create_export_job(<em>args) or supply a job id to call
+my_pd_data_frame = CSV_exporter().get_job_output(</em>args) to retrieve a pandas data frame</p>
+<p>Constructor of the Class CSV_exporter</p>
+<p>Handles the basic API-calls for export-job fetching and creation. Either creates or fetches the outcome of an
+specific export job</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>base_url</code></strong> :&ensp;<code>string</code></dt>
+<dd>&nbsp;</dd>
+<dt>URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng</dt>
+<dt><strong><code>auth</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<p>Consits of two strings (loginname , password)</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class CSV_exporter():
+    &#34;&#34;&#34;Handles the API calls for CSV file export
 
-    def __init__(self, base_url, auth):
-        # define class members here
-        self.OS_request_gen = OS_request_gen(auth)
-        self.base_url = base_url
-        self.auth = auth
+    This class provides methods to create and fetch the resutls of an internal OpenSpecimen export job.
+
+
+    Notes
+    -----
+    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
+    just pass the parameters via JSON-formatted string. This means the user has to know the keywords.
+    The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
+    the calls refer to this site. More details can be seen in the documentation.
+
+    Example
+    -------
+
+    Just call create export job with the correct data json String like
+    my_id = CSV_exporter().create_export_job(*args) or supply a job id to call
+    my_pd_data_frame = CSV_exporter().get_job_output(*args) to retrieve a pandas data frame
+    &#34;&#34;&#34;
+
+    def __init__(self):
+        
+        &#34;&#34;&#34;Constructor of the Class CSV_exporter
+
+        Handles the basic API-calls for export-job fetching and creation. Either creates or fetches the outcome of an 
+        specific export job
+
+        Parameters
+        ----------
+        base_url : string
+        URL to openspecimen, has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng
+        auth : tuple
+        Consits of two strings (loginname , password)
+        &#34;&#34;&#34;
+        self.base_url = config_manager.get_url()
+        self.auth = config_manager.get_auth()
+        self.OS_request_gen = OS_request_gen(self.auth)
 
     def create_export_job(self, data):
 
+        &#34;&#34;&#34;Create export job method with the entity (Collection Protocoll, Institutes etc.)
+        encoded within the data JSON-formated-strig.
+
+        Parameters
+        ----------
+        data : JSON-formatted-string 
+        Containing the information needed by the API. 
+        See OpenSpecimenAPIconnector.os_util.Export_OP().export_file to find the JSON 
+        blueprint methods in OpenSpecimenAPIconnector.os_core.Json_Factory().
+
+        Returns
+        -------
+        job_id: String
+        A string representing the id (integer number) assigned by the OpenSpecimen API
+        &#34;&#34;&#34;        
+
         job_endpoint = &#34;/export-jobs/&#34;
         job_url = self.base_url + job_endpoint
-        r = self.OS_request_gen.post_request(job_url, data)
-        req_json = json.loads(r.text)
-        if req_json[&#34;status&#34;] == &#34;IN_PROGRESS&#34;:
-            print(&#34;Waiting for job to finish&#34;)
-            time.sleep(35)
+        done = False
+        
+        while not done:
+            r = self.OS_request_gen.post_request(job_url, data)
+            assert r.status_code == 200, &#34;Error creating Job:\n {}&#34;.format(r.text)
+            req_json = json.loads(r.text)
+            if req_json[&#34;status&#34;] == &#34;IN_PROGRESS&#34;:
+                print(&#34;Waiting for job to finish&#34;)
+                time.sleep(5)
+            else:
+                done = True
+        
         job_id = req_json[&#34;id&#34;]
         
         return job_id
 
     def get_job_output(self, job_id):
 
+        &#34;&#34;&#34;Fetch the output 
+
+        Parameters
+        ----------
+        job_id : 
+            String representing the ID for identifying the output file
+
+        Returns
+        -------
+        job_data: pandas.DataFrame()
+            A pandas data frame containing the CSV files information. You can easily recover the original file
+            by using the pandas.to_csv() method.
+        &#34;&#34;&#34;        
+        
+
         job_out_endpoint = &#34;/export-jobs/{}/output&#34;.format(job_id)
         job_out_url = self.base_url + job_out_endpoint
 
         r = self.OS_request_gen.get_request(job_out_url, stream=True)
-        with open(&#34;testfile&#34;, &#34;wb&#34;) as fp:
-            fp.write(r.content)
-        with zipfile.ZipFile(&#34;testfile&#34;, &#34;r&#34;) as archive:
+        assert isinstance(r.content, bytes), &#34;Error getting job Output either check job status or see attached error:\n {}&#34;.format(r.text)
+        file = io.BytesIO(r.content)
+
+        with zipfile.ZipFile(file, &#34;r&#34;) as archive:
             job_data = archive.open(&#34;output.csv&#34;, &#34;r&#34;)
             job_data = pd.read_csv(job_data)
-        os.remove(&#34;testfile&#34;)
 
         return job_data</code></pre>
 </details>
@@ -139,20 +291,59 @@ class CSV_exporter():
 <span>def <span class="ident">create_export_job</span></span>(<span>self, data)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Create export job method with the entity (Collection Protocoll, Institutes etc.)
+encoded within the data JSON-formated-strig.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>data</code></strong> :&ensp;<code>JSON-formatted-string</code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<p>Containing the information needed by the API.
+See OpenSpecimenAPIconnector.os_util.Export_OP().export_file to find the JSON
+blueprint methods in OpenSpecimenAPIconnector.os_core.Json_Factory().</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>job_id</code></strong> :&ensp;<code>String</code></dt>
+<dd>&nbsp;</dd>
+<dt><code>A string representing the id (integer number) assigned by the OpenSpecimen API</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def create_export_job(self, data):
 
+    &#34;&#34;&#34;Create export job method with the entity (Collection Protocoll, Institutes etc.)
+    encoded within the data JSON-formated-strig.
+
+    Parameters
+    ----------
+    data : JSON-formatted-string 
+    Containing the information needed by the API. 
+    See OpenSpecimenAPIconnector.os_util.Export_OP().export_file to find the JSON 
+    blueprint methods in OpenSpecimenAPIconnector.os_core.Json_Factory().
+
+    Returns
+    -------
+    job_id: String
+    A string representing the id (integer number) assigned by the OpenSpecimen API
+    &#34;&#34;&#34;        
+
     job_endpoint = &#34;/export-jobs/&#34;
     job_url = self.base_url + job_endpoint
-    r = self.OS_request_gen.post_request(job_url, data)
-    req_json = json.loads(r.text)
-    if req_json[&#34;status&#34;] == &#34;IN_PROGRESS&#34;:
-        print(&#34;Waiting for job to finish&#34;)
-        time.sleep(35)
+    done = False
+    
+    while not done:
+        r = self.OS_request_gen.post_request(job_url, data)
+        assert r.status_code == 200, &#34;Error creating Job:\n {}&#34;.format(r.text)
+        req_json = json.loads(r.text)
+        if req_json[&#34;status&#34;] == &#34;IN_PROGRESS&#34;:
+            print(&#34;Waiting for job to finish&#34;)
+            time.sleep(5)
+        else:
+            done = True
+    
     job_id = req_json[&#34;id&#34;]
     
     return job_id</code></pre>
@@ -162,23 +353,49 @@ class CSV_exporter():
 <span>def <span class="ident">get_job_output</span></span>(<span>self, job_id)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Fetch the output </p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>job_id</code></strong></dt>
+<dd>String representing the ID for identifying the output file</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>job_data</code></strong> :&ensp;<code>pandas.DataFrame()</code></dt>
+<dd>A pandas data frame containing the CSV files information. You can easily recover the original file
+by using the pandas.to_csv() method.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def get_job_output(self, job_id):
 
+    &#34;&#34;&#34;Fetch the output 
+
+    Parameters
+    ----------
+    job_id : 
+        String representing the ID for identifying the output file
+
+    Returns
+    -------
+    job_data: pandas.DataFrame()
+        A pandas data frame containing the CSV files information. You can easily recover the original file
+        by using the pandas.to_csv() method.
+    &#34;&#34;&#34;        
+    
+
     job_out_endpoint = &#34;/export-jobs/{}/output&#34;.format(job_id)
     job_out_url = self.base_url + job_out_endpoint
 
     r = self.OS_request_gen.get_request(job_out_url, stream=True)
-    with open(&#34;testfile&#34;, &#34;wb&#34;) as fp:
-        fp.write(r.content)
-    with zipfile.ZipFile(&#34;testfile&#34;, &#34;r&#34;) as archive:
+    assert isinstance(r.content, bytes), &#34;Error getting job Output either check job status or see attached error:\n {}&#34;.format(r.text)
+    file = io.BytesIO(r.content)
+
+    with zipfile.ZipFile(file, &#34;r&#34;) as archive:
         job_data = archive.open(&#34;output.csv&#34;, &#34;r&#34;)
         job_data = pd.read_csv(job_data)
-    os.remove(&#34;testfile&#34;)
 
     return job_data</code></pre>
 </details>

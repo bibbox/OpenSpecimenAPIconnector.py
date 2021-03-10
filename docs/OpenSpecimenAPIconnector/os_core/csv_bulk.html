@@ -37,43 +37,41 @@ from datetime import datetime
 
 from .req_util import OS_request_gen
 from .jsons import Json_factory
-
+from .. import config_manager
 
 class csv_bulk:
     &#34;&#34;&#34;Handles the OpenSpecimen CSV Bulk Importer via API.
 
     Handles the API calls of the OpenSpecimen&#39;s Bulk Importer for all the different schemas. 
-    this class can get the templates to a schema, upload the csv-files, run the job, get the job status
+    This class can get the templates to a schema, upload the csv-files, run the job, get the job status
     and get the job report.
 
     Note
     ----
-    The OpenSpecimen Documentation of Bulk Import can be seen at 
+    The OpenSpecimen Documentation of the Bulk Import can be seen at 
     https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/440434702/Bulk+Import+via+API .
     File uploading in OpenSpecimen are two calls, which here are two seperated calls, via the
-    function bulk_import fron the os_util class bulk_operations this calls get one call.
+    function bulk_import from the os_util class bulk_operations these calls get one call.
     &#34;&#34;&#34;
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         &#34;&#34;&#34;Constructor of the class csv_bulk
 
         Constructor of the class csv_bulk. It also connects this class to the OpenSpecimen specific requests class
-        OS_request_gen, and the OpenSpecimen standard JSON-dict generater clas JSON_factory
+        OS_request_gen, and the OpenSpecimen standard JSON-dict generator class JSON_factory
         &#34;&#34;&#34;
-       
-        self.OS_request_gen = OS_request_gen(auth)
+        self.base_url = config_manager.get_url() + &#39;/import-jobs&#39;
+        self.auth = config_manager.get_auth()
+        self.OS_request_gen = OS_request_gen(self.auth)
         self.Json_fact = Json_factory()
-        self.base_url = base_url + &#39;/import-jobs&#39;
-        self.auth = auth
-
 
     def ausgabe(self):
 
         &#34;&#34;&#34;Testing of the URL and authentification.
 
-        If there are unexpected errors one can easily test if the URL and login data is correctly spelled.
-        the function prints the URL and login data, handed over to the class, to the output terminal.
+        If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
+        The function prints the URL and login data to the output terminal, which was handed over to the class.
         &#34;&#34;&#34;
 
         print(self.base_url, self.OS_request_gen.auth)
@@ -83,8 +81,8 @@ class csv_bulk:
     
         &#34;&#34;&#34;Get the Templates to the corresponding schema
 
-        Get the Templates of a OpenSpecimen schema and loads it into an empty pandas dataframe,
-        where the OpenSpecimen specific keys are the header of the dataframe. To use this class one has to know the 
+        Get the Templates of a OpenSpecimen schema and load it into an empty pandas dataframe,
+        where the OpenSpecimen specific keys are the header of the dataframe. To use this class, one has to know the 
         schemanames which are used in OpenSpecimen. They are written in camelCase.
 
         Note
@@ -103,35 +101,42 @@ class csv_bulk:
         -------
         pandas core dataframe
             Empty dataframe with OpenSpecimen&#39;s keys to the corresponding schema.
+        data binary csv file
+            The raw csv file 
         &#34;&#34;&#34;
+
+        schemes = [&#34;cp&#34;, &#34;specimen&#34;, &#34;cpr&#34;, &#34;user&#34;, &#34;userRoles&#34;, &#34;site&#34;, &#34;shipment&#34;,
+            &#34;institute&#34;, &#34;dpRequirement&#34;, &#34;distributionProtocol&#34;, &#34;distributionOrder&#34;, &#34;storageContainer&#34;, &#34;storageContainerType&#34;,
+            &#34;containerShipment&#34;, &#34;cpe&#34;, &#34;masterSpecimen&#34;, &#34;participant&#34;, &#34;sr&#34;, &#34;visit&#34;, &#34;specimenAliquot&#34;, &#34;specimenDerivative&#34;,
+            &#34;specimenDisposal&#34;, &#34;consent&#34;]
+       
+        assert schemaname in schemes, &#34;Non permissible schema please check documentation for permissible values&#34;
 
         endpoint = &#39;/input-file-template?schema=&#39; + str(schemaname)
         url = self.base_url + endpoint
 
         r = self.OS_request_gen.get_request(url)
-
+    
         data = io.StringIO(r.text)
         ret_val = pandas.read_csv(data, sep=&#34;,&#34;,encoding=&#39;UTF-8&#39;, engine=&#39;python&#39;)
-
-        return ret_val
-
-
+       
+        return ret_val, data
 
     def upload_csv(self, filename, file):
 
         &#34;&#34;&#34;Upload a CSV file to OpenSpecimen
 
-        First part of uploading a CSV file to OpenSpecimen. This creates a job with a file-id.
-        With the file-id the job then can be started via the function run_upload.
+        This function handles the uploading of a CSV file to OpenSpecimen. This creates a job with a file-ID.
+        With the file-ID the job then can be started via the function run_upload.
 
         Note
         ----
-        The values are separeted by comma &#39;,&#39;. This is the OpenSpecimen standard format.
+        The values are separated by comma &#39;,&#39;. This is the OpenSpecimen standard format.
 
         Parameters
         ----------
         filename : string
-            The name of the file which should get uploaded as string with the ending, here .csv .
+            The name of the file as string with the ending, here .csv . 
         
         file : binary
             The file itself which should get uploaded.
@@ -139,7 +144,7 @@ class csv_bulk:
         Returns
         -------
         list
-            The Job-Id as list with length 1.
+            The Job-ID as list with length 1.
         &#34;&#34;&#34;
 
         endpoint = &#39;/input-file&#39;
@@ -153,14 +158,14 @@ class csv_bulk:
 
     def run_upload(self, schemaname, fileid, operation = &#39;CREATE&#39;, dateformat = None, timeformat = None):
 
-        &#34;&#34;&#34;Run a the job which is already created.
+        &#34;&#34;&#34;Run a job which is already created.
 
-        Runs a Job, which is already created. The schema and fileid have to be known. Moreover one has to specify if 
-        the Job updates already existing objects or create new ones.
+        Runs a Job, which is already created. The schema and file-ID have to be known. Moreover, one has to specify if 
+        the job updates already existing objects or create new ones.
 
         Note
         ----
-        The date and timeformat can be left empty if it is compatible with OpenSpecimen.
+        The date and timeformat can be left empty, if it is compatible with OpenSpecimen.
 
         Parameters
         ----------
@@ -171,29 +176,28 @@ class csv_bulk:
             specimenDisposal, consent
 
         fileid : string
-            The file-id, from OpenSpecimen generated , which is generated when the file is uploaded.
+            The file-ID, from OpenSpecimen generated, which is generated when the file is uploaded.
 
         operation : string
             The permissable operations are &#39;CREATE&#39; and &#39;UPDATE&#39;.
 
         dateformat : string
-            An optional parameter, which has to be specified if the format is not compatible with OpsenSpeimen.
+            An optional parameter, which has to be specified if the format is not compatible with OpenSpecimen.
 
         timeformat : string
-            An optional parameter, which has to be specified if the format is not compatible with OpsenSpeimen. 
+            An optional parameter, which has to be specified if the format is not compatible with OpenSpecimen. 
 
 
         Returns
         -------
         string
-            A tupple with the format (&#39;JOBID&#39;, &#39;Response Text&#39;).
+            A tuple with the format (&#39;JOBID&#39;, &#39;Response Text&#39;).
         &#34;&#34;&#34;
 
         url = self.base_url
-        payload = self.Json_fact.create_cpr_part_import_job(schemaname=schemaname, operation=operation, fileid=fileid,
+        payload = self.Json_fact.create_bulk_import_job(schemaname=schemaname, operation=operation, fileid=fileid,
                                                             dateformat=dateformat, timeformat=timeformat)
         r = self.OS_request_gen.post_request(url, data=payload)
-
         return (json.loads(r.text)[&#34;id&#34;], r.text)
 
 
@@ -201,7 +205,7 @@ class csv_bulk:
 
         &#34;&#34;&#34;Get the Job status.
 
-        Get the status of a job with zje ID ::jobid:: . The status of the job has to be known and 
+        Get the status of a job with the ID ::jobid:: . The status of the job has to be known and 
         can be seen via GUI in JOBS. The number after # in the title is the ID. The codes are:
         200 : Bulk Import request was successfully processed.
         401 : Authorisation failed, user doesn’t have the authority.
@@ -209,8 +213,8 @@ class csv_bulk:
 
         Parameters
         ----------
-        jobid : string or int
-            ID of the job, which status has to be looked after.
+        jobid : int
+            ID of the job.
 
         Returns
         -------
@@ -230,22 +234,22 @@ class csv_bulk:
 
         &#34;&#34;&#34;Download a job report.
 
-        Get the status of a job with zje ID ::jobid:: . The status of the job has to be known and 
-        can be seen via GUI in JOBS or in the corresponding schema with View Past Imports . The number 
+        Get the status of a job with the ID ::jobid:: . The status of the job has to be known and 
+        can be seen via GUI in JOBS or in the corresponding schema with View Past Imports. The number 
         after # in the title is the ID. Generates a JSON-dict of the JOB containing the information
         which were uploaded and the additional fields OS_IMPORT_STATUS, OS_ERROR_MESSAGE.
-        The Status and Error message can be extracted, when converted to a list with location [-2,-1],
+        The status and error message can be extracted when converted to a list with location [-2,-1],
         or when converted to a dict with keys [&#39;OS_IMPORT_STATUS&#39;] and [&#39;OS_ERROR_MESSAGE&#39;].
 
         Parameters
         ----------
-        jobid : string or int
-            ID of the job, which status has to be looked after.
+        jobid : int
+            ID of the job.
 
         Returns
         -------
         string
-            Job details as CSV like string separeted by &#39;,&#39;
+            Job details as CSV like string separated by &#39;,&#39;
         &#34;&#34;&#34;
 
         endpoint = &#39;/&#39; + str(jobid) + &#39;/output&#39;
@@ -267,21 +271,20 @@ class csv_bulk:
 <dl>
 <dt id="OpenSpecimenAPIconnector.os_core.csv_bulk.csv_bulk"><code class="flex name class">
 <span>class <span class="ident">csv_bulk</span></span>
-<span>(</span><span>base_url, auth)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Handles the OpenSpecimen CSV Bulk Importer via API.</p>
 <p>Handles the API calls of the OpenSpecimen's Bulk Importer for all the different schemas.
-this class can get the templates to a schema, upload the csv-files, run the job, get the job status
+This class can get the templates to a schema, upload the csv-files, run the job, get the job status
 and get the job report.</p>
 <h2 id="note">Note</h2>
-<p>The OpenSpecimen Documentation of Bulk Import can be seen at
+<p>The OpenSpecimen Documentation of the Bulk Import can be seen at
 <a href="https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/440434702/Bulk+Import+via+API">https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/440434702/Bulk+Import+via+API</a> .
 File uploading in OpenSpecimen are two calls, which here are two seperated calls, via the
-function bulk_import fron the os_util class bulk_operations this calls get one call.</p>
+function bulk_import from the os_util class bulk_operations these calls get one call.</p>
 <p>Constructor of the class csv_bulk</p>
 <p>Constructor of the class csv_bulk. It also connects this class to the OpenSpecimen specific requests class
-OS_request_gen, and the OpenSpecimen standard JSON-dict generater clas JSON_factory</p></div>
+OS_request_gen, and the OpenSpecimen standard JSON-dict generator class JSON_factory</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -290,37 +293,35 @@ OS_request_gen, and the OpenSpecimen standard JSON-dict generater clas JSON_fact
     &#34;&#34;&#34;Handles the OpenSpecimen CSV Bulk Importer via API.
 
     Handles the API calls of the OpenSpecimen&#39;s Bulk Importer for all the different schemas. 
-    this class can get the templates to a schema, upload the csv-files, run the job, get the job status
+    This class can get the templates to a schema, upload the csv-files, run the job, get the job status
     and get the job report.
 
     Note
     ----
-    The OpenSpecimen Documentation of Bulk Import can be seen at 
+    The OpenSpecimen Documentation of the Bulk Import can be seen at 
     https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/440434702/Bulk+Import+via+API .
     File uploading in OpenSpecimen are two calls, which here are two seperated calls, via the
-    function bulk_import fron the os_util class bulk_operations this calls get one call.
+    function bulk_import from the os_util class bulk_operations these calls get one call.
     &#34;&#34;&#34;
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         &#34;&#34;&#34;Constructor of the class csv_bulk
 
         Constructor of the class csv_bulk. It also connects this class to the OpenSpecimen specific requests class
-        OS_request_gen, and the OpenSpecimen standard JSON-dict generater clas JSON_factory
+        OS_request_gen, and the OpenSpecimen standard JSON-dict generator class JSON_factory
         &#34;&#34;&#34;
-       
-        self.OS_request_gen = OS_request_gen(auth)
+        self.base_url = config_manager.get_url() + &#39;/import-jobs&#39;
+        self.auth = config_manager.get_auth()
+        self.OS_request_gen = OS_request_gen(self.auth)
         self.Json_fact = Json_factory()
-        self.base_url = base_url + &#39;/import-jobs&#39;
-        self.auth = auth
-
 
     def ausgabe(self):
 
         &#34;&#34;&#34;Testing of the URL and authentification.
 
-        If there are unexpected errors one can easily test if the URL and login data is correctly spelled.
-        the function prints the URL and login data, handed over to the class, to the output terminal.
+        If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
+        The function prints the URL and login data to the output terminal, which was handed over to the class.
         &#34;&#34;&#34;
 
         print(self.base_url, self.OS_request_gen.auth)
@@ -330,8 +331,8 @@ OS_request_gen, and the OpenSpecimen standard JSON-dict generater clas JSON_fact
     
         &#34;&#34;&#34;Get the Templates to the corresponding schema
 
-        Get the Templates of a OpenSpecimen schema and loads it into an empty pandas dataframe,
-        where the OpenSpecimen specific keys are the header of the dataframe. To use this class one has to know the 
+        Get the Templates of a OpenSpecimen schema and load it into an empty pandas dataframe,
+        where the OpenSpecimen specific keys are the header of the dataframe. To use this class, one has to know the 
         schemanames which are used in OpenSpecimen. They are written in camelCase.
 
         Note
@@ -350,35 +351,42 @@ OS_request_gen, and the OpenSpecimen standard JSON-dict generater clas JSON_fact
         -------
         pandas core dataframe
             Empty dataframe with OpenSpecimen&#39;s keys to the corresponding schema.
+        data binary csv file
+            The raw csv file 
         &#34;&#34;&#34;
+
+        schemes = [&#34;cp&#34;, &#34;specimen&#34;, &#34;cpr&#34;, &#34;user&#34;, &#34;userRoles&#34;, &#34;site&#34;, &#34;shipment&#34;,
+            &#34;institute&#34;, &#34;dpRequirement&#34;, &#34;distributionProtocol&#34;, &#34;distributionOrder&#34;, &#34;storageContainer&#34;, &#34;storageContainerType&#34;,
+            &#34;containerShipment&#34;, &#34;cpe&#34;, &#34;masterSpecimen&#34;, &#34;participant&#34;, &#34;sr&#34;, &#34;visit&#34;, &#34;specimenAliquot&#34;, &#34;specimenDerivative&#34;,
+            &#34;specimenDisposal&#34;, &#34;consent&#34;]
+       
+        assert schemaname in schemes, &#34;Non permissible schema please check documentation for permissible values&#34;
 
         endpoint = &#39;/input-file-template?schema=&#39; + str(schemaname)
         url = self.base_url + endpoint
 
         r = self.OS_request_gen.get_request(url)
-
+    
         data = io.StringIO(r.text)
         ret_val = pandas.read_csv(data, sep=&#34;,&#34;,encoding=&#39;UTF-8&#39;, engine=&#39;python&#39;)
-
-        return ret_val
-
-
+       
+        return ret_val, data
 
     def upload_csv(self, filename, file):
 
         &#34;&#34;&#34;Upload a CSV file to OpenSpecimen
 
-        First part of uploading a CSV file to OpenSpecimen. This creates a job with a file-id.
-        With the file-id the job then can be started via the function run_upload.
+        This function handles the uploading of a CSV file to OpenSpecimen. This creates a job with a file-ID.
+        With the file-ID the job then can be started via the function run_upload.
 
         Note
         ----
-        The values are separeted by comma &#39;,&#39;. This is the OpenSpecimen standard format.
+        The values are separated by comma &#39;,&#39;. This is the OpenSpecimen standard format.
 
         Parameters
         ----------
         filename : string
-            The name of the file which should get uploaded as string with the ending, here .csv .
+            The name of the file as string with the ending, here .csv . 
         
         file : binary
             The file itself which should get uploaded.
@@ -386,7 +394,7 @@ OS_request_gen, and the OpenSpecimen standard JSON-dict generater clas JSON_fact
         Returns
         -------
         list
-            The Job-Id as list with length 1.
+            The Job-ID as list with length 1.
         &#34;&#34;&#34;
 
         endpoint = &#39;/input-file&#39;
@@ -400,14 +408,14 @@ OS_request_gen, and the OpenSpecimen standard JSON-dict generater clas JSON_fact
 
     def run_upload(self, schemaname, fileid, operation = &#39;CREATE&#39;, dateformat = None, timeformat = None):
 
-        &#34;&#34;&#34;Run a the job which is already created.
+        &#34;&#34;&#34;Run a job which is already created.
 
-        Runs a Job, which is already created. The schema and fileid have to be known. Moreover one has to specify if 
-        the Job updates already existing objects or create new ones.
+        Runs a Job, which is already created. The schema and file-ID have to be known. Moreover, one has to specify if 
+        the job updates already existing objects or create new ones.
 
         Note
         ----
-        The date and timeformat can be left empty if it is compatible with OpenSpecimen.
+        The date and timeformat can be left empty, if it is compatible with OpenSpecimen.
 
         Parameters
         ----------
@@ -418,29 +426,28 @@ OS_request_gen, and the OpenSpecimen standard JSON-dict generater clas JSON_fact
             specimenDisposal, consent
 
         fileid : string
-            The file-id, from OpenSpecimen generated , which is generated when the file is uploaded.
+            The file-ID, from OpenSpecimen generated, which is generated when the file is uploaded.
 
         operation : string
             The permissable operations are &#39;CREATE&#39; and &#39;UPDATE&#39;.
 
         dateformat : string
-            An optional parameter, which has to be specified if the format is not compatible with OpsenSpeimen.
+            An optional parameter, which has to be specified if the format is not compatible with OpenSpecimen.
 
         timeformat : string
-            An optional parameter, which has to be specified if the format is not compatible with OpsenSpeimen. 
+            An optional parameter, which has to be specified if the format is not compatible with OpenSpecimen. 
 
 
         Returns
         -------
         string
-            A tupple with the format (&#39;JOBID&#39;, &#39;Response Text&#39;).
+            A tuple with the format (&#39;JOBID&#39;, &#39;Response Text&#39;).
         &#34;&#34;&#34;
 
         url = self.base_url
-        payload = self.Json_fact.create_cpr_part_import_job(schemaname=schemaname, operation=operation, fileid=fileid,
+        payload = self.Json_fact.create_bulk_import_job(schemaname=schemaname, operation=operation, fileid=fileid,
                                                             dateformat=dateformat, timeformat=timeformat)
         r = self.OS_request_gen.post_request(url, data=payload)
-
         return (json.loads(r.text)[&#34;id&#34;], r.text)
 
 
@@ -448,7 +455,7 @@ OS_request_gen, and the OpenSpecimen standard JSON-dict generater clas JSON_fact
 
         &#34;&#34;&#34;Get the Job status.
 
-        Get the status of a job with zje ID ::jobid:: . The status of the job has to be known and 
+        Get the status of a job with the ID ::jobid:: . The status of the job has to be known and 
         can be seen via GUI in JOBS. The number after # in the title is the ID. The codes are:
         200 : Bulk Import request was successfully processed.
         401 : Authorisation failed, user doesn’t have the authority.
@@ -456,8 +463,8 @@ OS_request_gen, and the OpenSpecimen standard JSON-dict generater clas JSON_fact
 
         Parameters
         ----------
-        jobid : string or int
-            ID of the job, which status has to be looked after.
+        jobid : int
+            ID of the job.
 
         Returns
         -------
@@ -477,22 +484,22 @@ OS_request_gen, and the OpenSpecimen standard JSON-dict generater clas JSON_fact
 
         &#34;&#34;&#34;Download a job report.
 
-        Get the status of a job with zje ID ::jobid:: . The status of the job has to be known and 
-        can be seen via GUI in JOBS or in the corresponding schema with View Past Imports . The number 
+        Get the status of a job with the ID ::jobid:: . The status of the job has to be known and 
+        can be seen via GUI in JOBS or in the corresponding schema with View Past Imports. The number 
         after # in the title is the ID. Generates a JSON-dict of the JOB containing the information
         which were uploaded and the additional fields OS_IMPORT_STATUS, OS_ERROR_MESSAGE.
-        The Status and Error message can be extracted, when converted to a list with location [-2,-1],
+        The status and error message can be extracted when converted to a list with location [-2,-1],
         or when converted to a dict with keys [&#39;OS_IMPORT_STATUS&#39;] and [&#39;OS_ERROR_MESSAGE&#39;].
 
         Parameters
         ----------
-        jobid : string or int
-            ID of the job, which status has to be looked after.
+        jobid : int
+            ID of the job.
 
         Returns
         -------
         string
-            Job details as CSV like string separeted by &#39;,&#39;
+            Job details as CSV like string separated by &#39;,&#39;
         &#34;&#34;&#34;
 
         endpoint = &#39;/&#39; + str(jobid) + &#39;/output&#39;
@@ -509,8 +516,8 @@ OS_request_gen, and the OpenSpecimen standard JSON-dict generater clas JSON_fact
 </code></dt>
 <dd>
 <div class="desc"><p>Testing of the URL and authentification.</p>
-<p>If there are unexpected errors one can easily test if the URL and login data is correctly spelled.
-the function prints the URL and login data, handed over to the class, to the output terminal.</p></div>
+<p>If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
+The function prints the URL and login data to the output terminal, which was handed over to the class.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -519,8 +526,8 @@ the function prints the URL and login data, handed over to the class, to the out
 
     &#34;&#34;&#34;Testing of the URL and authentification.
 
-    If there are unexpected errors one can easily test if the URL and login data is correctly spelled.
-    the function prints the URL and login data, handed over to the class, to the output terminal.
+    If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
+    The function prints the URL and login data to the output terminal, which was handed over to the class.
     &#34;&#34;&#34;
 
     print(self.base_url, self.OS_request_gen.auth)</code></pre>
@@ -531,15 +538,15 @@ the function prints the URL and login data, handed over to the class, to the out
 </code></dt>
 <dd>
 <div class="desc"><p>Get the Job status.</p>
-<p>Get the status of a job with zje ID ::jobid:: . The status of the job has to be known and
+<p>Get the status of a job with the ID ::jobid:: . The status of the job has to be known and
 can be seen via GUI in JOBS. The number after # in the title is the ID. The codes are:
 200 : Bulk Import request was successfully processed.
 401 : Authorisation failed, user doesn’t have the authority.
 500 : Internal server error, encountered server error while performing operations.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>jobid</code></strong> :&ensp;<code>string</code> or <code>int</code></dt>
-<dd>ID of the job, which status has to be looked after.</dd>
+<dt><strong><code>jobid</code></strong> :&ensp;<code>int</code></dt>
+<dd>ID of the job.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
@@ -554,7 +561,7 @@ can be seen via GUI in JOBS. The number after # in the title is the ID. The code
 
     &#34;&#34;&#34;Get the Job status.
 
-    Get the status of a job with zje ID ::jobid:: . The status of the job has to be known and 
+    Get the status of a job with the ID ::jobid:: . The status of the job has to be known and 
     can be seen via GUI in JOBS. The number after # in the title is the ID. The codes are:
     200 : Bulk Import request was successfully processed.
     401 : Authorisation failed, user doesn’t have the authority.
@@ -562,8 +569,8 @@ can be seen via GUI in JOBS. The number after # in the title is the ID. The code
 
     Parameters
     ----------
-    jobid : string or int
-        ID of the job, which status has to be looked after.
+    jobid : int
+        ID of the job.
 
     Returns
     -------
@@ -584,8 +591,8 @@ can be seen via GUI in JOBS. The number after # in the title is the ID. The code
 </code></dt>
 <dd>
 <div class="desc"><p>Get the Templates to the corresponding schema</p>
-<p>Get the Templates of a OpenSpecimen schema and loads it into an empty pandas dataframe,
-where the OpenSpecimen specific keys are the header of the dataframe. To use this class one has to know the
+<p>Get the Templates of a OpenSpecimen schema and load it into an empty pandas dataframe,
+where the OpenSpecimen specific keys are the header of the dataframe. To use this class, one has to know the
 schemanames which are used in OpenSpecimen. They are written in camelCase.</p>
 <h2 id="note">Note</h2>
 <p>The schemanames can be seen at: <a href="https://docs.google.com/spreadsheets/d/1fFcL91jSoTxusoBdxM_sr6TkLt65f25YPgfV-AYps4g/edit#gid=0">https://docs.google.com/spreadsheets/d/1fFcL91jSoTxusoBdxM_sr6TkLt65f25YPgfV-AYps4g/edit#gid=0</a></p>
@@ -601,6 +608,8 @@ specimenDisposal, consent</dd>
 <dl>
 <dt><code>pandas core dataframe</code></dt>
 <dd>Empty dataframe with OpenSpecimen's keys to the corresponding schema.</dd>
+<dt><code>data binary csv file</code></dt>
+<dd>The raw csv file</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -610,8 +619,8 @@ specimenDisposal, consent</dd>
 
     &#34;&#34;&#34;Get the Templates to the corresponding schema
 
-    Get the Templates of a OpenSpecimen schema and loads it into an empty pandas dataframe,
-    where the OpenSpecimen specific keys are the header of the dataframe. To use this class one has to know the 
+    Get the Templates of a OpenSpecimen schema and load it into an empty pandas dataframe,
+    where the OpenSpecimen specific keys are the header of the dataframe. To use this class, one has to know the 
     schemanames which are used in OpenSpecimen. They are written in camelCase.
 
     Note
@@ -630,7 +639,16 @@ specimenDisposal, consent</dd>
     -------
     pandas core dataframe
         Empty dataframe with OpenSpecimen&#39;s keys to the corresponding schema.
+    data binary csv file
+        The raw csv file 
     &#34;&#34;&#34;
+
+    schemes = [&#34;cp&#34;, &#34;specimen&#34;, &#34;cpr&#34;, &#34;user&#34;, &#34;userRoles&#34;, &#34;site&#34;, &#34;shipment&#34;,
+        &#34;institute&#34;, &#34;dpRequirement&#34;, &#34;distributionProtocol&#34;, &#34;distributionOrder&#34;, &#34;storageContainer&#34;, &#34;storageContainerType&#34;,
+        &#34;containerShipment&#34;, &#34;cpe&#34;, &#34;masterSpecimen&#34;, &#34;participant&#34;, &#34;sr&#34;, &#34;visit&#34;, &#34;specimenAliquot&#34;, &#34;specimenDerivative&#34;,
+        &#34;specimenDisposal&#34;, &#34;consent&#34;]
+   
+    assert schemaname in schemes, &#34;Non permissible schema please check documentation for permissible values&#34;
 
     endpoint = &#39;/input-file-template?schema=&#39; + str(schemaname)
     url = self.base_url + endpoint
@@ -639,8 +657,8 @@ specimenDisposal, consent</dd>
 
     data = io.StringIO(r.text)
     ret_val = pandas.read_csv(data, sep=&#34;,&#34;,encoding=&#39;UTF-8&#39;, engine=&#39;python&#39;)
-
-    return ret_val</code></pre>
+   
+    return ret_val, data</code></pre>
 </details>
 </dd>
 <dt id="OpenSpecimenAPIconnector.os_core.csv_bulk.csv_bulk.job_report"><code class="name flex">
@@ -648,21 +666,21 @@ specimenDisposal, consent</dd>
 </code></dt>
 <dd>
 <div class="desc"><p>Download a job report.</p>
-<p>Get the status of a job with zje ID ::jobid:: . The status of the job has to be known and
-can be seen via GUI in JOBS or in the corresponding schema with View Past Imports . The number
+<p>Get the status of a job with the ID ::jobid:: . The status of the job has to be known and
+can be seen via GUI in JOBS or in the corresponding schema with View Past Imports. The number
 after # in the title is the ID. Generates a JSON-dict of the JOB containing the information
 which were uploaded and the additional fields OS_IMPORT_STATUS, OS_ERROR_MESSAGE.
-The Status and Error message can be extracted, when converted to a list with location [-2,-1],
+The status and error message can be extracted when converted to a list with location [-2,-1],
 or when converted to a dict with keys ['OS_IMPORT_STATUS'] and ['OS_ERROR_MESSAGE'].</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>jobid</code></strong> :&ensp;<code>string</code> or <code>int</code></dt>
-<dd>ID of the job, which status has to be looked after.</dd>
+<dt><strong><code>jobid</code></strong> :&ensp;<code>int</code></dt>
+<dd>ID of the job.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>string</code></dt>
-<dd>Job details as CSV like string separeted by ','</dd>
+<dd>Job details as CSV like string separated by ','</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -672,22 +690,22 @@ or when converted to a dict with keys ['OS_IMPORT_STATUS'] and ['OS_ERROR_MESSAG
 
     &#34;&#34;&#34;Download a job report.
 
-    Get the status of a job with zje ID ::jobid:: . The status of the job has to be known and 
-    can be seen via GUI in JOBS or in the corresponding schema with View Past Imports . The number 
+    Get the status of a job with the ID ::jobid:: . The status of the job has to be known and 
+    can be seen via GUI in JOBS or in the corresponding schema with View Past Imports. The number 
     after # in the title is the ID. Generates a JSON-dict of the JOB containing the information
     which were uploaded and the additional fields OS_IMPORT_STATUS, OS_ERROR_MESSAGE.
-    The Status and Error message can be extracted, when converted to a list with location [-2,-1],
+    The status and error message can be extracted when converted to a list with location [-2,-1],
     or when converted to a dict with keys [&#39;OS_IMPORT_STATUS&#39;] and [&#39;OS_ERROR_MESSAGE&#39;].
 
     Parameters
     ----------
-    jobid : string or int
-        ID of the job, which status has to be looked after.
+    jobid : int
+        ID of the job.
 
     Returns
     -------
     string
-        Job details as CSV like string separeted by &#39;,&#39;
+        Job details as CSV like string separated by &#39;,&#39;
     &#34;&#34;&#34;
 
     endpoint = &#39;/&#39; + str(jobid) + &#39;/output&#39;
@@ -702,11 +720,11 @@ or when converted to a dict with keys ['OS_IMPORT_STATUS'] and ['OS_ERROR_MESSAG
 <span>def <span class="ident">run_upload</span></span>(<span>self, schemaname, fileid, operation='CREATE', dateformat=None, timeformat=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Run a the job which is already created.</p>
-<p>Runs a Job, which is already created. The schema and fileid have to be known. Moreover one has to specify if
-the Job updates already existing objects or create new ones.</p>
+<div class="desc"><p>Run a job which is already created.</p>
+<p>Runs a Job, which is already created. The schema and file-ID have to be known. Moreover, one has to specify if
+the job updates already existing objects or create new ones.</p>
 <h2 id="note">Note</h2>
-<p>The date and timeformat can be left empty if it is compatible with OpenSpecimen.</p>
+<p>The date and timeformat can be left empty, if it is compatible with OpenSpecimen.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>schemaname</code></strong> :&ensp;<code>string</code></dt>
@@ -715,18 +733,18 @@ institute, dpRequirement, distributionProtocol, distributionOrder, storageContai
 containerShipment, cpe, masterSpecimen, participant, sr, visit, specimenAliquot, specimenDerivative,
 specimenDisposal, consent</dd>
 <dt><strong><code>fileid</code></strong> :&ensp;<code>string</code></dt>
-<dd>The file-id, from OpenSpecimen generated , which is generated when the file is uploaded.</dd>
+<dd>The file-ID, from OpenSpecimen generated, which is generated when the file is uploaded.</dd>
 <dt><strong><code>operation</code></strong> :&ensp;<code>string</code></dt>
 <dd>The permissable operations are 'CREATE' and 'UPDATE'.</dd>
 <dt><strong><code>dateformat</code></strong> :&ensp;<code>string</code></dt>
-<dd>An optional parameter, which has to be specified if the format is not compatible with OpsenSpeimen.</dd>
+<dd>An optional parameter, which has to be specified if the format is not compatible with OpenSpecimen.</dd>
 <dt><strong><code>timeformat</code></strong> :&ensp;<code>string</code></dt>
-<dd>An optional parameter, which has to be specified if the format is not compatible with OpsenSpeimen.</dd>
+<dd>An optional parameter, which has to be specified if the format is not compatible with OpenSpecimen.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>string</code></dt>
-<dd>A tupple with the format ('JOBID', 'Response Text').</dd>
+<dd>A tuple with the format ('JOBID', 'Response Text').</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -734,14 +752,14 @@ specimenDisposal, consent</dd>
 </summary>
 <pre><code class="python">def run_upload(self, schemaname, fileid, operation = &#39;CREATE&#39;, dateformat = None, timeformat = None):
 
-    &#34;&#34;&#34;Run a the job which is already created.
+    &#34;&#34;&#34;Run a job which is already created.
 
-    Runs a Job, which is already created. The schema and fileid have to be known. Moreover one has to specify if 
-    the Job updates already existing objects or create new ones.
+    Runs a Job, which is already created. The schema and file-ID have to be known. Moreover, one has to specify if 
+    the job updates already existing objects or create new ones.
 
     Note
     ----
-    The date and timeformat can be left empty if it is compatible with OpenSpecimen.
+    The date and timeformat can be left empty, if it is compatible with OpenSpecimen.
 
     Parameters
     ----------
@@ -752,29 +770,28 @@ specimenDisposal, consent</dd>
         specimenDisposal, consent
 
     fileid : string
-        The file-id, from OpenSpecimen generated , which is generated when the file is uploaded.
+        The file-ID, from OpenSpecimen generated, which is generated when the file is uploaded.
 
     operation : string
         The permissable operations are &#39;CREATE&#39; and &#39;UPDATE&#39;.
 
     dateformat : string
-        An optional parameter, which has to be specified if the format is not compatible with OpsenSpeimen.
+        An optional parameter, which has to be specified if the format is not compatible with OpenSpecimen.
 
     timeformat : string
-        An optional parameter, which has to be specified if the format is not compatible with OpsenSpeimen. 
+        An optional parameter, which has to be specified if the format is not compatible with OpenSpecimen. 
 
 
     Returns
     -------
     string
-        A tupple with the format (&#39;JOBID&#39;, &#39;Response Text&#39;).
+        A tuple with the format (&#39;JOBID&#39;, &#39;Response Text&#39;).
     &#34;&#34;&#34;
 
     url = self.base_url
-    payload = self.Json_fact.create_cpr_part_import_job(schemaname=schemaname, operation=operation, fileid=fileid,
+    payload = self.Json_fact.create_bulk_import_job(schemaname=schemaname, operation=operation, fileid=fileid,
                                                         dateformat=dateformat, timeformat=timeformat)
     r = self.OS_request_gen.post_request(url, data=payload)
-
     return (json.loads(r.text)[&#34;id&#34;], r.text)</code></pre>
 </details>
 </dd>
@@ -783,21 +800,21 @@ specimenDisposal, consent</dd>
 </code></dt>
 <dd>
 <div class="desc"><p>Upload a CSV file to OpenSpecimen</p>
-<p>First part of uploading a CSV file to OpenSpecimen. This creates a job with a file-id.
-With the file-id the job then can be started via the function run_upload.</p>
+<p>This function handles the uploading of a CSV file to OpenSpecimen. This creates a job with a file-ID.
+With the file-ID the job then can be started via the function run_upload.</p>
 <h2 id="note">Note</h2>
-<p>The values are separeted by comma ','. This is the OpenSpecimen standard format.</p>
+<p>The values are separated by comma ','. This is the OpenSpecimen standard format.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>filename</code></strong> :&ensp;<code>string</code></dt>
-<dd>The name of the file which should get uploaded as string with the ending, here .csv .</dd>
+<dd>The name of the file as string with the ending, here .csv .</dd>
 <dt><strong><code>file</code></strong> :&ensp;<code>binary</code></dt>
 <dd>The file itself which should get uploaded.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>list</code></dt>
-<dd>The Job-Id as list with length 1.</dd>
+<dd>The Job-ID as list with length 1.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -807,17 +824,17 @@ With the file-id the job then can be started via the function run_upload.</p>
 
     &#34;&#34;&#34;Upload a CSV file to OpenSpecimen
 
-    First part of uploading a CSV file to OpenSpecimen. This creates a job with a file-id.
-    With the file-id the job then can be started via the function run_upload.
+    This function handles the uploading of a CSV file to OpenSpecimen. This creates a job with a file-ID.
+    With the file-ID the job then can be started via the function run_upload.
 
     Note
     ----
-    The values are separeted by comma &#39;,&#39;. This is the OpenSpecimen standard format.
+    The values are separated by comma &#39;,&#39;. This is the OpenSpecimen standard format.
 
     Parameters
     ----------
     filename : string
-        The name of the file which should get uploaded as string with the ending, here .csv .
+        The name of the file as string with the ending, here .csv . 
     
     file : binary
         The file itself which should get uploaded.
@@ -825,7 +842,7 @@ With the file-id the job then can be started via the function run_upload.</p>
     Returns
     -------
     list
-        The Job-Id as list with length 1.
+        The Job-ID as list with length 1.
     &#34;&#34;&#34;
 
     endpoint = &#39;/input-file&#39;

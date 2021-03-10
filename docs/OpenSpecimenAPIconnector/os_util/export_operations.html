@@ -35,24 +35,65 @@ import time
 
 from ..os_core.csv_export import CSV_exporter
 from ..os_core.jsons import Json_factory
-from ..os_core.req_util import OS_request_gen
 
 class Export_OP():
 
-    def __init__(self, base_url, auth):
-        self.base_url = base_url
-        self.auth = auth
+    &#34;&#34;&#34;Handles the API calls for Export_OP
+
+    This class weaves together the base methods defined in OpenSpecimenAPIconnector.os_core.csv_export(*args)
+    and provides the necessary JSON-formated data string, which is fetched in OpenSpecimenAPIconnector.os_core.Json_factory().
+    Returns a pandas.DataFrame() containing the file information.    
+
+    Notes
+    -----
+    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
+    just pass the parameters via JSON-formatted string. The user has to know the keywords.
+    The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
+    the calls refer to this site. More details can be seen in the documentation.
+
+    Currently, not all entity types are implemented. Further, Collection protocoll still does not support 
+    CSV export. 
+
+    Example
+    -------
+
+    Call export_file = export_file(**args) and provide a valid entity type. Additional 
+    parameter can be passed to identify details about the entity to be exported (e.g collection protocol id) 
+    See the calls in .export_file() and the Json_factory blueprints to
+    get more information from the source code. 
+    &#34;&#34;&#34;
+
+    def __init__(self):
+
+        &#34;&#34;&#34;Constructor of the Class Export_OP        
+
+        Parameters
+        ----------
+        base_url : string
+        URL to openspecimen, has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng
+        auth : tuple
+        Consists of two strings (loginname , password)
+        &#34;&#34;&#34;
+
         self.Json_fac = Json_factory()
-        self.exporter = CSV_exporter(self.base_url, self.auth)
+        self.exporter = CSV_exporter()
 
     def export_file(self, entity=None, param=None):
-        &#39;&#39;&#39;
-        export a given OS Entity line specimes to a CSV file
+        &#34;&#34;&#34;Fetch the output 
 
-        :param entity: The Entity we wanna export Specimens Etc
-        :param param:
-        :return:
-        &#39;&#39;&#39;
+        Parameters
+        ----------
+        entity : String 
+            Representing the entity(collection protocol, institute, etc.) for identifying the necessary JSON data string
+        param: String 
+            Representing the various additional necessary parameters. E.g.: The Collection protocoll identifier 
+
+        Returns
+        -------
+        export_file: pandas.DataFrame()
+        A pandas data frame containing the CSV files information. You can easily recover the original file
+        by using the pandas.to_csv() method.
+        &#34;&#34;&#34;        
         # temporary solution until template file handling is clear
 
         if entity == &#34;institute&#34;:
@@ -62,7 +103,11 @@ class Export_OP():
         elif entity == &#34;site&#34;:
             data = self.Json_fac.create_site_export_job_json(record_ids=param)
         elif entity == &#34;cp&#34;:
-            data = self.Json_fac.create_cp_export_job_json(cp_id=param)
+            objecttype = None
+            entitytype = None
+            formname = None
+            data = self.json.create_cp_csv_export_job(objecttype = objecttype, cpid = param,
+                entitytype = entitytype, formname = formname)
         elif entity == &#34;cpr&#34;:
             data = self.Json_fac.create_cpr_export_job_json(cp_id=param)
         elif entity == &#34;visit&#34;:
@@ -87,30 +132,98 @@ class Export_OP():
 <dl>
 <dt id="OpenSpecimenAPIconnector.os_util.export_operations.Export_OP"><code class="flex name class">
 <span>class <span class="ident">Export_OP</span></span>
-<span>(</span><span>base_url, auth)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Handles the API calls for Export_OP</p>
+<p>This class weaves together the base methods defined in OpenSpecimenAPIconnector.os_core.csv_export(*args)
+and provides the necessary JSON-formated data string, which is fetched in OpenSpecimenAPIconnector.os_core.Json_factory().
+Returns a pandas.DataFrame() containing the file information.
+</p>
+<h2 id="notes">Notes</h2>
+<p>In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
+just pass the parameters via JSON-formatted string. The user has to know the keywords.
+The API calls are documented in <a href="https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs">https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs</a> and
+the calls refer to this site. More details can be seen in the documentation.</p>
+<p>Currently, not all entity types are implemented. Further, Collection protocoll still does not support
+CSV export. </p>
+<h2 id="example">Example</h2>
+<p>Call export_file = export_file(**args) and provide a valid entity type. Additional
+parameter can be passed to identify details about the entity to be exported (e.g collection protocol id)
+See the calls in .export_file() and the Json_factory blueprints to
+get more information from the source code. </p>
+<p>Constructor of the Class Export_OP
+</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>base_url</code></strong> :&ensp;<code>string</code></dt>
+<dd>&nbsp;</dd>
+<dt>URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng</dt>
+<dt><strong><code>auth</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<p>Consists of two strings (loginname , password)</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Export_OP():
 
-    def __init__(self, base_url, auth):
-        self.base_url = base_url
-        self.auth = auth
+    &#34;&#34;&#34;Handles the API calls for Export_OP
+
+    This class weaves together the base methods defined in OpenSpecimenAPIconnector.os_core.csv_export(*args)
+    and provides the necessary JSON-formated data string, which is fetched in OpenSpecimenAPIconnector.os_core.Json_factory().
+    Returns a pandas.DataFrame() containing the file information.    
+
+    Notes
+    -----
+    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
+    just pass the parameters via JSON-formatted string. The user has to know the keywords.
+    The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
+    the calls refer to this site. More details can be seen in the documentation.
+
+    Currently, not all entity types are implemented. Further, Collection protocoll still does not support 
+    CSV export. 
+
+    Example
+    -------
+
+    Call export_file = export_file(**args) and provide a valid entity type. Additional 
+    parameter can be passed to identify details about the entity to be exported (e.g collection protocol id) 
+    See the calls in .export_file() and the Json_factory blueprints to
+    get more information from the source code. 
+    &#34;&#34;&#34;
+
+    def __init__(self):
+
+        &#34;&#34;&#34;Constructor of the Class Export_OP        
+
+        Parameters
+        ----------
+        base_url : string
+        URL to openspecimen, has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng
+        auth : tuple
+        Consists of two strings (loginname , password)
+        &#34;&#34;&#34;
+
         self.Json_fac = Json_factory()
-        self.exporter = CSV_exporter(self.base_url, self.auth)
+        self.exporter = CSV_exporter()
 
     def export_file(self, entity=None, param=None):
-        &#39;&#39;&#39;
-        export a given OS Entity line specimes to a CSV file
+        &#34;&#34;&#34;Fetch the output 
 
-        :param entity: The Entity we wanna export Specimens Etc
-        :param param:
-        :return:
-        &#39;&#39;&#39;
+        Parameters
+        ----------
+        entity : String 
+            Representing the entity(collection protocol, institute, etc.) for identifying the necessary JSON data string
+        param: String 
+            Representing the various additional necessary parameters. E.g.: The Collection protocoll identifier 
+
+        Returns
+        -------
+        export_file: pandas.DataFrame()
+        A pandas data frame containing the CSV files information. You can easily recover the original file
+        by using the pandas.to_csv() method.
+        &#34;&#34;&#34;        
         # temporary solution until template file handling is clear
 
         if entity == &#34;institute&#34;:
@@ -120,7 +233,11 @@ class Export_OP():
         elif entity == &#34;site&#34;:
             data = self.Json_fac.create_site_export_job_json(record_ids=param)
         elif entity == &#34;cp&#34;:
-            data = self.Json_fac.create_cp_export_job_json(cp_id=param)
+            objecttype = None
+            entitytype = None
+            formname = None
+            data = self.json.create_cp_csv_export_job(objecttype = objecttype, cpid = param,
+                entitytype = entitytype, formname = formname)
         elif entity == &#34;cpr&#34;:
             data = self.Json_fac.create_cpr_export_job_json(cp_id=param)
         elif entity == &#34;visit&#34;:
@@ -139,22 +256,42 @@ class Export_OP():
 <span>def <span class="ident">export_file</span></span>(<span>self, entity=None, param=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>export a given OS Entity line specimes to a CSV file</p>
-<p>:param entity: The Entity we wanna export Specimens Etc
-:param param:
-:return:</p></div>
+<div class="desc"><p>Fetch the output </p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>entity</code></strong> :&ensp;<code>String </code></dt>
+<dd>Representing the entity(collection protocol, institute, etc.) for identifying the necessary JSON data string</dd>
+<dt><strong><code>param</code></strong> :&ensp;<code>String </code></dt>
+<dd>Representing the various additional necessary parameters. E.g.: The Collection protocoll identifier</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>export_file</code></strong> :&ensp;<code>pandas.DataFrame()</code></dt>
+<dd>&nbsp;</dd>
+<dt><code>A pandas data frame containing the CSV files information. You can easily recover the original file</code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<p>by using the pandas.to_csv() method.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def export_file(self, entity=None, param=None):
-    &#39;&#39;&#39;
-    export a given OS Entity line specimes to a CSV file
+    &#34;&#34;&#34;Fetch the output 
 
-    :param entity: The Entity we wanna export Specimens Etc
-    :param param:
-    :return:
-    &#39;&#39;&#39;
+    Parameters
+    ----------
+    entity : String 
+        Representing the entity(collection protocol, institute, etc.) for identifying the necessary JSON data string
+    param: String 
+        Representing the various additional necessary parameters. E.g.: The Collection protocoll identifier 
+
+    Returns
+    -------
+    export_file: pandas.DataFrame()
+    A pandas data frame containing the CSV files information. You can easily recover the original file
+    by using the pandas.to_csv() method.
+    &#34;&#34;&#34;        
     # temporary solution until template file handling is clear
 
     if entity == &#34;institute&#34;:
@@ -164,7 +301,11 @@ class Export_OP():
     elif entity == &#34;site&#34;:
         data = self.Json_fac.create_site_export_job_json(record_ids=param)
     elif entity == &#34;cp&#34;:
-        data = self.Json_fac.create_cp_export_job_json(cp_id=param)
+        objecttype = None
+        entitytype = None
+        formname = None
+        data = self.json.create_cp_csv_export_job(objecttype = objecttype, cpid = param,
+            entitytype = entitytype, formname = formname)
     elif entity == &#34;cpr&#34;:
         data = self.Json_fac.create_cpr_export_job_json(cp_id=param)
     elif entity == &#34;visit&#34;:

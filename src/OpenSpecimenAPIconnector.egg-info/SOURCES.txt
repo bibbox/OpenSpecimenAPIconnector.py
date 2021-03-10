@@ -37,7 +37,6 @@ src/OpenSpecimenAPIconnector/os_util/collection_protocol_util.py
 src/OpenSpecimenAPIconnector/os_util/cpevent_util.py
 src/OpenSpecimenAPIconnector/os_util/cpr_util.py
 src/OpenSpecimenAPIconnector/os_util/csv_exp_util.py
-src/OpenSpecimenAPIconnector/os_util/export_operations.py
 src/OpenSpecimenAPIconnector/os_util/institute_util.py
 src/OpenSpecimenAPIconnector/os_util/query_util.py
 src/OpenSpecimenAPIconnector/os_util/site_util.py

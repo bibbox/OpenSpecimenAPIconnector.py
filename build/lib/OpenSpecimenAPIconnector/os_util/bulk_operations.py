@@ -4,6 +4,7 @@ from ..os_core.csv_bulk import csv_bulk
 import io
 import pandas
 import time
+import json
 
 class bulk_operations:
 
@@ -61,23 +62,31 @@ class bulk_operations:
 
         Returns
         -------
-        list 
-            list with label, OS_IMPORT_STATUS OS_IMPORT_MESSAGE as column headers.
+        Pandas DataFrame 
+            Data Frame with label, OS_IMPORT_STATUS OS_IMPORT_MESSAGE as column headers.
         """
 
         fileid = self.csv_bulk.upload_csv(filename, file)
         upload_ = self.csv_bulk.run_upload(schemaname=schemaname, fileid=fileid, operation=operation,
                                            dateformat=dateformat, timeformat=timeformat)
 
-        jobid = upload_[0]    
-
-        #Job report has to be created, if there is no sleep, there is no job. 
-        time.sleep(5)
+        jobid = upload_[0]
+        job_pending = True    
+        while job_pending:
+            status = json.loads(self.csv_bulk.get_job_status(jobid))
+            time.sleep(0.05) # limit request rate
+            if status["status"] == "FAILED" or status["status"] == "COMPLETED":
+                job_pending = False
 
         r = self.csv_bulk.job_report(jobid)
 
         data = io.StringIO(r)
-        ret_val = pandas.read_csv(data, sep=",")
-        ret = ret_val.iloc[:, [2, -2, -1]]
+        ret = pandas.read_csv(data, sep=",").fillna("0")
+        found = ret[ret["OS_IMPORT_STATUS"].str.contains('SUCCESS')]
+        found_same = ret[ret["OS_ERROR_MESSAGE"].str.contains('same', na=False)]
 
+        check = found_same.count()["OS_IMPORT_STATUS"] + found.count()["OS_ERROR_MESSAGE"]
+        
+        assert check == len(ret["OS_IMPORT_STATUS"]), "Error creating {} by CSV: \n".format(schemaname) + str(ret)
+        assert not ret.empty, "Error creating {} by CSV: Empty Return".format(schemaname)
         return ret

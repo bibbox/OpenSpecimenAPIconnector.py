@@ -31,7 +31,7 @@
 # Import
 from datetime import datetime
 from .req_util import OS_request_gen
-
+from .. import config_manager
 import json
 
 
@@ -40,49 +40,47 @@ class specimen:
     &#34;&#34;&#34;Handles the calls for Specimens
     
     This class handles the API calls for OpenSpecimen Specimens/Aliquots/Derivatives. It can create, delete, 
-    search specimens with different parameters, get all specimens in the Sytem.
-    The output is a JSON dict or the Error message as dict. It also can check if a
-    specimen exists which returns a string which tells you if it exists.
+    search, and determine the existence of specimens with different parameters. Further, a list of all specimens in the system can be created.
+    The output is a JSON dict or the error message as dict. 
     
     Notes
     -----
-    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
-    just pass the parameters via JSON-formatted string. This means the user has to know the keywords.
+    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes, one can
+    just pass the parameters via a JSON-formatted string. This means the user has to know the keywords.
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
     
     Example
     -------
-    A code example, where the Specimens/Derivatives/Aliquots are handled is in the Jupyter-Notebook::
+    A code example, where the Specimens/Derivatives/Aliquots are handled, is in the Jupyter-Notebook::
         $ jupyter notebook main.ipynb
     &#34;&#34;&#34;
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         &#34;&#34;&#34;Constructor of the Class collection_protocol
         
-        Constructor of the class colelction_protocol, can handle the basic API-calls
+        Constructor of the class collection_protocol can handle the basic API-calls
         of the collection protocol in OpenSpecimen. Connects this class to OpenSpecimen
         specific request handle (os_core.request_util.py).
         
         Parameters
         ----------
         base_url : string
-            URL to openspecimen, has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng
+            URL to openspecimen, which has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng
         auth : tuple
-            Consits of two strings ( loginname , password)
+            Consists of two strings ( loginname , password)
         &#34;&#34;&#34; 
-        
-        self.OS_request_gen = OS_request_gen(auth)
-        self.base_url = base_url + &#39;/specimens&#39;
-
+        self.base_url = config_manager.get_url() + &#39;/specimens&#39;
+        self.auth = config_manager.get_auth()
+        self.OS_request_gen = OS_request_gen(self.auth)
 
     def ausgabe(self):
         
         &#34;&#34;&#34;Testing of the URL and authentification.
         
-        If there are unexpected errors one can easily test if the URL and login data is correctly spelled.
-        the function prints the URL and login data, handed over to the class, to the output terminal.
+        If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
+        The function prints the URL and login data  to the output terminal, which was handed over to the class.
         &#34;&#34;&#34;
 
         print(self.base_url, self.OS_request_gen.auth)
@@ -96,12 +94,12 @@ class specimen:
         This ID is generated automatically from OpenSpecimen when the Specimen is created.
         It can be seen in the GUI by clicking on the desired Specimen, and read from the URL:
         http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/cps/{cpid}/specimens/{specimenid}/... .
-        Or via search Specimen, for example by name and then extract the ID via key [&#34;id&#34;].
+        Otherwise via search Specimen, for example by name and then extract the ID via key [&#34;id&#34;].
         
         Parameters
         ----------
         specimenid : string or int
-            The System&#39;s ID of the Specimen, will be converted to a string.
+            The System&#39;s ID of the Specimen, which will be converted to a string.
         Returns
         -------
         JSON-dict
@@ -119,19 +117,19 @@ class specimen:
         
         &#34;&#34;&#34;Check if a Specimen with Label exists
         
-        Check if a Specimen with Label ::specimenLabel:: already exists in the System.
-        Can be interesting if one manually creates Label to avoid Specimens with the same label.
+        Check if a specimen with Label ::specimenLabel:: already exists in the System.
+        Can be interesting if one manually creates a label to avoid specimens with the same label.
         
         Parameters
         ----------
         specimenLabel : string
-            Label which should be checked as string. Get converted to a string
+            Label which should be checked as string. Gets converted to a string
         
         Returns
         -------
         string
             If Specimen exists, returns &#34;Specimen with label &lt;specimenLabel&gt; exists&#34;.
-            Else &#34;Specimen with label &lt;specimenLabel&gt; does not exist&#34;.
+            Or Else &#34;Specimen with label &lt;specimenLabel&gt; does not exist&#34;.
         &#34;&#34;&#34;
 
         endpoint = &#39;?label=&#39; + str(specimenLabel)
@@ -153,8 +151,8 @@ class specimen:
         
         Creates a Specimen. In order to use this function one has to know
         the parameters which OpenSpecimen needs to create a Specimen. One can use it via the os_util class
-        specimen_util.py. This allows just the basic definition, if one has Extensions 
-        e.g. BBMRI contact, this fields has to be added separatly. 
+        specimen_util.py. This allows just the basic definition, if one has extensions 
+        e.g. BBMRI contact, this fields has to be added separately. 
         
         Parameters
         ----------
@@ -162,7 +160,7 @@ class specimen:
             JSON formatted string with parameters: label[mandatory if its created manually, leave empty if the System creates it
             automatically], specimenclass, type, pathology, atomicSite, laterality, initialQty, availableQty, lineage,
             visitId,  status, storageLocation(dict with keys positionX[optional], 
-            positionY[optional])[optional], concetration[optional], biohazards[optional], comments[optional],
+            positionY[optional])[optional], concentration[optional], biohazards[optional], comments[optional],
             collectionEvent(DICT with keys user,time, container[otpional], procedure[optional]),
             receivedEvent(DICT with keys user, time, receivedQuality), extensionDetails(DICT with keys useUdn, attrsmap,
             DICT with extension keys)[optional]
@@ -170,7 +168,7 @@ class specimen:
         Returns
         -------
         json-dict
-            Either details of the created Specimen as dictornary or OpenSpecimen&#39;s error message
+            Either details of the created specimen as dictionary or OpenSpecimen&#39;s error message
         &#34;&#34;&#34;
         
         url = self.base_url 
@@ -187,7 +185,7 @@ class specimen:
         Search for one or more Specimens with the values in the search_string defined. The search string looks like:
         http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/np/specimens?{param_1}={value_1}&amp;...&amp;{param_x}={value_x}
         With the class specimen_util from os_util and function ::search_specimens:: the search string is generated
-        and this function is called. Not all keys from OpenSpecimen can be easily searched after.
+        and this function is called. Not all keys from OpenSpecimen can be easily searched for.
         
         Parameters
         ----------
@@ -197,7 +195,7 @@ class specimen:
         Returns
         -------
         dict
-            Details of the matching Specimens, if no one matches it is an empty list.
+            Details of the matching Specimens, if no one matches, it is an empty list.
         &#34;&#34;&#34;
         
         endpoint = str(search_string)
@@ -206,31 +204,31 @@ class specimen:
 
         return json.loads(r.text)
 
-    def update_specimen(self, specimenid, updateparams):
+    def update_specimen(self, specimenid, params):
         
-        &#34;&#34;&#34;Updates a existing Specimen/Aliquot/Derivative
+        &#34;&#34;&#34;Updates an existing Specimen/Aliquot/Derivative
         
-        Updates a existing Specimen/Derivative/Aliquot with the automatically generated OpsenSpecimen&#39;s system wide
-        unique Specimen ID ::specimenid::, with the Parameters ::updateparams:: which are passed to the function.
-        The ID of the Specimen have to be known and can for example be seen in the GUI by clicking on 
+        Updates an existing Specimen/Derivative/Aliquot with the automatically generated OpsenSpecimen&#39;s system wide
+        unique specimen ID ::specimenid::, with the parameters ::updateparams:: which are passed to the function.
+        The ID of the specimen has to be known and can, for example, be seen in the GUI by clicking on 
         theSpecimen, which has the format http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/cps/{cpid}/specimen/{specimenid} .
         Or via the function search_specimens and extract from there with the key [&#34;id&#34;]
         
         Note
         ----
-        The optional parameters are those, which are optional for a Specimens. For updating all parameters are optional,
-        does which are not passed to the function will stay the same as before.
+        The optional parameters are those, which are optional for a Specimen. For updating, all parameters are optional,
+        those which are not passed to the function will stay the same as before.
         
         Parameter
         ---------
-        cpid : strinf or int
-            Unique Collection Protocol ID which is generated automatically from the System. It will be converted to a string.
+        cpid : int
+            Unique Collection Protocol ID which is generated automatically from the System.
         
         params : string
             JSON formatted string with parameters: label[mandatory if its created manually, leave empty if the System creates it
             automatically], specimenclass, type, pathology, atomicSite, laterality, initialQty, availableQty, lineage,
             visitId, parentId[mandatory if Aliquot/Derivative], status, storageLocation(dict with keys positionX[optional],
-            positionY[optional])[optional], concetration[optional],         biohazards[optional], comments[optional],
+            positionY[optional])[optional], concentration[optional],         biohazards[optional], comments[optional],
             collectionEvent(DICT with keys user,time, container[otpional], procedure[optional]),
             receivedEvent(DICT with keys user, time, receivedQuality), extensionDetails(DICT with keys useUdn, attrsmap,
             DICT with extension keys)[optional]
@@ -238,38 +236,37 @@ class specimen:
         Returns
         -------
         JSON-dict
-            JSON-dict with the details of the updated Colelction Protocol or the OpenSpecimen&#39;s error message.
+            JSON-dict with the details of the updated Collection Protocol or the OpenSpecimen&#39;s error message.
         &#34;&#34;&#34;
 
         endpoint = &#39;/&#39;+str(specimenid)
         url = self.base_url + endpoint
-        data = updateparams
+        data = params
         r = self.OS_request_gen.put_request(url, data)
         
         return json.loads(r.text)
-
 
     def delete_specimen(self, specimenids):
         
         &#34;&#34;&#34;Delete a Specimen/Derivative/Aliquot
         
         Delete an already existing Specimen/Derivative/Aliquot. The parameter ::specimenid:: is the uniqe ID of the Specimen/
-        Derivative/Aliquot which is generated automatically from OpenSpecimen. To get the ID one can click in the GUI on the 
+        Derivative/Aliquot which is generated automatically from OpenSpecimen. To get the ID, one can click in the GUI on the 
         Specimen/Derivative/Aliquot and read it from the URL, with format:
         http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/cp-view/{cpid}/specimen/{specimenid}/... .
-        An other possibility is to search via &#39;search_specimens&#39; for a specific parameter and then extract the ID
-        from the JSON-dict which get returned. The function allows also to delete a list of specimen
+        Another possibility is to search via &#39;search_specimens&#39; for a specific parameter and then extract the ID
+        from the JSON-dict which gets returned. The function allows also to delete a list of specimen
         
         Parameters
         ----------
         specimenids: string 
-            The unique ID(s) of the Specimen/Aliquot/Derivative which OpenSpecimen creates itselfs. 
+            The unique ID(s) of the Specimen/Aliquot/Derivative which OpenSpecimen creates itself. 
             Deleting specimens has the form &#34;?id=specimenid_1+...+specimenid_n&#34;
             
         Returns
         -------
         JSON-dict
-            Details of the Specimens which is deleted or the OpenSpecimen error message as dict.
+            Details of the Specimens which are deleted or the OpenSpecimen error message as dict.
         &#34;&#34;&#34;
 
         url = self.base_url + specimenids
@@ -291,32 +288,30 @@ class specimen:
 <dl>
 <dt id="OpenSpecimenAPIconnector.os_core.specimen.specimen"><code class="flex name class">
 <span>class <span class="ident">specimen</span></span>
-<span>(</span><span>base_url, auth)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Handles the calls for Specimens</p>
 <p>This class handles the API calls for OpenSpecimen Specimens/Aliquots/Derivatives. It can create, delete,
-search specimens with different parameters, get all specimens in the Sytem.
-The output is a JSON dict or the Error message as dict. It also can check if a
-specimen exists which returns a string which tells you if it exists.</p>
+search, and determine the existence of specimens with different parameters. Further, a list of all specimens in the system can be created.
+The output is a JSON dict or the error message as dict. </p>
 <h2 id="notes">Notes</h2>
-<p>In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
-just pass the parameters via JSON-formatted string. This means the user has to know the keywords.
+<p>In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes, one can
+just pass the parameters via a JSON-formatted string. This means the user has to know the keywords.
 The API calls are documented in <a href="https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs">https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs</a> and
 the calls refer to this site. More details can be seen in the documentation.</p>
 <h2 id="example">Example</h2>
-<p>A code example, where the Specimens/Derivatives/Aliquots are handled is in the Jupyter-Notebook::
+<p>A code example, where the Specimens/Derivatives/Aliquots are handled, is in the Jupyter-Notebook::
 $ jupyter notebook main.ipynb</p>
 <p>Constructor of the Class collection_protocol</p>
-<p>Constructor of the class colelction_protocol, can handle the basic API-calls
+<p>Constructor of the class collection_protocol can handle the basic API-calls
 of the collection protocol in OpenSpecimen. Connects this class to OpenSpecimen
 specific request handle (os_core.request_util.py).</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>base_url</code></strong> :&ensp;<code>string</code></dt>
-<dd>URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng</dd>
+<dd>URL to openspecimen, which has the format: http(s)://<host>:<port>/openspecimen/rest/ng</dd>
 <dt><strong><code>auth</code></strong> :&ensp;<code>tuple</code></dt>
-<dd>Consits of two strings ( loginname , password)</dd>
+<dd>Consists of two strings ( loginname , password)</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -327,49 +322,47 @@ specific request handle (os_core.request_util.py).</p>
     &#34;&#34;&#34;Handles the calls for Specimens
     
     This class handles the API calls for OpenSpecimen Specimens/Aliquots/Derivatives. It can create, delete, 
-    search specimens with different parameters, get all specimens in the Sytem.
-    The output is a JSON dict or the Error message as dict. It also can check if a
-    specimen exists which returns a string which tells you if it exists.
+    search, and determine the existence of specimens with different parameters. Further, a list of all specimens in the system can be created.
+    The output is a JSON dict or the error message as dict. 
     
     Notes
     -----
-    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
-    just pass the parameters via JSON-formatted string. This means the user has to know the keywords.
+    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes, one can
+    just pass the parameters via a JSON-formatted string. This means the user has to know the keywords.
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
     
     Example
     -------
-    A code example, where the Specimens/Derivatives/Aliquots are handled is in the Jupyter-Notebook::
+    A code example, where the Specimens/Derivatives/Aliquots are handled, is in the Jupyter-Notebook::
         $ jupyter notebook main.ipynb
     &#34;&#34;&#34;
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
         &#34;&#34;&#34;Constructor of the Class collection_protocol
         
-        Constructor of the class colelction_protocol, can handle the basic API-calls
+        Constructor of the class collection_protocol can handle the basic API-calls
         of the collection protocol in OpenSpecimen. Connects this class to OpenSpecimen
         specific request handle (os_core.request_util.py).
         
         Parameters
         ----------
         base_url : string
-            URL to openspecimen, has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng
+            URL to openspecimen, which has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng
         auth : tuple
-            Consits of two strings ( loginname , password)
+            Consists of two strings ( loginname , password)
         &#34;&#34;&#34; 
-        
-        self.OS_request_gen = OS_request_gen(auth)
-        self.base_url = base_url + &#39;/specimens&#39;
-
+        self.base_url = config_manager.get_url() + &#39;/specimens&#39;
+        self.auth = config_manager.get_auth()
+        self.OS_request_gen = OS_request_gen(self.auth)
 
     def ausgabe(self):
         
         &#34;&#34;&#34;Testing of the URL and authentification.
         
-        If there are unexpected errors one can easily test if the URL and login data is correctly spelled.
-        the function prints the URL and login data, handed over to the class, to the output terminal.
+        If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
+        The function prints the URL and login data  to the output terminal, which was handed over to the class.
         &#34;&#34;&#34;
 
         print(self.base_url, self.OS_request_gen.auth)
@@ -383,12 +376,12 @@ specific request handle (os_core.request_util.py).</p>
         This ID is generated automatically from OpenSpecimen when the Specimen is created.
         It can be seen in the GUI by clicking on the desired Specimen, and read from the URL:
         http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/cps/{cpid}/specimens/{specimenid}/... .
-        Or via search Specimen, for example by name and then extract the ID via key [&#34;id&#34;].
+        Otherwise via search Specimen, for example by name and then extract the ID via key [&#34;id&#34;].
         
         Parameters
         ----------
         specimenid : string or int
-            The System&#39;s ID of the Specimen, will be converted to a string.
+            The System&#39;s ID of the Specimen, which will be converted to a string.
         Returns
         -------
         JSON-dict
@@ -406,19 +399,19 @@ specific request handle (os_core.request_util.py).</p>
         
         &#34;&#34;&#34;Check if a Specimen with Label exists
         
-        Check if a Specimen with Label ::specimenLabel:: already exists in the System.
-        Can be interesting if one manually creates Label to avoid Specimens with the same label.
+        Check if a specimen with Label ::specimenLabel:: already exists in the System.
+        Can be interesting if one manually creates a label to avoid specimens with the same label.
         
         Parameters
         ----------
         specimenLabel : string
-            Label which should be checked as string. Get converted to a string
+            Label which should be checked as string. Gets converted to a string
         
         Returns
         -------
         string
             If Specimen exists, returns &#34;Specimen with label &lt;specimenLabel&gt; exists&#34;.
-            Else &#34;Specimen with label &lt;specimenLabel&gt; does not exist&#34;.
+            Or Else &#34;Specimen with label &lt;specimenLabel&gt; does not exist&#34;.
         &#34;&#34;&#34;
 
         endpoint = &#39;?label=&#39; + str(specimenLabel)
@@ -440,8 +433,8 @@ specific request handle (os_core.request_util.py).</p>
         
         Creates a Specimen. In order to use this function one has to know
         the parameters which OpenSpecimen needs to create a Specimen. One can use it via the os_util class
-        specimen_util.py. This allows just the basic definition, if one has Extensions 
-        e.g. BBMRI contact, this fields has to be added separatly. 
+        specimen_util.py. This allows just the basic definition, if one has extensions 
+        e.g. BBMRI contact, this fields has to be added separately. 
         
         Parameters
         ----------
@@ -449,7 +442,7 @@ specific request handle (os_core.request_util.py).</p>
             JSON formatted string with parameters: label[mandatory if its created manually, leave empty if the System creates it
             automatically], specimenclass, type, pathology, atomicSite, laterality, initialQty, availableQty, lineage,
             visitId,  status, storageLocation(dict with keys positionX[optional], 
-            positionY[optional])[optional], concetration[optional], biohazards[optional], comments[optional],
+            positionY[optional])[optional], concentration[optional], biohazards[optional], comments[optional],
             collectionEvent(DICT with keys user,time, container[otpional], procedure[optional]),
             receivedEvent(DICT with keys user, time, receivedQuality), extensionDetails(DICT with keys useUdn, attrsmap,
             DICT with extension keys)[optional]
@@ -457,7 +450,7 @@ specific request handle (os_core.request_util.py).</p>
         Returns
         -------
         json-dict
-            Either details of the created Specimen as dictornary or OpenSpecimen&#39;s error message
+            Either details of the created specimen as dictionary or OpenSpecimen&#39;s error message
         &#34;&#34;&#34;
         
         url = self.base_url 
@@ -474,7 +467,7 @@ specific request handle (os_core.request_util.py).</p>
         Search for one or more Specimens with the values in the search_string defined. The search string looks like:
         http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/np/specimens?{param_1}={value_1}&amp;...&amp;{param_x}={value_x}
         With the class specimen_util from os_util and function ::search_specimens:: the search string is generated
-        and this function is called. Not all keys from OpenSpecimen can be easily searched after.
+        and this function is called. Not all keys from OpenSpecimen can be easily searched for.
         
         Parameters
         ----------
@@ -484,7 +477,7 @@ specific request handle (os_core.request_util.py).</p>
         Returns
         -------
         dict
-            Details of the matching Specimens, if no one matches it is an empty list.
+            Details of the matching Specimens, if no one matches, it is an empty list.
         &#34;&#34;&#34;
         
         endpoint = str(search_string)
@@ -493,31 +486,31 @@ specific request handle (os_core.request_util.py).</p>
 
         return json.loads(r.text)
 
-    def update_specimen(self, specimenid, updateparams):
+    def update_specimen(self, specimenid, params):
         
-        &#34;&#34;&#34;Updates a existing Specimen/Aliquot/Derivative
+        &#34;&#34;&#34;Updates an existing Specimen/Aliquot/Derivative
         
-        Updates a existing Specimen/Derivative/Aliquot with the automatically generated OpsenSpecimen&#39;s system wide
-        unique Specimen ID ::specimenid::, with the Parameters ::updateparams:: which are passed to the function.
-        The ID of the Specimen have to be known and can for example be seen in the GUI by clicking on 
+        Updates an existing Specimen/Derivative/Aliquot with the automatically generated OpsenSpecimen&#39;s system wide
+        unique specimen ID ::specimenid::, with the parameters ::updateparams:: which are passed to the function.
+        The ID of the specimen has to be known and can, for example, be seen in the GUI by clicking on 
         theSpecimen, which has the format http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/cps/{cpid}/specimen/{specimenid} .
         Or via the function search_specimens and extract from there with the key [&#34;id&#34;]
         
         Note
         ----
-        The optional parameters are those, which are optional for a Specimens. For updating all parameters are optional,
-        does which are not passed to the function will stay the same as before.
+        The optional parameters are those, which are optional for a Specimen. For updating, all parameters are optional,
+        those which are not passed to the function will stay the same as before.
         
         Parameter
         ---------
-        cpid : strinf or int
-            Unique Collection Protocol ID which is generated automatically from the System. It will be converted to a string.
+        cpid : int
+            Unique Collection Protocol ID which is generated automatically from the System.
         
         params : string
             JSON formatted string with parameters: label[mandatory if its created manually, leave empty if the System creates it
             automatically], specimenclass, type, pathology, atomicSite, laterality, initialQty, availableQty, lineage,
             visitId, parentId[mandatory if Aliquot/Derivative], status, storageLocation(dict with keys positionX[optional],
-            positionY[optional])[optional], concetration[optional],         biohazards[optional], comments[optional],
+            positionY[optional])[optional], concentration[optional],         biohazards[optional], comments[optional],
             collectionEvent(DICT with keys user,time, container[otpional], procedure[optional]),
             receivedEvent(DICT with keys user, time, receivedQuality), extensionDetails(DICT with keys useUdn, attrsmap,
             DICT with extension keys)[optional]
@@ -525,38 +518,37 @@ specific request handle (os_core.request_util.py).</p>
         Returns
         -------
         JSON-dict
-            JSON-dict with the details of the updated Colelction Protocol or the OpenSpecimen&#39;s error message.
+            JSON-dict with the details of the updated Collection Protocol or the OpenSpecimen&#39;s error message.
         &#34;&#34;&#34;
 
         endpoint = &#39;/&#39;+str(specimenid)
         url = self.base_url + endpoint
-        data = updateparams
+        data = params
         r = self.OS_request_gen.put_request(url, data)
         
         return json.loads(r.text)
-
 
     def delete_specimen(self, specimenids):
         
         &#34;&#34;&#34;Delete a Specimen/Derivative/Aliquot
         
         Delete an already existing Specimen/Derivative/Aliquot. The parameter ::specimenid:: is the uniqe ID of the Specimen/
-        Derivative/Aliquot which is generated automatically from OpenSpecimen. To get the ID one can click in the GUI on the 
+        Derivative/Aliquot which is generated automatically from OpenSpecimen. To get the ID, one can click in the GUI on the 
         Specimen/Derivative/Aliquot and read it from the URL, with format:
         http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/cp-view/{cpid}/specimen/{specimenid}/... .
-        An other possibility is to search via &#39;search_specimens&#39; for a specific parameter and then extract the ID
-        from the JSON-dict which get returned. The function allows also to delete a list of specimen
+        Another possibility is to search via &#39;search_specimens&#39; for a specific parameter and then extract the ID
+        from the JSON-dict which gets returned. The function allows also to delete a list of specimen
         
         Parameters
         ----------
         specimenids: string 
-            The unique ID(s) of the Specimen/Aliquot/Derivative which OpenSpecimen creates itselfs. 
+            The unique ID(s) of the Specimen/Aliquot/Derivative which OpenSpecimen creates itself. 
             Deleting specimens has the form &#34;?id=specimenid_1+...+specimenid_n&#34;
             
         Returns
         -------
         JSON-dict
-            Details of the Specimens which is deleted or the OpenSpecimen error message as dict.
+            Details of the Specimens which are deleted or the OpenSpecimen error message as dict.
         &#34;&#34;&#34;
 
         url = self.base_url + specimenids
@@ -571,8 +563,9 @@ specific request handle (os_core.request_util.py).</p>
 </code></dt>
 <dd>
 <div class="desc"><p>Testing of the URL and authentification.</p>
-<p>If there are unexpected errors one can easily test if the URL and login data is correctly spelled.
-the function prints the URL and login data, handed over to the class, to the output terminal.</p></div>
+<p>If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
+The function prints the URL and login data
+to the output terminal, which was handed over to the class.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -581,8 +574,8 @@ the function prints the URL and login data, handed over to the class, to the out
     
     &#34;&#34;&#34;Testing of the URL and authentification.
     
-    If there are unexpected errors one can easily test if the URL and login data is correctly spelled.
-    the function prints the URL and login data, handed over to the class, to the output terminal.
+    If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
+    The function prints the URL and login data  to the output terminal, which was handed over to the class.
     &#34;&#34;&#34;
 
     print(self.base_url, self.OS_request_gen.auth)</code></pre>
@@ -593,18 +586,18 @@ the function prints the URL and login data, handed over to the class, to the out
 </code></dt>
 <dd>
 <div class="desc"><p>Check if a Specimen with Label exists</p>
-<p>Check if a Specimen with Label ::specimenLabel:: already exists in the System.
-Can be interesting if one manually creates Label to avoid Specimens with the same label.</p>
+<p>Check if a specimen with Label ::specimenLabel:: already exists in the System.
+Can be interesting if one manually creates a label to avoid specimens with the same label.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>specimenLabel</code></strong> :&ensp;<code>string</code></dt>
-<dd>Label which should be checked as string. Get converted to a string</dd>
+<dd>Label which should be checked as string. Gets converted to a string</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>string</code></dt>
 <dd>If Specimen exists, returns "Specimen with label <specimenLabel> exists".
-Else "Specimen with label <specimenLabel> does not exist".</dd>
+Or Else "Specimen with label <specimenLabel> does not exist".</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -614,19 +607,19 @@ Else "Specimen with label <specimenLabel> does not exist".</dd>
     
     &#34;&#34;&#34;Check if a Specimen with Label exists
     
-    Check if a Specimen with Label ::specimenLabel:: already exists in the System.
-    Can be interesting if one manually creates Label to avoid Specimens with the same label.
+    Check if a specimen with Label ::specimenLabel:: already exists in the System.
+    Can be interesting if one manually creates a label to avoid specimens with the same label.
     
     Parameters
     ----------
     specimenLabel : string
-        Label which should be checked as string. Get converted to a string
+        Label which should be checked as string. Gets converted to a string
     
     Returns
     -------
     string
         If Specimen exists, returns &#34;Specimen with label &lt;specimenLabel&gt; exists&#34;.
-        Else &#34;Specimen with label &lt;specimenLabel&gt; does not exist&#34;.
+        Or Else &#34;Specimen with label &lt;specimenLabel&gt; does not exist&#34;.
     &#34;&#34;&#34;
 
     endpoint = &#39;?label=&#39; + str(specimenLabel)
@@ -649,8 +642,8 @@ Else "Specimen with label <specimenLabel> does not exist".</dd>
 <div class="desc"><p>Creates a Specimen</p>
 <p>Creates a Specimen. In order to use this function one has to know
 the parameters which OpenSpecimen needs to create a Specimen. One can use it via the os_util class
-specimen_util.py. This allows just the basic definition, if one has Extensions
-e.g. BBMRI contact, this fields has to be added separatly. </p>
+specimen_util.py. This allows just the basic definition, if one has extensions
+e.g. BBMRI contact, this fields has to be added separately. </p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>params</code></strong> :&ensp;<code>string</code></dt>
@@ -658,7 +651,7 @@ e.g. BBMRI contact, this fields has to be added separatly. </p>
 automatically], specimenclass, type, pathology, atomicSite, laterality, initialQty, availableQty, lineage,
 visitId,
 status, storageLocation(dict with keys positionX[optional],
-positionY[optional])[optional], concetration[optional], biohazards[optional], comments[optional],
+positionY[optional])[optional], concentration[optional], biohazards[optional], comments[optional],
 collectionEvent(DICT with keys user,time, container[otpional], procedure[optional]),
 receivedEvent(DICT with keys user, time, receivedQuality), extensionDetails(DICT with keys useUdn, attrsmap,
 DICT with extension keys)[optional]</dd>
@@ -666,7 +659,7 @@ DICT with extension keys)[optional]</dd>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>json-dict</code></dt>
-<dd>Either details of the created Specimen as dictornary or OpenSpecimen's error message</dd>
+<dd>Either details of the created specimen as dictionary or OpenSpecimen's error message</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -678,8 +671,8 @@ DICT with extension keys)[optional]</dd>
     
     Creates a Specimen. In order to use this function one has to know
     the parameters which OpenSpecimen needs to create a Specimen. One can use it via the os_util class
-    specimen_util.py. This allows just the basic definition, if one has Extensions 
-    e.g. BBMRI contact, this fields has to be added separatly. 
+    specimen_util.py. This allows just the basic definition, if one has extensions 
+    e.g. BBMRI contact, this fields has to be added separately. 
     
     Parameters
     ----------
@@ -687,7 +680,7 @@ DICT with extension keys)[optional]</dd>
         JSON formatted string with parameters: label[mandatory if its created manually, leave empty if the System creates it
         automatically], specimenclass, type, pathology, atomicSite, laterality, initialQty, availableQty, lineage,
         visitId,  status, storageLocation(dict with keys positionX[optional], 
-        positionY[optional])[optional], concetration[optional], biohazards[optional], comments[optional],
+        positionY[optional])[optional], concentration[optional], biohazards[optional], comments[optional],
         collectionEvent(DICT with keys user,time, container[otpional], procedure[optional]),
         receivedEvent(DICT with keys user, time, receivedQuality), extensionDetails(DICT with keys useUdn, attrsmap,
         DICT with extension keys)[optional]
@@ -695,7 +688,7 @@ DICT with extension keys)[optional]</dd>
     Returns
     -------
     json-dict
-        Either details of the created Specimen as dictornary or OpenSpecimen&#39;s error message
+        Either details of the created specimen as dictionary or OpenSpecimen&#39;s error message
     &#34;&#34;&#34;
     
     url = self.base_url 
@@ -711,21 +704,21 @@ DICT with extension keys)[optional]</dd>
 <dd>
 <div class="desc"><p>Delete a Specimen/Derivative/Aliquot</p>
 <p>Delete an already existing Specimen/Derivative/Aliquot. The parameter ::specimenid:: is the uniqe ID of the Specimen/
-Derivative/Aliquot which is generated automatically from OpenSpecimen. To get the ID one can click in the GUI on the
+Derivative/Aliquot which is generated automatically from OpenSpecimen. To get the ID, one can click in the GUI on the
 Specimen/Derivative/Aliquot and read it from the URL, with format:
 http(s)://<host>:<port>/openspecimen/cp-view/{cpid}/specimen/{specimenid}/&hellip; .
-An other possibility is to search via 'search_specimens' for a specific parameter and then extract the ID
-from the JSON-dict which get returned. The function allows also to delete a list of specimen</p>
+Another possibility is to search via 'search_specimens' for a specific parameter and then extract the ID
+from the JSON-dict which gets returned. The function allows also to delete a list of specimen</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>specimenids</code></strong> :&ensp;<code>string </code></dt>
-<dd>The unique ID(s) of the Specimen/Aliquot/Derivative which OpenSpecimen creates itselfs.
+<dd>The unique ID(s) of the Specimen/Aliquot/Derivative which OpenSpecimen creates itself.
 Deleting specimens has the form "?id=specimenid_1+&hellip;+specimenid_n"</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>JSON-dict</code></dt>
-<dd>Details of the Specimens which is deleted or the OpenSpecimen error message as dict.</dd>
+<dd>Details of the Specimens which are deleted or the OpenSpecimen error message as dict.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -736,22 +729,22 @@ Deleting specimens has the form "?id=specimenid_1+&hellip;+specimenid_n"</dd>
     &#34;&#34;&#34;Delete a Specimen/Derivative/Aliquot
     
     Delete an already existing Specimen/Derivative/Aliquot. The parameter ::specimenid:: is the uniqe ID of the Specimen/
-    Derivative/Aliquot which is generated automatically from OpenSpecimen. To get the ID one can click in the GUI on the 
+    Derivative/Aliquot which is generated automatically from OpenSpecimen. To get the ID, one can click in the GUI on the 
     Specimen/Derivative/Aliquot and read it from the URL, with format:
     http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/cp-view/{cpid}/specimen/{specimenid}/... .
-    An other possibility is to search via &#39;search_specimens&#39; for a specific parameter and then extract the ID
-    from the JSON-dict which get returned. The function allows also to delete a list of specimen
+    Another possibility is to search via &#39;search_specimens&#39; for a specific parameter and then extract the ID
+    from the JSON-dict which gets returned. The function allows also to delete a list of specimen
     
     Parameters
     ----------
     specimenids: string 
-        The unique ID(s) of the Specimen/Aliquot/Derivative which OpenSpecimen creates itselfs. 
+        The unique ID(s) of the Specimen/Aliquot/Derivative which OpenSpecimen creates itself. 
         Deleting specimens has the form &#34;?id=specimenid_1+...+specimenid_n&#34;
         
     Returns
     -------
     JSON-dict
-        Details of the Specimens which is deleted or the OpenSpecimen error message as dict.
+        Details of the Specimens which are deleted or the OpenSpecimen error message as dict.
     &#34;&#34;&#34;
 
     url = self.base_url + specimenids
@@ -769,11 +762,11 @@ Deleting specimens has the form "?id=specimenid_1+&hellip;+specimenid_n"</dd>
 This ID is generated automatically from OpenSpecimen when the Specimen is created.
 It can be seen in the GUI by clicking on the desired Specimen, and read from the URL:
 http(s)://<host>:<port>/openspecimen/cps/{cpid}/specimens/{specimenid}/&hellip; .
-Or via search Specimen, for example by name and then extract the ID via key ["id"].</p>
+Otherwise via search Specimen, for example by name and then extract the ID via key ["id"].</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>specimenid</code></strong> :&ensp;<code>string</code> or <code>int</code></dt>
-<dd>The System's ID of the Specimen, will be converted to a string.</dd>
+<dd>The System's ID of the Specimen, which will be converted to a string.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
@@ -792,12 +785,12 @@ Or via search Specimen, for example by name and then extract the ID via key ["id
     This ID is generated automatically from OpenSpecimen when the Specimen is created.
     It can be seen in the GUI by clicking on the desired Specimen, and read from the URL:
     http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/cps/{cpid}/specimens/{specimenid}/... .
-    Or via search Specimen, for example by name and then extract the ID via key [&#34;id&#34;].
+    Otherwise via search Specimen, for example by name and then extract the ID via key [&#34;id&#34;].
     
     Parameters
     ----------
     specimenid : string or int
-        The System&#39;s ID of the Specimen, will be converted to a string.
+        The System&#39;s ID of the Specimen, which will be converted to a string.
     Returns
     -------
     JSON-dict
@@ -820,7 +813,7 @@ Specimen with specific values.</p>
 <p>Search for one or more Specimens with the values in the search_string defined. The search string looks like:
 http(s)://<host>:<port>/openspecimen/rest/np/specimens?{param_1}={value_1}&amp;&hellip;&amp;{param_x}={value_x}
 With the class specimen_util from os_util and function ::search_specimens:: the search string is generated
-and this function is called. Not all keys from OpenSpecimen can be easily searched after.</p>
+and this function is called. Not all keys from OpenSpecimen can be easily searched for.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>search_string</code></strong> :&ensp;<code>string</code></dt>
@@ -830,7 +823,7 @@ label[optional], cprId[optional], eventId[optional], visitId[optional]</dd>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>dict</code></dt>
-<dd>Details of the matching Specimens, if no one matches it is an empty list.</dd>
+<dd>Details of the matching Specimens, if no one matches, it is an empty list.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -843,7 +836,7 @@ label[optional], cprId[optional], eventId[optional], visitId[optional]</dd>
     Search for one or more Specimens with the values in the search_string defined. The search string looks like:
     http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/np/specimens?{param_1}={value_1}&amp;...&amp;{param_x}={value_x}
     With the class specimen_util from os_util and function ::search_specimens:: the search string is generated
-    and this function is called. Not all keys from OpenSpecimen can be easily searched after.
+    and this function is called. Not all keys from OpenSpecimen can be easily searched for.
     
     Parameters
     ----------
@@ -853,7 +846,7 @@ label[optional], cprId[optional], eventId[optional], visitId[optional]</dd>
     Returns
     -------
     dict
-        Details of the matching Specimens, if no one matches it is an empty list.
+        Details of the matching Specimens, if no one matches, it is an empty list.
     &#34;&#34;&#34;
     
     endpoint = str(search_string)
@@ -864,26 +857,26 @@ label[optional], cprId[optional], eventId[optional], visitId[optional]</dd>
 </details>
 </dd>
 <dt id="OpenSpecimenAPIconnector.os_core.specimen.specimen.update_specimen"><code class="name flex">
-<span>def <span class="ident">update_specimen</span></span>(<span>self, specimenid, updateparams)</span>
+<span>def <span class="ident">update_specimen</span></span>(<span>self, specimenid, params)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Updates a existing Specimen/Aliquot/Derivative</p>
-<p>Updates a existing Specimen/Derivative/Aliquot with the automatically generated OpsenSpecimen's system wide
-unique Specimen ID ::specimenid::, with the Parameters ::updateparams:: which are passed to the function.
-The ID of the Specimen have to be known and can for example be seen in the GUI by clicking on
+<div class="desc"><p>Updates an existing Specimen/Aliquot/Derivative</p>
+<p>Updates an existing Specimen/Derivative/Aliquot with the automatically generated OpsenSpecimen's system wide
+unique specimen ID ::specimenid::, with the parameters ::updateparams:: which are passed to the function.
+The ID of the specimen has to be known and can, for example, be seen in the GUI by clicking on
 theSpecimen, which has the format http(s)://<host>:<port>/openspecimen/cps/{cpid}/specimen/{specimenid} .
 Or via the function search_specimens and extract from there with the key ["id"]</p>
 <h2 id="note">Note</h2>
-<p>The optional parameters are those, which are optional for a Specimens. For updating all parameters are optional,
-does which are not passed to the function will stay the same as before.</p>
+<p>The optional parameters are those, which are optional for a Specimen. For updating, all parameters are optional,
+those which are not passed to the function will stay the same as before.</p>
 <h2 id="parameter">Parameter</h2>
-<p>cpid : strinf or int
-Unique Collection Protocol ID which is generated automatically from the System. It will be converted to a string.</p>
+<p>cpid : int
+Unique Collection Protocol ID which is generated automatically from the System.</p>
 <p>params : string
 JSON formatted string with parameters: label[mandatory if its created manually, leave empty if the System creates it
 automatically], specimenclass, type, pathology, atomicSite, laterality, initialQty, availableQty, lineage,
 visitId, parentId[mandatory if Aliquot/Derivative], status, storageLocation(dict with keys positionX[optional],
-positionY[optional])[optional], concetration[optional],
+positionY[optional])[optional], concentration[optional],
 biohazards[optional], comments[optional],
 collectionEvent(DICT with keys user,time, container[otpional], procedure[optional]),
 receivedEvent(DICT with keys user, time, receivedQuality), extensionDetails(DICT with keys useUdn, attrsmap,
@@ -891,37 +884,37 @@ DICT with extension keys)[optional]</p>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>JSON-dict</code></dt>
-<dd>JSON-dict with the details of the updated Colelction Protocol or the OpenSpecimen's error message.</dd>
+<dd>JSON-dict with the details of the updated Collection Protocol or the OpenSpecimen's error message.</dd>
 </dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def update_specimen(self, specimenid, updateparams):
+<pre><code class="python">def update_specimen(self, specimenid, params):
     
-    &#34;&#34;&#34;Updates a existing Specimen/Aliquot/Derivative
+    &#34;&#34;&#34;Updates an existing Specimen/Aliquot/Derivative
     
-    Updates a existing Specimen/Derivative/Aliquot with the automatically generated OpsenSpecimen&#39;s system wide
-    unique Specimen ID ::specimenid::, with the Parameters ::updateparams:: which are passed to the function.
-    The ID of the Specimen have to be known and can for example be seen in the GUI by clicking on 
+    Updates an existing Specimen/Derivative/Aliquot with the automatically generated OpsenSpecimen&#39;s system wide
+    unique specimen ID ::specimenid::, with the parameters ::updateparams:: which are passed to the function.
+    The ID of the specimen has to be known and can, for example, be seen in the GUI by clicking on 
     theSpecimen, which has the format http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/cps/{cpid}/specimen/{specimenid} .
     Or via the function search_specimens and extract from there with the key [&#34;id&#34;]
     
     Note
     ----
-    The optional parameters are those, which are optional for a Specimens. For updating all parameters are optional,
-    does which are not passed to the function will stay the same as before.
+    The optional parameters are those, which are optional for a Specimen. For updating, all parameters are optional,
+    those which are not passed to the function will stay the same as before.
     
     Parameter
     ---------
-    cpid : strinf or int
-        Unique Collection Protocol ID which is generated automatically from the System. It will be converted to a string.
+    cpid : int
+        Unique Collection Protocol ID which is generated automatically from the System.
     
     params : string
         JSON formatted string with parameters: label[mandatory if its created manually, leave empty if the System creates it
         automatically], specimenclass, type, pathology, atomicSite, laterality, initialQty, availableQty, lineage,
         visitId, parentId[mandatory if Aliquot/Derivative], status, storageLocation(dict with keys positionX[optional],
-        positionY[optional])[optional], concetration[optional],         biohazards[optional], comments[optional],
+        positionY[optional])[optional], concentration[optional],         biohazards[optional], comments[optional],
         collectionEvent(DICT with keys user,time, container[otpional], procedure[optional]),
         receivedEvent(DICT with keys user, time, receivedQuality), extensionDetails(DICT with keys useUdn, attrsmap,
         DICT with extension keys)[optional]
@@ -929,12 +922,12 @@ DICT with extension keys)[optional]</p>
     Returns
     -------
     JSON-dict
-        JSON-dict with the details of the updated Colelction Protocol or the OpenSpecimen&#39;s error message.
+        JSON-dict with the details of the updated Collection Protocol or the OpenSpecimen&#39;s error message.
     &#34;&#34;&#34;
 
     endpoint = &#39;/&#39;+str(specimenid)
     url = self.base_url + endpoint
-    data = updateparams
+    data = params
     r = self.OS_request_gen.put_request(url, data)
     
     return json.loads(r.text)</code></pre>

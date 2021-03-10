@@ -29,37 +29,94 @@
 <pre><code class="python">#! /bin/python3
 
 from ..os_core.csv_bulk import csv_bulk
-from ..os_core.req_util import OS_request_gen
 import io
 import pandas
 import time
+import json
 
 class bulk_operations:
 
-    #   Constructor
-    def __init__(self, base_url, auth):
+    &#34;&#34;&#34;Handles the OpenSpecimen CSV Bulk Importer via API.
 
-        self.csv_bulk = csv_bulk(base_url=base_url, auth=auth)
+    Handles the API calls of the OpenSpecimen&#39;s Bulk Importer for all the different schemas. 
+    This class makes and executes an Import JOB.
+
+    Note
+    ----
+    The OpenSpecimen Documentation of Bulk Import can be seen at 
+    https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/440434702/Bulk+Import+via+API .
+    &#34;&#34;&#34;
+
+    def __init__(self):
+
+        &#34;&#34;&#34;Constructor of the class csv_bulk
+
+        Constructor of the class csv_bulk. It also connects this class to the os_core class csv_bulk.
+        &#34;&#34;&#34;
+        self.csv_bulk = csv_bulk()
 
     def bulk_import(self, file, filename, schemaname, operation=&#39;CREATE&#39;,
                     dateformat=None, timeformat=None):
+        
+        &#34;&#34;&#34;Make and Run a CSV-bulk import job
+
+        Make a JOB, precisely upload a file to OpenSpecimen, extract the file-ID token from this return
+        and then execute it with the right schema and operation (Create or Update). To use this function one has to
+        know which entity should be created or updated and which fields are mandatory. 
+
+        Parameters
+        ----------
+        file : binary
+            The file to upload, is a CSV-file with separator &#39;,&#39;.
+        
+        filename : string
+            Name of the file with ending (.csv)
+        
+        schemaname : string
+            The schemaname in OpenSpecimen with permissable values are: cp, cpr, user, userRoles,
+            site, shipment, institute, dpRequirement, distributionProtocol, distributionorder,
+            storagecontainer, storagecontainerType, containerShipment, cpe, masterSpecimen, participant,
+            sr, visit, specimenAliquot, specimenDerivative, specimendisposal, consent
+
+        operation : string
+            String with Information if the file updates data or create it. Default value = &#39;CREATE&#39;.
+            Permissable values are CREATE or UPDATE
+        
+        dateformat : string
+            If another dateformat than in the OpenSpecimen System configuration is taken, this has to be specified.
+        
+        timeformat : string
+           If another timeformat than in the OpenSpecimen System configuration is taken, this has to be specified.
+
+        Returns
+        -------
+        Pandas DataFrame 
+            Data Frame with label, OS_IMPORT_STATUS OS_IMPORT_MESSAGE as column headers.
+        &#34;&#34;&#34;
 
         fileid = self.csv_bulk.upload_csv(filename, file)
         upload_ = self.csv_bulk.run_upload(schemaname=schemaname, fileid=fileid, operation=operation,
                                            dateformat=dateformat, timeformat=timeformat)
 
-        jobid = upload_[0]    
-
-        #Job report has to be created, if there is no sleep, there is an error, 
-        time.sleep(5)
+        jobid = upload_[0]
+        job_pending = True    
+        while job_pending:
+            status = json.loads(self.csv_bulk.get_job_status(jobid))
+            time.sleep(0.05) # limit request rate
+            if status[&#34;status&#34;] == &#34;FAILED&#34; or status[&#34;status&#34;] == &#34;COMPLETED&#34;:
+                job_pending = False
 
         r = self.csv_bulk.job_report(jobid)
-        print(r)
 
         data = io.StringIO(r)
-        ret_val = pandas.read_csv(data, sep=&#34;,&#34;)
-        ret = ret_val.iloc[:, [2, -2, -1]]
+        ret = pandas.read_csv(data, sep=&#34;,&#34;).fillna(&#34;0&#34;)
+        found = ret[ret[&#34;OS_IMPORT_STATUS&#34;].str.contains(&#39;SUCCESS&#39;)]
+        found_same = ret[ret[&#34;OS_ERROR_MESSAGE&#34;].str.contains(&#39;same&#39;, na=False)]
 
+        check = found_same.count()[&#34;OS_IMPORT_STATUS&#34;] + found.count()[&#34;OS_ERROR_MESSAGE&#34;]
+        
+        assert check == len(ret[&#34;OS_IMPORT_STATUS&#34;]), &#34;Error creating {} by CSV: \n&#34;.format(schemaname) + str(ret)
+        assert not ret.empty, &#34;Error creating {} by CSV: Empty Return&#34;.format(schemaname)
         return ret</code></pre>
 </details>
 </section>
@@ -74,40 +131,103 @@ class bulk_operations:
 <dl>
 <dt id="OpenSpecimenAPIconnector.os_util.bulk_operations.bulk_operations"><code class="flex name class">
 <span>class <span class="ident">bulk_operations</span></span>
-<span>(</span><span>base_url, auth)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Handles the OpenSpecimen CSV Bulk Importer via API.</p>
+<p>Handles the API calls of the OpenSpecimen's Bulk Importer for all the different schemas.
+This class makes and executes an Import JOB.</p>
+<h2 id="note">Note</h2>
+<p>The OpenSpecimen Documentation of Bulk Import can be seen at
+<a href="https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/440434702/Bulk+Import+via+API">https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/440434702/Bulk+Import+via+API</a> .</p>
+<p>Constructor of the class csv_bulk</p>
+<p>Constructor of the class csv_bulk. It also connects this class to the os_core class csv_bulk.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class bulk_operations:
 
-    #   Constructor
-    def __init__(self, base_url, auth):
+    &#34;&#34;&#34;Handles the OpenSpecimen CSV Bulk Importer via API.
 
-        self.csv_bulk = csv_bulk(base_url=base_url, auth=auth)
+    Handles the API calls of the OpenSpecimen&#39;s Bulk Importer for all the different schemas. 
+    This class makes and executes an Import JOB.
+
+    Note
+    ----
+    The OpenSpecimen Documentation of Bulk Import can be seen at 
+    https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/440434702/Bulk+Import+via+API .
+    &#34;&#34;&#34;
+
+    def __init__(self):
+
+        &#34;&#34;&#34;Constructor of the class csv_bulk
+
+        Constructor of the class csv_bulk. It also connects this class to the os_core class csv_bulk.
+        &#34;&#34;&#34;
+        self.csv_bulk = csv_bulk()
 
     def bulk_import(self, file, filename, schemaname, operation=&#39;CREATE&#39;,
                     dateformat=None, timeformat=None):
+        
+        &#34;&#34;&#34;Make and Run a CSV-bulk import job
+
+        Make a JOB, precisely upload a file to OpenSpecimen, extract the file-ID token from this return
+        and then execute it with the right schema and operation (Create or Update). To use this function one has to
+        know which entity should be created or updated and which fields are mandatory. 
+
+        Parameters
+        ----------
+        file : binary
+            The file to upload, is a CSV-file with separator &#39;,&#39;.
+        
+        filename : string
+            Name of the file with ending (.csv)
+        
+        schemaname : string
+            The schemaname in OpenSpecimen with permissable values are: cp, cpr, user, userRoles,
+            site, shipment, institute, dpRequirement, distributionProtocol, distributionorder,
+            storagecontainer, storagecontainerType, containerShipment, cpe, masterSpecimen, participant,
+            sr, visit, specimenAliquot, specimenDerivative, specimendisposal, consent
+
+        operation : string
+            String with Information if the file updates data or create it. Default value = &#39;CREATE&#39;.
+            Permissable values are CREATE or UPDATE
+        
+        dateformat : string
+            If another dateformat than in the OpenSpecimen System configuration is taken, this has to be specified.
+        
+        timeformat : string
+           If another timeformat than in the OpenSpecimen System configuration is taken, this has to be specified.
+
+        Returns
+        -------
+        Pandas DataFrame 
+            Data Frame with label, OS_IMPORT_STATUS OS_IMPORT_MESSAGE as column headers.
+        &#34;&#34;&#34;
 
         fileid = self.csv_bulk.upload_csv(filename, file)
         upload_ = self.csv_bulk.run_upload(schemaname=schemaname, fileid=fileid, operation=operation,
                                            dateformat=dateformat, timeformat=timeformat)
 
-        jobid = upload_[0]    
-
-        #Job report has to be created, if there is no sleep, there is an error, 
-        time.sleep(5)
+        jobid = upload_[0]
+        job_pending = True    
+        while job_pending:
+            status = json.loads(self.csv_bulk.get_job_status(jobid))
+            time.sleep(0.05) # limit request rate
+            if status[&#34;status&#34;] == &#34;FAILED&#34; or status[&#34;status&#34;] == &#34;COMPLETED&#34;:
+                job_pending = False
 
         r = self.csv_bulk.job_report(jobid)
-        print(r)
 
         data = io.StringIO(r)
-        ret_val = pandas.read_csv(data, sep=&#34;,&#34;)
-        ret = ret_val.iloc[:, [2, -2, -1]]
+        ret = pandas.read_csv(data, sep=&#34;,&#34;).fillna(&#34;0&#34;)
+        found = ret[ret[&#34;OS_IMPORT_STATUS&#34;].str.contains(&#39;SUCCESS&#39;)]
+        found_same = ret[ret[&#34;OS_ERROR_MESSAGE&#34;].str.contains(&#39;same&#39;, na=False)]
 
+        check = found_same.count()[&#34;OS_IMPORT_STATUS&#34;] + found.count()[&#34;OS_ERROR_MESSAGE&#34;]
+        
+        assert check == len(ret[&#34;OS_IMPORT_STATUS&#34;]), &#34;Error creating {} by CSV: \n&#34;.format(schemaname) + str(ret)
+        assert not ret.empty, &#34;Error creating {} by CSV: Empty Return&#34;.format(schemaname)
         return ret</code></pre>
 </details>
 <h3>Methods</h3>
@@ -116,30 +236,101 @@ class bulk_operations:
 <span>def <span class="ident">bulk_import</span></span>(<span>self, file, filename, schemaname, operation='CREATE', dateformat=None, timeformat=None)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Make and Run a CSV-bulk import job</p>
+<p>Make a JOB, precisely upload a file to OpenSpecimen, extract the file-ID token from this return
+and then execute it with the right schema and operation (Create or Update). To use this function one has to
+know which entity should be created or updated and which fields are mandatory. </p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>file</code></strong> :&ensp;<code>binary</code></dt>
+<dd>The file to upload, is a CSV-file with separator ','.</dd>
+<dt><strong><code>filename</code></strong> :&ensp;<code>string</code></dt>
+<dd>Name of the file with ending (.csv)</dd>
+<dt><strong><code>schemaname</code></strong> :&ensp;<code>string</code></dt>
+<dd>The schemaname in OpenSpecimen with permissable values are: cp, cpr, user, userRoles,
+site, shipment, institute, dpRequirement, distributionProtocol, distributionorder,
+storagecontainer, storagecontainerType, containerShipment, cpe, masterSpecimen, participant,
+sr, visit, specimenAliquot, specimenDerivative, specimendisposal, consent</dd>
+<dt><strong><code>operation</code></strong> :&ensp;<code>string</code></dt>
+<dd>String with Information if the file updates data or create it. Default value = 'CREATE'.
+Permissable values are CREATE or UPDATE</dd>
+<dt><strong><code>dateformat</code></strong> :&ensp;<code>string</code></dt>
+<dd>If another dateformat than in the OpenSpecimen System configuration is taken, this has to be specified.</dd>
+<dt><strong><code>timeformat</code></strong> :&ensp;<code>string</code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<p>If another timeformat than in the OpenSpecimen System configuration is taken, this has to be specified.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Pandas DataFrame </code></dt>
+<dd>Data Frame with label, OS_IMPORT_STATUS OS_IMPORT_MESSAGE as column headers.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def bulk_import(self, file, filename, schemaname, operation=&#39;CREATE&#39;,
                 dateformat=None, timeformat=None):
+    
+    &#34;&#34;&#34;Make and Run a CSV-bulk import job
+
+    Make a JOB, precisely upload a file to OpenSpecimen, extract the file-ID token from this return
+    and then execute it with the right schema and operation (Create or Update). To use this function one has to
+    know which entity should be created or updated and which fields are mandatory. 
+
+    Parameters
+    ----------
+    file : binary
+        The file to upload, is a CSV-file with separator &#39;,&#39;.
+    
+    filename : string
+        Name of the file with ending (.csv)
+    
+    schemaname : string
+        The schemaname in OpenSpecimen with permissable values are: cp, cpr, user, userRoles,
+        site, shipment, institute, dpRequirement, distributionProtocol, distributionorder,
+        storagecontainer, storagecontainerType, containerShipment, cpe, masterSpecimen, participant,
+        sr, visit, specimenAliquot, specimenDerivative, specimendisposal, consent
+
+    operation : string
+        String with Information if the file updates data or create it. Default value = &#39;CREATE&#39;.
+        Permissable values are CREATE or UPDATE
+    
+    dateformat : string
+        If another dateformat than in the OpenSpecimen System configuration is taken, this has to be specified.
+    
+    timeformat : string
+       If another timeformat than in the OpenSpecimen System configuration is taken, this has to be specified.
+
+    Returns
+    -------
+    Pandas DataFrame 
+        Data Frame with label, OS_IMPORT_STATUS OS_IMPORT_MESSAGE as column headers.
+    &#34;&#34;&#34;
 
     fileid = self.csv_bulk.upload_csv(filename, file)
     upload_ = self.csv_bulk.run_upload(schemaname=schemaname, fileid=fileid, operation=operation,
                                        dateformat=dateformat, timeformat=timeformat)
 
-    jobid = upload_[0]    
-
-    #Job report has to be created, if there is no sleep, there is an error, 
-    time.sleep(5)
+    jobid = upload_[0]
+    job_pending = True    
+    while job_pending:
+        status = json.loads(self.csv_bulk.get_job_status(jobid))
+        time.sleep(0.05) # limit request rate
+        if status[&#34;status&#34;] == &#34;FAILED&#34; or status[&#34;status&#34;] == &#34;COMPLETED&#34;:
+            job_pending = False
 
     r = self.csv_bulk.job_report(jobid)
-    print(r)
 
     data = io.StringIO(r)
-    ret_val = pandas.read_csv(data, sep=&#34;,&#34;)
-    ret = ret_val.iloc[:, [2, -2, -1]]
+    ret = pandas.read_csv(data, sep=&#34;,&#34;).fillna(&#34;0&#34;)
+    found = ret[ret[&#34;OS_IMPORT_STATUS&#34;].str.contains(&#39;SUCCESS&#39;)]
+    found_same = ret[ret[&#34;OS_ERROR_MESSAGE&#34;].str.contains(&#39;same&#39;, na=False)]
 
+    check = found_same.count()[&#34;OS_IMPORT_STATUS&#34;] + found.count()[&#34;OS_ERROR_MESSAGE&#34;]
+    
+    assert check == len(ret[&#34;OS_IMPORT_STATUS&#34;]), &#34;Error creating {} by CSV: \n&#34;.format(schemaname) + str(ret)
+    assert not ret.empty, &#34;Error creating {} by CSV: Empty Return&#34;.format(schemaname)
     return ret</code></pre>
 </details>
 </dd>

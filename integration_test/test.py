@@ -1,4 +1,4 @@
-#! ~/simon/anaconda3/envs/py39/bin/python3
+#! /bin/python3
 from OSconnectorTest import integrationTest
 
 
@@ -8,5 +8,4 @@ auth = ('admin', 'Login@123')
 integration = integrationTest(base_url = base_url, auth = auth)
 
 out_ = integration.runIntegrationTest()
-
 print('finito')

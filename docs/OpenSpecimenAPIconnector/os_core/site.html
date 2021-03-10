@@ -30,6 +30,8 @@
 
 #Import
 from .req_util import OS_request_gen
+from .. import config_manager
+import pandas as pd
 
 import json
 
@@ -39,78 +41,57 @@ class sites():
     &#34;&#34;&#34;Handles the calls for sites
     
     This class handles the API calls for OpenSpecimen Sites. It can create, delete, search 
-    a sites with different parameters, get all sites and  get the template of the sites as
-    Pandas dataframe.  The output is a JSON dict or the Error message as JSON dict, except 
+    sites with different parameters, get all sites and  get the template of the sites as
+    Pandas dataframe.  The output is a JSON dict or the error message as JSON dict, except 
     the Pandas dataframe.
     
     Notes
     -----
-    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
-    just pass the parameters via JSON-formatted string. This means the user has to know the keywords.
+    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes, one can
+    just pass the parameters via a JSON-formatted string. This means the user has to know the keywords.
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
     
     Example
     -------
-    A code example, where the Collection protocols are handled is in the Jupyter-Notebook::
+    A code example, where the Collection protocols are handled, is in the Jupyter-Notebook::
         $ jupyter notebook main.ipynb
     &#34;&#34;&#34;
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
-        &#34;&#34;&#34;Constructor of the Class collection_protocol
-        Constructor of the class colelction_protocol, can handle the basic API-calls
-        of the collection protocol in OpenSpecimen. Connects this class to OpenSpecimen
+        &#34;&#34;&#34;Constructor of the Class sites
+
+        Constructor of the class sites can handle the basic API-calls
+        of the sites in OpenSpecimen. Connects this class to OpenSpecimen
         specific request handle (os_core.request_util.py). And generates the site specific API-URL.
         
         Parameters
         ----------
         base_url : string
-            URL to openspecimen, has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng
+            URL to openspecimen, which has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng
         auth : tuple
-            Consits of two strings ( loginname , password)
+            Consists of two strings ( loginname , password)
         &#34;&#34;&#34;
-        
-        self.OS_request_gen = OS_request_gen(auth)
-        self.base_url = base_url + &#39;/sites&#39;
-        
+        self.base_url = config_manager.get_url() + &#39;/sites&#39;
+        self.auth = config_manager.get_auth()
+        self.OS_request_gen = OS_request_gen(self.auth)
 
     def ausgabe(self):
         
         &#34;&#34;&#34;Testing of the URL and authentification.
-        If there are unexpected errors one can easily test if the URL and login data is correctly spelled.
-        the function prints the URL and login data, handed over to the class, to the output terminal.
+        If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
+        The function prints the URL and login data and hand it over to the output terminal.
         &#34;&#34;&#34;
 
         print(self.base_url, self.OS_request_gen.auth)
-
-
-    def get_site_pandas_template(self):
-        
-        &#34;&#34;&#34;Get the template for sites
-        
-        Get the template for creating sites as empty pandas dataframe, where the OpenSpecimen keys
-        for sites are the header. 
-
-        Returns
-        -------
-        pandas dataframe
-            Empty pandas dataframe, with the OpenSpecimen keys of the sites as header.
-        &#34;&#34;&#34;
-
-        site_template_endpoint = &#34;/import-jobs/input-file-template?schema=site&#34;
-        site_template_url = self.base_url + site_template_endpoint
-        r = self.Req_Fac.get_request(site_template_url)
-        site_pandas_template = pd.DataFrame(columns=[r.content.decode()])
-
-        return site_pandas_template
 
 
     def create_sites(self, params):
         
         &#34;&#34;&#34;Create a site in OpenSpecimen
         
-        Create a site in OpenSpecimen with an API call. In order to use this function one has to know
+        Create a site in OpenSpecimen with an API call. In order to use this function, one has to know
         the OpenSpecimen specific permissable values. With the os_util class site_util.py a site with
         standard OpenSpecimen fields can be created, which is calling this function.
         
@@ -118,12 +99,12 @@ class sites():
         ----------
         params : string
             JSON-formatted string with parameters: name, instituteName, coordinators, type, 
-            acitvityStatus, address
+            activityStatus, address
         
         Returns
         -------
         dict
-            Details of the created site as dictornary or the OpenSpecimen&#39;s error message.
+            Details of the created site as dictionary or the OpenSpecimen&#39;s error message.
         &#34;&#34;&#34;  
 
         url = self.base_url + &#39;/&#39;
@@ -135,24 +116,23 @@ class sites():
 
     def delete_sites(self, siid):
         
-        &#34;&#34;&#34;Delete a site with OpenSpeimen&#39;s uniques Site ID
+        &#34;&#34;&#34;Delete a site with OpenSpecimen&#39;s uniques Site ID
         
-        Delete an already existing Site. The parameter ::siid:: is the uniqe ID of the Site
-        which is generated automatically from OpenSpecimen. To get the ID one can click in the GUI on the Sites
-        page on the desired Site and read it from the URL, with format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/#/sites/{siid}/overview .
-        An other possibility is to search via &#39;search_sites&#39; for a specific parameter and then extract the ID
+        Delete an already existing site. The parameter ::siid:: is the uniqe ID of the site
+        which is generated automatically from OpenSpecimen. To get the ID, one can click in the GUI on the sites
+        page of the desired site and read it from the URL, with format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/#/sites/{siid}/overview .
+        Another possibility is to search via &#39;search_sites&#39; for a specific parameter and then extract the ID
         from the JSON-dict which get returned.
         
         Parameters
         ----------
-        siid: string or int
-            The unique ID of the Site which OpenSpecimen creates itselfs as a string or integer. 
-            It will get converted to a string.
+        siid: int
+            The unique ID of the site which OpenSpecimen creates itself as an integer. 
             
         Returns
         -------
         JSON-dict
-            Details of the Site which is deleted or the OpenSpecimen error message as dict.
+            Details of the site which is deleted or the OpenSpecimen error message as dict.
         &#34;&#34;&#34;
 
         endpoint = &#39;/&#39; + str(siid)
@@ -164,11 +144,11 @@ class sites():
 
     def search_sites(self, search_string):
         
-        &#34;&#34;&#34;Search for  Sites with specific values.
-        Search for one or more Sites with the values in search_string defined. The search string looks like:
+        &#34;&#34;&#34;Search for sites with specific values.
+        Search for one or more sites with the values in search_string defined. The search string looks like:
         http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/np/sites?{param_1}={value_1}&amp;...&amp;{param_x}={value_x}
         With the class sites_util from os_util and function ::search_sites:: the search string is generated
-        automatically and this function is called. Not all keys from OpenSpecimen can be easily searched after.
+        automatically and this function is called. Not all keys from OpenSpecimen can be easily searched for.
         
         Parameters
         ----------
@@ -179,7 +159,7 @@ class sites():
         Returns
         -------
         JSON-dict
-            Details of the matching Sites, if no one matches it is an empty list.
+            Details of the matching sites, if no one matches, it is an empty list.
         &#34;&#34;&#34;
 
         url = self.base_url + search_string
@@ -192,12 +172,12 @@ class sites():
         
         &#34;&#34;&#34;Get all Sites
         
-        Get all Sites within the OpenSpecimen Distribution defined with the base_url.
+        Get all sites within the OpenSpecimen distribution defined with the base_url.
         
         Returns
         -------
         dict
-            Details of all Sites as dictornary in the OpenSpecimen distribution
+            Details of all sites as dictionary in the OpenSpecimen distribution
         &#34;&#34;&#34;
 
         url = self.base_url
@@ -210,18 +190,18 @@ class sites():
         
         &#34;&#34;&#34;Get the Site with the ID ::siteid::
         
-        Get the details of a Site with the System wide unique ID ::siteid::.
-        This ID is generated automatically from OpenSpecimen when the Site is created.
+        Get the details of a site with the system wide unique ID ::siteid::.
+        This ID is generated automatically from OpenSpecimen when the site is created.
         
         Parameters
         ----------
-        siteid : string or int
-            The system wide unique ID of the side as int or string. It get converted to a string.
+        siteid : int
+            The system wide unique ID of the side as int.
             
         Returns
         -------
         dict
-            Details of the site with the specified ID as dictornary or the OpenSpecimen&#39; error message.
+            Details of the site with the specified ID as dictionary or the OpenSpecimen&#39; error message.
         &#34;&#34;&#34;
 
         endpoint = &#39;/&#39; + str(siteid)
@@ -233,32 +213,32 @@ class sites():
 
     def update_site(self, siid, params):
         
-        &#34;&#34;&#34;Updates a existing Site with ID ::siid:: with the Parameters ::params::
+        &#34;&#34;&#34;Updates an existing Site with ID ::siid:: with the Parameters ::params::
         
-        Updates a existing Site with the automatically generated OpsenSpecimen&#39;s system wide
-        unique Site ID ::siid::, with the Parameters ::params:: which are passed to the function.
-        The ID of the Site have to be known and can for example be seen in the GUI by clicking on 
-        the Site, which has the format http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/site/{cpid}/... .
+        Updates an existing site with the automatically generated OpsenSpecimen&#39;s system wide
+        unique site ID ::siid::, with the parameters ::params:: which are passed to the function.
+        The ID of the site has to be known and can, for example, be seen in the GUI by clicking on 
+        the site, which has the format http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/site/{cpid}/... .
         Or via the function search_sites or get_all_sites and extracted with key [&#34;id&#34;]
         
         Note
         ----
-        The optional parameters are those, which are optional for a Site. For updating all parameters are optional,
+        The optional parameters are those, which are optional for a site. For updating, all parameters are optional,
         those which are not passed to the function will stay the same as before.
         
         Parameter
         ---------
-        siid : strinf or int
-            Unique Site ID which is generated automatically from the System. It will be converted to a string.
+        siid : int
+            Unique site ID which is generated automatically from the system.
         
         params : string
             JSON-formatted string with the parameters which should get updated.The keys which can get updated are: 
-            name, instituteName, coordinators, type, acitvityStatus, address
+            name, instituteName, coordinators, type, activityStatus, address
             
         Returns
         -------
         JSON-dict
-            JSON-dict with the details of the updated Site or the OpenSpecimen&#39;s error message.
+            JSON-dict with the details of the updated site or the OpenSpecimen&#39;s error message.
         &#34;&#34;&#34;
 
         endpoint = &#39;/&#39; + str(siid)
@@ -279,34 +259,33 @@ class sites():
 <dl>
 <dt id="OpenSpecimenAPIconnector.os_core.site.sites"><code class="flex name class">
 <span>class <span class="ident">sites</span></span>
-<span>(</span><span>base_url, auth)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Handles the calls for sites</p>
 <p>This class handles the API calls for OpenSpecimen Sites. It can create, delete, search
-a sites with different parameters, get all sites and
+sites with different parameters, get all sites and
 get the template of the sites as
 Pandas dataframe.
-The output is a JSON dict or the Error message as JSON dict, except
+The output is a JSON dict or the error message as JSON dict, except
 the Pandas dataframe.</p>
 <h2 id="notes">Notes</h2>
-<p>In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
-just pass the parameters via JSON-formatted string. This means the user has to know the keywords.
+<p>In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes, one can
+just pass the parameters via a JSON-formatted string. This means the user has to know the keywords.
 The API calls are documented in <a href="https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs">https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs</a> and
 the calls refer to this site. More details can be seen in the documentation.</p>
 <h2 id="example">Example</h2>
-<p>A code example, where the Collection protocols are handled is in the Jupyter-Notebook::
+<p>A code example, where the Collection protocols are handled, is in the Jupyter-Notebook::
 $ jupyter notebook main.ipynb</p>
-<p>Constructor of the Class collection_protocol
-Constructor of the class colelction_protocol, can handle the basic API-calls
-of the collection protocol in OpenSpecimen. Connects this class to OpenSpecimen
+<p>Constructor of the Class sites</p>
+<p>Constructor of the class sites can handle the basic API-calls
+of the sites in OpenSpecimen. Connects this class to OpenSpecimen
 specific request handle (os_core.request_util.py). And generates the site specific API-URL.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>base_url</code></strong> :&ensp;<code>string</code></dt>
-<dd>URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng</dd>
+<dd>URL to openspecimen, which has the format: http(s)://<host>:<port>/openspecimen/rest/ng</dd>
 <dt><strong><code>auth</code></strong> :&ensp;<code>tuple</code></dt>
-<dd>Consits of two strings ( loginname , password)</dd>
+<dd>Consists of two strings ( loginname , password)</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -317,78 +296,57 @@ specific request handle (os_core.request_util.py). And generates the site specif
     &#34;&#34;&#34;Handles the calls for sites
     
     This class handles the API calls for OpenSpecimen Sites. It can create, delete, search 
-    a sites with different parameters, get all sites and  get the template of the sites as
-    Pandas dataframe.  The output is a JSON dict or the Error message as JSON dict, except 
+    sites with different parameters, get all sites and  get the template of the sites as
+    Pandas dataframe.  The output is a JSON dict or the error message as JSON dict, except 
     the Pandas dataframe.
     
     Notes
     -----
-    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
-    just pass the parameters via JSON-formatted string. This means the user has to know the keywords.
+    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes, one can
+    just pass the parameters via a JSON-formatted string. This means the user has to know the keywords.
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
     
     Example
     -------
-    A code example, where the Collection protocols are handled is in the Jupyter-Notebook::
+    A code example, where the Collection protocols are handled, is in the Jupyter-Notebook::
         $ jupyter notebook main.ipynb
     &#34;&#34;&#34;
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
-        &#34;&#34;&#34;Constructor of the Class collection_protocol
-        Constructor of the class colelction_protocol, can handle the basic API-calls
-        of the collection protocol in OpenSpecimen. Connects this class to OpenSpecimen
+        &#34;&#34;&#34;Constructor of the Class sites
+
+        Constructor of the class sites can handle the basic API-calls
+        of the sites in OpenSpecimen. Connects this class to OpenSpecimen
         specific request handle (os_core.request_util.py). And generates the site specific API-URL.
         
         Parameters
         ----------
         base_url : string
-            URL to openspecimen, has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng
+            URL to openspecimen, which has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng
         auth : tuple
-            Consits of two strings ( loginname , password)
+            Consists of two strings ( loginname , password)
         &#34;&#34;&#34;
-        
-        self.OS_request_gen = OS_request_gen(auth)
-        self.base_url = base_url + &#39;/sites&#39;
-        
+        self.base_url = config_manager.get_url() + &#39;/sites&#39;
+        self.auth = config_manager.get_auth()
+        self.OS_request_gen = OS_request_gen(self.auth)
 
     def ausgabe(self):
         
         &#34;&#34;&#34;Testing of the URL and authentification.
-        If there are unexpected errors one can easily test if the URL and login data is correctly spelled.
-        the function prints the URL and login data, handed over to the class, to the output terminal.
+        If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
+        The function prints the URL and login data and hand it over to the output terminal.
         &#34;&#34;&#34;
 
         print(self.base_url, self.OS_request_gen.auth)
-
-
-    def get_site_pandas_template(self):
-        
-        &#34;&#34;&#34;Get the template for sites
-        
-        Get the template for creating sites as empty pandas dataframe, where the OpenSpecimen keys
-        for sites are the header. 
-
-        Returns
-        -------
-        pandas dataframe
-            Empty pandas dataframe, with the OpenSpecimen keys of the sites as header.
-        &#34;&#34;&#34;
-
-        site_template_endpoint = &#34;/import-jobs/input-file-template?schema=site&#34;
-        site_template_url = self.base_url + site_template_endpoint
-        r = self.Req_Fac.get_request(site_template_url)
-        site_pandas_template = pd.DataFrame(columns=[r.content.decode()])
-
-        return site_pandas_template
 
 
     def create_sites(self, params):
         
         &#34;&#34;&#34;Create a site in OpenSpecimen
         
-        Create a site in OpenSpecimen with an API call. In order to use this function one has to know
+        Create a site in OpenSpecimen with an API call. In order to use this function, one has to know
         the OpenSpecimen specific permissable values. With the os_util class site_util.py a site with
         standard OpenSpecimen fields can be created, which is calling this function.
         
@@ -396,12 +354,12 @@ specific request handle (os_core.request_util.py). And generates the site specif
         ----------
         params : string
             JSON-formatted string with parameters: name, instituteName, coordinators, type, 
-            acitvityStatus, address
+            activityStatus, address
         
         Returns
         -------
         dict
-            Details of the created site as dictornary or the OpenSpecimen&#39;s error message.
+            Details of the created site as dictionary or the OpenSpecimen&#39;s error message.
         &#34;&#34;&#34;  
 
         url = self.base_url + &#39;/&#39;
@@ -413,24 +371,23 @@ specific request handle (os_core.request_util.py). And generates the site specif
 
     def delete_sites(self, siid):
         
-        &#34;&#34;&#34;Delete a site with OpenSpeimen&#39;s uniques Site ID
+        &#34;&#34;&#34;Delete a site with OpenSpecimen&#39;s uniques Site ID
         
-        Delete an already existing Site. The parameter ::siid:: is the uniqe ID of the Site
-        which is generated automatically from OpenSpecimen. To get the ID one can click in the GUI on the Sites
-        page on the desired Site and read it from the URL, with format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/#/sites/{siid}/overview .
-        An other possibility is to search via &#39;search_sites&#39; for a specific parameter and then extract the ID
+        Delete an already existing site. The parameter ::siid:: is the uniqe ID of the site
+        which is generated automatically from OpenSpecimen. To get the ID, one can click in the GUI on the sites
+        page of the desired site and read it from the URL, with format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/#/sites/{siid}/overview .
+        Another possibility is to search via &#39;search_sites&#39; for a specific parameter and then extract the ID
         from the JSON-dict which get returned.
         
         Parameters
         ----------
-        siid: string or int
-            The unique ID of the Site which OpenSpecimen creates itselfs as a string or integer. 
-            It will get converted to a string.
+        siid: int
+            The unique ID of the site which OpenSpecimen creates itself as an integer. 
             
         Returns
         -------
         JSON-dict
-            Details of the Site which is deleted or the OpenSpecimen error message as dict.
+            Details of the site which is deleted or the OpenSpecimen error message as dict.
         &#34;&#34;&#34;
 
         endpoint = &#39;/&#39; + str(siid)
@@ -442,11 +399,11 @@ specific request handle (os_core.request_util.py). And generates the site specif
 
     def search_sites(self, search_string):
         
-        &#34;&#34;&#34;Search for  Sites with specific values.
-        Search for one or more Sites with the values in search_string defined. The search string looks like:
+        &#34;&#34;&#34;Search for sites with specific values.
+        Search for one or more sites with the values in search_string defined. The search string looks like:
         http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/np/sites?{param_1}={value_1}&amp;...&amp;{param_x}={value_x}
         With the class sites_util from os_util and function ::search_sites:: the search string is generated
-        automatically and this function is called. Not all keys from OpenSpecimen can be easily searched after.
+        automatically and this function is called. Not all keys from OpenSpecimen can be easily searched for.
         
         Parameters
         ----------
@@ -457,7 +414,7 @@ specific request handle (os_core.request_util.py). And generates the site specif
         Returns
         -------
         JSON-dict
-            Details of the matching Sites, if no one matches it is an empty list.
+            Details of the matching sites, if no one matches, it is an empty list.
         &#34;&#34;&#34;
 
         url = self.base_url + search_string
@@ -470,12 +427,12 @@ specific request handle (os_core.request_util.py). And generates the site specif
         
         &#34;&#34;&#34;Get all Sites
         
-        Get all Sites within the OpenSpecimen Distribution defined with the base_url.
+        Get all sites within the OpenSpecimen distribution defined with the base_url.
         
         Returns
         -------
         dict
-            Details of all Sites as dictornary in the OpenSpecimen distribution
+            Details of all sites as dictionary in the OpenSpecimen distribution
         &#34;&#34;&#34;
 
         url = self.base_url
@@ -488,18 +445,18 @@ specific request handle (os_core.request_util.py). And generates the site specif
         
         &#34;&#34;&#34;Get the Site with the ID ::siteid::
         
-        Get the details of a Site with the System wide unique ID ::siteid::.
-        This ID is generated automatically from OpenSpecimen when the Site is created.
+        Get the details of a site with the system wide unique ID ::siteid::.
+        This ID is generated automatically from OpenSpecimen when the site is created.
         
         Parameters
         ----------
-        siteid : string or int
-            The system wide unique ID of the side as int or string. It get converted to a string.
+        siteid : int
+            The system wide unique ID of the side as int.
             
         Returns
         -------
         dict
-            Details of the site with the specified ID as dictornary or the OpenSpecimen&#39; error message.
+            Details of the site with the specified ID as dictionary or the OpenSpecimen&#39; error message.
         &#34;&#34;&#34;
 
         endpoint = &#39;/&#39; + str(siteid)
@@ -511,32 +468,32 @@ specific request handle (os_core.request_util.py). And generates the site specif
 
     def update_site(self, siid, params):
         
-        &#34;&#34;&#34;Updates a existing Site with ID ::siid:: with the Parameters ::params::
+        &#34;&#34;&#34;Updates an existing Site with ID ::siid:: with the Parameters ::params::
         
-        Updates a existing Site with the automatically generated OpsenSpecimen&#39;s system wide
-        unique Site ID ::siid::, with the Parameters ::params:: which are passed to the function.
-        The ID of the Site have to be known and can for example be seen in the GUI by clicking on 
-        the Site, which has the format http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/site/{cpid}/... .
+        Updates an existing site with the automatically generated OpsenSpecimen&#39;s system wide
+        unique site ID ::siid::, with the parameters ::params:: which are passed to the function.
+        The ID of the site has to be known and can, for example, be seen in the GUI by clicking on 
+        the site, which has the format http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/site/{cpid}/... .
         Or via the function search_sites or get_all_sites and extracted with key [&#34;id&#34;]
         
         Note
         ----
-        The optional parameters are those, which are optional for a Site. For updating all parameters are optional,
+        The optional parameters are those, which are optional for a site. For updating, all parameters are optional,
         those which are not passed to the function will stay the same as before.
         
         Parameter
         ---------
-        siid : strinf or int
-            Unique Site ID which is generated automatically from the System. It will be converted to a string.
+        siid : int
+            Unique site ID which is generated automatically from the system.
         
         params : string
             JSON-formatted string with the parameters which should get updated.The keys which can get updated are: 
-            name, instituteName, coordinators, type, acitvityStatus, address
+            name, instituteName, coordinators, type, activityStatus, address
             
         Returns
         -------
         JSON-dict
-            JSON-dict with the details of the updated Site or the OpenSpecimen&#39;s error message.
+            JSON-dict with the details of the updated site or the OpenSpecimen&#39;s error message.
         &#34;&#34;&#34;
 
         endpoint = &#39;/&#39; + str(siid)
@@ -552,8 +509,8 @@ specific request handle (os_core.request_util.py). And generates the site specif
 </code></dt>
 <dd>
 <div class="desc"><p>Testing of the URL and authentification.
-If there are unexpected errors one can easily test if the URL and login data is correctly spelled.
-the function prints the URL and login data, handed over to the class, to the output terminal.</p></div>
+If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
+The function prints the URL and login data and hand it over to the output terminal.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -561,8 +518,8 @@ the function prints the URL and login data, handed over to the class, to the out
 <pre><code class="python">def ausgabe(self):
     
     &#34;&#34;&#34;Testing of the URL and authentification.
-    If there are unexpected errors one can easily test if the URL and login data is correctly spelled.
-    the function prints the URL and login data, handed over to the class, to the output terminal.
+    If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
+    The function prints the URL and login data and hand it over to the output terminal.
     &#34;&#34;&#34;
 
     print(self.base_url, self.OS_request_gen.auth)</code></pre>
@@ -573,19 +530,19 @@ the function prints the URL and login data, handed over to the class, to the out
 </code></dt>
 <dd>
 <div class="desc"><p>Create a site in OpenSpecimen</p>
-<p>Create a site in OpenSpecimen with an API call. In order to use this function one has to know
+<p>Create a site in OpenSpecimen with an API call. In order to use this function, one has to know
 the OpenSpecimen specific permissable values. With the os_util class site_util.py a site with
 standard OpenSpecimen fields can be created, which is calling this function.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>params</code></strong> :&ensp;<code>string</code></dt>
 <dd>JSON-formatted string with parameters: name, instituteName, coordinators, type,
-acitvityStatus, address</dd>
+activityStatus, address</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>dict</code></dt>
-<dd>Details of the created site as dictornary or the OpenSpecimen's error message.</dd>
+<dd>Details of the created site as dictionary or the OpenSpecimen's error message.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -595,7 +552,7 @@ acitvityStatus, address</dd>
     
     &#34;&#34;&#34;Create a site in OpenSpecimen
     
-    Create a site in OpenSpecimen with an API call. In order to use this function one has to know
+    Create a site in OpenSpecimen with an API call. In order to use this function, one has to know
     the OpenSpecimen specific permissable values. With the os_util class site_util.py a site with
     standard OpenSpecimen fields can be created, which is calling this function.
     
@@ -603,12 +560,12 @@ acitvityStatus, address</dd>
     ----------
     params : string
         JSON-formatted string with parameters: name, instituteName, coordinators, type, 
-        acitvityStatus, address
+        activityStatus, address
     
     Returns
     -------
     dict
-        Details of the created site as dictornary or the OpenSpecimen&#39;s error message.
+        Details of the created site as dictionary or the OpenSpecimen&#39;s error message.
     &#34;&#34;&#34;  
 
     url = self.base_url + &#39;/&#39;
@@ -622,22 +579,21 @@ acitvityStatus, address</dd>
 <span>def <span class="ident">delete_sites</span></span>(<span>self, siid)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Delete a site with OpenSpeimen's uniques Site ID</p>
-<p>Delete an already existing Site. The parameter ::siid:: is the uniqe ID of the Site
-which is generated automatically from OpenSpecimen. To get the ID one can click in the GUI on the Sites
-page on the desired Site and read it from the URL, with format: http(s)://<host>:<port>/openspecimen/#/sites/{siid}/overview .
-An other possibility is to search via 'search_sites' for a specific parameter and then extract the ID
+<div class="desc"><p>Delete a site with OpenSpecimen's uniques Site ID</p>
+<p>Delete an already existing site. The parameter ::siid:: is the uniqe ID of the site
+which is generated automatically from OpenSpecimen. To get the ID, one can click in the GUI on the sites
+page of the desired site and read it from the URL, with format: http(s)://<host>:<port>/openspecimen/#/sites/{siid}/overview .
+Another possibility is to search via 'search_sites' for a specific parameter and then extract the ID
 from the JSON-dict which get returned.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>siid</code></strong> :&ensp;<code>string</code> or <code>int</code></dt>
-<dd>The unique ID of the Site which OpenSpecimen creates itselfs as a string or integer.
-It will get converted to a string.</dd>
+<dt><strong><code>siid</code></strong> :&ensp;<code>int</code></dt>
+<dd>The unique ID of the site which OpenSpecimen creates itself as an integer.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>JSON-dict</code></dt>
-<dd>Details of the Site which is deleted or the OpenSpecimen error message as dict.</dd>
+<dd>Details of the site which is deleted or the OpenSpecimen error message as dict.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -645,24 +601,23 @@ It will get converted to a string.</dd>
 </summary>
 <pre><code class="python">def delete_sites(self, siid):
     
-    &#34;&#34;&#34;Delete a site with OpenSpeimen&#39;s uniques Site ID
+    &#34;&#34;&#34;Delete a site with OpenSpecimen&#39;s uniques Site ID
     
-    Delete an already existing Site. The parameter ::siid:: is the uniqe ID of the Site
-    which is generated automatically from OpenSpecimen. To get the ID one can click in the GUI on the Sites
-    page on the desired Site and read it from the URL, with format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/#/sites/{siid}/overview .
-    An other possibility is to search via &#39;search_sites&#39; for a specific parameter and then extract the ID
+    Delete an already existing site. The parameter ::siid:: is the uniqe ID of the site
+    which is generated automatically from OpenSpecimen. To get the ID, one can click in the GUI on the sites
+    page of the desired site and read it from the URL, with format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/#/sites/{siid}/overview .
+    Another possibility is to search via &#39;search_sites&#39; for a specific parameter and then extract the ID
     from the JSON-dict which get returned.
     
     Parameters
     ----------
-    siid: string or int
-        The unique ID of the Site which OpenSpecimen creates itselfs as a string or integer. 
-        It will get converted to a string.
+    siid: int
+        The unique ID of the site which OpenSpecimen creates itself as an integer. 
         
     Returns
     -------
     JSON-dict
-        Details of the Site which is deleted or the OpenSpecimen error message as dict.
+        Details of the site which is deleted or the OpenSpecimen error message as dict.
     &#34;&#34;&#34;
 
     endpoint = &#39;/&#39; + str(siid)
@@ -677,11 +632,11 @@ It will get converted to a string.</dd>
 </code></dt>
 <dd>
 <div class="desc"><p>Get all Sites</p>
-<p>Get all Sites within the OpenSpecimen Distribution defined with the base_url.</p>
+<p>Get all sites within the OpenSpecimen distribution defined with the base_url.</p>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>dict</code></dt>
-<dd>Details of all Sites as dictornary in the OpenSpecimen distribution</dd>
+<dd>Details of all sites as dictionary in the OpenSpecimen distribution</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -691,12 +646,12 @@ It will get converted to a string.</dd>
     
     &#34;&#34;&#34;Get all Sites
     
-    Get all Sites within the OpenSpecimen Distribution defined with the base_url.
+    Get all sites within the OpenSpecimen distribution defined with the base_url.
     
     Returns
     -------
     dict
-        Details of all Sites as dictornary in the OpenSpecimen distribution
+        Details of all sites as dictionary in the OpenSpecimen distribution
     &#34;&#34;&#34;
 
     url = self.base_url
@@ -710,17 +665,17 @@ It will get converted to a string.</dd>
 </code></dt>
 <dd>
 <div class="desc"><p>Get the Site with the ID ::siteid::</p>
-<p>Get the details of a Site with the System wide unique ID ::siteid::.
-This ID is generated automatically from OpenSpecimen when the Site is created.</p>
+<p>Get the details of a site with the system wide unique ID ::siteid::.
+This ID is generated automatically from OpenSpecimen when the site is created.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>siteid</code></strong> :&ensp;<code>string</code> or <code>int</code></dt>
-<dd>The system wide unique ID of the side as int or string. It get converted to a string.</dd>
+<dt><strong><code>siteid</code></strong> :&ensp;<code>int</code></dt>
+<dd>The system wide unique ID of the side as int.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>dict</code></dt>
-<dd>Details of the site with the specified ID as dictornary or the OpenSpecimen' error message.</dd>
+<dd>Details of the site with the specified ID as dictionary or the OpenSpecimen' error message.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -730,18 +685,18 @@ This ID is generated automatically from OpenSpecimen when the Site is created.</
     
     &#34;&#34;&#34;Get the Site with the ID ::siteid::
     
-    Get the details of a Site with the System wide unique ID ::siteid::.
-    This ID is generated automatically from OpenSpecimen when the Site is created.
+    Get the details of a site with the system wide unique ID ::siteid::.
+    This ID is generated automatically from OpenSpecimen when the site is created.
     
     Parameters
     ----------
-    siteid : string or int
-        The system wide unique ID of the side as int or string. It get converted to a string.
+    siteid : int
+        The system wide unique ID of the side as int.
         
     Returns
     -------
     dict
-        Details of the site with the specified ID as dictornary or the OpenSpecimen&#39; error message.
+        Details of the site with the specified ID as dictionary or the OpenSpecimen&#39; error message.
     &#34;&#34;&#34;
 
     endpoint = &#39;/&#39; + str(siteid)
@@ -751,53 +706,15 @@ This ID is generated automatically from OpenSpecimen when the Site is created.</
     return json.loads(r.text)</code></pre>
 </details>
 </dd>
-<dt id="OpenSpecimenAPIconnector.os_core.site.sites.get_site_pandas_template"><code class="name flex">
-<span>def <span class="ident">get_site_pandas_template</span></span>(<span>self)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Get the template for sites</p>
-<p>Get the template for creating sites as empty pandas dataframe, where the OpenSpecimen keys
-for sites are the header. </p>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>pandas dataframe</code></dt>
-<dd>Empty pandas dataframe, with the OpenSpecimen keys of the sites as header.</dd>
-</dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def get_site_pandas_template(self):
-    
-    &#34;&#34;&#34;Get the template for sites
-    
-    Get the template for creating sites as empty pandas dataframe, where the OpenSpecimen keys
-    for sites are the header. 
-
-    Returns
-    -------
-    pandas dataframe
-        Empty pandas dataframe, with the OpenSpecimen keys of the sites as header.
-    &#34;&#34;&#34;
-
-    site_template_endpoint = &#34;/import-jobs/input-file-template?schema=site&#34;
-    site_template_url = self.base_url + site_template_endpoint
-    r = self.Req_Fac.get_request(site_template_url)
-    site_pandas_template = pd.DataFrame(columns=[r.content.decode()])
-
-    return site_pandas_template</code></pre>
-</details>
-</dd>
 <dt id="OpenSpecimenAPIconnector.os_core.site.sites.search_sites"><code class="name flex">
 <span>def <span class="ident">search_sites</span></span>(<span>self, search_string)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Search for
-Sites with specific values.
-Search for one or more Sites with the values in search_string defined. The search string looks like:
+<div class="desc"><p>Search for sites with specific values.
+Search for one or more sites with the values in search_string defined. The search string looks like:
 http(s)://<host>:<port>/openspecimen/rest/np/sites?{param_1}={value_1}&amp;&hellip;&amp;{param_x}={value_x}
 With the class sites_util from os_util and function ::search_sites:: the search string is generated
-automatically and this function is called. Not all keys from OpenSpecimen can be easily searched after.</p>
+automatically and this function is called. Not all keys from OpenSpecimen can be easily searched for.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>search_string</code></strong> :&ensp;<code>string</code></dt>
@@ -807,7 +724,7 @@ startAt[optional], maxResults[optional], name[optional], exactMatch[optional], i
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>JSON-dict</code></dt>
-<dd>Details of the matching Sites, if no one matches it is an empty list.</dd>
+<dd>Details of the matching sites, if no one matches, it is an empty list.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -815,11 +732,11 @@ startAt[optional], maxResults[optional], name[optional], exactMatch[optional], i
 </summary>
 <pre><code class="python">def search_sites(self, search_string):
     
-    &#34;&#34;&#34;Search for  Sites with specific values.
-    Search for one or more Sites with the values in search_string defined. The search string looks like:
+    &#34;&#34;&#34;Search for sites with specific values.
+    Search for one or more sites with the values in search_string defined. The search string looks like:
     http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/np/sites?{param_1}={value_1}&amp;...&amp;{param_x}={value_x}
     With the class sites_util from os_util and function ::search_sites:: the search string is generated
-    automatically and this function is called. Not all keys from OpenSpecimen can be easily searched after.
+    automatically and this function is called. Not all keys from OpenSpecimen can be easily searched for.
     
     Parameters
     ----------
@@ -830,7 +747,7 @@ startAt[optional], maxResults[optional], name[optional], exactMatch[optional], i
     Returns
     -------
     JSON-dict
-        Details of the matching Sites, if no one matches it is an empty list.
+        Details of the matching sites, if no one matches, it is an empty list.
     &#34;&#34;&#34;
 
     url = self.base_url + search_string
@@ -843,25 +760,25 @@ startAt[optional], maxResults[optional], name[optional], exactMatch[optional], i
 <span>def <span class="ident">update_site</span></span>(<span>self, siid, params)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Updates a existing Site with ID ::siid:: with the Parameters ::params::</p>
-<p>Updates a existing Site with the automatically generated OpsenSpecimen's system wide
-unique Site ID ::siid::, with the Parameters ::params:: which are passed to the function.
-The ID of the Site have to be known and can for example be seen in the GUI by clicking on
-the Site, which has the format http(s)://<host>:<port>/openspecimen/site/{cpid}/&hellip; .
+<div class="desc"><p>Updates an existing Site with ID ::siid:: with the Parameters ::params::</p>
+<p>Updates an existing site with the automatically generated OpsenSpecimen's system wide
+unique site ID ::siid::, with the parameters ::params:: which are passed to the function.
+The ID of the site has to be known and can, for example, be seen in the GUI by clicking on
+the site, which has the format http(s)://<host>:<port>/openspecimen/site/{cpid}/&hellip; .
 Or via the function search_sites or get_all_sites and extracted with key ["id"]</p>
 <h2 id="note">Note</h2>
-<p>The optional parameters are those, which are optional for a Site. For updating all parameters are optional,
+<p>The optional parameters are those, which are optional for a site. For updating, all parameters are optional,
 those which are not passed to the function will stay the same as before.</p>
 <h2 id="parameter">Parameter</h2>
-<p>siid : strinf or int
-Unique Site ID which is generated automatically from the System. It will be converted to a string.</p>
+<p>siid : int
+Unique site ID which is generated automatically from the system.</p>
 <p>params : string
 JSON-formatted string with the parameters which should get updated.The keys which can get updated are:
-name, instituteName, coordinators, type, acitvityStatus, address</p>
+name, instituteName, coordinators, type, activityStatus, address</p>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>JSON-dict</code></dt>
-<dd>JSON-dict with the details of the updated Site or the OpenSpecimen's error message.</dd>
+<dd>JSON-dict with the details of the updated site or the OpenSpecimen's error message.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -869,32 +786,32 @@ name, instituteName, coordinators, type, acitvityStatus, address</p>
 </summary>
 <pre><code class="python">def update_site(self, siid, params):
     
-    &#34;&#34;&#34;Updates a existing Site with ID ::siid:: with the Parameters ::params::
+    &#34;&#34;&#34;Updates an existing Site with ID ::siid:: with the Parameters ::params::
     
-    Updates a existing Site with the automatically generated OpsenSpecimen&#39;s system wide
-    unique Site ID ::siid::, with the Parameters ::params:: which are passed to the function.
-    The ID of the Site have to be known and can for example be seen in the GUI by clicking on 
-    the Site, which has the format http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/site/{cpid}/... .
+    Updates an existing site with the automatically generated OpsenSpecimen&#39;s system wide
+    unique site ID ::siid::, with the parameters ::params:: which are passed to the function.
+    The ID of the site has to be known and can, for example, be seen in the GUI by clicking on 
+    the site, which has the format http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/site/{cpid}/... .
     Or via the function search_sites or get_all_sites and extracted with key [&#34;id&#34;]
     
     Note
     ----
-    The optional parameters are those, which are optional for a Site. For updating all parameters are optional,
+    The optional parameters are those, which are optional for a site. For updating, all parameters are optional,
     those which are not passed to the function will stay the same as before.
     
     Parameter
     ---------
-    siid : strinf or int
-        Unique Site ID which is generated automatically from the System. It will be converted to a string.
+    siid : int
+        Unique site ID which is generated automatically from the system.
     
     params : string
         JSON-formatted string with the parameters which should get updated.The keys which can get updated are: 
-        name, instituteName, coordinators, type, acitvityStatus, address
+        name, instituteName, coordinators, type, activityStatus, address
         
     Returns
     -------
     JSON-dict
-        JSON-dict with the details of the updated Site or the OpenSpecimen&#39;s error message.
+        JSON-dict with the details of the updated site or the OpenSpecimen&#39;s error message.
     &#34;&#34;&#34;
 
     endpoint = &#39;/&#39; + str(siid)
@@ -924,13 +841,12 @@ name, instituteName, coordinators, type, acitvityStatus, address</p>
 <ul>
 <li>
 <h4><code><a title="OpenSpecimenAPIconnector.os_core.site.sites" href="#OpenSpecimenAPIconnector.os_core.site.sites">sites</a></code></h4>
-<ul class="">
+<ul class="two-column">
 <li><code><a title="OpenSpecimenAPIconnector.os_core.site.sites.ausgabe" href="#OpenSpecimenAPIconnector.os_core.site.sites.ausgabe">ausgabe</a></code></li>
 <li><code><a title="OpenSpecimenAPIconnector.os_core.site.sites.create_sites" href="#OpenSpecimenAPIconnector.os_core.site.sites.create_sites">create_sites</a></code></li>
 <li><code><a title="OpenSpecimenAPIconnector.os_core.site.sites.delete_sites" href="#OpenSpecimenAPIconnector.os_core.site.sites.delete_sites">delete_sites</a></code></li>
 <li><code><a title="OpenSpecimenAPIconnector.os_core.site.sites.get_all_sites" href="#OpenSpecimenAPIconnector.os_core.site.sites.get_all_sites">get_all_sites</a></code></li>
 <li><code><a title="OpenSpecimenAPIconnector.os_core.site.sites.get_site" href="#OpenSpecimenAPIconnector.os_core.site.sites.get_site">get_site</a></code></li>
-<li><code><a title="OpenSpecimenAPIconnector.os_core.site.sites.get_site_pandas_template" href="#OpenSpecimenAPIconnector.os_core.site.sites.get_site_pandas_template">get_site_pandas_template</a></code></li>
 <li><code><a title="OpenSpecimenAPIconnector.os_core.site.sites.search_sites" href="#OpenSpecimenAPIconnector.os_core.site.sites.search_sites">search_sites</a></code></li>
 <li><code><a title="OpenSpecimenAPIconnector.os_core.site.sites.update_site" href="#OpenSpecimenAPIconnector.os_core.site.sites.update_site">update_site</a></code></li>
 </ul>

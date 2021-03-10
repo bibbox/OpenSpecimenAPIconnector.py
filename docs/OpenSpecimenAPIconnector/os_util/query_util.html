@@ -29,7 +29,6 @@
 <pre><code class="python">#! /bin/python3
 
 from ..os_core.query import query
-from ..os_core.req_util import OS_request_gen
 from ..os_core.jsons import Json_factory
 from ..os_core.url import url_gen
 import json
@@ -39,41 +38,154 @@ import time
 
 class query_util:
 
-    #   Constructor
-    def __init__(self, base_url, auth):
+    &#34;&#34;&#34;Handles the API calls for the queries
 
-        self.query = query(base_url=base_url, auth=auth)
+    Handles the OpenSpecimen API calls for the queries. This class can 
+    create, execute, search for queries.  The other calls are in the os_core class query.
+    
+    Notes
+    -----
+    In order to use this and also the other classes, the user has to know OpenSpecimen. 
+    The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
+    the calls refer to this site. More details can be seen in the documentation.
+
+    Example
+    -------
+
+    A code example, where the queries are handled is in the Jupyter-Notebook:
+
+        $ jupyter notebook main.ipynb
+    &#34;&#34;&#34;
+
+    def __init__(self):
+
+        &#34;&#34;&#34;Constructor of the Class query.
+
+        Constructor of the class query, can handle the basic API-calls
+        of the query in OpenSpecimen. Connects this class to the os_core classes
+        query, Json_factory and url_gen.
+
+        Parameters
+        ----------
+        base_url : string
+            URL to openspecimen, has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng
+        auth : tuple
+            Consists of two strings ( loginname , password)
+        &#34;&#34;&#34;
+
+        self.query = query()
         self.jsons = Json_factory()
         self.url = url_gen()
         
 
-
-# Create a query
-
-    def create_aql(self, cpid, aql, rowmode=&#39;OFF&#39;, coloumexpr=&#39;true&#39;, isodate=&#39;true&#39;):
+    def create_aql(self, cpid, aql, rowmode=&#39;OFF&#39;, columnexpr=&#39;true&#39;, isodate=&#39;true&#39;):
         
-        params = self.jsons.create_aql(cpid, aql, rowmode, coloumexpr, isodate)
+        &#34;&#34;&#34;Create a Query in OpenSpecimen
 
-        r = self.query.create_aql(params)
+        Creates a Query which is stored in the Queries in OpenSpecimen. The query language 
+        can be extracted from the OpenSpecimen GUI query generator.
+
+        Parameter
+        ---------
+        cpid : int
+            The collection Protocol ID  where the query gets assigned to.
+
+        aql : string
+            Command to execute in the OpenSpecimen&#39;s Advanced Query Language.
+
+        rowmode : string
+            Permissable Values OFF/SHALLOW/DEEP. Specify if multi-valued attributes result in a single row or one row per value.
+        
+        columnexpr : string
+            Permissable values true/false. If true Userfriendly column labels are included in the response.
+
+        isodate : string
+            Permissable values are true/false. If true, the API accepts a ISO-date-format(yyy-MM-dd&#39;T&#39;HH:mm:ss), or else it takes the format from the OS local settings.
+
+        Returns
+        -------
+        JSON-dict
+            Details of the saved query or the OpenSpecimen&#39;s error message.
+        &#34;&#34;&#34;
+
+        params = self.jsons.execute_aql(cpid, aql, rowmode, columnexpr, isodate)
+        r = self.query.execute_aql(params)
 
         return r
 
-# Execute a saved Query
-    def execute_query(self,qryid, start, results, rowmode=&#34;OFF&#34;, drivingform=&#34;Participant&#34;):
 
-        params = self.jsons.execute_query(start, results, drivingform, rowmode)
+    def execute_query(self, qryid, start=&#39;0&#39;, results=&#39;100&#39;, rowmode=&#34;OFF&#34;, drivingform=&#34;Participant&#34;):
 
-        r = self.query.execute_query(qryid, params)
+        &#34;&#34;&#34;Execute a saved Query.
+
+        Execute an already existing Query with the OpenSpecimen&#39;s unique Query ID ::qryid:: .
+        The query ID can be seen via clicking on the Queries in OpenSpecimen and it is the
+        number after # in the title.
+
+        Parameters
+        ----------
+        qryid : int
+            The System&#39;s ID of the Query, will be converted to a string.
+
+        start : int
+            Defines the row of the outcomes from which they will be displayed.
+        
+        results : int
+            Defines how many results will be displayed.
+
+        rowmode : string
+            Permissable values are DEEP/SHALLOW/OFF.  If OFF all values of a multivalued field are shown in one row.
+        
+        drivingform : string
+            Defines the search perspective, precisely which tables are searched at, permissable values are Participant, Specimen.
+
+        Returns
+        -------
+        JSON-dict
+            Details of all matching queries or the OpenSpecimen&#39;s error message.
+        &#34;&#34;&#34;
+
+        params = self.jsons.execute_query(start = start, results = results, drivingform = drivingform, rowmode = rowmode)
+        r = self.query.execute_query(qryid = qryid, params = params)
 
         return json.dumps(r)
 
 
     def search_query(self, cpid = None, searchstring = None, start = None, max_ = None, countreq = None):
 
+        &#34;&#34;&#34;Search for list of queries with specific suburl.
+
+        Search for one or more queries with the parameters in the suburl defined. The search URL looks like:
+        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/np/saved-queries?{param_1}={value_1}&amp;...&amp;{param_x}={value_x}
+
+        Parameters
+        ----------
+        cpid : int
+            The collection Protocol ID  where the query is assigned to.
+
+        searchstring : string
+            Substring of the query title.
+        
+        start : int
+            Defines the row of the outcomes from which they will be displayed.
+        
+        max_ : int
+            Defines how many results will be displayed.
+
+        countreq : string
+            OpenSpecimen&#39;s boolean, if true total number of saved queries will be shown.
+
+        Returns
+        -------
+        JSON-dict
+            Details of all matching queries or the OpenSpecimen&#39;s error message.
+        &#34;&#34;&#34;
+
         params = self.url.query_url_gen(cpid = cpid, searchstring = searchstring, start = start,
                                         max_ = max_, countreq = countreq)
+        r = self.query.search_query(suburl = params)
 
-        r = self.query.search_query(search_params = params)</code></pre>
+        return r</code></pre>
 </details>
 </section>
 <section>
@@ -87,86 +199,316 @@ class query_util:
 <dl>
 <dt id="OpenSpecimenAPIconnector.os_util.query_util.query_util"><code class="flex name class">
 <span>class <span class="ident">query_util</span></span>
-<span>(</span><span>base_url, auth)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Handles the API calls for the queries</p>
+<p>Handles the OpenSpecimen API calls for the queries. This class can
+create, execute, search for queries.
+The other calls are in the os_core class query.</p>
+<h2 id="notes">Notes</h2>
+<p>In order to use this and also the other classes, the user has to know OpenSpecimen.
+The API calls are documented in <a href="https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs">https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs</a> and
+the calls refer to this site. More details can be seen in the documentation.</p>
+<h2 id="example">Example</h2>
+<p>A code example, where the queries are handled is in the Jupyter-Notebook:</p>
+<pre><code>$ jupyter notebook main.ipynb
+</code></pre>
+<p>Constructor of the Class query.</p>
+<p>Constructor of the class query, can handle the basic API-calls
+of the query in OpenSpecimen. Connects this class to the os_core classes
+query, Json_factory and url_gen.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>base_url</code></strong> :&ensp;<code>string</code></dt>
+<dd>URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng</dd>
+<dt><strong><code>auth</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>Consists of two strings ( loginname , password)</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class query_util:
 
-    #   Constructor
-    def __init__(self, base_url, auth):
+    &#34;&#34;&#34;Handles the API calls for the queries
 
-        self.query = query(base_url=base_url, auth=auth)
+    Handles the OpenSpecimen API calls for the queries. This class can 
+    create, execute, search for queries.  The other calls are in the os_core class query.
+    
+    Notes
+    -----
+    In order to use this and also the other classes, the user has to know OpenSpecimen. 
+    The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
+    the calls refer to this site. More details can be seen in the documentation.
+
+    Example
+    -------
+
+    A code example, where the queries are handled is in the Jupyter-Notebook:
+
+        $ jupyter notebook main.ipynb
+    &#34;&#34;&#34;
+
+    def __init__(self):
+
+        &#34;&#34;&#34;Constructor of the Class query.
+
+        Constructor of the class query, can handle the basic API-calls
+        of the query in OpenSpecimen. Connects this class to the os_core classes
+        query, Json_factory and url_gen.
+
+        Parameters
+        ----------
+        base_url : string
+            URL to openspecimen, has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng
+        auth : tuple
+            Consists of two strings ( loginname , password)
+        &#34;&#34;&#34;
+
+        self.query = query()
         self.jsons = Json_factory()
         self.url = url_gen()
         
 
-
-# Create a query
-
-    def create_aql(self, cpid, aql, rowmode=&#39;OFF&#39;, coloumexpr=&#39;true&#39;, isodate=&#39;true&#39;):
+    def create_aql(self, cpid, aql, rowmode=&#39;OFF&#39;, columnexpr=&#39;true&#39;, isodate=&#39;true&#39;):
         
-        params = self.jsons.create_aql(cpid, aql, rowmode, coloumexpr, isodate)
+        &#34;&#34;&#34;Create a Query in OpenSpecimen
 
-        r = self.query.create_aql(params)
+        Creates a Query which is stored in the Queries in OpenSpecimen. The query language 
+        can be extracted from the OpenSpecimen GUI query generator.
+
+        Parameter
+        ---------
+        cpid : int
+            The collection Protocol ID  where the query gets assigned to.
+
+        aql : string
+            Command to execute in the OpenSpecimen&#39;s Advanced Query Language.
+
+        rowmode : string
+            Permissable Values OFF/SHALLOW/DEEP. Specify if multi-valued attributes result in a single row or one row per value.
+        
+        columnexpr : string
+            Permissable values true/false. If true Userfriendly column labels are included in the response.
+
+        isodate : string
+            Permissable values are true/false. If true, the API accepts a ISO-date-format(yyy-MM-dd&#39;T&#39;HH:mm:ss), or else it takes the format from the OS local settings.
+
+        Returns
+        -------
+        JSON-dict
+            Details of the saved query or the OpenSpecimen&#39;s error message.
+        &#34;&#34;&#34;
+
+        params = self.jsons.execute_aql(cpid, aql, rowmode, columnexpr, isodate)
+        r = self.query.execute_aql(params)
 
         return r
 
-# Execute a saved Query
-    def execute_query(self,qryid, start, results, rowmode=&#34;OFF&#34;, drivingform=&#34;Participant&#34;):
 
-        params = self.jsons.execute_query(start, results, drivingform, rowmode)
+    def execute_query(self, qryid, start=&#39;0&#39;, results=&#39;100&#39;, rowmode=&#34;OFF&#34;, drivingform=&#34;Participant&#34;):
 
-        r = self.query.execute_query(qryid, params)
+        &#34;&#34;&#34;Execute a saved Query.
+
+        Execute an already existing Query with the OpenSpecimen&#39;s unique Query ID ::qryid:: .
+        The query ID can be seen via clicking on the Queries in OpenSpecimen and it is the
+        number after # in the title.
+
+        Parameters
+        ----------
+        qryid : int
+            The System&#39;s ID of the Query, will be converted to a string.
+
+        start : int
+            Defines the row of the outcomes from which they will be displayed.
+        
+        results : int
+            Defines how many results will be displayed.
+
+        rowmode : string
+            Permissable values are DEEP/SHALLOW/OFF.  If OFF all values of a multivalued field are shown in one row.
+        
+        drivingform : string
+            Defines the search perspective, precisely which tables are searched at, permissable values are Participant, Specimen.
+
+        Returns
+        -------
+        JSON-dict
+            Details of all matching queries or the OpenSpecimen&#39;s error message.
+        &#34;&#34;&#34;
+
+        params = self.jsons.execute_query(start = start, results = results, drivingform = drivingform, rowmode = rowmode)
+        r = self.query.execute_query(qryid = qryid, params = params)
 
         return json.dumps(r)
 
 
     def search_query(self, cpid = None, searchstring = None, start = None, max_ = None, countreq = None):
 
+        &#34;&#34;&#34;Search for list of queries with specific suburl.
+
+        Search for one or more queries with the parameters in the suburl defined. The search URL looks like:
+        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/np/saved-queries?{param_1}={value_1}&amp;...&amp;{param_x}={value_x}
+
+        Parameters
+        ----------
+        cpid : int
+            The collection Protocol ID  where the query is assigned to.
+
+        searchstring : string
+            Substring of the query title.
+        
+        start : int
+            Defines the row of the outcomes from which they will be displayed.
+        
+        max_ : int
+            Defines how many results will be displayed.
+
+        countreq : string
+            OpenSpecimen&#39;s boolean, if true total number of saved queries will be shown.
+
+        Returns
+        -------
+        JSON-dict
+            Details of all matching queries or the OpenSpecimen&#39;s error message.
+        &#34;&#34;&#34;
+
         params = self.url.query_url_gen(cpid = cpid, searchstring = searchstring, start = start,
                                         max_ = max_, countreq = countreq)
+        r = self.query.search_query(suburl = params)
 
-        r = self.query.search_query(search_params = params)</code></pre>
+        return r</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
 <dt id="OpenSpecimenAPIconnector.os_util.query_util.query_util.create_aql"><code class="name flex">
-<span>def <span class="ident">create_aql</span></span>(<span>self, cpid, aql, rowmode='OFF', coloumexpr='true', isodate='true')</span>
+<span>def <span class="ident">create_aql</span></span>(<span>self, cpid, aql, rowmode='OFF', columnexpr='true', isodate='true')</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Create a Query in OpenSpecimen</p>
+<p>Creates a Query which is stored in the Queries in OpenSpecimen. The query language
+can be extracted from the OpenSpecimen GUI query generator.</p>
+<h2 id="parameter">Parameter</h2>
+<p>cpid : int
+The collection Protocol ID
+where the query gets assigned to.</p>
+<p>aql : string
+Command to execute in the OpenSpecimen's Advanced Query Language.</p>
+<p>rowmode : string
+Permissable Values OFF/SHALLOW/DEEP. Specify if multi-valued attributes result in a single row or one row per value.</p>
+<p>columnexpr : string
+Permissable values true/false. If true Userfriendly column labels are included in the response.</p>
+<p>isodate : string
+Permissable values are true/false. If true, the API accepts a ISO-date-format(yyy-MM-dd'T'HH:mm:ss), or else it takes the format from the OS local settings.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>JSON-dict</code></dt>
+<dd>Details of the saved query or the OpenSpecimen's error message.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def create_aql(self, cpid, aql, rowmode=&#39;OFF&#39;, coloumexpr=&#39;true&#39;, isodate=&#39;true&#39;):
+<pre><code class="python">def create_aql(self, cpid, aql, rowmode=&#39;OFF&#39;, columnexpr=&#39;true&#39;, isodate=&#39;true&#39;):
     
-    params = self.jsons.create_aql(cpid, aql, rowmode, coloumexpr, isodate)
+    &#34;&#34;&#34;Create a Query in OpenSpecimen
 
-    r = self.query.create_aql(params)
+    Creates a Query which is stored in the Queries in OpenSpecimen. The query language 
+    can be extracted from the OpenSpecimen GUI query generator.
+
+    Parameter
+    ---------
+    cpid : int
+        The collection Protocol ID  where the query gets assigned to.
+
+    aql : string
+        Command to execute in the OpenSpecimen&#39;s Advanced Query Language.
+
+    rowmode : string
+        Permissable Values OFF/SHALLOW/DEEP. Specify if multi-valued attributes result in a single row or one row per value.
+    
+    columnexpr : string
+        Permissable values true/false. If true Userfriendly column labels are included in the response.
+
+    isodate : string
+        Permissable values are true/false. If true, the API accepts a ISO-date-format(yyy-MM-dd&#39;T&#39;HH:mm:ss), or else it takes the format from the OS local settings.
+
+    Returns
+    -------
+    JSON-dict
+        Details of the saved query or the OpenSpecimen&#39;s error message.
+    &#34;&#34;&#34;
+
+    params = self.jsons.execute_aql(cpid, aql, rowmode, columnexpr, isodate)
+    r = self.query.execute_aql(params)
 
     return r</code></pre>
 </details>
 </dd>
 <dt id="OpenSpecimenAPIconnector.os_util.query_util.query_util.execute_query"><code class="name flex">
-<span>def <span class="ident">execute_query</span></span>(<span>self, qryid, start, results, rowmode='OFF', drivingform='Participant')</span>
+<span>def <span class="ident">execute_query</span></span>(<span>self, qryid, start='0', results='100', rowmode='OFF', drivingform='Participant')</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Execute a saved Query.</p>
+<p>Execute an already existing Query with the OpenSpecimen's unique Query ID ::qryid:: .
+The query ID can be seen via clicking on the Queries in OpenSpecimen and it is the
+number after # in the title.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>qryid</code></strong> :&ensp;<code>int</code></dt>
+<dd>The System's ID of the Query, will be converted to a string.</dd>
+<dt><strong><code>start</code></strong> :&ensp;<code>int</code></dt>
+<dd>Defines the row of the outcomes from which they will be displayed.</dd>
+<dt><strong><code>results</code></strong> :&ensp;<code>int</code></dt>
+<dd>Defines how many results will be displayed.</dd>
+<dt><strong><code>rowmode</code></strong> :&ensp;<code>string</code></dt>
+<dd>Permissable values are DEEP/SHALLOW/OFF.
+If OFF all values of a multivalued field are shown in one row.</dd>
+<dt><strong><code>drivingform</code></strong> :&ensp;<code>string</code></dt>
+<dd>Defines the search perspective, precisely which tables are searched at, permissable values are Participant, Specimen.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>JSON-dict</code></dt>
+<dd>Details of all matching queries or the OpenSpecimen's error message.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def execute_query(self,qryid, start, results, rowmode=&#34;OFF&#34;, drivingform=&#34;Participant&#34;):
+<pre><code class="python">def execute_query(self, qryid, start=&#39;0&#39;, results=&#39;100&#39;, rowmode=&#34;OFF&#34;, drivingform=&#34;Participant&#34;):
 
-    params = self.jsons.execute_query(start, results, drivingform, rowmode)
+    &#34;&#34;&#34;Execute a saved Query.
 
-    r = self.query.execute_query(qryid, params)
+    Execute an already existing Query with the OpenSpecimen&#39;s unique Query ID ::qryid:: .
+    The query ID can be seen via clicking on the Queries in OpenSpecimen and it is the
+    number after # in the title.
+
+    Parameters
+    ----------
+    qryid : int
+        The System&#39;s ID of the Query, will be converted to a string.
+
+    start : int
+        Defines the row of the outcomes from which they will be displayed.
+    
+    results : int
+        Defines how many results will be displayed.
+
+    rowmode : string
+        Permissable values are DEEP/SHALLOW/OFF.  If OFF all values of a multivalued field are shown in one row.
+    
+    drivingform : string
+        Defines the search perspective, precisely which tables are searched at, permissable values are Participant, Specimen.
+
+    Returns
+    -------
+    JSON-dict
+        Details of all matching queries or the OpenSpecimen&#39;s error message.
+    &#34;&#34;&#34;
+
+    params = self.jsons.execute_query(start = start, results = results, drivingform = drivingform, rowmode = rowmode)
+    r = self.query.execute_query(qryid = qryid, params = params)
 
     return json.dumps(r)</code></pre>
 </details>
@@ -175,17 +517,67 @@ class query_util:
 <span>def <span class="ident">search_query</span></span>(<span>self, cpid=None, searchstring=None, start=None, max_=None, countreq=None)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Search for list of queries with specific suburl.</p>
+<p>Search for one or more queries with the parameters in the suburl defined. The search URL looks like:
+http(s)://<host>:<port>/openspecimen/rest/np/saved-queries?{param_1}={value_1}&amp;&hellip;&amp;{param_x}={value_x}</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>cpid</code></strong> :&ensp;<code>int</code></dt>
+<dd>The collection Protocol ID
+where the query is assigned to.</dd>
+<dt><strong><code>searchstring</code></strong> :&ensp;<code>string</code></dt>
+<dd>Substring of the query title.</dd>
+<dt><strong><code>start</code></strong> :&ensp;<code>int</code></dt>
+<dd>Defines the row of the outcomes from which they will be displayed.</dd>
+<dt><strong><code>max_</code></strong> :&ensp;<code>int</code></dt>
+<dd>Defines how many results will be displayed.</dd>
+<dt><strong><code>countreq</code></strong> :&ensp;<code>string</code></dt>
+<dd>OpenSpecimen's boolean, if true total number of saved queries will be shown.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>JSON-dict</code></dt>
+<dd>Details of all matching queries or the OpenSpecimen's error message.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def search_query(self, cpid = None, searchstring = None, start = None, max_ = None, countreq = None):
 
+    &#34;&#34;&#34;Search for list of queries with specific suburl.
+
+    Search for one or more queries with the parameters in the suburl defined. The search URL looks like:
+    http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/np/saved-queries?{param_1}={value_1}&amp;...&amp;{param_x}={value_x}
+
+    Parameters
+    ----------
+    cpid : int
+        The collection Protocol ID  where the query is assigned to.
+
+    searchstring : string
+        Substring of the query title.
+    
+    start : int
+        Defines the row of the outcomes from which they will be displayed.
+    
+    max_ : int
+        Defines how many results will be displayed.
+
+    countreq : string
+        OpenSpecimen&#39;s boolean, if true total number of saved queries will be shown.
+
+    Returns
+    -------
+    JSON-dict
+        Details of all matching queries or the OpenSpecimen&#39;s error message.
+    &#34;&#34;&#34;
+
     params = self.url.query_url_gen(cpid = cpid, searchstring = searchstring, start = start,
                                     max_ = max_, countreq = countreq)
+    r = self.query.search_query(suburl = params)
 
-    r = self.query.search_query(search_params = params)</code></pre>
+    return r</code></pre>
 </details>
 </dd>
 </dl>

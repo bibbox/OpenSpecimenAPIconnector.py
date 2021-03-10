@@ -36,25 +36,60 @@ from ..os_core.institute import institutes
 
 class institutes_util:
 
-    def __init__(self, base_url, auth):
+    &#34;&#34;&#34;Handles the API calls for the institutes
 
-        self.institutes = institutes(base_url = base_url, auth = auth)
-        self.urls = url_gen()
-        self.jsons =Json_factory()
+    Handles the OpenSpecimen API calls for the institutes. This class can 
+    create, and update institutes. The other calls are in the os_core class institutes.
+    
+    Notes
+    -----
+    In order to use this and also the other classes, the user has to know OpenSpecimen. 
+    The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
+    the calls refer to this site. More details can be seen in the documentation.
 
-    def create_institute(self, institutename=None):
+    Example
+    -------
+    A code example, where the institutes are handled is in the Jupyter-Notebook:
+
+        $ jupyter notebook main.ipynb
+    &#34;&#34;&#34;
+
+    def __init__(self):
+
+        &#34;&#34;&#34;Constructor of the Class institutes_util
+
+        Constructor of the class institutes_util, can handle the  API-calls
+        to create and update the institutes in OpenSpecimen. Connects this class os_core
+        classes institutes and Json_factory
+
+        Parameters
+        ----------
+        base_url : string
+            URL to openspecimen, has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng
+        auth : tuple
+            Consists of two strings ( loginname , password)
+        &#34;&#34;&#34;
+
+        self.institutes = institutes()
+        self.jsons = Json_factory()
+
+    def create_institute(self, institutename):
+
+        &#34;&#34;&#34;Creates an Institute.
+
+        Creates an Institute in OpenSpecimen. 
+
+        Parameters
+        ----------
+        institutename : string
+            the name of the institute.
+        &#34;&#34;&#34;
 
         params = self.jsons.create_institute(institutename = institutename)
         r = self.institutes.create_institute(params = params)
 
         return r
-
-    def update_institute(self, instituteid, institutename=None):
-
-        params = self.jsons.create_institute(institutename = institutename)
-        r = self.institutes.create_institute(inid =instituteid, params = params)
-
-        return r</code></pre>
+        </code></pre>
 </details>
 </section>
 <section>
@@ -68,68 +103,122 @@ class institutes_util:
 <dl>
 <dt id="OpenSpecimenAPIconnector.os_util.institute_util.institutes_util"><code class="flex name class">
 <span>class <span class="ident">institutes_util</span></span>
-<span>(</span><span>base_url, auth)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Handles the API calls for the institutes</p>
+<p>Handles the OpenSpecimen API calls for the institutes. This class can
+create, and update institutes. The other calls are in the os_core class institutes.</p>
+<h2 id="notes">Notes</h2>
+<p>In order to use this and also the other classes, the user has to know OpenSpecimen.
+The API calls are documented in <a href="https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs">https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs</a> and
+the calls refer to this site. More details can be seen in the documentation.</p>
+<h2 id="example">Example</h2>
+<p>A code example, where the institutes are handled is in the Jupyter-Notebook:</p>
+<pre><code>$ jupyter notebook main.ipynb
+</code></pre>
+<p>Constructor of the Class institutes_util</p>
+<p>Constructor of the class institutes_util, can handle the
+API-calls
+to create and update the institutes in OpenSpecimen. Connects this class os_core
+classes institutes and Json_factory</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>base_url</code></strong> :&ensp;<code>string</code></dt>
+<dd>URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng</dd>
+<dt><strong><code>auth</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>Consists of two strings ( loginname , password)</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class institutes_util:
 
-    def __init__(self, base_url, auth):
+    &#34;&#34;&#34;Handles the API calls for the institutes
 
-        self.institutes = institutes(base_url = base_url, auth = auth)
-        self.urls = url_gen()
-        self.jsons =Json_factory()
+    Handles the OpenSpecimen API calls for the institutes. This class can 
+    create, and update institutes. The other calls are in the os_core class institutes.
+    
+    Notes
+    -----
+    In order to use this and also the other classes, the user has to know OpenSpecimen. 
+    The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
+    the calls refer to this site. More details can be seen in the documentation.
 
-    def create_institute(self, institutename=None):
+    Example
+    -------
+    A code example, where the institutes are handled is in the Jupyter-Notebook:
+
+        $ jupyter notebook main.ipynb
+    &#34;&#34;&#34;
+
+    def __init__(self):
+
+        &#34;&#34;&#34;Constructor of the Class institutes_util
+
+        Constructor of the class institutes_util, can handle the  API-calls
+        to create and update the institutes in OpenSpecimen. Connects this class os_core
+        classes institutes and Json_factory
+
+        Parameters
+        ----------
+        base_url : string
+            URL to openspecimen, has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng
+        auth : tuple
+            Consists of two strings ( loginname , password)
+        &#34;&#34;&#34;
+
+        self.institutes = institutes()
+        self.jsons = Json_factory()
+
+    def create_institute(self, institutename):
+
+        &#34;&#34;&#34;Creates an Institute.
+
+        Creates an Institute in OpenSpecimen. 
+
+        Parameters
+        ----------
+        institutename : string
+            the name of the institute.
+        &#34;&#34;&#34;
 
         params = self.jsons.create_institute(institutename = institutename)
         r = self.institutes.create_institute(params = params)
-
-        return r
-
-    def update_institute(self, instituteid, institutename=None):
-
-        params = self.jsons.create_institute(institutename = institutename)
-        r = self.institutes.create_institute(inid =instituteid, params = params)
 
         return r</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
 <dt id="OpenSpecimenAPIconnector.os_util.institute_util.institutes_util.create_institute"><code class="name flex">
-<span>def <span class="ident">create_institute</span></span>(<span>self, institutename=None)</span>
+<span>def <span class="ident">create_institute</span></span>(<span>self, institutename)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Creates an Institute.</p>
+<p>Creates an Institute in OpenSpecimen. </p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>institutename</code></strong> :&ensp;<code>string</code></dt>
+<dd>the name of the institute.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def create_institute(self, institutename=None):
+<pre><code class="python">def create_institute(self, institutename):
+
+    &#34;&#34;&#34;Creates an Institute.
+
+    Creates an Institute in OpenSpecimen. 
+
+    Parameters
+    ----------
+    institutename : string
+        the name of the institute.
+    &#34;&#34;&#34;
 
     params = self.jsons.create_institute(institutename = institutename)
     r = self.institutes.create_institute(params = params)
-
-    return r</code></pre>
-</details>
-</dd>
-<dt id="OpenSpecimenAPIconnector.os_util.institute_util.institutes_util.update_institute"><code class="name flex">
-<span>def <span class="ident">update_institute</span></span>(<span>self, instituteid, institutename=None)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def update_institute(self, instituteid, institutename=None):
-
-    params = self.jsons.create_institute(institutename = institutename)
-    r = self.institutes.create_institute(inid =instituteid, params = params)
 
     return r</code></pre>
 </details>
@@ -156,7 +245,6 @@ class institutes_util:
 <h4><code><a title="OpenSpecimenAPIconnector.os_util.institute_util.institutes_util" href="#OpenSpecimenAPIconnector.os_util.institute_util.institutes_util">institutes_util</a></code></h4>
 <ul class="">
 <li><code><a title="OpenSpecimenAPIconnector.os_util.institute_util.institutes_util.create_institute" href="#OpenSpecimenAPIconnector.os_util.institute_util.institutes_util.create_institute">create_institute</a></code></li>
-<li><code><a title="OpenSpecimenAPIconnector.os_util.institute_util.institutes_util.update_institute" href="#OpenSpecimenAPIconnector.os_util.institute_util.institutes_util.update_institute">update_institute</a></code></li>
 </ul>
 </li>
 </ul>

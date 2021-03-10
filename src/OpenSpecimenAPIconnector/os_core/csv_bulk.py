@@ -94,8 +94,6 @@ class csv_bulk:
        
         return ret_val, data
 
-
-
     def upload_csv(self, filename, file):
 
         """Upload a CSV file to OpenSpecimen

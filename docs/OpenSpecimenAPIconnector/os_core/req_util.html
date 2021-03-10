@@ -35,9 +35,9 @@ class OS_request_gen():
     &#34;&#34;&#34;Generates OpenSpecimen specific requests
      
     This class generates OpenSpecimen specific requests such that headers and authentification are created automatically.
-    With this class the users has to specify which requests do they need, the url and the payload, which should be sended
+    With this class the users have to specify which requests they do need, the url and the payload, which should be sent
     to OpenSpecimen. The payload alters for different requests and can be seen in the OpenSpecimen&#39;s API documentation.
-    The class can handle following requests: GET, POST(formdata, files, json-formatted string), PUT, DELETE, HEADER.
+    The class can handle the following requests: GET, POST(formdata, files, json-formatted string), PUT, DELETE, HEADER.
     
     Notes
     -----
@@ -47,7 +47,7 @@ class OS_request_gen():
     
     Example
     -------
-    A code example, where those requests are used is in the Jupyter-Notebook::
+    A code example, where those requests are used, is in the Jupyter-Notebook::
         $ jupyter notebook main.ipynb
     &#34;&#34;&#34;
 
@@ -55,13 +55,13 @@ class OS_request_gen():
         
         &#34;&#34;&#34;Constructor of the class OS_request_gen()
         
-        Constructor of the class OS_request_gen(). It generates the possible headers for the differnet requests,
+        Constructor of the class OS_request_gen(). It generates the possible headers for the different requests,
         which are json_headers, zip_headers, form_data_headers, file_headers.
         
         Parameters
         ----------
         auth : string
-            String as tupple with the format &#34;( API-User, Password)&#34;
+            String as tuple with the format &#34;( API-User, Password)&#34;
         &#34;&#34;&#34;
         
         self.json_headers = {
@@ -82,23 +82,23 @@ class OS_request_gen():
         &#34;&#34;&#34;Generates GET requests for OpenSpecimen
         
         Generates GET request for OpenSpecimen, which always contains the URL in the format
-        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/... . Is used for searching objects and 
-        downloading templates or collections. If one downloads a larger file the parameter
+        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/... . It is used for searching objects and 
+        downloading templates or collections. If one downloads a larger file, the parameter
         stream has to be set to &#34;True&#34;.
         
         Parameters
         ----------
         url : string
-            URL for the get request as string. Has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/...
+            URL for the get request as string has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/...
             
         stream : bool
-            Can be set &#34;True&#34; for larger files, which are taking time to download. Default value is &#34;False&#34;.
+            Can be set to &#34;True&#34; for larger files, which takes a while to download. Default value is &#34;False&#34;.
             
         Returns
         -------
         http(s) response
-            The response of the request, consists of status code, header and body. The type of the body alters
-            for different request.
+            The response of the request consists of status code, header and body. The type of the body alters
+            for different requests.
         &#34;&#34;&#34;
 
         if stream:
@@ -125,13 +125,13 @@ class OS_request_gen():
         Parameters
         ----------
         url : string
-            URL for the get request as string. Has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/...
+            URL for the get request as string has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/...
             
         data : json-formatted strings
             Json-formatted string, with the keys from OpenSpecimen.
             
         form_data : bool
-            Default value is &#34;False&#34;. Can be set to &#34;True&#34; if for examples forms (.xml-files) are uploaded.
+            Default value is &#34;False&#34;. Can be set to &#34;True&#34; if, for example, forms (.xml-files) are uploaded.
         
         files : binary
             Default value is &#34;None&#34;. Contains tuple with name + ending and file itself.
@@ -142,8 +142,8 @@ class OS_request_gen():
         Returns
         -------
         http(s) response
-            The response of the request, consists of status code, header and body. The type of the body alters
-            for different request.
+            The response of the request consists of status code, header and body. The type of the body alters
+            for different requests.
         &#34;&#34;&#34;
         
         if form_data:
@@ -171,7 +171,7 @@ class OS_request_gen():
         Parameters
         ----------
         url : string
-            URL for the get request as string. Has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/...
+            URL for the get request as string has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/...
             
         data : json-formatted strings
             Json-formatted string, with the keys from OpenSpecimen.
@@ -179,7 +179,7 @@ class OS_request_gen():
         Returns
         -------
         http(s) response
-            The response of the request, consists of status code, header and body. The type of the body alters
+            The response of the request consists of status code, header and body. The type of the body alters
             for different request.
         &#34;&#34;&#34;
 
@@ -194,18 +194,18 @@ class OS_request_gen():
         
         Generates DELETE request for OpenSpecimen, which always contains the URL in the format
         http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity}/{objectID} . Is used for deleting objects 
-        of a desired entities e.g. specimens. Usually OpenSpecimen requires the ID of the object in the URL.
+        of a desired entity e.g. specimens. Usually OpenSpecimen requires the ID of the object in the URL.
         
         Parameters
         ----------
         url : string
-            URL for the get request as string. Has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity}/{objectID}
+            URL for the get request as string has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity}/{objectID}
             
         Returns
         -------
         http(s) response
-            The response of the request, consists of status code, header and body. The type of the body alters
-            for different request.
+            The response of the request consists of status code, header and body. The type of the body alters
+            for different requests.
         &#34;&#34;&#34;
 
         r = requests.request(&#34;DELETE&#34;, url, auth=self.auth)
@@ -217,19 +217,19 @@ class OS_request_gen():
         
         &#34;&#34;&#34;Generates HEAD requests for OpenSpecimen
         
-        Generates HEAD request for OpenSpecimen, which always contains the URL in the format
-        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity} . Is used for getting
+        Generates a HEAD request for OpenSpecimen, which always contains the URL in the format
+        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity} . It is used for getting
         the header of an object. Usually OpenSpecimen requires the entity of the object in the URL.
         
         Parameters
         ----------
         url : string
-            URL for the get request as string. Has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity}
+            URL for the get request as string has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity}
             
         Returns
         -------
         http(s) response
-            The response of the request, consists of status code, header and body. The type of the body alters
+            The response of the request consists of status code, header and body. The type of the body alters
             for different request.
         &#34;&#34;&#34;
 
@@ -268,23 +268,23 @@ class OS_request_gen():
 <dd>
 <div class="desc"><p>Generates OpenSpecimen specific requests</p>
 <p>This class generates OpenSpecimen specific requests such that headers and authentification are created automatically.
-With this class the users has to specify which requests do they need, the url and the payload, which should be sended
+With this class the users have to specify which requests they do need, the url and the payload, which should be sent
 to OpenSpecimen. The payload alters for different requests and can be seen in the OpenSpecimen's API documentation.
-The class can handle following requests: GET, POST(formdata, files, json-formatted string), PUT, DELETE, HEADER.</p>
+The class can handle the following requests: GET, POST(formdata, files, json-formatted string), PUT, DELETE, HEADER.</p>
 <h2 id="notes">Notes</h2>
 <p>In order to use this and also the other classes, the user has to know OpenSpecimen. The users have to know which requests
 are needed and what content should be uploaded. The API documentation of OpenSpecimen is in:
 <a href="https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs">https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs</a></p>
 <h2 id="example">Example</h2>
-<p>A code example, where those requests are used is in the Jupyter-Notebook::
+<p>A code example, where those requests are used, is in the Jupyter-Notebook::
 $ jupyter notebook main.ipynb</p>
 <p>Constructor of the class OS_request_gen()</p>
-<p>Constructor of the class OS_request_gen(). It generates the possible headers for the differnet requests,
+<p>Constructor of the class OS_request_gen(). It generates the possible headers for the different requests,
 which are json_headers, zip_headers, form_data_headers, file_headers.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>auth</code></strong> :&ensp;<code>string</code></dt>
-<dd>String as tupple with the format "( API-User, Password)"</dd>
+<dd>String as tuple with the format "( API-User, Password)"</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -295,9 +295,9 @@ which are json_headers, zip_headers, form_data_headers, file_headers.</p>
     &#34;&#34;&#34;Generates OpenSpecimen specific requests
      
     This class generates OpenSpecimen specific requests such that headers and authentification are created automatically.
-    With this class the users has to specify which requests do they need, the url and the payload, which should be sended
+    With this class the users have to specify which requests they do need, the url and the payload, which should be sent
     to OpenSpecimen. The payload alters for different requests and can be seen in the OpenSpecimen&#39;s API documentation.
-    The class can handle following requests: GET, POST(formdata, files, json-formatted string), PUT, DELETE, HEADER.
+    The class can handle the following requests: GET, POST(formdata, files, json-formatted string), PUT, DELETE, HEADER.
     
     Notes
     -----
@@ -307,7 +307,7 @@ which are json_headers, zip_headers, form_data_headers, file_headers.</p>
     
     Example
     -------
-    A code example, where those requests are used is in the Jupyter-Notebook::
+    A code example, where those requests are used, is in the Jupyter-Notebook::
         $ jupyter notebook main.ipynb
     &#34;&#34;&#34;
 
@@ -315,13 +315,13 @@ which are json_headers, zip_headers, form_data_headers, file_headers.</p>
         
         &#34;&#34;&#34;Constructor of the class OS_request_gen()
         
-        Constructor of the class OS_request_gen(). It generates the possible headers for the differnet requests,
+        Constructor of the class OS_request_gen(). It generates the possible headers for the different requests,
         which are json_headers, zip_headers, form_data_headers, file_headers.
         
         Parameters
         ----------
         auth : string
-            String as tupple with the format &#34;( API-User, Password)&#34;
+            String as tuple with the format &#34;( API-User, Password)&#34;
         &#34;&#34;&#34;
         
         self.json_headers = {
@@ -342,23 +342,23 @@ which are json_headers, zip_headers, form_data_headers, file_headers.</p>
         &#34;&#34;&#34;Generates GET requests for OpenSpecimen
         
         Generates GET request for OpenSpecimen, which always contains the URL in the format
-        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/... . Is used for searching objects and 
-        downloading templates or collections. If one downloads a larger file the parameter
+        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/... . It is used for searching objects and 
+        downloading templates or collections. If one downloads a larger file, the parameter
         stream has to be set to &#34;True&#34;.
         
         Parameters
         ----------
         url : string
-            URL for the get request as string. Has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/...
+            URL for the get request as string has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/...
             
         stream : bool
-            Can be set &#34;True&#34; for larger files, which are taking time to download. Default value is &#34;False&#34;.
+            Can be set to &#34;True&#34; for larger files, which takes a while to download. Default value is &#34;False&#34;.
             
         Returns
         -------
         http(s) response
-            The response of the request, consists of status code, header and body. The type of the body alters
-            for different request.
+            The response of the request consists of status code, header and body. The type of the body alters
+            for different requests.
         &#34;&#34;&#34;
 
         if stream:
@@ -385,13 +385,13 @@ which are json_headers, zip_headers, form_data_headers, file_headers.</p>
         Parameters
         ----------
         url : string
-            URL for the get request as string. Has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/...
+            URL for the get request as string has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/...
             
         data : json-formatted strings
             Json-formatted string, with the keys from OpenSpecimen.
             
         form_data : bool
-            Default value is &#34;False&#34;. Can be set to &#34;True&#34; if for examples forms (.xml-files) are uploaded.
+            Default value is &#34;False&#34;. Can be set to &#34;True&#34; if, for example, forms (.xml-files) are uploaded.
         
         files : binary
             Default value is &#34;None&#34;. Contains tuple with name + ending and file itself.
@@ -402,8 +402,8 @@ which are json_headers, zip_headers, form_data_headers, file_headers.</p>
         Returns
         -------
         http(s) response
-            The response of the request, consists of status code, header and body. The type of the body alters
-            for different request.
+            The response of the request consists of status code, header and body. The type of the body alters
+            for different requests.
         &#34;&#34;&#34;
         
         if form_data:
@@ -431,7 +431,7 @@ which are json_headers, zip_headers, form_data_headers, file_headers.</p>
         Parameters
         ----------
         url : string
-            URL for the get request as string. Has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/...
+            URL for the get request as string has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/...
             
         data : json-formatted strings
             Json-formatted string, with the keys from OpenSpecimen.
@@ -439,7 +439,7 @@ which are json_headers, zip_headers, form_data_headers, file_headers.</p>
         Returns
         -------
         http(s) response
-            The response of the request, consists of status code, header and body. The type of the body alters
+            The response of the request consists of status code, header and body. The type of the body alters
             for different request.
         &#34;&#34;&#34;
 
@@ -454,18 +454,18 @@ which are json_headers, zip_headers, form_data_headers, file_headers.</p>
         
         Generates DELETE request for OpenSpecimen, which always contains the URL in the format
         http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity}/{objectID} . Is used for deleting objects 
-        of a desired entities e.g. specimens. Usually OpenSpecimen requires the ID of the object in the URL.
+        of a desired entity e.g. specimens. Usually OpenSpecimen requires the ID of the object in the URL.
         
         Parameters
         ----------
         url : string
-            URL for the get request as string. Has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity}/{objectID}
+            URL for the get request as string has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity}/{objectID}
             
         Returns
         -------
         http(s) response
-            The response of the request, consists of status code, header and body. The type of the body alters
-            for different request.
+            The response of the request consists of status code, header and body. The type of the body alters
+            for different requests.
         &#34;&#34;&#34;
 
         r = requests.request(&#34;DELETE&#34;, url, auth=self.auth)
@@ -477,19 +477,19 @@ which are json_headers, zip_headers, form_data_headers, file_headers.</p>
         
         &#34;&#34;&#34;Generates HEAD requests for OpenSpecimen
         
-        Generates HEAD request for OpenSpecimen, which always contains the URL in the format
-        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity} . Is used for getting
+        Generates a HEAD request for OpenSpecimen, which always contains the URL in the format
+        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity} . It is used for getting
         the header of an object. Usually OpenSpecimen requires the entity of the object in the URL.
         
         Parameters
         ----------
         url : string
-            URL for the get request as string. Has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity}
+            URL for the get request as string has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity}
             
         Returns
         -------
         http(s) response
-            The response of the request, consists of status code, header and body. The type of the body alters
+            The response of the request consists of status code, header and body. The type of the body alters
             for different request.
         &#34;&#34;&#34;
 
@@ -520,17 +520,17 @@ which are json_headers, zip_headers, form_data_headers, file_headers.</p>
 <div class="desc"><p>Generates DELETE requests for OpenSpecimen</p>
 <p>Generates DELETE request for OpenSpecimen, which always contains the URL in the format
 http(s)://<host>:<port>/openspecimen/rest/ng/{entity}/{objectID} . Is used for deleting objects
-of a desired entities e.g. specimens. Usually OpenSpecimen requires the ID of the object in the URL.</p>
+of a desired entity e.g. specimens. Usually OpenSpecimen requires the ID of the object in the URL.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>url</code></strong> :&ensp;<code>string</code></dt>
-<dd>URL for the get request as string. Has the form: http(s)://<host>:<port>/openspecimen/rest/ng/{entity}/{objectID}</dd>
+<dd>URL for the get request as string has the form: http(s)://<host>:<port>/openspecimen/rest/ng/{entity}/{objectID}</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>http(s) response</code></dt>
-<dd>The response of the request, consists of status code, header and body. The type of the body alters
-for different request.</dd>
+<dd>The response of the request consists of status code, header and body. The type of the body alters
+for different requests.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -542,18 +542,18 @@ for different request.</dd>
     
     Generates DELETE request for OpenSpecimen, which always contains the URL in the format
     http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity}/{objectID} . Is used for deleting objects 
-    of a desired entities e.g. specimens. Usually OpenSpecimen requires the ID of the object in the URL.
+    of a desired entity e.g. specimens. Usually OpenSpecimen requires the ID of the object in the URL.
     
     Parameters
     ----------
     url : string
-        URL for the get request as string. Has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity}/{objectID}
+        URL for the get request as string has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity}/{objectID}
         
     Returns
     -------
     http(s) response
-        The response of the request, consists of status code, header and body. The type of the body alters
-        for different request.
+        The response of the request consists of status code, header and body. The type of the body alters
+        for different requests.
     &#34;&#34;&#34;
 
     r = requests.request(&#34;DELETE&#34;, url, auth=self.auth)
@@ -567,21 +567,21 @@ for different request.</dd>
 <dd>
 <div class="desc"><p>Generates GET requests for OpenSpecimen</p>
 <p>Generates GET request for OpenSpecimen, which always contains the URL in the format
-http(s)://<host>:<port>/openspecimen/rest/ng/&hellip; . Is used for searching objects and
-downloading templates or collections. If one downloads a larger file the parameter
+http(s)://<host>:<port>/openspecimen/rest/ng/&hellip; . It is used for searching objects and
+downloading templates or collections. If one downloads a larger file, the parameter
 stream has to be set to "True".</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>url</code></strong> :&ensp;<code>string</code></dt>
-<dd>URL for the get request as string. Has the form: http(s)://<host>:<port>/openspecimen/rest/ng/&hellip;</dd>
+<dd>URL for the get request as string has the form: http(s)://<host>:<port>/openspecimen/rest/ng/&hellip;</dd>
 <dt><strong><code>stream</code></strong> :&ensp;<code>bool</code></dt>
-<dd>Can be set "True" for larger files, which are taking time to download. Default value is "False".</dd>
+<dd>Can be set to "True" for larger files, which takes a while to download. Default value is "False".</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>http(s) response</code></dt>
-<dd>The response of the request, consists of status code, header and body. The type of the body alters
-for different request.</dd>
+<dd>The response of the request consists of status code, header and body. The type of the body alters
+for different requests.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -592,23 +592,23 @@ for different request.</dd>
     &#34;&#34;&#34;Generates GET requests for OpenSpecimen
     
     Generates GET request for OpenSpecimen, which always contains the URL in the format
-    http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/... . Is used for searching objects and 
-    downloading templates or collections. If one downloads a larger file the parameter
+    http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/... . It is used for searching objects and 
+    downloading templates or collections. If one downloads a larger file, the parameter
     stream has to be set to &#34;True&#34;.
     
     Parameters
     ----------
     url : string
-        URL for the get request as string. Has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/...
+        URL for the get request as string has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/...
         
     stream : bool
-        Can be set &#34;True&#34; for larger files, which are taking time to download. Default value is &#34;False&#34;.
+        Can be set to &#34;True&#34; for larger files, which takes a while to download. Default value is &#34;False&#34;.
         
     Returns
     -------
     http(s) response
-        The response of the request, consists of status code, header and body. The type of the body alters
-        for different request.
+        The response of the request consists of status code, header and body. The type of the body alters
+        for different requests.
     &#34;&#34;&#34;
 
     if stream:
@@ -627,18 +627,18 @@ for different request.</dd>
 </code></dt>
 <dd>
 <div class="desc"><p>Generates HEAD requests for OpenSpecimen</p>
-<p>Generates HEAD request for OpenSpecimen, which always contains the URL in the format
-http(s)://<host>:<port>/openspecimen/rest/ng/{entity} . Is used for getting
+<p>Generates a HEAD request for OpenSpecimen, which always contains the URL in the format
+http(s)://<host>:<port>/openspecimen/rest/ng/{entity} . It is used for getting
 the header of an object. Usually OpenSpecimen requires the entity of the object in the URL.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>url</code></strong> :&ensp;<code>string</code></dt>
-<dd>URL for the get request as string. Has the form: http(s)://<host>:<port>/openspecimen/rest/ng/{entity}</dd>
+<dd>URL for the get request as string has the form: http(s)://<host>:<port>/openspecimen/rest/ng/{entity}</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>http(s) response</code></dt>
-<dd>The response of the request, consists of status code, header and body. The type of the body alters
+<dd>The response of the request consists of status code, header and body. The type of the body alters
 for different request.</dd>
 </dl></div>
 <details class="source">
@@ -649,19 +649,19 @@ for different request.</dd>
     
     &#34;&#34;&#34;Generates HEAD requests for OpenSpecimen
     
-    Generates HEAD request for OpenSpecimen, which always contains the URL in the format
-    http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity} . Is used for getting
+    Generates a HEAD request for OpenSpecimen, which always contains the URL in the format
+    http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity} . It is used for getting
     the header of an object. Usually OpenSpecimen requires the entity of the object in the URL.
     
     Parameters
     ----------
     url : string
-        URL for the get request as string. Has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity}
+        URL for the get request as string has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity}
         
     Returns
     -------
     http(s) response
-        The response of the request, consists of status code, header and body. The type of the body alters
+        The response of the request consists of status code, header and body. The type of the body alters
         for different request.
     &#34;&#34;&#34;
 
@@ -683,11 +683,11 @@ execute the job)</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>url</code></strong> :&ensp;<code>string</code></dt>
-<dd>URL for the get request as string. Has the form: http(s)://<host>:<port>/openspecimen/rest/ng/&hellip;</dd>
+<dd>URL for the get request as string has the form: http(s)://<host>:<port>/openspecimen/rest/ng/&hellip;</dd>
 <dt><strong><code>data</code></strong> :&ensp;<code>json-formatted strings</code></dt>
 <dd>Json-formatted string, with the keys from OpenSpecimen.</dd>
 <dt><strong><code>form_data</code></strong> :&ensp;<code>bool</code></dt>
-<dd>Default value is "False". Can be set to "True" if for examples forms (.xml-files) are uploaded.</dd>
+<dd>Default value is "False". Can be set to "True" if, for example, forms (.xml-files) are uploaded.</dd>
 <dt><strong><code>files</code></strong> :&ensp;<code>binary</code></dt>
 <dd>Default value is "None". Contains tuple with name + ending and file itself.</dd>
 <dt><strong><code>params</code></strong> :&ensp;<code>json formatted string</code></dt>
@@ -696,8 +696,8 @@ execute the job)</p>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>http(s) response</code></dt>
-<dd>The response of the request, consists of status code, header and body. The type of the body alters
-for different request.</dd>
+<dd>The response of the request consists of status code, header and body. The type of the body alters
+for different requests.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -716,13 +716,13 @@ for different request.</dd>
     Parameters
     ----------
     url : string
-        URL for the get request as string. Has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/...
+        URL for the get request as string has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/...
         
     data : json-formatted strings
         Json-formatted string, with the keys from OpenSpecimen.
         
     form_data : bool
-        Default value is &#34;False&#34;. Can be set to &#34;True&#34; if for examples forms (.xml-files) are uploaded.
+        Default value is &#34;False&#34;. Can be set to &#34;True&#34; if, for example, forms (.xml-files) are uploaded.
     
     files : binary
         Default value is &#34;None&#34;. Contains tuple with name + ending and file itself.
@@ -733,8 +733,8 @@ for different request.</dd>
     Returns
     -------
     http(s) response
-        The response of the request, consists of status code, header and body. The type of the body alters
-        for different request.
+        The response of the request consists of status code, header and body. The type of the body alters
+        for different requests.
     &#34;&#34;&#34;
     
     if form_data:
@@ -762,14 +762,14 @@ from OpenSpecimen.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>url</code></strong> :&ensp;<code>string</code></dt>
-<dd>URL for the get request as string. Has the form: http(s)://<host>:<port>/openspecimen/rest/ng/&hellip;</dd>
+<dd>URL for the get request as string has the form: http(s)://<host>:<port>/openspecimen/rest/ng/&hellip;</dd>
 <dt><strong><code>data</code></strong> :&ensp;<code>json-formatted strings</code></dt>
 <dd>Json-formatted string, with the keys from OpenSpecimen.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>http(s) response</code></dt>
-<dd>The response of the request, consists of status code, header and body. The type of the body alters
+<dd>The response of the request consists of status code, header and body. The type of the body alters
 for different request.</dd>
 </dl></div>
 <details class="source">
@@ -788,7 +788,7 @@ for different request.</dd>
     Parameters
     ----------
     url : string
-        URL for the get request as string. Has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/...
+        URL for the get request as string has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/...
         
     data : json-formatted strings
         Json-formatted string, with the keys from OpenSpecimen.
@@ -796,7 +796,7 @@ for different request.</dd>
     Returns
     -------
     http(s) response
-        The response of the request, consists of status code, header and body. The type of the body alters
+        The response of the request consists of status code, header and body. The type of the body alters
         for different request.
     &#34;&#34;&#34;
 

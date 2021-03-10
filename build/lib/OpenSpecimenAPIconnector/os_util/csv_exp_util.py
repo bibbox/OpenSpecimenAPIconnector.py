@@ -9,7 +9,7 @@ import time
 
 ## TODO Add all the other entities currently in export operations. Da sollten wir nochmal drüber sprechen
 
-class csv_export:
+class csv_exporter:
 
     """Handles the export of CSV files from open specimen for different entities like collection protocols, specimens etc etc.
 
@@ -45,29 +45,49 @@ class csv_export:
         self.json = Json_factory()
 
 
-    def cp_csv_export(self, objecttype, cpid, entitytype=None, formname=None):
+    def csv_export(self, objecttype, recordids=None, cpid=None, ppids=None,  entitytype=None, formname=None, 
+                            specimenlabels=None, csv=False):
 
         """Export CV for entity collection protocol
 
         Export function for collection protocols 
 
         Parameters
+        objecttype: string 
+            Identifying the general object to be exported.
+            Permissible Values: "institute", "site", "user", "cpr", "specimen", "extensions", "storageContainer"
+        recordids: list or string
+            Comma seperated list of record ids for fetching selected entries by their identifier. (Sites, Institutes, Users and Containers) 
+        cp_id: string 
+            Collection protocol id of export target not neccesary for objects higher in the hierachy like institue or site.
+            For all others it can be specified or set to "-1" which means all data in the system.
+        ppids: list or string
+            List of comma seperated participant identifiers; String if its a singular participant to be exported
+            Used in combination with specimen object type as a paramter
+        entitytype: string
+            Paramter defining the entity for data extraction (e.g.: attached form at participant level)
+            used with the extension object type
+        formname: string
+            Defines the form to be downloaded in context of the extension object type together with the specified entity 
+        specimenlabels: list or string
+            List of comma seperated specimen identifiers; str if its a singular specimen to be exported        
         ----------
-        objecttype : None
-            Not really clear what exactly this signifies right now
-        cpid : string
-            OpenSpecimen ID of the collection protocol to be exported
-        entitype : None
-            Not really clear what this is needed for, since the function exports Collection protocols
-        formname : None
-            Not really clear what exactly this signifies right now
+        
+        Returns
+        -------
+        job: Pandas DataFrame or CSV binary File
+            Returns the csv file as Pandas data frame or CSV binary string
         """
+        
 
-        data = self.json.create_cp_csv_export_job(objecttype = objecttype, cpid = cpid,
+        data = self.json.create_csv_export_job(objecttype = objecttype, cpid = cpid,
                 entitytype = entitytype, formname = formname)
         
         job_id = self.export.create_export_job(data = data)
 
         job = self.export.get_job_output(job_id = job_id)
+
+        if csv:
+           job = job.to_csv(index=False)
 
         return job

@@ -26,13 +26,21 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from .os_core import *
+<pre><code class="python">from .config import config
+import requests
+import json
+config_manager = config()
+from .os_core import *
 from .os_util import *</code></pre>
 </details>
 </section>
 <section>
 <h2 class="section-title" id="header-submodules">Sub-modules</h2>
 <dl>
+<dt><code class="name"><a title="OpenSpecimenAPIconnector.config" href="config.html">OpenSpecimenAPIconnector.config</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
 <dt><code class="name"><a title="OpenSpecimenAPIconnector.mg_core" href="mg_core/index.html">OpenSpecimenAPIconnector.mg_core</a></code></dt>
 <dd>
 <div class="desc"></div>
@@ -66,6 +74,7 @@ from .os_util import *</code></pre>
 <ul id="index">
 <li><h3><a href="#header-submodules">Sub-modules</a></h3>
 <ul>
+<li><code><a title="OpenSpecimenAPIconnector.config" href="config.html">OpenSpecimenAPIconnector.config</a></code></li>
 <li><code><a title="OpenSpecimenAPIconnector.mg_core" href="mg_core/index.html">OpenSpecimenAPIconnector.mg_core</a></code></li>
 <li><code><a title="OpenSpecimenAPIconnector.mg_util" href="mg_util/index.html">OpenSpecimenAPIconnector.mg_util</a></code></li>
 <li><code><a title="OpenSpecimenAPIconnector.os_core" href="os_core/index.html">OpenSpecimenAPIconnector.os_core</a></code></li>

@@ -94,8 +94,6 @@ class csv_bulk:
        
         return ret_val, data
 
-
-
     def upload_csv(self, filename, file):
 
         """Upload a CSV file to OpenSpecimen
@@ -172,7 +170,6 @@ class csv_bulk:
         payload = self.Json_fact.create_bulk_import_job(schemaname=schemaname, operation=operation, fileid=fileid,
                                                             dateformat=dateformat, timeformat=timeformat)
         r = self.OS_request_gen.post_request(url, data=payload)
-        print(r.text)
         return (json.loads(r.text)["id"], r.text)
 
 

@@ -31,58 +31,59 @@
 
 import json
 from .req_util import OS_request_gen
-
+from .url import url_gen
+from .. import config_manager
 
 class institutes():
 
     &#34;&#34;&#34;Handles the API calls for the institutes
 
     Handles the OpenSpecimen API calls for the institutes. This class can 
-    create, delete, update Insitutes. One can search via different parameters an institute,
+    create, delete, update institutes. One can search via different parameters for an institute and
     get all Collection protocols corresponding to an institute. Get one or all institutes.
-    
+
     Notes
     -----
-    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
-    just pass the parameters via JSON-formatted string. This means the user has to know the keywords.
+    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes, one can
+    just pass the parameters via a JSON-formatted string. This means the user has to know the keywords.
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
 
     Example
     -------
 
-    A code example, where the Institutes are handled is in the Jupyter-Notebook:
+    Code examples, where the institutes are handled, is in the Jupyter-Notebook:
 
         $ jupyter notebook main.ipynb
     &#34;&#34;&#34;
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
-        &#34;&#34;&#34;Constructor of the Class institutes
+        &#34;&#34;&#34;Constructor of the Class Institutes
 
-        Constructor of the class institutes, can handle the basic API-calls
+        Constructor of the class institutes can handle the basic API-calls
         of the institutes in OpenSpecimen. Connects this class to OpenSpecimen
         specific URL Generator Class (os_core/url.py)
 
         Parameters
         ----------
         base_url : string
-            URL to openspecimen, has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng
+        URL to openspecimen, has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng
         auth : tuple
-            Consits of two strings ( loginname , password)
+        Consists of two strings ( loginname , password)
         &#34;&#34;&#34;
-
-        self.OS_request_gen = OS_request_gen(base_url, auth)
-        self.base_url = base_url + &#39;/institutes&#39;
+        self.base_url = config_manager.get_url() + &#39;/institutes&#39;
+        self.auth = config_manager.get_auth()
+        self.OS_request_gen = OS_request_gen(self.auth)
         self.urls = url_gen()
 
 
     def ausgabe(self):
 
-        &#34;&#34;&#34;Testing of the URL and authentification.
+        &#34;&#34;&#34;Testing of the URL and Authentification.
 
-        If there are unexpected errors one can easily test if the URL and login data is correctly spelled.
-        the function prints the URL and login data, handed over to the class, to the output terminal.
+        If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
+        The function prints the URL and login data to the output terminal, which was handed over to the class.
         &#34;&#34;&#34;
 
         print(self.base_url, self.OS_request_gen.auth)
@@ -90,10 +91,10 @@ class institutes():
 
     def create_institute(self, params):
 
-        &#34;&#34;&#34;Creates an Insitute.
+        &#34;&#34;&#34;Create an Institute.
 
-        Creates an Institute in OpenSpecimen. In order to use this function one has to know
-        the parameters which OpenSpecimen needs to create an Insitute. One can use it via the os_util class
+        Creates an institute in OpenSpecimen. In order to use this function one has to know
+        the parameters which OpenSpecimen needs to create an institute. One can use it via the os_util class
         institute_util. This allows just the basic definition. 
 
         Parameters
@@ -118,21 +119,21 @@ class institutes():
 
         &#34;&#34;&#34;Delete an Institute 
 
-        Delete an existing Institute In OpenSpecimen with ID ::inid::.
-        The ID is created from OpenSpecimen and can for eample be seen in the GUI
-        under Institutes when clicking on the Institute, the URL looks like:
+        Delete an existing institute in OpenSpecimen with ID ::inid::.
+        The ID is created from OpenSpecimen and can, for example, be seen in the GUI
+        under Institutes. When clicking on the institute, the URL looks like:
         http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/institutes/{inid}/overview .
-        Or with the function search_institutes for example by name and extract the id from there.
+        Otherwise, one can search with the function search_institutes for example by name and extract the ID from there.
 
         Parameter
         ---------
-        inid : string or int
-            The System generated ID of the Institute. Will get converted to a string.
+        inid : int
+            The ID of the Institute, generated by the system, will get converted to a string.
 
         Returns
         -------
         JSON-dict
-            Details of the deleted Institue or the OpenSpecimen&#39;s error message.
+            Details of the deleted institute or the OpenSpecimen&#39;s error message.
         &#34;&#34;&#34;
 
         endpoint = &#39;/&#39; + str(inid)
@@ -144,9 +145,9 @@ class institutes():
 
     def search_institutes(self, substring):
 
-        &#34;&#34;&#34;Search for  Institutes with specific substring.
+        &#34;&#34;&#34;Search for Institutes with specific substring.
 
-        Search for one or more Institutes with the substring in their name defined. The search URL looks like:
+        Search for one or more institutes with the substring. The search URL looks like:
         http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/np/institutes?{param_1}={value_1}&amp;...&amp;{param_x}={value_x}
 
         Parameters
@@ -157,7 +158,7 @@ class institutes():
         Returns
         -------
         JSON-dict
-            Details of all matching Institue or the OpenSpecimen&#39;s error message.
+            Details of all matching institutes or the OpenSpecimen&#39;s error message.
         &#34;&#34;&#34;
 
         endpoint = &#39;?name=&#39; + str(substring)
@@ -171,12 +172,12 @@ class institutes():
 
         &#34;&#34;&#34;Get all Institutes
 
-        Get all Institutes within the OpenSpecimen distribution, which is defined in the base_url.
+        Get all institutes within the OpenSpecimen distribution, which is defined in the base_url.
 
         Returns
         -------
         JSON-dict
-            Details of all Institutes which are in the OpenSpecimen Distribution.
+            Details of all institutes which are in the OpenSpecimen Distribution.
         &#34;&#34;&#34;
 
         url = self.base_url
@@ -190,11 +191,11 @@ class institutes():
         &#34;&#34;&#34;Get the institute with the ID ::inid::
 
         Get the details of the Institute with the unique ID ::inid::.
-        This ID is generated automatically from OpenSpecimen when the Protocol is created.
+        This ID is automatically generated by OpenSpecimen at Protocol creation.
 
         Parameters
         ----------
-        inid : string or int
+        inid : int
             The System&#39;s ID of the Institute, will be converted to a string.
 
         Returns
@@ -212,26 +213,25 @@ class institutes():
 
     def update_institute(self, inid, params):
 
-        &#34;&#34;&#34;Updates a existing Institute with ID ::inid:: with the Parameters ::params::
+        &#34;&#34;&#34;Updates an existing Institute with ID ::inid:: with the Parameters ::params::
 
-        Updates a existing Institute with the automatically generated OpsenSpecimen&#39;s system wide
-        unique Institute ID ::cpid::, with the Parameter ::params:: which are passed to the function.
-        The ID of the Institute have to be known and can for example be seen in the GUI by clicking on 
-        the Institutes, which has the format http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/institutes/{inid}/... .
-        Or via the function search_institutes.
+        Updates an existing institute with the automatically generated OpenSpecimen&#39;s system wide
+        unique Institute ID ::instituteid::, with the parameter ::params:: which are passed to the function.
+        The ID of the institute has to be known and can, for example, be seen in the GUI by clicking on 
+        the institutes, which has the format http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/institutes/{inid}/....or via the function search_institutes.
 
         Parameter
         ---------
-        inid : string or int
-            Unique Institute ID which is generated automatically from the System. It will be converted to a string.
+        instituteid :  int
+            Unique Institute ID which is generated automatically from the system. It will be converted to a string.
         
-        params : string
-            JSON-formatted string with the key name. 
-
+        institutename : string
+            New name of the institute, if it is left empty, nothing will be updated.
+            
         Returns
         -------
         JSON-dict
-            JSON-dict with the details of the updated Institute or the OpenSpecimen&#39;s error message.
+            JSON-dict with the details of the updated institute or the OpenSpecimen&#39;s error message.
         &#34;&#34;&#34;
 
         endpoint = &#39;/&#39; + str(inid)
@@ -253,33 +253,34 @@ class institutes():
 <dl>
 <dt id="OpenSpecimenAPIconnector.os_core.institute.institutes"><code class="flex name class">
 <span>class <span class="ident">institutes</span></span>
-<span>(</span><span>base_url, auth)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Handles the API calls for the institutes</p>
 <p>Handles the OpenSpecimen API calls for the institutes. This class can
-create, delete, update Insitutes. One can search via different parameters an institute,
+create, delete, update institutes. One can search via different parameters for an institute and
 get all Collection protocols corresponding to an institute. Get one or all institutes.</p>
 <h2 id="notes">Notes</h2>
-<p>In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
-just pass the parameters via JSON-formatted string. This means the user has to know the keywords.
+<p>In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes, one can
+just pass the parameters via a JSON-formatted string. This means the user has to know the keywords.
 The API calls are documented in <a href="https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs">https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs</a> and
 the calls refer to this site. More details can be seen in the documentation.</p>
 <h2 id="example">Example</h2>
-<p>A code example, where the Institutes are handled is in the Jupyter-Notebook:</p>
+<p>Code examples, where the institutes are handled, is in the Jupyter-Notebook:</p>
 <pre><code>$ jupyter notebook main.ipynb
 </code></pre>
-<p>Constructor of the Class institutes</p>
-<p>Constructor of the class institutes, can handle the basic API-calls
+<p>Constructor of the Class Institutes</p>
+<p>Constructor of the class institutes can handle the basic API-calls
 of the institutes in OpenSpecimen. Connects this class to OpenSpecimen
 specific URL Generator Class (os_core/url.py)</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>base_url</code></strong> :&ensp;<code>string</code></dt>
-<dd>URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng</dd>
+<dd>&nbsp;</dd>
+<dt>URL to openspecimen, has the format: http(s)://<host>:<port>/openspecimen/rest/ng</dt>
 <dt><strong><code>auth</code></strong> :&ensp;<code>tuple</code></dt>
-<dd>Consits of two strings ( loginname , password)</dd>
-</dl></div>
+<dd>&nbsp;</dd>
+</dl>
+<p>Consists of two strings ( loginname , password)</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -289,51 +290,51 @@ specific URL Generator Class (os_core/url.py)</p>
     &#34;&#34;&#34;Handles the API calls for the institutes
 
     Handles the OpenSpecimen API calls for the institutes. This class can 
-    create, delete, update Insitutes. One can search via different parameters an institute,
+    create, delete, update institutes. One can search via different parameters for an institute and
     get all Collection protocols corresponding to an institute. Get one or all institutes.
-    
+
     Notes
     -----
-    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
-    just pass the parameters via JSON-formatted string. This means the user has to know the keywords.
+    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes, one can
+    just pass the parameters via a JSON-formatted string. This means the user has to know the keywords.
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
 
     Example
     -------
 
-    A code example, where the Institutes are handled is in the Jupyter-Notebook:
+    Code examples, where the institutes are handled, is in the Jupyter-Notebook:
 
         $ jupyter notebook main.ipynb
     &#34;&#34;&#34;
 
-    def __init__(self, base_url, auth):
+    def __init__(self):
 
-        &#34;&#34;&#34;Constructor of the Class institutes
+        &#34;&#34;&#34;Constructor of the Class Institutes
 
-        Constructor of the class institutes, can handle the basic API-calls
+        Constructor of the class institutes can handle the basic API-calls
         of the institutes in OpenSpecimen. Connects this class to OpenSpecimen
         specific URL Generator Class (os_core/url.py)
 
         Parameters
         ----------
         base_url : string
-            URL to openspecimen, has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng
+        URL to openspecimen, has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng
         auth : tuple
-            Consits of two strings ( loginname , password)
+        Consists of two strings ( loginname , password)
         &#34;&#34;&#34;
-
-        self.OS_request_gen = OS_request_gen(base_url, auth)
-        self.base_url = base_url + &#39;/institutes&#39;
+        self.base_url = config_manager.get_url() + &#39;/institutes&#39;
+        self.auth = config_manager.get_auth()
+        self.OS_request_gen = OS_request_gen(self.auth)
         self.urls = url_gen()
 
 
     def ausgabe(self):
 
-        &#34;&#34;&#34;Testing of the URL and authentification.
+        &#34;&#34;&#34;Testing of the URL and Authentification.
 
-        If there are unexpected errors one can easily test if the URL and login data is correctly spelled.
-        the function prints the URL and login data, handed over to the class, to the output terminal.
+        If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
+        The function prints the URL and login data to the output terminal, which was handed over to the class.
         &#34;&#34;&#34;
 
         print(self.base_url, self.OS_request_gen.auth)
@@ -341,10 +342,10 @@ specific URL Generator Class (os_core/url.py)</p>
 
     def create_institute(self, params):
 
-        &#34;&#34;&#34;Creates an Insitute.
+        &#34;&#34;&#34;Create an Institute.
 
-        Creates an Institute in OpenSpecimen. In order to use this function one has to know
-        the parameters which OpenSpecimen needs to create an Insitute. One can use it via the os_util class
+        Creates an institute in OpenSpecimen. In order to use this function one has to know
+        the parameters which OpenSpecimen needs to create an institute. One can use it via the os_util class
         institute_util. This allows just the basic definition. 
 
         Parameters
@@ -369,21 +370,21 @@ specific URL Generator Class (os_core/url.py)</p>
 
         &#34;&#34;&#34;Delete an Institute 
 
-        Delete an existing Institute In OpenSpecimen with ID ::inid::.
-        The ID is created from OpenSpecimen and can for eample be seen in the GUI
-        under Institutes when clicking on the Institute, the URL looks like:
+        Delete an existing institute in OpenSpecimen with ID ::inid::.
+        The ID is created from OpenSpecimen and can, for example, be seen in the GUI
+        under Institutes. When clicking on the institute, the URL looks like:
         http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/institutes/{inid}/overview .
-        Or with the function search_institutes for example by name and extract the id from there.
+        Otherwise, one can search with the function search_institutes for example by name and extract the ID from there.
 
         Parameter
         ---------
-        inid : string or int
-            The System generated ID of the Institute. Will get converted to a string.
+        inid : int
+            The ID of the Institute, generated by the system, will get converted to a string.
 
         Returns
         -------
         JSON-dict
-            Details of the deleted Institue or the OpenSpecimen&#39;s error message.
+            Details of the deleted institute or the OpenSpecimen&#39;s error message.
         &#34;&#34;&#34;
 
         endpoint = &#39;/&#39; + str(inid)
@@ -395,9 +396,9 @@ specific URL Generator Class (os_core/url.py)</p>
 
     def search_institutes(self, substring):
 
-        &#34;&#34;&#34;Search for  Institutes with specific substring.
+        &#34;&#34;&#34;Search for Institutes with specific substring.
 
-        Search for one or more Institutes with the substring in their name defined. The search URL looks like:
+        Search for one or more institutes with the substring. The search URL looks like:
         http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/np/institutes?{param_1}={value_1}&amp;...&amp;{param_x}={value_x}
 
         Parameters
@@ -408,7 +409,7 @@ specific URL Generator Class (os_core/url.py)</p>
         Returns
         -------
         JSON-dict
-            Details of all matching Institue or the OpenSpecimen&#39;s error message.
+            Details of all matching institutes or the OpenSpecimen&#39;s error message.
         &#34;&#34;&#34;
 
         endpoint = &#39;?name=&#39; + str(substring)
@@ -422,12 +423,12 @@ specific URL Generator Class (os_core/url.py)</p>
 
         &#34;&#34;&#34;Get all Institutes
 
-        Get all Institutes within the OpenSpecimen distribution, which is defined in the base_url.
+        Get all institutes within the OpenSpecimen distribution, which is defined in the base_url.
 
         Returns
         -------
         JSON-dict
-            Details of all Institutes which are in the OpenSpecimen Distribution.
+            Details of all institutes which are in the OpenSpecimen Distribution.
         &#34;&#34;&#34;
 
         url = self.base_url
@@ -441,11 +442,11 @@ specific URL Generator Class (os_core/url.py)</p>
         &#34;&#34;&#34;Get the institute with the ID ::inid::
 
         Get the details of the Institute with the unique ID ::inid::.
-        This ID is generated automatically from OpenSpecimen when the Protocol is created.
+        This ID is automatically generated by OpenSpecimen at Protocol creation.
 
         Parameters
         ----------
-        inid : string or int
+        inid : int
             The System&#39;s ID of the Institute, will be converted to a string.
 
         Returns
@@ -463,26 +464,25 @@ specific URL Generator Class (os_core/url.py)</p>
 
     def update_institute(self, inid, params):
 
-        &#34;&#34;&#34;Updates a existing Institute with ID ::inid:: with the Parameters ::params::
+        &#34;&#34;&#34;Updates an existing Institute with ID ::inid:: with the Parameters ::params::
 
-        Updates a existing Institute with the automatically generated OpsenSpecimen&#39;s system wide
-        unique Institute ID ::cpid::, with the Parameter ::params:: which are passed to the function.
-        The ID of the Institute have to be known and can for example be seen in the GUI by clicking on 
-        the Institutes, which has the format http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/institutes/{inid}/... .
-        Or via the function search_institutes.
+        Updates an existing institute with the automatically generated OpenSpecimen&#39;s system wide
+        unique Institute ID ::instituteid::, with the parameter ::params:: which are passed to the function.
+        The ID of the institute has to be known and can, for example, be seen in the GUI by clicking on 
+        the institutes, which has the format http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/institutes/{inid}/....or via the function search_institutes.
 
         Parameter
         ---------
-        inid : string or int
-            Unique Institute ID which is generated automatically from the System. It will be converted to a string.
+        instituteid :  int
+            Unique Institute ID which is generated automatically from the system. It will be converted to a string.
         
-        params : string
-            JSON-formatted string with the key name. 
-
+        institutename : string
+            New name of the institute, if it is left empty, nothing will be updated.
+            
         Returns
         -------
         JSON-dict
-            JSON-dict with the details of the updated Institute or the OpenSpecimen&#39;s error message.
+            JSON-dict with the details of the updated institute or the OpenSpecimen&#39;s error message.
         &#34;&#34;&#34;
 
         endpoint = &#39;/&#39; + str(inid)
@@ -498,19 +498,19 @@ specific URL Generator Class (os_core/url.py)</p>
 <span>def <span class="ident">ausgabe</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Testing of the URL and authentification.</p>
-<p>If there are unexpected errors one can easily test if the URL and login data is correctly spelled.
-the function prints the URL and login data, handed over to the class, to the output terminal.</p></div>
+<div class="desc"><p>Testing of the URL and Authentification.</p>
+<p>If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
+The function prints the URL and login data to the output terminal, which was handed over to the class.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def ausgabe(self):
 
-    &#34;&#34;&#34;Testing of the URL and authentification.
+    &#34;&#34;&#34;Testing of the URL and Authentification.
 
-    If there are unexpected errors one can easily test if the URL and login data is correctly spelled.
-    the function prints the URL and login data, handed over to the class, to the output terminal.
+    If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.
+    The function prints the URL and login data to the output terminal, which was handed over to the class.
     &#34;&#34;&#34;
 
     print(self.base_url, self.OS_request_gen.auth)</code></pre>
@@ -520,9 +520,9 @@ the function prints the URL and login data, handed over to the class, to the out
 <span>def <span class="ident">create_institute</span></span>(<span>self, params)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Creates an Insitute.</p>
-<p>Creates an Institute in OpenSpecimen. In order to use this function one has to know
-the parameters which OpenSpecimen needs to create an Insitute. One can use it via the os_util class
+<div class="desc"><p>Create an Institute.</p>
+<p>Creates an institute in OpenSpecimen. In order to use this function one has to know
+the parameters which OpenSpecimen needs to create an institute. One can use it via the os_util class
 institute_util. This allows just the basic definition. </p>
 <h2 id="parameters">Parameters</h2>
 <dl>
@@ -540,10 +540,10 @@ institute_util. This allows just the basic definition. </p>
 </summary>
 <pre><code class="python">def create_institute(self, params):
 
-    &#34;&#34;&#34;Creates an Insitute.
+    &#34;&#34;&#34;Create an Institute.
 
-    Creates an Institute in OpenSpecimen. In order to use this function one has to know
-    the parameters which OpenSpecimen needs to create an Insitute. One can use it via the os_util class
+    Creates an institute in OpenSpecimen. In order to use this function one has to know
+    the parameters which OpenSpecimen needs to create an institute. One can use it via the os_util class
     institute_util. This allows just the basic definition. 
 
     Parameters
@@ -569,18 +569,18 @@ institute_util. This allows just the basic definition. </p>
 </code></dt>
 <dd>
 <div class="desc"><p>Delete an Institute </p>
-<p>Delete an existing Institute In OpenSpecimen with ID ::inid::.
-The ID is created from OpenSpecimen and can for eample be seen in the GUI
-under Institutes when clicking on the Institute, the URL looks like:
+<p>Delete an existing institute in OpenSpecimen with ID ::inid::.
+The ID is created from OpenSpecimen and can, for example, be seen in the GUI
+under Institutes. When clicking on the institute, the URL looks like:
 http(s)://<host>:<port>/openspecimen/institutes/{inid}/overview .
-Or with the function search_institutes for example by name and extract the id from there.</p>
+Otherwise, one can search with the function search_institutes for example by name and extract the ID from there.</p>
 <h2 id="parameter">Parameter</h2>
-<p>inid : string or int
-The System generated ID of the Institute. Will get converted to a string.</p>
+<p>inid : int
+The ID of the Institute, generated by the system, will get converted to a string.</p>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>JSON-dict</code></dt>
-<dd>Details of the deleted Institue or the OpenSpecimen's error message.</dd>
+<dd>Details of the deleted institute or the OpenSpecimen's error message.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -590,21 +590,21 @@ The System generated ID of the Institute. Will get converted to a string.</p>
 
     &#34;&#34;&#34;Delete an Institute 
 
-    Delete an existing Institute In OpenSpecimen with ID ::inid::.
-    The ID is created from OpenSpecimen and can for eample be seen in the GUI
-    under Institutes when clicking on the Institute, the URL looks like:
+    Delete an existing institute in OpenSpecimen with ID ::inid::.
+    The ID is created from OpenSpecimen and can, for example, be seen in the GUI
+    under Institutes. When clicking on the institute, the URL looks like:
     http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/institutes/{inid}/overview .
-    Or with the function search_institutes for example by name and extract the id from there.
+    Otherwise, one can search with the function search_institutes for example by name and extract the ID from there.
 
     Parameter
     ---------
-    inid : string or int
-        The System generated ID of the Institute. Will get converted to a string.
+    inid : int
+        The ID of the Institute, generated by the system, will get converted to a string.
 
     Returns
     -------
     JSON-dict
-        Details of the deleted Institue or the OpenSpecimen&#39;s error message.
+        Details of the deleted institute or the OpenSpecimen&#39;s error message.
     &#34;&#34;&#34;
 
     endpoint = &#39;/&#39; + str(inid)
@@ -619,11 +619,11 @@ The System generated ID of the Institute. Will get converted to a string.</p>
 </code></dt>
 <dd>
 <div class="desc"><p>Get all Institutes</p>
-<p>Get all Institutes within the OpenSpecimen distribution, which is defined in the base_url.</p>
+<p>Get all institutes within the OpenSpecimen distribution, which is defined in the base_url.</p>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>JSON-dict</code></dt>
-<dd>Details of all Institutes which are in the OpenSpecimen Distribution.</dd>
+<dd>Details of all institutes which are in the OpenSpecimen Distribution.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -633,12 +633,12 @@ The System generated ID of the Institute. Will get converted to a string.</p>
 
     &#34;&#34;&#34;Get all Institutes
 
-    Get all Institutes within the OpenSpecimen distribution, which is defined in the base_url.
+    Get all institutes within the OpenSpecimen distribution, which is defined in the base_url.
 
     Returns
     -------
     JSON-dict
-        Details of all Institutes which are in the OpenSpecimen Distribution.
+        Details of all institutes which are in the OpenSpecimen Distribution.
     &#34;&#34;&#34;
 
     url = self.base_url
@@ -653,10 +653,10 @@ The System generated ID of the Institute. Will get converted to a string.</p>
 <dd>
 <div class="desc"><p>Get the institute with the ID ::inid::</p>
 <p>Get the details of the Institute with the unique ID ::inid::.
-This ID is generated automatically from OpenSpecimen when the Protocol is created.</p>
+This ID is automatically generated by OpenSpecimen at Protocol creation.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>inid</code></strong> :&ensp;<code>string</code> or <code>int</code></dt>
+<dt><strong><code>inid</code></strong> :&ensp;<code>int</code></dt>
 <dd>The System's ID of the Institute, will be converted to a string.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
@@ -673,11 +673,11 @@ This ID is generated automatically from OpenSpecimen when the Protocol is create
     &#34;&#34;&#34;Get the institute with the ID ::inid::
 
     Get the details of the Institute with the unique ID ::inid::.
-    This ID is generated automatically from OpenSpecimen when the Protocol is created.
+    This ID is automatically generated by OpenSpecimen at Protocol creation.
 
     Parameters
     ----------
-    inid : string or int
+    inid : int
         The System&#39;s ID of the Institute, will be converted to a string.
 
     Returns
@@ -697,9 +697,8 @@ This ID is generated automatically from OpenSpecimen when the Protocol is create
 <span>def <span class="ident">search_institutes</span></span>(<span>self, substring)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Search for
-Institutes with specific substring.</p>
-<p>Search for one or more Institutes with the substring in their name defined. The search URL looks like:
+<div class="desc"><p>Search for Institutes with specific substring.</p>
+<p>Search for one or more institutes with the substring. The search URL looks like:
 http(s)://<host>:<port>/openspecimen/rest/np/institutes?{param_1}={value_1}&amp;&hellip;&amp;{param_x}={value_x}</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
@@ -709,7 +708,7 @@ http(s)://<host>:<port>/openspecimen/rest/np/institutes?{param_1}={value_1}&amp;
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>JSON-dict</code></dt>
-<dd>Details of all matching Institue or the OpenSpecimen's error message.</dd>
+<dd>Details of all matching institutes or the OpenSpecimen's error message.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -717,9 +716,9 @@ http(s)://<host>:<port>/openspecimen/rest/np/institutes?{param_1}={value_1}&amp;
 </summary>
 <pre><code class="python">def search_institutes(self, substring):
 
-    &#34;&#34;&#34;Search for  Institutes with specific substring.
+    &#34;&#34;&#34;Search for Institutes with specific substring.
 
-    Search for one or more Institutes with the substring in their name defined. The search URL looks like:
+    Search for one or more institutes with the substring. The search URL looks like:
     http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/np/institutes?{param_1}={value_1}&amp;...&amp;{param_x}={value_x}
 
     Parameters
@@ -730,7 +729,7 @@ http(s)://<host>:<port>/openspecimen/rest/np/institutes?{param_1}={value_1}&amp;
     Returns
     -------
     JSON-dict
-        Details of all matching Institue or the OpenSpecimen&#39;s error message.
+        Details of all matching institutes or the OpenSpecimen&#39;s error message.
     &#34;&#34;&#34;
 
     endpoint = &#39;?name=&#39; + str(substring)
@@ -744,21 +743,21 @@ http(s)://<host>:<port>/openspecimen/rest/np/institutes?{param_1}={value_1}&amp;
 <span>def <span class="ident">update_institute</span></span>(<span>self, inid, params)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Updates a existing Institute with ID ::inid:: with the Parameters ::params::</p>
-<p>Updates a existing Institute with the automatically generated OpsenSpecimen's system wide
-unique Institute ID ::cpid::, with the Parameter ::params:: which are passed to the function.
-The ID of the Institute have to be known and can for example be seen in the GUI by clicking on
-the Institutes, which has the format http(s)://<host>:<port>/openspecimen/institutes/{inid}/&hellip; .
-Or via the function search_institutes.</p>
+<div class="desc"><p>Updates an existing Institute with ID ::inid:: with the Parameters ::params::</p>
+<p>Updates an existing institute with the automatically generated OpenSpecimen's system wide
+unique Institute ID ::instituteid::, with the parameter ::params:: which are passed to the function.
+The ID of the institute has to be known and can, for example, be seen in the GUI by clicking on
+the institutes, which has the format http(s)://<host>:<port>/openspecimen/institutes/{inid}/....or via the function search_institutes.</p>
 <h2 id="parameter">Parameter</h2>
-<p>inid : string or int
-Unique Institute ID which is generated automatically from the System. It will be converted to a string.</p>
-<p>params : string
-JSON-formatted string with the key name. </p>
+<p>instituteid :
+int
+Unique Institute ID which is generated automatically from the system. It will be converted to a string.</p>
+<p>institutename : string
+New name of the institute, if it is left empty, nothing will be updated.</p>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>JSON-dict</code></dt>
-<dd>JSON-dict with the details of the updated Institute or the OpenSpecimen's error message.</dd>
+<dd>JSON-dict with the details of the updated institute or the OpenSpecimen's error message.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -766,26 +765,25 @@ JSON-formatted string with the key name. </p>
 </summary>
 <pre><code class="python">def update_institute(self, inid, params):
 
-    &#34;&#34;&#34;Updates a existing Institute with ID ::inid:: with the Parameters ::params::
+    &#34;&#34;&#34;Updates an existing Institute with ID ::inid:: with the Parameters ::params::
 
-    Updates a existing Institute with the automatically generated OpsenSpecimen&#39;s system wide
-    unique Institute ID ::cpid::, with the Parameter ::params:: which are passed to the function.
-    The ID of the Institute have to be known and can for example be seen in the GUI by clicking on 
-    the Institutes, which has the format http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/institutes/{inid}/... .
-    Or via the function search_institutes.
+    Updates an existing institute with the automatically generated OpenSpecimen&#39;s system wide
+    unique Institute ID ::instituteid::, with the parameter ::params:: which are passed to the function.
+    The ID of the institute has to be known and can, for example, be seen in the GUI by clicking on 
+    the institutes, which has the format http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/institutes/{inid}/....or via the function search_institutes.
 
     Parameter
     ---------
-    inid : string or int
-        Unique Institute ID which is generated automatically from the System. It will be converted to a string.
+    instituteid :  int
+        Unique Institute ID which is generated automatically from the system. It will be converted to a string.
     
-    params : string
-        JSON-formatted string with the key name. 
-
+    institutename : string
+        New name of the institute, if it is left empty, nothing will be updated.
+        
     Returns
     -------
     JSON-dict
-        JSON-dict with the details of the updated Institute or the OpenSpecimen&#39;s error message.
+        JSON-dict with the details of the updated institute or the OpenSpecimen&#39;s error message.
     &#34;&#34;&#34;
 
     endpoint = &#39;/&#39; + str(inid)
