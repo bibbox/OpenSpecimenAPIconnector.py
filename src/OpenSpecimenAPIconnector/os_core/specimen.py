@@ -191,7 +191,7 @@ class specimen:
         The optional parameters are those, which are optional for a Specimen. For updating, all parameters are optional,
         those which are not passed to the function will stay the same as before.
         
-        Parameter
+        Parameters
         ---------
         cpid : int
             Unique Collection Protocol ID which is generated automatically from the System.
@@ -222,11 +222,11 @@ class specimen:
         
         """Delete a Specimen/Derivative/Aliquot
         
-        Delete an already existing Specimen/Derivative/Aliquot. The parameter ::specimenid:: is the uniqe ID of the Specimen/
+        Delete an already existing Specimen/Derivative/Aliquot. The Parameters ::specimenid:: is the uniqe ID of the Specimen/
         Derivative/Aliquot which is generated automatically from OpenSpecimen. To get the ID, one can click in the GUI on the 
         Specimen/Derivative/Aliquot and read it from the URL, with format:
         http(s)://<host>:<port>/openspecimen/cp-view/{cpid}/specimen/{specimenid}/... .
-        Another possibility is to search via 'search_specimens' for a specific parameter and then extract the ID
+        Another possibility is to search via 'search_specimens' for a specific Parameters and then extract the ID
         from the JSON-dict which gets returned. The function allows also to delete a list of specimen
         
         Parameters

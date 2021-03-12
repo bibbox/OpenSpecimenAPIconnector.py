@@ -57,7 +57,7 @@ class query_util:
         Creates a Query which is stored in the Queries in OpenSpecimen. The query language 
         can be extracted from the OpenSpecimen GUI query generator.
 
-        Parameter
+        Parameters
         ---------
         cpid : int
             The collection Protocol ID  where the query gets assigned to.

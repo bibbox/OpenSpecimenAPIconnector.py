@@ -95,10 +95,10 @@ class collection_protocol():
 
         """Delete a Collection Protocol with OpenSpecimens unique CollectionProtocolID
 
-        Delete an already existing Collection Protocol. The parameter ::cpid:: is the uniqe ID of the Collection Protocol
+        Delete an already existing Collection Protocol. The Parameters ::cpid:: is the uniqe ID of the Collection Protocol
         which is generated automatically from OpenSpecimen. To get the ID, one can click in the GUI on the Collection Protocol
         Details button and read it from the URL, with the format: http(s)://<host>:<port>/openspecimen/#/cp-view/{cpid}/overview.
-        Another possibility is to search via 'search_collection_protocols' for a specific parameter and then extract the ID
+        Another possibility is to search via 'search_collection_protocols' for a specific Parameters and then extract the ID
         from the JSON-dict which gets returned.
 
         Parameters
@@ -198,7 +198,7 @@ class collection_protocol():
         """Merge two Collection Protocols
 
         Merge two Collection Protocols which are defined in params. To call this function the short titles of
-        the source and target collection protocol have to be known. The parameter ::params:: is a json-formatted string,
+        the source and target collection protocol have to be known. The Parameters ::params:: is a json-formatted string,
         with keys srcCPShortTitle and tgtCpShorttitle. The merged Protocol is the one with short title tgtCpShortTitle,
         with merge logic outer. 
 
@@ -238,7 +238,7 @@ class collection_protocol():
         ----
             For updating, all parameters are optional. Those parameters which are not passed to the function, will stay the same as before.
 
-        Parameter
+        Parameters
         ---------
         cpid : int
             Unique Collection Protocol ID which is generated automatically from the System. It will be converted to a string.

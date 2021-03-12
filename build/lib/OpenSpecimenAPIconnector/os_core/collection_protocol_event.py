@@ -181,7 +181,7 @@ class collection_protocol_event:
 
         Update an existing event with ID eventid. In order to use this function, one
         has to know the parameters, which OpenSpecimen allows to update. 
-        For example, one can 'add' the parameter "code" to an existing event which was created via GUI.
+        For example, one can 'add' the Parameters "code" to an existing event which was created via GUI.
         This is needed if one wants to add conditional forms via the workflow.
 
         Parameters

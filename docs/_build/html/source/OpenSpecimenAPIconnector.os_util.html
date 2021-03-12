@@ -443,7 +443,7 @@ This function should be used before creating a participant to see if a participa
 </dl>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Details of the matching parameter, if reqreginfo is true, return additional the participant info.</p>
+<dd class="field-odd"><p>Details of the matching Parameters, if reqreginfo is true, return additional the participant info.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>JSON-dict</p>
@@ -929,11 +929,11 @@ it has to be left empty.</p>
 <dt id="OpenSpecimenAPIconnector.os_util.specimen_util.specimen_util.delete_specimens">
 <code class="sig-name descname"><span class="pre">delete_specimens</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">specimenids</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.specimen_util.specimen_util.delete_specimens" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete a Specimen/Derivative/Aliquot</p>
-<p>Delete an already existing Specimen/Derivative/Aliquot. The parameter ::specimenid:: is the uniqe ID of the Specimen/
+<p>Delete an already existing Specimen/Derivative/Aliquot. The Parameters ::specimenid:: is the uniqe ID of the Specimen/
 Derivative/Aliquot which is generated automatically from OpenSpecimen. To get the ID one can click in the GUI on the
 Specimen/Derivative/Aliquot and read it from the URL, with format:
 http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/cp-view/{cpid}/specimen/{specimenid}/… .
-Another possibility is to search via ‘search_specimens’ for a specific parameter and then extract the ID
+Another possibility is to search via ‘search_specimens’ for a specific Parameters and then extract the ID
 from the JSON-dict which get returned. The function allows also to delete a list of specimen</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -963,7 +963,7 @@ http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/np/specimens?{param_1}={va
 <li><p><strong>eventid</strong> (<em>int</em>) – Unique systemwide Identifier of the event.</p></li>
 <li><p><strong>visitid</strong> (<em>int</em>) – Unique systemwide identifier of the visit.</p></li>
 <li><p><strong>maxres</strong> (<em>int</em>) – Defines how many results are returned maximally.</p></li>
-<li><p><strong>exact</strong> (<em>string</em>) – OpenSpecimen’s boolean true/false. If true parameter have to match exactly.</p></li>
+<li><p><strong>exact</strong> (<em>string</em>) – OpenSpecimen’s boolean true/false. If true Parameters have to match exactly.</p></li>
 <li><p><strong>extension</strong> (<em>string</em>) – OpenSpecimen’s boolean true/false. If true extension Details will get returned too.</p></li>
 </ul>
 </dd>

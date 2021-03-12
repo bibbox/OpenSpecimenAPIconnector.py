@@ -65,7 +65,7 @@ class query:
         Creates a query which then is executed. The query language AQL can be extracted from the OpenSpecimen GUI query generator.
         The possible metainfos are written like schemaname.key. To use this class, one has to know the AQL language.
 
-        Parameter
+        Parameters
         ---------
         params : string
             JSON-formatted string with the desired parameters. cpId, aql, wideRowMode(default ='OFF') [optional] ,

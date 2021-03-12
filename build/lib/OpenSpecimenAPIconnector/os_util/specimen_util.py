@@ -80,7 +80,7 @@ class specimen_util:
             Defines how many results are returned maximally.
 
         exact : string
-            OpenSpecimen's boolean true/false. If true parameter have to match exactly.
+            OpenSpecimen's boolean true/false. If true Parameters have to match exactly.
 
         extension : string
             OpenSpecimen's boolean true/false. If true extension Details will get returned too.
@@ -349,11 +349,11 @@ class specimen_util:
 
         """Delete a Specimen/Derivative/Aliquot
         
-        Delete an already existing Specimen/Derivative/Aliquot. The parameter ::specimenid:: is the uniqe ID of the Specimen/
+        Delete an already existing Specimen/Derivative/Aliquot. The Parameters ::specimenid:: is the uniqe ID of the Specimen/
         Derivative/Aliquot which is generated automatically from OpenSpecimen. To get the ID one can click in the GUI on the 
         Specimen/Derivative/Aliquot and read it from the URL, with format:
         http(s)://<host>:<port>/openspecimen/cp-view/{cpid}/specimen/{specimenid}/... .
-        Another possibility is to search via 'search_specimens' for a specific parameter and then extract the ID
+        Another possibility is to search via 'search_specimens' for a specific Parameters and then extract the ID
         from the JSON-dict which get returned. The function allows also to delete a list of specimen
         
         Parameters

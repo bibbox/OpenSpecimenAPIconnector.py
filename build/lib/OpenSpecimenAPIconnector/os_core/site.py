@@ -90,10 +90,10 @@ class sites():
         
         """Delete a site with OpenSpecimen's uniques Site ID
         
-        Delete an already existing site. The parameter ::siid:: is the uniqe ID of the site
+        Delete an already existing site. The Parameters ::siid:: is the uniqe ID of the site
         which is generated automatically from OpenSpecimen. To get the ID, one can click in the GUI on the sites
         page of the desired site and read it from the URL, with format: http(s)://<host>:<port>/openspecimen/#/sites/{siid}/overview .
-        Another possibility is to search via 'search_sites' for a specific parameter and then extract the ID
+        Another possibility is to search via 'search_sites' for a specific Parameters and then extract the ID
         from the JSON-dict which get returned.
         
         Parameters
@@ -198,7 +198,7 @@ class sites():
         The optional parameters are those, which are optional for a site. For updating, all parameters are optional,
         those which are not passed to the function will stay the same as before.
         
-        Parameter
+        Parameters
         ---------
         siid : int
             Unique site ID which is generated automatically from the system.

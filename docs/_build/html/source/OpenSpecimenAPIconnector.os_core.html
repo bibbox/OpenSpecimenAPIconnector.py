@@ -93,10 +93,10 @@ manualPpidEnabled[optional], manualVisitNameEnabled[optional], manualSpecLabelEn
 <dt id="OpenSpecimenAPIconnector.os_core.collection_protocol.collection_protocol.delete_collection_protocol">
 <code class="sig-name descname"><span class="pre">delete_collection_protocol</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cpid</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_core.collection_protocol.collection_protocol.delete_collection_protocol" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete a Collection Protocol with OpenSpecimens unique CollectionProtocolID</p>
-<p>Delete an already existing Collection Protocol. The parameter ::cpid:: is the uniqe ID of the Collection Protocol
+<p>Delete an already existing Collection Protocol. The Parameters ::cpid:: is the uniqe ID of the Collection Protocol
 which is generated automatically from OpenSpecimen. To get the ID, one can click in the GUI on the Collection Protocol
 Details button and read it from the URL, with the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/#/cp-view/{cpid}/overview.
-Another possibility is to search via ‘search_collection_protocols’ for a specific parameter and then extract the ID
+Another possibility is to search via ‘search_collection_protocols’ for a specific Parameters and then extract the ID
 from the JSON-dict which gets returned.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -168,7 +168,7 @@ dataframe, precisely, it is the header of a pandas data frame.</p>
 <code class="sig-name descname"><span class="pre">merge_colelction_protocols</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_core.collection_protocol.collection_protocol.merge_colelction_protocols" title="Permalink to this definition">¶</a></dt>
 <dd><p>Merge two Collection Protocols</p>
 <p>Merge two Collection Protocols which are defined in params. To call this function the short titles of
-the source and target collection protocol have to be known. The parameter ::params:: is a json-formatted string,
+the source and target collection protocol have to be known. The Parameters ::params:: is a json-formatted string,
 with keys srcCPShortTitle and tgtCpShorttitle. The merged Protocol is the one with short title tgtCpShortTitle,
 with merge logic outer.</p>
 <div class="admonition note">
@@ -375,7 +375,7 @@ For example, one can extract the eventid with an event-key from OpenSpecimen, wh
 <dd><p>Update an existing event with ID eventid and the parameters params.</p>
 <p>Update an existing event with ID eventid. In order to use this function, one
 has to know the parameters, which OpenSpecimen allows to update.
-For example, one can ‘add’ the parameter “code” to an existing event which was created via GUI.
+For example, one can ‘add’ the Parameters “code” to an existing event which was created via GUI.
 This is needed if one wants to add conditional forms via the workflow.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -791,8 +791,8 @@ containerShipment, cpe, masterSpecimen, participant, sr, visit, specimenAliquot,
 specimenDisposal, consent</p></li>
 <li><p><strong>fileid</strong> (<em>string</em>) – The file-ID, from OpenSpecimen generated, which is generated when the file is uploaded.</p></li>
 <li><p><strong>operation</strong> (<em>string</em>) – The permissable operations are ‘CREATE’ and ‘UPDATE’.</p></li>
-<li><p><strong>dateformat</strong> (<em>string</em>) – An optional parameter, which has to be specified if the format is not compatible with OpenSpecimen.</p></li>
-<li><p><strong>timeformat</strong> (<em>string</em>) – An optional parameter, which has to be specified if the format is not compatible with OpenSpecimen.</p></li>
+<li><p><strong>dateformat</strong> (<em>string</em>) – An optional Parameters, which has to be specified if the format is not compatible with OpenSpecimen.</p></li>
+<li><p><strong>timeformat</strong> (<em>string</em>) – An optional Parameters, which has to be specified if the format is not compatible with OpenSpecimen.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -932,7 +932,7 @@ the parameters which OpenSpecimen needs to create an institute. One can use it v
 institute_util. This allows just the basic definition.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>params</strong> (<em>string</em>) – JSON formatted string with parameter: name (Name of the Institute)</p>
+<dd class="field-odd"><p><strong>params</strong> (<em>string</em>) – JSON formatted string with Parameters: name (Name of the Institute)</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Either details of the created institute as JSON-dict or the OpenSpecimen’s error message.</p>
@@ -1024,7 +1024,7 @@ http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/np/institutes?{param_1}={v
 <code class="sig-name descname"><span class="pre">update_institute</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_core.institute.institutes.update_institute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates an existing Institute with ID ::inid:: with the Parameters ::params:</p>
 <p>Updates an existing institute with the automatically generated OpenSpecimen’s system wide
-unique Institute ID ::instituteid::, with the parameter ::params:: which are passed to the function.
+unique Institute ID ::instituteid::, with the Parameters ::params:: which are passed to the function.
 The ID of the institute has to be known and can, for example, be seen in the GUI by clicking on
 the institutes, which has the format http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/institutes/{inid}/….or via the function search_institutes.</p>
 <dl class="simple">
@@ -1562,14 +1562,14 @@ cpid : string</p>
 </dd>
 <dt>uid: string</dt><dd><p>Social Security number  or different national identifier</p>
 </dd>
-<dt>specimen: string</dt><dd><p>Participants whose specimen labels or barcodes contain this parameter value as a substring will be matched</p>
+<dt>specimen: string</dt><dd><p>Participants whose specimen labels or barcodes contain this Parameters value as a substring will be matched</p>
 </dd>
 <dt>includestats: string</dt><dd><p>Include additional statitics within the response (visits specimens etc.)</p>
 </dd>
 <dt>startat: string</dt><dd><p>startat and maxResults are useful in implementing pagination of participants list. When not specified,
 startAt defaults to 0. When startAt = n, the first element of the response is (n + 1)th participant satisfying the query criteria.</p>
 </dd>
-<dt>maxresults: string</dt><dd><p>This parameter specifies how many participant records should be included in the API response.</p>
+<dt>maxresults: string</dt><dd><p>This Parameters specifies how many participant records should be included in the API response.</p>
 </dd>
 <dt>exactmatch: string</dt><dd><p>Specifies whether the PPID should be exact match or sub-string match. Boolean true means exact match. Otherwise it is substring match.</p>
 </dd>
@@ -1879,7 +1879,7 @@ for different requests.</p>
 <dd><p>Generates GET requests for OpenSpecimen</p>
 <p>Generates GET request for OpenSpecimen, which always contains the URL in the format
 http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/… . It is used for searching objects and
-downloading templates or collections. If one downloads a larger file, the parameter
+downloading templates or collections. If one downloads a larger file, the Parameters
 stream has to be set to “True”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2045,10 +2045,10 @@ activityStatus, address</p>
 <dt id="OpenSpecimenAPIconnector.os_core.site.sites.delete_sites">
 <code class="sig-name descname"><span class="pre">delete_sites</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">siid</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_core.site.sites.delete_sites" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete a site with OpenSpecimen’s uniques Site ID</p>
-<p>Delete an already existing site. The parameter ::siid:: is the uniqe ID of the site
+<p>Delete an already existing site. The Parameters ::siid:: is the uniqe ID of the site
 which is generated automatically from OpenSpecimen. To get the ID, one can click in the GUI on the sites
 page of the desired site and read it from the URL, with format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/#/sites/{siid}/overview .
-Another possibility is to search via ‘search_sites’ for a specific parameter and then extract the ID
+Another possibility is to search via ‘search_sites’ for a specific Parameters and then extract the ID
 from the JSON-dict which get returned.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2232,11 +2232,11 @@ DICT with extension keys)[optional]</p>
 <dt id="OpenSpecimenAPIconnector.os_core.specimen.specimen.delete_specimen">
 <code class="sig-name descname"><span class="pre">delete_specimen</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">specimenids</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_core.specimen.specimen.delete_specimen" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete a Specimen/Derivative/Aliquot</p>
-<p>Delete an already existing Specimen/Derivative/Aliquot. The parameter ::specimenid:: is the uniqe ID of the Specimen/
+<p>Delete an already existing Specimen/Derivative/Aliquot. The Parameters ::specimenid:: is the uniqe ID of the Specimen/
 Derivative/Aliquot which is generated automatically from OpenSpecimen. To get the ID, one can click in the GUI on the
 Specimen/Derivative/Aliquot and read it from the URL, with format:
 http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/cp-view/{cpid}/specimen/{specimenid}/… .
-Another possibility is to search via ‘search_specimens’ for a specific parameter and then extract the ID
+Another possibility is to search via ‘search_specimens’ for a specific Parameters and then extract the ID
 from the JSON-dict which gets returned. The function allows also to delete a list of specimen</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2342,9 +2342,9 @@ DICT with extension keys)[optional]</p>
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">OpenSpecimenAPIconnector.os_core.url.</span></code><code class="sig-name descname"><span class="pre">url_gen</span></code><a class="headerlink" href="#OpenSpecimenAPIconnector.os_core.url.url_gen" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Generates the endpoint URL for search- and list operations</p>
-<p>This class generates the parameter string used  in search operations. It can also be used on arrays and lists.
+<p>This class generates the Parameters string used  in search operations. It can also be used on arrays and lists.
 For example deleting a list of specimens can be handled with this class.
-Parameter strings look like ‘?entity1=value1&amp;…&amp;entityx=valuex’. To specify a list/array operation parameter string
+Parameters strings look like ‘?entity1=value1&amp;…&amp;entityx=valuex’. To specify a list/array operation Parameters string
 format follows the following rule ‘?entity=value1,…,valuex&amp;’</p>
 <p class="rubric">Notes</p>
 <p>In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes, one can
@@ -2354,8 +2354,8 @@ the calls refer to this site. More details can be seen in the documentation.</p>
 <dl class="py method">
 <dt id="OpenSpecimenAPIconnector.os_core.url.url_gen.cp_search_url_gen">
 <code class="sig-name descname"><span class="pre">cp_search_url_gen</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">searchstring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">piid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reponame</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">startat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxresults</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detailedlist</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_core.url.url_gen.cp_search_url_gen" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates the parameter string for Collection Protocol search</p>
-<p>This function generates the parameter string to search for collection protocols.
+<dd><p>Generates the Parameters string for Collection Protocol search</p>
+<p>This function generates the Parameters string to search for collection protocols.
 Permissable values are specified within OpenSpecimen.
 Values can be passed as lists single parameters will be added as logical AND.</p>
 <div class="admonition note">
@@ -2376,7 +2376,7 @@ Parameters permissible to be lists are marked as such within the parameters sect
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Parameter string specific for the given  searchoperation to be added to the URL endpoint the e.g.: ‘?query=’searchstring&amp;title=title&amp;…&amp;detailedList=true’.</p>
+<dd class="field-even"><p>Parameters string specific for the given  searchoperation to be added to the URL endpoint the e.g.: ‘?query=’searchstring&amp;title=title&amp;…&amp;detailedList=true’.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>string</p>
@@ -2512,7 +2512,7 @@ the name or surgical pathology number.It looks like ‘?name=visitname&amp;sprNu
 <dt id="OpenSpecimenAPIconnector.os_core.url.url_gen.site_search_url_gen">
 <code class="sig-name descname"><span class="pre">site_search_url_gen</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sitename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">institutename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxresults</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_core.url.url_gen.site_search_url_gen" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generates the string for Site</p>
-<p>This function generates the parameter string to search for sites, with names or the sites to an institute.
+<p>This function generates the Parameters string to search for sites, with names or the sites to an institute.
 Sitename and Institutename can be lists, they are handled as a logical AND.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

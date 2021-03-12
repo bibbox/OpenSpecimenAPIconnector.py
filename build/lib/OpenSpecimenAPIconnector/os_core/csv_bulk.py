@@ -154,10 +154,10 @@ class csv_bulk:
             The permissable operations are 'CREATE' and 'UPDATE'.
 
         dateformat : string
-            An optional parameter, which has to be specified if the format is not compatible with OpenSpecimen.
+            An optional Parameters, which has to be specified if the format is not compatible with OpenSpecimen.
 
         timeformat : string
-            An optional parameter, which has to be specified if the format is not compatible with OpenSpecimen. 
+            An optional Parameters, which has to be specified if the format is not compatible with OpenSpecimen. 
 
 
         Returns

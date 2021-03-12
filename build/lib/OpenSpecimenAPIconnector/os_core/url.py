@@ -11,7 +11,7 @@ def _write_instance(entity, value, sep = '&'):
     Parameters
     ----------
     entity : string
-        The name of the search parameter.
+        The name of the search Parameters.
 
     value : string or list
         The values corresponding to the entity.
@@ -38,9 +38,9 @@ class url_gen:
 
     """Generates the endpoint URL for search- and list operations
 
-    This class generates the parameter string used  in search operations. It can also be used on arrays and lists.
+    This class generates the Parameters string used  in search operations. It can also be used on arrays and lists.
     For example deleting a list of specimens can be handled with this class. 
-    Parameter strings look like '?entity1=value1&...&entityx=valuex'. To specify a list/array operation parameter string
+    Parameters strings look like '?entity1=value1&...&entityx=valuex'. To specify a list/array operation Parameters string
     format follows the following rule '?entity=value1,...,valuex&'
 
     Notes
@@ -65,7 +65,7 @@ class url_gen:
 
         """Generates the string for Site
 
-        This function generates the parameter string to search for sites, with names or the sites to an institute.
+        This function generates the Parameters string to search for sites, with names or the sites to an institute.
         Sitename and Institutename can be lists, they are handled as a logical AND. 
 
         Parameters
@@ -100,9 +100,9 @@ class url_gen:
 
     def cp_search_url_gen(self, searchstring = None, title = None, piid = None, reponame = None, startat = None, maxresults = None, detailedlist = None):
 
-        """Generates the parameter string for Collection Protocol search
+        """Generates the Parameters string for Collection Protocol search
 
-        This function generates the parameter string to search for collection protocols.
+        This function generates the Parameters string to search for collection protocols.
         Permissable values are specified within OpenSpecimen.
         Values can be passed as lists single parameters will be added as logical AND. 
 
@@ -138,7 +138,7 @@ class url_gen:
         Returns
         -------
         string
-            Parameter string specific for the given  searchoperation to be added to the URL endpoint the e.g.: '?query='searchstring&title=title&...&detailedList=true'.
+            Parameters string specific for the given  searchoperation to be added to the URL endpoint the e.g.: '?query='searchstring&title=title&...&detailedList=true'.
         """
 
         url_string='?'

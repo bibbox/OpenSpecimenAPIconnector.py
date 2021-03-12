@@ -60,7 +60,7 @@
   // arguments at the beginning and then a variable number of values to operate
   // on. This helper accumulates all remaining arguments past the function’s
   // argument length (or an explicit `startIndex`), into an array that becomes
-  // the last argument. Similar to ES6’s "rest parameter".
+  // the last argument. Similar to ES6’s "rest Parameters".
   function restArguments(func, startIndex) {
     startIndex = startIndex == null ? func.length - 1 : +startIndex;
     return function() {
@@ -1124,7 +1124,7 @@
 
   // When a sequence of calls of the returned function ends, the argument
   // function is triggered. The end of a sequence is defined by the `wait`
-  // parameter. If `immediate` is passed, the argument function will be
+  // Parameters. If `immediate` is passed, the argument function will be
   // triggered at the beginning of the sequence instead of at the end.
   function debounce(func, wait, immediate) {
     var timeout, previous, args, result, context;

@@ -106,7 +106,7 @@ class collection_protocol_registration:
         the GUI in the URL: http(s)://<host>:<port>/openspecimen/cp-view/{cpId}/participants/{cprid}/...
         or with the function get_participant_matches in the os_core class participants.
 
-        Parameter
+        Parameters
         ---------
         cprid : int
             System generated unique ID of the participant. Will get converted to a string.
@@ -133,7 +133,7 @@ class collection_protocol_registration:
         the GUI in the URL: http(s)://<host>:<port>/openspecimen/cp-view/{cpId}/participants/{cprid}/...
         or with the function get_participant_matches in the os_core class participants.
 
-        Parameter
+        Parameters
         ---------
         cprid : int
             System generated unique ID of the participant. Will get converted to a string.
@@ -160,7 +160,7 @@ class collection_protocol_registration:
         the GUI in the URL: http(s)://<host>:<port>/openspecimen/cp-view/{cpId}/participants/{cprid}/...
         or with the function get_participant_matches in the os_core class participants.
 
-        Parameter
+        Parameters
         ---------
         cprid : int
             System generated unique ID of the participant. Will get converted to a string.
@@ -187,7 +187,7 @@ class collection_protocol_registration:
         the GUI in the URL: http(s)://<host>:<port>/openspecimen/cp-view/{cpId}/participants/{cprid}/...
         or with the function get_participant_matches in the os_core class participants.
 
-        Parameter
+        Parameters
         ---------
         cprid : int
             System generated unique ID of the participant. Will get converted to a string.
@@ -214,7 +214,7 @@ class collection_protocol_registration:
         the GUI in the URL: http(s)://<host>:<port>/openspecimen/cp-view/{cpId}/participants/{cprid}/...
         or with the function get_participant_matches in the os_core class participants.
 
-        Parameter
+        Parameters
         ---------
         cprid : int
             System generated unique ID of the participant. Will get converted to a string.
@@ -240,7 +240,7 @@ class collection_protocol_registration:
         The Parameters are passed via a JSON-formatted string. This function is used in the 
         os_util class cpr_util, where the specific parameters can be passed.
 
-        Parameter
+        Parameters
         ---------
         params : string
             Json formatted string with keys: cpId, registrationDate[optional], name(substring of first, last or middlename)[optional],
@@ -271,7 +271,7 @@ class collection_protocol_registration:
         or with the function get_participant_matches in the os_core class participants.
         Also, the collection protocol ID of the Protocol in which the participant is registered at has to be known.
 
-        Parameter
+        Parameters
         ---------
         params : string
             JSON-formatted string with the Parameters: the keys are participant( value is a dict with key id and value

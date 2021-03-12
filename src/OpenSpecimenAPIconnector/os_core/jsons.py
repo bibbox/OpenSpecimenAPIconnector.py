@@ -616,14 +616,14 @@ class Json_factory():
         uid: string
             Social Security number  or different national identifier
         specimen: string
-            Participants whose specimen labels or barcodes contain this parameter value as a substring will be matched
+            Participants whose specimen labels or barcodes contain this Parameters value as a substring will be matched
         includestats: string
             Include additional statitics within the response (visits specimens etc.)
         startat: string
             startat and maxResults are useful in implementing pagination of participants list. When not specified, 
             startAt defaults to 0. When startAt = n, the first element of the response is (n + 1)th participant satisfying the query criteria.
         maxresults: string
-            This parameter specifies how many participant records should be included in the API response. 
+            This Parameters specifies how many participant records should be included in the API response. 
         exactmatch: string
             Specifies whether the PPID should be exact match or sub-string match. Boolean true means exact match. Otherwise it is substring match.
         ----------

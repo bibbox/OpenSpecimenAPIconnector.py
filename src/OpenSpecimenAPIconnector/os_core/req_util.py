@@ -56,7 +56,7 @@ class OS_request_gen():
         
         Generates GET request for OpenSpecimen, which always contains the URL in the format
         http(s)://<host>:<port>/openspecimen/rest/ng/... . It is used for searching objects and 
-        downloading templates or collections. If one downloads a larger file, the parameter
+        downloading templates or collections. If one downloads a larger file, the Parameters
         stream has to be set to "True".
         
         Parameters
