@@ -1,4 +1,1 @@
 python-dateutil
-json
-numpy
-pandas
