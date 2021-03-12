@@ -10,14 +10,14 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
+import os
+import sys
+sys.path.insert(0, os.path.abspath('../src/OpenspecimenAPIConnector'))
 
 
 # -- Project information -----------------------------------------------------
 
-project = 'OpenspecimenPyConnector'
+project = 'OpenSpecimenConnector'
 copyright = '2021, Christian Schorn, Simon Streit'
 author = 'Christian Schorn, Simon Streit'
 
@@ -30,10 +30,8 @@ release = '0.9.1'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-
 # Add napoleon to the extensions list
 extensions = ['sphinx.ext.napoleon']
-
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
