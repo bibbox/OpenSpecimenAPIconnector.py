@@ -672,7 +672,6 @@ class integrationTest:
         self.ID['speci2']=response['specimens'][0]['id']
         self.logFile.write(str(response)+ ' \n')
 
-
         ##Specimens
         #Add a Specimen
         self.logFile.write('-Add a Specimen- \n')
