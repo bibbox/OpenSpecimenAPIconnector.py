@@ -1,10 +1,10 @@
-.. OpenSpecimenConnector documentation master file, created by
-   sphinx-quickstart on Fri Mar 12 12:17:20 2021.
+.. OpenSpecimenAPIConnector documentation master file, created by
+   sphinx-quickstart on Fri Mar 12 13:04:47 2021.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to OpenSpecimenConnector's documentation!
-=================================================
+Welcome to OpenSpecimenAPIConnector's documentation!
+====================================================
 
 .. toctree::
    :maxdepth: 2

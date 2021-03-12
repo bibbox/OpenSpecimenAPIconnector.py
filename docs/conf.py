@@ -17,9 +17,9 @@ sys.path.insert(0, os.path.abspath('.'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'OpenSpecimenConnector'
-copyright = '2021, Christian Schorn, Simon Streit'
-author = 'Christian Schorn, Simon Streit'
+project = 'OpenSpecimenAPIConnector'
+copyright = '2021, Christian Schron, Simon Streit'
+author = 'Christian Schron, Simon Streit'
 
 # The full version, including alpha/beta/rc tags
 release = '0.9.1'
@@ -30,8 +30,13 @@ release = '0.9.1'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-# Add napoleon to the extensions list
-extensions = ['sphinx.ext.napoleon']
+extensions = [
+    'sphinx.ext.napoleon'
+]
+
+napoleon_google_docstring = False
+napoleon_use_param = False
+napoleon_use_ivar = True
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
