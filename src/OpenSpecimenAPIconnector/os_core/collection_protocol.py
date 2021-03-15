@@ -226,10 +226,10 @@ class collection_protocol():
 
     def update_collection_protocol(self, cpid, params):
 
-        """Updates an existing Collection Protocol with ID ::cpid:: with the Parameters ::params::
+        """Updates an existing Collection Protocol with ID cpid with the Parameters params
 
             Updates an existing Collection Protocol with the automatically generated OpenSpecimen's system wide
-            unique Collection Protocol ID ::cpid::, with the Parameters ::params:: which are passed to the function.
+            unique Collection Protocol ID cpid, with the Parameters params which are passed to the function.
             The ID of the Collection Protocol has to be known and can, for Examples, be seen in the GUI by clicking on 
             the Collection Protocol, which has the format http(s)://<host>:<port>/openspecimen/cps/{cpid}/... .
             Or via the function search_collection_protocols or get_all_collection_protocols
