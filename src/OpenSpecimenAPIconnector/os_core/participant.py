@@ -13,17 +13,17 @@ class participant:
     Handles the OpenSpecimen API calls for the participants. This class can 
     get a participant with a Participant Protocoll ID PPID or via search parameters.
     
-    Notes
+    Note
     -----
     In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes, one can
     just pass the parameters via a JSON-formatted string. This means the user has to know the keywords.
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
 
-    Example
-    -------
+    Examples
+    --------
 
-    A code example, where the institutes are handled, is in the Jupyter-Notebook:
+    A code Examples, where the institutes are handled, is in the Jupyter-Notebook:
 
         $ jupyter notebook main.ipynb
     """
@@ -60,9 +60,9 @@ class participant:
 
     def get_participant(self, ppid):
 
-        """Get the participant with the Participant Protocol ID ::ppid::
+        """Get the participant with the Participant Protocol ID ppid
 
-        Get the details of the Participant with the Collection protocol wide unique ID ::ppid::.
+        Get the details of the Participant with the Collection protocol wide unique ID ppid.
         This ID can be generated automatically from OpenSpecimen or generated manually, which has
         to be specified when the Collection Protocol is created.
 

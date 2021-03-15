@@ -12,15 +12,15 @@ class CSV_exporter():
     This class provides methods to create and fetch the resutls of an internal OpenSpecimen export job.
 
 
-    Notes
+    Note
     -----
     In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
     just pass the parameters via JSON-formatted string. This means the user has to know the keywords.
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
 
-    Example
-    -------
+    Examples
+    --------
 
     Just call create export job with the correct data json String like
     my_id = CSV_exporter().create_export_job(*args) or supply a job id to call

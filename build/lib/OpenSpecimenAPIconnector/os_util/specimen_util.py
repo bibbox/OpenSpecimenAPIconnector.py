@@ -20,15 +20,15 @@ class specimen_util:
     The output is a JSON dict or the Error message as dict. It also can check if a
     specimen exists which returns a string which tells you if it exists.
     
-    Notes
+    Note
     -----
     In order to use this and also the other classes, the user has to know OpenSpecimen. 
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
     
-    Example
-    -------
-    A code example, where the Specimens/Derivatives/Aliquots are handled is in the Jupyter-Notebook::
+    Examples
+    --------
+    A code Examples, where the Specimens/Derivatives/Aliquots are handled is in the Jupyter-Notebook::
         $ jupyter notebook main.ipynb
     """
 
@@ -107,7 +107,7 @@ class specimen_util:
         Create a Specimen to an already existing Visit. In order to use this function one has to know,
         the mandatory details of the specimen e.g. the class of the Specimen.
         
-        Notes
+        Note
         -----
         The label is mandatory if the Protocolsettings are such that the Label is created manually, otherwise
         it has to be left empty.
@@ -232,9 +232,9 @@ class specimen_util:
 
         Update an existing Specimen in order to use this function one has to know the specimenid. This can be seen via the GUI
         by clicking on the desired specimen, and read from the URL: http(s)://<host>:<port>/openspecimen/cps/{cpid}/specimens/{specimenid}/... .
-        Or via search Specimen, for example by name and then extract the ID via key ["id"].
+        Or via search Specimen, for Examples by name and then extract the ID via key ["id"].
         
-        Notes
+        Note
         -----
         The specimenid is mandatory, all the other keys are otional for updating. If left empty nothing will be changed.
 

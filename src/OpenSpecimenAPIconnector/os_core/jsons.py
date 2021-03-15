@@ -29,7 +29,7 @@ class Json_factory():
 
         """Creates a JSON-formated string for participant creation
         This function creates the json corresponding to the cpr_util function
-        Notes
+        Note
         ----- 
         Mandatory parameters are passed as positional arguments in the caliing function
         Parameters
@@ -144,7 +144,7 @@ class Json_factory():
 
         """Creates the JSON-formated string corresponding to the collection_protocol_util funciton create_CP
         
-        Notes
+        Note
         -----
         Mandatory paramters are passed as positional args within the calling util class
         Parameters
@@ -195,7 +195,8 @@ class Json_factory():
         
         Returns
         -------
-        JSON-formated-string containing the collection protocol information neccesary for creation
+        JSON-formated-string 
+            Collection protocol information neccesary for creation
         """
 
         site_arr = []
@@ -249,9 +250,11 @@ class Json_factory():
         
         Create an event for a given Collection Protocol. Details of the parameters can be found in
         the parameters section.
-        Notes
+        
+        Note
         -----
         Mandatory paramters are passed as positional args within the calling util class
+        
         Parameters
         ----------
         label : string
@@ -280,6 +283,7 @@ class Json_factory():
         
         code : string
             the Event code, is optional. In order to define condionals in the workflow, one need the Event code.
+        
         Returns
         -------
         JSON-formated string
@@ -309,9 +313,10 @@ class Json_factory():
         """Create a API Json String for a Specimen
         Create the JSON String neccesary for creating a specimen
         
-        Notes
+        Note
         -----
         Mandatory paramters are passed as positional args within the calling util class
+        
         Parameters
         ----------
         label : string
@@ -325,6 +330,7 @@ class Json_factory():
         
         pathology : string
             Pathologystatus of the Specimen.
+        
         anatomic : string
             The anatomic site of the specimen.
         
@@ -359,6 +365,7 @@ class Json_factory():
         
         storlocx : int
             Position of the specimen in the Container in x direction.[optional]
+        
         storlocy : int
             Position of the specimen int the container in y direction.[optional]
             
@@ -376,6 +383,7 @@ class Json_factory():
         
         collproc : string
             The procedure of the collection[otpional].
+        
         conttype : string
             Type of the storage conatiner.
             
@@ -440,6 +448,7 @@ class Json_factory():
         """Create JSON formated string neccesary for exporting an collection protocol (should be implemented but is not see OpenSpecimen 7.2)
 
         Parameters
+        ----------
         objecttype: string 
             Identifying the general object to be exported.
             Permissible Values: "institute", "site", "user", "cpr", "specimen", "extensions", "storageContainer"
@@ -457,11 +466,12 @@ class Json_factory():
         formname: string
             Defines the form to be downloaded in context of the extension object type together with the specified entity 
         specimenlabels: list or string
-            List of comma seperated specimen identifiers; str if its a singular specimen to be exported        
-        ----------
-        Returns JSON-formated-string 
-            Json data needed for creating an export job for the given entity
+            List of comma seperated specimen identifiers; str if its a singular specimen to be exported
+        Returns
         -------
+        JSON-formated-string 
+            Json data needed for creating an export job for the given entity
+        
         """
         object_types = ["institute", "site", "user", "cpr", "specimen", "extensions", "storageContainer", "distributionProtocol", "cp", "cpe"]
         entity_types = ["Participant", "Visit", "Specimen", "SpecimenEvent", "SpecimenCollectionGroup", "CollectionProtocol"]
@@ -499,6 +509,7 @@ class Json_factory():
         """Create JSON formated string to execute a specified query passed to the method
 
         Parameters
+        ----------
         cp_id: string 
             Collection protocoll id of export target
         aql: string
@@ -514,11 +525,10 @@ class Json_factory():
             Specifies how the date column values needs to be serialised in the query response. 
             If true, then date/time values are serialised using ISO format: yyyy-MM-dd'T'HH:mm:ss. 
             Otherwise, date/time values are serialised using the format specified in OS locale settings
-        ----------
         Returns
+        -------
         JSON-formated-string 
             Json data needed for executing a system query
-        -------
         """
         params = {
             "cpId" : cpid,
@@ -534,23 +544,25 @@ class Json_factory():
     # Execute Saved Query
     def execute_query(self, start, results, drivingform="Participant", rowmode="OFF"):
         
-        """Create JSON formated string neccesary for execution of a saved query
+        """Create JSON formated string neccesary for execution of a saved query 
+        
         Parameters
+        ----------
         start: string 
             Used for paginating the results. If start=5, the output result will start from row number 5.
-        resutls: string
+        results: string
             Used for paginating the results. If results=10, the output result will be maximum 10 rows
         drivingform: string
             Driving form determines the search perspective. When left empty, it defaults to Participant.
-            (For example when drivingForm is Participant, the root table is 'catissue_coll_prot_reg' 
+            (For Examples when drivingForm is Participant, the root table is 'catissue_coll_prot_reg' 
             which is then used to join with the other tables.
             Similarly when drivingForm is Specimen, the root table will be catissue_specimen, 
             which will be joined with the other tables.) rowmode: string
-        ----------
+        
         Returns
-        JSON-formated-string 
-            Json data needed for executing a query saved within an Openspecimen appliance
         -------
+        JSON-formatted-string 
+            Json data needed for executing a query saved within an Openspecimen appliance
         """
 
         params= {
@@ -568,6 +580,7 @@ class Json_factory():
         """Create JSON formated string neccesary for creating a bulk import operation to be handled by OpenSpecimen
 
         Parameters
+        ----------
         schemaname : string
             The Openspecimen schematype, that defines the expected CSV file structure for the entity to be created   
         operation : string
@@ -580,11 +593,10 @@ class Json_factory():
         timeformat: string
             Specification of time format used in the OpenSpecimen API. See link for details
             https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/68976690/Date+and+time+formats
-        ----------
         Returns
+        -------
         JSON-formated-string 
             Json data needed for creating an CSV file import job for the given entity
-        -------
         """
         
         data = {"objectType": schemaname,
@@ -603,6 +615,7 @@ class Json_factory():
         """Create JSON formated string neccesary for creating a bulk import operation to be handled by OpenSpecimen
 
         Parameters
+        ----------
         cpid : string
             Collection protol id of the participants to be queried
         registrationdate: string
@@ -626,12 +639,12 @@ class Json_factory():
             This Parameters specifies how many participant records should be included in the API response. 
         exactmatch: string
             Specifies whether the PPID should be exact match or sub-string match. Boolean true means exact match. Otherwise it is substring match.
-        ----------
+        
         Returns
-        JSON-formated-string   trg_cp: string
+        -------
+        JSON-formated-string
             CP id of target of merge action
             Json data needed for creating an CSV file import job for the given entity
-        -------
         """
 
         params = {
@@ -660,7 +673,7 @@ class Json_factory():
 
         Parameters
         ----------
-         cprid : int
+        cprid : int
             Identifier of the Collection Protocoll Registration to which the Visit belongs.
             cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.
         
@@ -984,9 +997,9 @@ class Json_factory():
 
         Change the password of an user via API.
         
-        Notes
+        Note
         -----
-        If an user changes its one password, the old password is mandatory.
+        If an user changes its own password, the old password is mandatory.
         If the user who changes the password is a superadmin, the new password is enough.
 
         Parameters

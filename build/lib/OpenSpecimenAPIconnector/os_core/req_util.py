@@ -12,15 +12,15 @@ class OS_request_gen():
     to OpenSpecimen. The payload alters for different requests and can be seen in the OpenSpecimen's API documentation.
     The class can handle the following requests: GET, POST(formdata, files, json-formatted string), PUT, DELETE, HEADER.
     
-    Notes
+    Note
     -----
     In order to use this and also the other classes, the user has to know OpenSpecimen. The users have to know which requests
     are needed and what content should be uploaded. The API documentation of OpenSpecimen is in:
     https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs
     
-    Example
-    -------
-    A code example, where those requests are used, is in the Jupyter-Notebook::
+    Examples
+    --------
+    A code Examples, where those requests are used, is in the Jupyter-Notebook::
         $ jupyter notebook main.ipynb
     """
 
@@ -104,7 +104,7 @@ class OS_request_gen():
             Json-formatted string, with the keys from OpenSpecimen.
             
         form_data : bool
-            Default value is "False". Can be set to "True" if, for example, forms (.xml-files) are uploaded.
+            Default value is "False". Can be set to "True" if, for Examples, forms (.xml-files) are uploaded.
         
         files : binary
             Default value is "None". Contains tuple with name + ending and file itself.

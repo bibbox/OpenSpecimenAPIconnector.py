@@ -16,16 +16,16 @@ class cpr_util:
     This class can create participants, register existing participants to another protocol,
     get the details of an existing participant or more existing participants, update a participant.
 
-    Notes
+    Note
     -----
     In order to use this and also the other classes, the user has to know OpenSpecimen. 
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
 
-    Example
-    -------
+    Examples
+    --------
 
-    A code example, where the Institutes are handled is in the Jupyter-Notebook:
+    A code Examples, where the Institutes are handled is in the Jupyter-Notebook:
 
         $ jupyter notebook main.ipynb
     """
@@ -161,7 +161,7 @@ class cpr_util:
         Those values can be seen via GUI, extracted from the responses with the class collection_protocol in os_core or
         collection_protocol_util in os_util. 
 
-        Notes
+        Note
         ----- 
         Either cpid or cptitle or cpshorttitle are mandatory to identify the Collection Protocol.
         ppid has to be left empty if PPID is auto-generated at protocol level, else it is mandatory.
@@ -263,7 +263,7 @@ class cpr_util:
         collection_protocol_util in os_util.  For updating a participant the cprid has to be known. This can be seen via GUI
         or with searching the participant first.
 
-        Notes
+        Note
         ----- 
         Either cpid or cptitle or cpshorttitle are mandatory to identify the Collection Protocol.
         ppid has to be left empty, if PPID is auto-generated at protocol level, else it is mandatory.

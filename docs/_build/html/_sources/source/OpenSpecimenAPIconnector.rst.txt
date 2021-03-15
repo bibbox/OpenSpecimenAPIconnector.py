@@ -5,7 +5,6 @@ Subpackages
 -----------
 
 .. toctree::
-   :maxdepth: 4
 
    OpenSpecimenAPIconnector.mg_core
    OpenSpecimenAPIconnector.mg_util
@@ -22,6 +21,7 @@ OpenSpecimenAPIconnector.config module
    :members:
    :undoc-members:
    :show-inheritance:
+
 
 Module contents
 ---------------

@@ -15,17 +15,17 @@ class collection_protocol_util:
     search  and merge  Protocols.
     The output is a JSON dict or the Error message as JSON dict, except the Pandas dataframe.
 
-    Notes
+    Note
     -----
     In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
     just pass the parameters via JSON-formatted string. This means the user has to know the keywords.
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
 
-    Example
-    -------
+    Examples
+    --------
 
-    A code example, where the Collection protocols are handled is in the Jupyter-Notebook::
+    A code Examples, where the Collection protocols are handled is in the Jupyter-Notebook::
 
         $ jupyter notebook main.ipynb
     """
@@ -218,7 +218,7 @@ class collection_protocol_util:
         Update a collection protocol with the Parameters passed to the function. The Collection protocol ID 
         cpid is mandatory.
 
-        Notes
+        Note
         -----
         The parameters except cpid are mandatory. All values not passed will not get changed.
         

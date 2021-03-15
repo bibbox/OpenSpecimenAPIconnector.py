@@ -39,11 +39,11 @@ class url_gen:
     """Generates the endpoint URL for search- and list operations
 
     This class generates the Parameters string used  in search operations. It can also be used on arrays and lists.
-    For example deleting a list of specimens can be handled with this class. 
+    For Examples deleting a list of specimens can be handled with this class. 
     Parameters strings look like '?entity1=value1&...&entityx=valuex'. To specify a list/array operation Parameters string
     format follows the following rule '?entity=value1,...,valuex&'
 
-    Notes
+    Note
     -----
     In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes, one can
     just pass the parameters via a JSON-formatted string. This means the user has to know the keywords.

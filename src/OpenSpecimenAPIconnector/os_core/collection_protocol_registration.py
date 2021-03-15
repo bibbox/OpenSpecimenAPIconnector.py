@@ -15,17 +15,17 @@ class collection_protocol_registration:
     merge participants, get the details of an existing participant or more existing participants, update a participant,
     get the consent forms of a participant, download a consent form and delete consents form of participants.
 
-    Notes
+    Note
     -----
     In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
     just pass the parameters via JSON-formatted string. This means the user has to know the keywords.
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
 
-    Example
-    -------
+    Examples
+    --------
 
-    A code example, where also Participants are registrated is in the Jupyter-Notebook::
+    A code Examples, where also Participants are registrated is in the Jupyter-Notebook::
 
         $ jupyter notebook main.ipynb
     """
@@ -102,7 +102,7 @@ class collection_protocol_registration:
         """Delete a consent form of a participant.
 
         Deletes a consent form of an existing participant with the uniquely participant ID ::cprid::
-        which is generated from the system. The ID has to be known and can be seen for example via 
+        which is generated from the system. The ID has to be known and can be seen for Examples via 
         the GUI in the URL: http(s)://<host>:<port>/openspecimen/cp-view/{cpId}/participants/{cprid}/...
         or with the function get_participant_matches in the os_core class participants.
 
@@ -129,7 +129,7 @@ class collection_protocol_registration:
         """Delete a participant from a Collection Protocol
 
         Deletes an existing participant with the uniquely participant ID ::cprid::
-        which is generated from the system. The ID has to be known and can be seen for example via 
+        which is generated from the system. The ID has to be known and can be seen for Examples via 
         the GUI in the URL: http(s)://<host>:<port>/openspecimen/cp-view/{cpId}/participants/{cprid}/...
         or with the function get_participant_matches in the os_core class participants.
 
@@ -156,7 +156,7 @@ class collection_protocol_registration:
         """Download the consent form of a participant.
 
         Downloads the consent form of an existing participant with the uniquely participant ID ::cprid::
-        which is generated from the system. The ID has to be known and can be seen for example via 
+        which is generated from the system. The ID has to be known and can be seen for Examples via 
         the GUI in the URL: http(s)://<host>:<port>/openspecimen/cp-view/{cpId}/participants/{cprid}/...
         or with the function get_participant_matches in the os_core class participants.
 
@@ -183,7 +183,7 @@ class collection_protocol_registration:
         """Get the consent form of a participant.
 
         Gets the consent form of an existing participant with the uniquely participant ID ::cprid::
-        which is generated from the system. The ID has to be known and can be seen for example via 
+        which is generated from the system. The ID has to be known and can be seen for Examples via 
         the GUI in the URL: http(s)://<host>:<port>/openspecimen/cp-view/{cpId}/participants/{cprid}/...
         or with the function get_participant_matches in the os_core class participants.
 
@@ -210,7 +210,7 @@ class collection_protocol_registration:
         """Get the details form of a participant.
 
         Gets the details as JSON-dict form of an existing participant with the uniquely participant ID ::cprid::
-        which is generated from the system. The ID has to be known and can be seen for example via 
+        which is generated from the system. The ID has to be known and can be seen for Examples via 
         the GUI in the URL: http(s)://<host>:<port>/openspecimen/cp-view/{cpId}/participants/{cprid}/...
         or with the function get_participant_matches in the os_core class participants.
 
@@ -266,7 +266,7 @@ class collection_protocol_registration:
         """Register a participant to another Collection Protocol
 
         Registers an already existing Participant to another Collection Protocol.
-        The Participants unique ID has to be known and can be seen for example via 
+        The Participants unique ID has to be known and can be seen for Examples via 
         the GUI in the URL: http(s)://<host>:<port>/openspecimen/cp-view/{cpId}/participants/{cprid}/...
         or with the function get_participant_matches in the os_core class participants.
         Also, the collection protocol ID of the Protocol in which the participant is registered at has to be known.
@@ -299,7 +299,7 @@ class collection_protocol_registration:
         Merges Participant with the unique Participant ID ::id_from:: to the Participant with
         unique Participant ID ::id_to::. This will move data from all visits and specimens from the source participant to the target participant
         and then deletes the source participant.
-        The Participants unique ID has to be known and can be seen for example via 
+        The Participants unique ID has to be known and can be seen for Examples via 
         the GUI in the URL: http(s)://<host>:<port>/openspecimen/cp-view/{cpId}/participants/{cprid}/...
         or with the function get_participant_matches in the os_core class participants.
 

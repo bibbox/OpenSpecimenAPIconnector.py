@@ -13,7 +13,7 @@ class users:
     This class handles the API calls for users. Get all or specific user information, create a user, change his/her/their password,
     get user-roles of or assign a specific role to a user.
 
-    Notes
+    Note
     -----
     In order to use this and also the other classes, the user has to know OpenSpecimen. The users have to know which requests
     are needed and what content should be uploaded. The API documentation of OpenSpecimen is in:

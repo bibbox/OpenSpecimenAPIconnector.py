@@ -12,20 +12,20 @@ class cpevent_util:
     """Handles the Events of corresponding to a Collection Protocol
 
     This class allows you to handle the events in Openspecimen. One can create an event,
-    but first the corresponding Collection Protocol has to be created, for example via os_core.collection_protocol.py.
+    but first the corresponding Collection Protocol has to be created, for Examples via os_core.collection_protocol.py.
     or one can update an existing event. The other calls are in the os_core class collection_protocol_event.py.
     The output is a JSON dict with either details or the Openspecimen error message.
 
-    Notes
+    Note
     -----
     In order to use this and also the other classes, the user has to know OpenSpecimen.
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
 
-    Example
-    -------
+    Examples
+    --------
 
-    A code example, where also events are handled is in the Jupyter-Notebook::
+    A code Examples, where also events are handled is in the Jupyter-Notebook::
 
     $ jupyter notebook main.ipynb
     """
@@ -105,12 +105,12 @@ class cpevent_util:
         """Update an event for a given Collection Protocol.
 
         Update an event for a given Collection Protocol. To use this function one has to know the eventid,
-        it can for example be seen in the URL, if one click on the event in the GUI. The URL looks like:
+        it can for Examples be seen in the URL, if one click on the event in the GUI. The URL looks like:
         http(s)://<host>:<port>/openspecimen/#/cps/{CollectionProtocolId}/specimen-requirements?eventId={eventid}
-        For example, one can extract the eventid with an event-key from OpenSpecimen, when first the function
+        For Examples, one can extract the eventid with an event-key from OpenSpecimen, when first the function
         "get_all_events(self, cpid)" for a specific Collection Protocol, with the Collection Protocol ID is called.
 
-        Notes
+        Note
         -----
         All parameters except the eventid are optional. If they are not passed to the function they stay the same as before.
 

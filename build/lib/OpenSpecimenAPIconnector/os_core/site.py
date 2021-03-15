@@ -17,16 +17,16 @@ class sites():
     Pandas dataframe.  The output is a JSON dict or the error message as JSON dict, except 
     the Pandas dataframe.
     
-    Notes
+    Note
     -----
     In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes, one can
     just pass the parameters via a JSON-formatted string. This means the user has to know the keywords.
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
     
-    Example
-    -------
-    A code example, where the Collection protocols are handled, is in the Jupyter-Notebook::
+    Examples
+    --------
+    A code Examples, where the Collection protocols are handled, is in the Jupyter-Notebook::
         $ jupyter notebook main.ipynb
     """
 
@@ -189,7 +189,7 @@ class sites():
         
         Updates an existing site with the automatically generated OpsenSpecimen's system wide
         unique site ID ::siid::, with the parameters ::params:: which are passed to the function.
-        The ID of the site has to be known and can, for example, be seen in the GUI by clicking on 
+        The ID of the site has to be known and can, for Examples, be seen in the GUI by clicking on 
         the site, which has the format http(s)://<host>:<port>/openspecimen/site/{cpid}/... .
         Or via the function search_sites or get_all_sites and extracted with key ["id"]
         

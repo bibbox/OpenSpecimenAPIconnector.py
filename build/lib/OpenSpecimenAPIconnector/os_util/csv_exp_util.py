@@ -14,16 +14,16 @@ class csv_exporter:
     """Handles the export of CSV files from open specimen for different entities like collection protocols, specimens etc etc.
 
     This class handles the CSV export of various different entities and creates CSV files of the requested entities like collection protocols, institutes etc.
-    Notes
+    Note
     -----
     In order to use this and also the other classes, the user has to know OpenSpecimen. 
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
 
-    Example
-    -------
+    Examples
+    --------
 
-    A code example, where the Institutes are handled is in the Jupyter-Notebook:
+    A code Examples, where the Institutes are handled is in the Jupyter-Notebook:
 
     $ jupyter notebook main.ipynb
     """

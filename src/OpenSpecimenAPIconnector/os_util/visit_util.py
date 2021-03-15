@@ -16,15 +16,15 @@ class visit_util:
     search visits with different parameters, add visits and specimens in one call.
     The outputs are JSON dicts or the Error messages as dict. 
 
-    Notes
+    Note
     -----
     In order to use this and also the other classes, the user has to know OpenSpecimen.
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
 
-    Example
-    -------
-    A code example, where the visits are handled is in the Jupyter-Notebook::
+    Examples
+    --------
+    A code Examples, where the visits are handled is in the Jupyter-Notebook::
         $ jupyter notebook main.ipynb
     """
 

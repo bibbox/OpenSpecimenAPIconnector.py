@@ -11,20 +11,18 @@ class CSV_exporter():
 
     This class provides methods to create and fetch the resutls of an internal OpenSpecimen export job.
 
-
-    Notes
+    Note
     -----
     In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
     just pass the parameters via JSON-formatted string. This means the user has to know the keywords.
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
 
-    Example
-    -------
-
+    Examples
+    ---------
     Just call create export job with the correct data json String like
-    my_id = CSV_exporter().create_export_job(*args) or supply a job id to call
-    my_pd_data_frame = CSV_exporter().get_job_output(*args) to retrieve a pandas data frame
+    my_id = CSV_exporter().create_export_job() or supply a job id to call
+    my_pd_data_frame = CSV_exporter().get_job_output() to retrieve a pandas data frame
     """
 
     def __init__(self):
@@ -48,19 +46,19 @@ class CSV_exporter():
     def create_export_job(self, data):
 
         """Create export job method with the entity (Collection Protocoll, Institutes etc.)
-        encoded within the data JSON-formated-strig.
+        encoded within the data JSON-formated-string.
 
         Parameters
         ----------
         data : JSON-formatted-string 
-        Containing the information needed by the API. 
-        See OpenSpecimenAPIconnector.os_util.Export_OP().export_file to find the JSON 
-        blueprint methods in OpenSpecimenAPIconnector.os_core.Json_Factory().
+            Containing the information needed by the API. 
+            See OpenSpecimenAPIconnector.os_util.Export_OP().export_file to find the JSON 
+            blueprint methods in OpenSpecimenAPIconnector.os_core.Json_Factory().
 
         Returns
         -------
         job_id: String
-        A string representing the id (integer number) assigned by the OpenSpecimen API
+            A string representing the id (integer number) assigned by the OpenSpecimen API
         """        
 
         job_endpoint = "/export-jobs/"

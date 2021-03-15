@@ -15,16 +15,16 @@ class specimen:
     search, and determine the existence of specimens with different parameters. Further, a list of all specimens in the system can be created.
     The output is a JSON dict or the error message as dict. 
     
-    Notes
+    Note
     -----
     In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes, one can
     just pass the parameters via a JSON-formatted string. This means the user has to know the keywords.
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
     
-    Example
-    -------
-    A code example, where the Specimens/Derivatives/Aliquots are handled, is in the Jupyter-Notebook::
+    Examples
+    --------
+    A code Examples, where the Specimens/Derivatives/Aliquots are handled, is in the Jupyter-Notebook::
         $ jupyter notebook main.ipynb
     """
 
@@ -60,13 +60,13 @@ class specimen:
 
     def get_specimen(self, specimenid):
         
-        """Get the Specimen with the ID ::specimenid::
+        """Get the Specimen with the ID specimenid
         
-        Get the details of the Specimen with the unique ID ::cspecimenid::.
+        Get the details of the Specimen with the unique ID specimenid.
         This ID is generated automatically from OpenSpecimen when the Specimen is created.
         It can be seen in the GUI by clicking on the desired Specimen, and read from the URL:
         http(s)://<host>:<port>/openspecimen/cps/{cpid}/specimens/{specimenid}/... .
-        Otherwise via search Specimen, for example by name and then extract the ID via key ["id"].
+        Otherwise via search Specimen, for Examples by name and then extract the ID via key ["id"].
         
         Parameters
         ----------
@@ -89,7 +89,7 @@ class specimen:
         
         """Check if a Specimen with Label exists
         
-        Check if a specimen with Label ::specimenLabel:: already exists in the System.
+        Check if a specimen with Label specimenLabel already exists in the System.
         Can be interesting if one manually creates a label to avoid specimens with the same label.
         
         Parameters
@@ -156,7 +156,7 @@ class specimen:
         
         Search for one or more Specimens with the values in the search_string defined. The search string looks like:
         http(s)://<host>:<port>/openspecimen/rest/np/specimens?{param_1}={value_1}&...&{param_x}={value_x}
-        With the class specimen_util from os_util and function ::search_specimens:: the search string is generated
+        With the class specimen_util from os_util and function search_specimens the search string is generated
         and this function is called. Not all keys from OpenSpecimen can be easily searched for.
         
         Parameters
@@ -181,8 +181,8 @@ class specimen:
         """Updates an existing Specimen/Aliquot/Derivative
         
         Updates an existing Specimen/Derivative/Aliquot with the automatically generated OpsenSpecimen's system wide
-        unique specimen ID ::specimenid::, with the parameters ::updateparams:: which are passed to the function.
-        The ID of the specimen has to be known and can, for example, be seen in the GUI by clicking on 
+        unique specimen ID specimenid, with the parameters updateparams which are passed to the function.
+        The ID of the specimen has to be known and can, for Examples, be seen in the GUI by clicking on 
         theSpecimen, which has the format http(s)://<host>:<port>/openspecimen/cps/{cpid}/specimen/{specimenid} .
         Or via the function search_specimens and extract from there with the key ["id"]
         
@@ -222,7 +222,7 @@ class specimen:
         
         """Delete a Specimen/Derivative/Aliquot
         
-        Delete an already existing Specimen/Derivative/Aliquot. The Parameters ::specimenid:: is the uniqe ID of the Specimen/
+        Delete an already existing Specimen/Derivative/Aliquot. The Parameters specimenid is the uniqe ID of the Specimen/
         Derivative/Aliquot which is generated automatically from OpenSpecimen. To get the ID, one can click in the GUI on the 
         Specimen/Derivative/Aliquot and read it from the URL, with format:
         http(s)://<host>:<port>/openspecimen/cp-view/{cpid}/specimen/{specimenid}/... .

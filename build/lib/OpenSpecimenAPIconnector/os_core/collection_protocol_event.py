@@ -11,21 +11,21 @@ class collection_protocol_event:
     """Handles the Events of corresponding to a Colelction Protocol
 
     This class allows you to handle the Events in Openspecimen. One can create an event,
-    but first the corresponding Colelction Protocol have to be created, for example via os_core.collection_protocol.py.
+    but first the corresponding Colelction Protocol have to be created, for Examples via os_core.collection_protocol.py.
     Get all events or just get one event, delete or update an existing event.
     The output is a JSON dict with either details or the Openspecimen error message.
 
-    Notes
+    Note
     -----
     In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can
     just pass the parameters via JSON-formatted string. This means the user has to know the keywords.
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
 
-    Example
-    -------
+    Examples
+    --------
 
-    A code example, where also Events are handled is in the Jupyter-Notebook::
+    A code Examples, where also Events are handled is in the Jupyter-Notebook::
 
         $ jupyter notebook main.ipynb
     """
@@ -94,9 +94,9 @@ class collection_protocol_event:
         """Delete an event with the ID eventid.
 
         Delete an event, which is already in OpenSpecimen. The unique ID is generated from OpenSpecimen
-        and can for example be seen in the URL, if one clicks on the event in the GUI. The URL looks like:
+        and can for Examples be seen in the URL, if one clicks on the event in the GUI. The URL looks like:
         http(s)://<host>:<port>/openspecimen/#/cps/{CollectionProtocolId}/specimen-requirements?eventId={eventid}
-        For example, one can extract the eventid with an event-key from OpenSpecimen, when the function
+        For Examples, one can extract the eventid with an event-key from OpenSpecimen, when the function
         "get_all_events(self, cpid)" for a specific Collection Protocol, with the Collection Protocol ID is called first.
 
 
@@ -124,7 +124,7 @@ class collection_protocol_event:
         """Get all events for a specific Collection Protocol with ID cpid.
 
         Get the details of all events within a given Collection Protocol with the ID cpid.
-        For example, the ID can be seen in the URL if one clicks on the overview of a Collection
+        For Examples, the ID can be seen in the URL if one clicks on the overview of a Collection
         Protocol. The URL looks like: http(s)://<host>:<port>/openspecimen/#/cps/{cpid}/overview .
         Another possibility is to search via the  function "search_collection_protocols(self, search_params)"
         from the class os_core.collection_protocol with an OpenSpecimen specific key and value.
@@ -153,9 +153,9 @@ class collection_protocol_event:
         """Get the details of an event with the unique ID eventid.
 
         Get the details of an event, which is already in OpenSpecimen. The unique ID is generated from OpenSpecimen
-        and can for example be seen in the URL, if one clicks on the event in the GUI. The URL looks like:
+        and can for Examples be seen in the URL, if one clicks on the event in the GUI. The URL looks like:
         http(s)://<host>:<port>/openspecimen/#/cps/{CollectionProtocolId}/specimen-requirements?eventId={eventid}
-        For example, one can extract the eventid with an event-key from OpenSpecimen, when the function
+        For Examples, one can extract the eventid with an event-key from OpenSpecimen, when the function
         "get_all_events(self, cpid)" for a specific Collection Protocol, with the Collection Protocol ID is called first.
 
         Parameters
@@ -181,7 +181,7 @@ class collection_protocol_event:
 
         Update an existing event with ID eventid. In order to use this function, one
         has to know the parameters, which OpenSpecimen allows to update. 
-        For example, one can 'add' the Parameters "code" to an existing event which was created via GUI.
+        For Examples, one can 'add' the Parameters "code" to an existing event which was created via GUI.
         This is needed if one wants to add conditional forms via the workflow.
 
         Parameters

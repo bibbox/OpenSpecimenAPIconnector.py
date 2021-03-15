@@ -15,16 +15,16 @@ class specimen:
     search, and determine the existence of specimens with different parameters. Further, a list of all specimens in the system can be created.
     The output is a JSON dict or the error message as dict. 
     
-    Notes
+    Note
     -----
     In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes, one can
     just pass the parameters via a JSON-formatted string. This means the user has to know the keywords.
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
     
-    Example
-    -------
-    A code example, where the Specimens/Derivatives/Aliquots are handled, is in the Jupyter-Notebook::
+    Examples
+    --------
+    A code Examples, where the Specimens/Derivatives/Aliquots are handled, is in the Jupyter-Notebook::
         $ jupyter notebook main.ipynb
     """
 
@@ -66,7 +66,7 @@ class specimen:
         This ID is generated automatically from OpenSpecimen when the Specimen is created.
         It can be seen in the GUI by clicking on the desired Specimen, and read from the URL:
         http(s)://<host>:<port>/openspecimen/cps/{cpid}/specimens/{specimenid}/... .
-        Otherwise via search Specimen, for example by name and then extract the ID via key ["id"].
+        Otherwise via search Specimen, for Examples by name and then extract the ID via key ["id"].
         
         Parameters
         ----------
@@ -182,7 +182,7 @@ class specimen:
         
         Updates an existing Specimen/Derivative/Aliquot with the automatically generated OpsenSpecimen's system wide
         unique specimen ID ::specimenid::, with the parameters ::updateparams:: which are passed to the function.
-        The ID of the specimen has to be known and can, for example, be seen in the GUI by clicking on 
+        The ID of the specimen has to be known and can, for Examples, be seen in the GUI by clicking on 
         theSpecimen, which has the format http(s)://<host>:<port>/openspecimen/cps/{cpid}/specimen/{specimenid} .
         Or via the function search_specimens and extract from there with the key ["id"]
         

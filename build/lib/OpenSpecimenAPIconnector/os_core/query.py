@@ -12,17 +12,17 @@ class query:
     Handles the OpenSpecimen API calls for the queries. This class can 
     create, execute, search for queries. Also it can create a query in the OpenSpecimen specific Querylanguage AQL.
     
-    Notes
+    Note
     -----
     In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes, one can
     just pass the parameters via a JSON-formatted string. This means the user has to know the keywords.
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
 
-    Example
-    -------
+    Examples
+    --------
 
-    A code example, where the Queries are handled, is in the Jupyter-Notebook:
+    A code Examples, where the Queries are handled, is in the Jupyter-Notebook:
 
         $ jupyter notebook main.ipynb
     """

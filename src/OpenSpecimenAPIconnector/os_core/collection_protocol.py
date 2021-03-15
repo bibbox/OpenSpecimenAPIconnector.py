@@ -15,16 +15,16 @@ class collection_protocol():
     The output is a JSON dict or the error message as JSON dict, except the Pandas dataframe.
     
 
-    Notes
+    Note
     -----
     In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes, one can
     just pass the parameters via a JSON-formatted string. This means the user has to know the keywords.
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
 
-    Example
-    -------
-    A code example, where the Collection protocols are handled, is in the Jupyter-Notebook::
+    Examples
+    --------
+    A code Examples, where the Collection protocols are handled, is in the Jupyter-Notebook::
 
         $ jupyter notebook main.ipynb
     """
@@ -170,9 +170,9 @@ class collection_protocol():
 
     def get_collection_protocol(self, cpid):
 
-        """Get the Collection Protocol with the ID ::cpid::
+        """Get the Collection Protocol with the ID cpid
 
-        Get the details of the Collection Protocol with the unique ID ::cpid::.
+        Get the details of the Collection Protocol with the unique ID cpid.
         This ID is generated automatically from OpenSpecimen when the Protocol is created.
 
         Parameters
@@ -230,7 +230,7 @@ class collection_protocol():
 
             Updates an existing Collection Protocol with the automatically generated OpenSpecimen's system wide
             unique Collection Protocol ID ::cpid::, with the Parameters ::params:: which are passed to the function.
-            The ID of the Collection Protocol has to be known and can, for example, be seen in the GUI by clicking on 
+            The ID of the Collection Protocol has to be known and can, for Examples, be seen in the GUI by clicking on 
             the Collection Protocol, which has the format http(s)://<host>:<port>/openspecimen/cps/{cpid}/... .
             Or via the function search_collection_protocols or get_all_collection_protocols
 
@@ -267,7 +267,7 @@ class collection_protocol():
 
         """Template for the Collection Protocol
 
-        Template for the Collection Protocol as specified within the system. If, for example, some extension details
+        Template for the Collection Protocol as specified within the system. If, for Examples, some extension details
         for the Collection Protocols exists, this function will return also those values. These values are converted into a pandas 
         dataframe, precisely, it is the header of a pandas data frame.
 

@@ -14,16 +14,16 @@ class csv_exporter:
     """Handles the export of CSV files from open specimen for different entities like collection protocols, specimens etc etc.
 
     This class handles the CSV export of various different entities and creates CSV files of the requested entities like collection protocols, institutes etc.
-    Notes
+    Note
     -----
     In order to use this and also the other classes, the user has to know OpenSpecimen. 
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
 
-    Example
-    -------
+    Examples
+    --------
 
-    A code example, where the Institutes are handled is in the Jupyter-Notebook:
+    A code Examples, where the Institutes are handled is in the Jupyter-Notebook:
 
     $ jupyter notebook main.ipynb
     """
@@ -53,26 +53,25 @@ class csv_exporter:
         Export function for collection protocols 
 
         Parameters
+        ----------
         objecttype: string 
             Identifying the general object to be exported.
-            Permissible Values: "institute", "site", "user", "cpr", "specimen", "extensions", "storageContainer"
+            Permissible Values: institute, site, user, cpr, specimen, extensions, storageContainer
         recordids: list or string
             Comma seperated list of record ids for fetching selected entries by their identifier. (Sites, Institutes, Users and Containers) 
         cp_id: string 
             Collection protocol id of export target not neccesary for objects higher in the hierachy like institue or site.
-            For all others it can be specified or set to "-1" which means all data in the system.
+            For all others it can be specified or set to -1 which means all data in the system.
         ppids: list or string
             List of comma seperated participant identifiers; String if its a singular participant to be exported
-            Used in combination with specimen object type as a paramter
+            Used in combination with specimen object type as a parameter
         entitytype: string
-            Paramter defining the entity for data extraction (e.g.: attached form at participant level)
+            Paramter defining the entity for data extraction (e.g. attached form at participant level)
             used with the extension object type
         formname: string
             Defines the form to be downloaded in context of the extension object type together with the specified entity 
         specimenlabels: list or string
-            List of comma seperated specimen identifiers; str if its a singular specimen to be exported        
-        ----------
-        
+            List of comma seperated specimen identifiers or str if its a singular specimen to be exported        
         Returns
         -------
         job: Pandas DataFrame or CSV binary File

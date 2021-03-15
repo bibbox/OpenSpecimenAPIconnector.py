@@ -14,15 +14,15 @@ class site_util:
     This class handles the API calls for OpenSpecimen Sites. It can create, update and search 
     sites with different parameters. The other calls are in the os_core class sites.
     
-    Notes
+    Note
     -----
     In order to use this and also the other classes, the user has to know OpenSpecimen. 
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
     
-    Example
-    -------
-    A code example, where the collection protocols are handled is in the Jupyter-Notebook::
+    Examples
+    --------
+    A code Examples, where the collection protocols are handled is in the Jupyter-Notebook::
         $ jupyter notebook main.ipynb
     """
 
@@ -131,7 +131,7 @@ class site_util:
         Update a site in OpenSpecimen with an API call. In order to update a site one has to know
         the ID of the site which can be seen in the GUI, by clicking on the site, the URL looks like:
         http(s)://<host>:<port>/openspecimen/sites/{siteid}/overview. Or it can be first searched for,
-        for example, by name with the function search_sites and then the ID can be extracted from there.
+        for Examples, by name with the function search_sites and then the ID can be extracted from there.
                 
         Parameters
         ----------

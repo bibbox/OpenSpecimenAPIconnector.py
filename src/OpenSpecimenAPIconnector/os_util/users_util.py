@@ -70,7 +70,7 @@ class user_util:
         the format: http(s)://<host>:<port>/openspecimen/users/{userid}/... .
         Or with the function get_all_users and then extract the ID to the wanted user.
 
-        Notes
+        Note
         -----
         For updating, the user has to be identified with its unique id {userid},
         all the other parameters of the user are optional. If they are not passed
@@ -163,7 +163,7 @@ class user_util:
         If the User isn't the Superadmin, nor the Superadmin changes his own password the parameters are userid,
         oldpassword, new password.
 
-        Notes
+        Note
         -----
         In the Systemsetting the Superadmin can define the passwords' complexity.
 

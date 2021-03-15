@@ -29,7 +29,7 @@ class Json_factory():
 
         """Creates a JSON-formated string for participant creation
         This function creates the json corresponding to the cpr_util function
-        Notes
+        Note
         ----- 
         Mandatory parameters are passed as positional arguments in the caliing function
         Parameters
@@ -144,7 +144,7 @@ class Json_factory():
 
         """Creates the JSON-formated string corresponding to the collection_protocol_util funciton create_CP
         
-        Notes
+        Note
         -----
         Mandatory paramters are passed as positional args within the calling util class
         Parameters
@@ -249,7 +249,7 @@ class Json_factory():
         
         Create an event for a given Collection Protocol. Details of the parameters can be found in
         the parameters section.
-        Notes
+        Note
         -----
         Mandatory paramters are passed as positional args within the calling util class
         Parameters
@@ -309,7 +309,7 @@ class Json_factory():
         """Create a API Json String for a Specimen
         Create the JSON String neccesary for creating a specimen
         
-        Notes
+        Note
         -----
         Mandatory paramters are passed as positional args within the calling util class
         Parameters
@@ -542,7 +542,7 @@ class Json_factory():
             Used for paginating the results. If results=10, the output result will be maximum 10 rows
         drivingform: string
             Driving form determines the search perspective. When left empty, it defaults to Participant.
-            (For example when drivingForm is Participant, the root table is 'catissue_coll_prot_reg' 
+            (For Examples when drivingForm is Participant, the root table is 'catissue_coll_prot_reg' 
             which is then used to join with the other tables.
             Similarly when drivingForm is Specimen, the root table will be catissue_specimen, 
             which will be joined with the other tables.) rowmode: string
@@ -984,7 +984,7 @@ class Json_factory():
 
         Change the password of an user via API.
         
-        Notes
+        Note
         -----
         If an user changes its one password, the old password is mandatory.
         If the user who changes the password is a superadmin, the new password is enough.

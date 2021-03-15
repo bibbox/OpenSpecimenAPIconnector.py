@@ -14,15 +14,15 @@ class institutes():
     create, delete, update institutes. One can search via different parameters for an institute and
     get all Collection protocols corresponding to an institute. Get one or all institutes.
 
-    Notes
+    Note
     -----
     In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes, one can
     just pass the parameters via a JSON-formatted string. This means the user has to know the keywords.
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
 
-    Example
-    -------
+    Examples
+    --------
 
     Code examples, where the institutes are handled, is in the Jupyter-Notebook:
 
@@ -92,10 +92,10 @@ class institutes():
         """Delete an Institute 
 
         Delete an existing institute in OpenSpecimen with ID ::inid::.
-        The ID is created from OpenSpecimen and can, for example, be seen in the GUI
+        The ID is created from OpenSpecimen and can, for Examples, be seen in the GUI
         under Institutes. When clicking on the institute, the URL looks like:
         http(s)://<host>:<port>/openspecimen/institutes/{inid}/overview .
-        Otherwise, one can search with the function search_institutes for example by name and extract the ID from there.
+        Otherwise, one can search with the function search_institutes for Examples by name and extract the ID from there.
 
         Parameters
         ---------
@@ -189,7 +189,7 @@ class institutes():
 
         Updates an existing institute with the automatically generated OpenSpecimen's system wide
         unique Institute ID ::instituteid::, with the Parameters ::params:: which are passed to the function.
-        The ID of the institute has to be known and can, for example, be seen in the GUI by clicking on 
+        The ID of the institute has to be known and can, for Examples, be seen in the GUI by clicking on 
         the institutes, which has the format http(s)://<host>:<port>/openspecimen/institutes/{inid}/....or via the function search_institutes.
 
         Parameters

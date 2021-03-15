@@ -15,16 +15,16 @@ class query_util:
     Handles the OpenSpecimen API calls for the queries. This class can 
     create, execute, search for queries.  The other calls are in the os_core class query.
     
-    Notes
+    Note
     -----
     In order to use this and also the other classes, the user has to know OpenSpecimen. 
     The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and 
     the calls refer to this site. More details can be seen in the documentation.
 
-    Example
-    -------
+    Examples
+    --------
 
-    A code example, where the queries are handled is in the Jupyter-Notebook:
+    A code Examples, where the queries are handled is in the Jupyter-Notebook:
 
         $ jupyter notebook main.ipynb
     """
