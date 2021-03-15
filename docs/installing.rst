@@ -26,7 +26,7 @@ In your ``sript.py`` file:
         ...
 
 .. note::
-    This will produce an Error if you current instance url or link is 
+    This will produce an Error if you current instance url or authorization is invalid 
 
 Jupyter Demos
 ===================
