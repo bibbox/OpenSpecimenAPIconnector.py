@@ -16,23 +16,20 @@ In your ``sript.py`` file:
     import OpenSpecimenAPIconnector.os_core as os_core
     import OpenSpecimenAPIconnector.os_util as os_util
 
-    # Set Login 
+    # Set Login Example
+    baseurl = 'http(s)://<OS-Instance-Name>/openspecimen/rest/ng'
+    loginname = "amdin"
+    password = "Login@123"
+    auth = (loginname, password)
     OSconn.config_manager.set_login(url = base_url, auth = auth)
-    
-    
-
+    # Use some Methods
+        ...
 
 .. note::
-    Adding this theme as an extension is what enables localization of theme
-    strings in your translated output. If these strings are not translated in
-    your output, either we lack the localized strings for your locale, or you
-    are using an old version of the theme.
+    This will produce an Error if you current instance url or link is 
 
-More Files and Demos
+Jupyter Demos
 ===================
 
-
-.. code:: python
-
-    html_theme = "sphinx_rtd_theme"
-    html_theme_path = ["_themes", ]
+For more information and detailed demos visit:
+https://github.com/bibbox/OpenSpecimenAPIconnector.py/tree/master/demo_notebooks
