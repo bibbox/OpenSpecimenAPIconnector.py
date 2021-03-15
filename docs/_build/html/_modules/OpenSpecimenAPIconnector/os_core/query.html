@@ -1,0 +1,347 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>OpenSpecimenAPIconnector.os_core.query &mdash; OpenSpecimenAPIConnector 0.9.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> OpenSpecimenAPIConnector
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stuff.html">Paragraph Level Markup</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/OpenSpecimenAPIconnector.html">OpenSpecimenAPIconnector package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">OpenSpecimenAPIConnector</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>OpenSpecimenAPIconnector.os_core.query</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for OpenSpecimenAPIconnector.os_core.query</h1><div class="highlight"><pre>
+<span></span><span class="ch">#! /bin/python3</span>
+
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">.req_util</span> <span class="k">import</span> <span class="n">OS_request_gen</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">config_manager</span>
+
+<div class="viewcode-block" id="query"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.query.query">[docs]</a><span class="k">class</span> <span class="nc">query</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;Handles the API calls for the queries</span>
+
+<span class="sd">    Handles the OpenSpecimen API calls for the queries. This class can </span>
+<span class="sd">    create, execute, search for queries. Also it can create a query in the OpenSpecimen specific Querylanguage AQL.</span>
+<span class="sd">    </span>
+<span class="sd">    Note</span>
+<span class="sd">    -----</span>
+<span class="sd">    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes, one can</span>
+<span class="sd">    just pass the parameters via a JSON-formatted string. This means the user has to know the keywords.</span>
+<span class="sd">    The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and </span>
+<span class="sd">    the calls refer to this site. More details can be seen in the documentation.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    A code Examples, where the Queries are handled, is in the Jupyter-Notebook:</span>
+
+<span class="sd">        $ jupyter notebook main.ipynb</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Constructor of the Class query.</span>
+
+<span class="sd">        Constructor of the class query can handle the basic API-calls</span>
+<span class="sd">        of the query in OpenSpecimen. Connects this class to OpenSpecimen</span>
+<span class="sd">        specific URL Generator Class (os_core/url.py)</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        base_url : string</span>
+<span class="sd">            URL to openspecimen, has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng</span>
+<span class="sd">        auth : tuple</span>
+<span class="sd">            Consists of two strings ( loginname , password)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">=</span> <span class="n">config_manager</span><span class="o">.</span><span class="n">get_url</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">auth</span> <span class="o">=</span> <span class="n">config_manager</span><span class="o">.</span><span class="n">get_auth</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span> <span class="o">=</span> <span class="n">OS_request_gen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">auth</span><span class="p">)</span>        
+
+<div class="viewcode-block" id="query.ausgabe"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.query.query.ausgabe">[docs]</a>    <span class="k">def</span> <span class="nf">ausgabe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Testing of the URL and authentification.</span>
+
+<span class="sd">        If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.</span>
+<span class="sd">        The function prints the URL and login data  to the output terminal, which was handed over to the class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">auth</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="query.execute_aql"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.query.query.execute_aql">[docs]</a>    <span class="k">def</span> <span class="nf">execute_aql</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+
+
+        <span class="sd">&quot;&quot;&quot;Write and Execute a Query in OpenSpecimen</span>
+
+<span class="sd">        Creates a query which then is executed. The query language AQL can be extracted from the OpenSpecimen GUI query generator.</span>
+<span class="sd">        The possible metainfos are written like schemaname.key. To use this class, one has to know the AQL language.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ---------</span>
+<span class="sd">        params : string</span>
+<span class="sd">            JSON-formatted string with the desired parameters. cpId, aql, wideRowMode(default =&#39;OFF&#39;) [optional] ,</span>
+<span class="sd">            outputColumnExprs (default= &#39;true&#39;)[optional], outputIsoDateTime (default = &#39;true)[optional]</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-dict</span>
+<span class="sd">            Details of the outcomes of the query with metadata, labels, and columns or the OpenSpecimen&#39;s error message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;/query&quot;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">post_request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="query.search_query"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.query.query.search_query">[docs]</a>    <span class="k">def</span> <span class="nf">search_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">suburl</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Search for list of queries with specific suburl.</span>
+
+<span class="sd">        Search for one or more queries with the parameters in the suburl defined. The search URL looks like:</span>
+<span class="sd">        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/np/saved-queries?{param_1}={value_1}&amp;...&amp;{param_x}={value_x}</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        suburl : string</span>
+<span class="sd">            Suburl of the queries with parameters: cpId, searchString, start, max, countReq</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-dict</span>
+<span class="sd">            Details of all matching queries or the OpenSpecimen&#39;s error message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;/saved-queries&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">suburl</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">get_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="k">return</span>  <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="query.execute_query"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.query.query.execute_query">[docs]</a>    <span class="k">def</span> <span class="nf">execute_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qryid</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Execute a saved Query.</span>
+
+<span class="sd">        Execute an already existing query with the OpenSpecimen&#39;s unique Query ID &lt;qryid&gt; .</span>
+<span class="sd">        The query ID can be seen via clicking on the queries in OpenSpecimen and it is the</span>
+<span class="sd">        number after # in the title.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        qryid : string or int</span>
+<span class="sd">            The systems ID of the query will be converted to a string.</span>
+
+<span class="sd">        params : string</span>
+<span class="sd">            JSON-formatted string with parameters: drivingForm, wideRowmode,</span>
+<span class="sd">            startAt, maxResults  </span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-dict</span>
+<span class="sd">            Details of all matching queries or the OpenSpecimen&#39;s error message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;/query/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">qryid</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">post_request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Christian Schorn, Simon Streit.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

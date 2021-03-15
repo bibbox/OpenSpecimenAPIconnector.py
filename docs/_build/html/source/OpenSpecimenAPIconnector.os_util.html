@@ -1,34 +1,194 @@
 
-<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta charset="utf-8" />
-    <title>OpenSpecimenAPIconnector.os_util package &#8212; OpenSpecimenAPIConnector 0.9.1 documentation</title>
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>OpenSpecimenAPIconnector.os_util package &mdash; OpenSpecimenAPIConnector 0.9.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="OpenSpecimenAPIconnector.os_core package" href="OpenSpecimenAPIconnector.os_core.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
    
-  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
-  </head><body>
-  
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
           
 
-          <div class="body" role="main">
+          
+            <a href="../index.html" class="icon icon-home"> OpenSpecimenAPIConnector
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../stuff.html">Paragraph Level Markup</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Modules</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="OpenSpecimenAPIconnector.html">OpenSpecimenAPIconnector package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="OpenSpecimenAPIconnector.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="OpenSpecimenAPIconnector.mg_core.html">OpenSpecimenAPIconnector.mg_core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OpenSpecimenAPIconnector.mg_util.html">OpenSpecimenAPIconnector.mg_util package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="OpenSpecimenAPIconnector.os_core.html">OpenSpecimenAPIconnector.os_core package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">OpenSpecimenAPIconnector.os_util package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-OpenSpecimenAPIconnector.os_util.aggregated_fields">OpenSpecimenAPIconnector.os_util.aggregated_fields module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-OpenSpecimenAPIconnector.os_util.bulk_operations">OpenSpecimenAPIconnector.os_util.bulk_operations module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-OpenSpecimenAPIconnector.os_util.collection_protocol_util">OpenSpecimenAPIconnector.os_util.collection_protocol_util module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-OpenSpecimenAPIconnector.os_util.cpevent_util">OpenSpecimenAPIconnector.os_util.cpevent_util module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-OpenSpecimenAPIconnector.os_util.cpr_util">OpenSpecimenAPIconnector.os_util.cpr_util module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-OpenSpecimenAPIconnector.os_util.csv_exp_util">OpenSpecimenAPIconnector.os_util.csv_exp_util module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-OpenSpecimenAPIconnector.os_util.institute_util">OpenSpecimenAPIconnector.os_util.institute_util module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-OpenSpecimenAPIconnector.os_util.query_util">OpenSpecimenAPIconnector.os_util.query_util module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-OpenSpecimenAPIconnector.os_util.site_util">OpenSpecimenAPIconnector.os_util.site_util module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-OpenSpecimenAPIconnector.os_util.specimen_util">OpenSpecimenAPIconnector.os_util.specimen_util module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-OpenSpecimenAPIconnector.os_util.users_util">OpenSpecimenAPIconnector.os_util.users_util module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-OpenSpecimenAPIconnector.os_util.visit_util">OpenSpecimenAPIconnector.os_util.visit_util module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-OpenSpecimenAPIconnector.os_util">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="OpenSpecimenAPIconnector.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="OpenSpecimenAPIconnector.html#module-OpenSpecimenAPIconnector.config">OpenSpecimenAPIconnector.config module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="OpenSpecimenAPIconnector.html#module-OpenSpecimenAPIconnector">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">OpenSpecimenAPIConnector</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="OpenSpecimenAPIconnector.html">OpenSpecimenAPIconnector package</a> &raquo;</li>
+        
+      <li>OpenSpecimenAPIconnector.os_util package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/source/OpenSpecimenAPIconnector.os_util.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <div class="section" id="openspecimenapiconnector-os-util-package">
 <h1>OpenSpecimenAPIconnector.os_util package<a class="headerlink" href="#openspecimenapiconnector-os-util-package" title="Permalink to this headline">¶</a></h1>
@@ -39,16 +199,16 @@
 <span id="openspecimenapiconnector-os-util-aggregated-fields-module"></span><h2>OpenSpecimenAPIconnector.os_util.aggregated_fields module<a class="headerlink" href="#module-OpenSpecimenAPIconnector.os_util.aggregated_fields" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="OpenSpecimenAPIconnector.os_util.aggregated_fields.aggregator">
-<em class="property">class </em><code class="sig-prename descclassname">OpenSpecimenAPIconnector.os_util.aggregated_fields.</code><code class="sig-name descname">aggregator</code><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.aggregated_fields.aggregator" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">OpenSpecimenAPIconnector.os_util.aggregated_fields.</code><code class="sig-name descname">aggregator</code><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/aggregated_fields.html#aggregator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.aggregated_fields.aggregator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.aggregated_fields.aggregator.extract_age_fields">
-<code class="sig-name descname">extract_age_fields</code><span class="sig-paren">(</span><em class="sig-param">cp_csv</em>, <em class="sig-param">cp_data</em>, <em class="sig-param">cp_id</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.aggregated_fields.aggregator.extract_age_fields" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">extract_age_fields</code><span class="sig-paren">(</span><em class="sig-param">cp_csv</em>, <em class="sig-param">cp_data</em>, <em class="sig-param">cp_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/aggregated_fields.html#aggregator.extract_age_fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.aggregated_fields.aggregator.extract_age_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.aggregated_fields.aggregator.run_aggregation">
-<code class="sig-name descname">run_aggregation</code><span class="sig-paren">(</span><em class="sig-param">sel_schema</em>, <em class="sig-param">ids=None</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.aggregated_fields.aggregator.run_aggregation" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">run_aggregation</code><span class="sig-paren">(</span><em class="sig-param">sel_schema</em>, <em class="sig-param">ids=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/aggregated_fields.html#aggregator.run_aggregation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.aggregated_fields.aggregator.run_aggregation" title="Permalink to this definition">¶</a></dt>
 <dd><p>General purpose aggreation for fields in attached forms
 under developement.
 TODO: See which entities are stored with extension detail
@@ -63,7 +223,7 @@ and where to use’’–_’</p>
 <span id="openspecimenapiconnector-os-util-bulk-operations-module"></span><h2>OpenSpecimenAPIconnector.os_util.bulk_operations module<a class="headerlink" href="#module-OpenSpecimenAPIconnector.os_util.bulk_operations" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="OpenSpecimenAPIconnector.os_util.bulk_operations.bulk_operations">
-<em class="property">class </em><code class="sig-prename descclassname">OpenSpecimenAPIconnector.os_util.bulk_operations.</code><code class="sig-name descname">bulk_operations</code><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.bulk_operations.bulk_operations" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">OpenSpecimenAPIconnector.os_util.bulk_operations.</code><code class="sig-name descname">bulk_operations</code><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/bulk_operations.html#bulk_operations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.bulk_operations.bulk_operations" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Handles the OpenSpecimen CSV Bulk Importer via API.</p>
 <p>Handles the API calls of the OpenSpecimen’s Bulk Importer for all the different schemas.
@@ -75,7 +235,7 @@ This class makes and executes an Import JOB.</p>
 </div>
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.bulk_operations.bulk_operations.bulk_import">
-<code class="sig-name descname">bulk_import</code><span class="sig-paren">(</span><em class="sig-param">file</em>, <em class="sig-param">filename</em>, <em class="sig-param">schemaname</em>, <em class="sig-param">operation='CREATE'</em>, <em class="sig-param">dateformat=None</em>, <em class="sig-param">timeformat=None</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.bulk_operations.bulk_operations.bulk_import" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">bulk_import</code><span class="sig-paren">(</span><em class="sig-param">file</em>, <em class="sig-param">filename</em>, <em class="sig-param">schemaname</em>, <em class="sig-param">operation='CREATE'</em>, <em class="sig-param">dateformat=None</em>, <em class="sig-param">timeformat=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/bulk_operations.html#bulk_operations.bulk_import"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.bulk_operations.bulk_operations.bulk_import" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make and Run a CSV-bulk import job</p>
 <p>Make a JOB, precisely upload a file to OpenSpecimen, extract the file-ID token from this return
 and then execute it with the right schema and operation (Create or Update). To use this function one has to
@@ -111,7 +271,7 @@ Permissable values are CREATE or UPDATE</p></li>
 <span id="openspecimenapiconnector-os-util-collection-protocol-util-module"></span><h2>OpenSpecimenAPIconnector.os_util.collection_protocol_util module<a class="headerlink" href="#module-OpenSpecimenAPIconnector.os_util.collection_protocol_util" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="OpenSpecimenAPIconnector.os_util.collection_protocol_util.collection_protocol_util">
-<em class="property">class </em><code class="sig-prename descclassname">OpenSpecimenAPIconnector.os_util.collection_protocol_util.</code><code class="sig-name descname">collection_protocol_util</code><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.collection_protocol_util.collection_protocol_util" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">OpenSpecimenAPIconnector.os_util.collection_protocol_util.</code><code class="sig-name descname">collection_protocol_util</code><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/collection_protocol_util.html#collection_protocol_util"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.collection_protocol_util.collection_protocol_util" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Utility class for Site API calls</p>
 <p>This class handles the API calls for OpenSpecimen Collection Protocol. It can create, update,
@@ -125,13 +285,13 @@ The API calls are documented in <a class="reference external" href="https://open
 the calls refer to this site. More details can be seen in the documentation.</p>
 </div>
 <p class="rubric">Examples</p>
-<p>A code Examples, where the Collection protocols are handled is in the Jupyter-Notebook:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ jupyter notebook main.ipynb
-</pre></div>
-</div>
+<p>A code Examples, where the Collection protocols are handled is in the Jupyter-Notebook</p>
+<blockquote>
+<div><p>$ jupyter notebook main.ipynb</p>
+</div></blockquote>
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.collection_protocol_util.collection_protocol_util.create_cp">
-<code class="sig-name descname">create_cp</code><span class="sig-paren">(</span><em class="sig-param">short_title</em>, <em class="sig-param">title</em>, <em class="sig-param">pi_mail</em>, <em class="sig-param">sites</em>, <em class="sig-param">time_start=None</em>, <em class="sig-param">time_end=None</em>, <em class="sig-param">man_id=None</em>, <em class="sig-param">coords=None</em>, <em class="sig-param">consentsWaived=None</em>, <em class="sig-param">eth_cons_id=None</em>, <em class="sig-param">part_no=None</em>, <em class="sig-param">desc_url=None</em>, <em class="sig-param">visitNameFmt=None</em>, <em class="sig-param">specimenLabelFmt=None</em>, <em class="sig-param">derivativeLabelFmt=None</em>, <em class="sig-param">man_visit_name=None</em>, <em class="sig-param">man_spec_label=None</em>, <em class="sig-param">aliquots_in_same=None</em>, <em class="sig-param">activity=None</em>, <em class="sig-param">aliquotLabelFmt=None</em>, <em class="sig-param">ppidFmt=None</em>, <em class="sig-param">specimenCentric=None</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.collection_protocol_util.collection_protocol_util.create_cp" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_cp</code><span class="sig-paren">(</span><em class="sig-param">short_title</em>, <em class="sig-param">title</em>, <em class="sig-param">pi_mail</em>, <em class="sig-param">sites</em>, <em class="sig-param">time_start=None</em>, <em class="sig-param">time_end=None</em>, <em class="sig-param">man_id=None</em>, <em class="sig-param">coords=None</em>, <em class="sig-param">consentsWaived=None</em>, <em class="sig-param">eth_cons_id=None</em>, <em class="sig-param">part_no=None</em>, <em class="sig-param">desc_url=None</em>, <em class="sig-param">visitNameFmt=None</em>, <em class="sig-param">specimenLabelFmt=None</em>, <em class="sig-param">derivativeLabelFmt=None</em>, <em class="sig-param">man_visit_name=None</em>, <em class="sig-param">man_spec_label=None</em>, <em class="sig-param">aliquots_in_same=None</em>, <em class="sig-param">activity=None</em>, <em class="sig-param">aliquotLabelFmt=None</em>, <em class="sig-param">ppidFmt=None</em>, <em class="sig-param">specimenCentric=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/collection_protocol_util.html#collection_protocol_util.create_cp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.collection_protocol_util.collection_protocol_util.create_cp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a Collection protocol with the given Parameters</p>
 <p>Create a collection protocol with the Parameters passed to the function.</p>
 <dl class="field-list simple">
@@ -167,7 +327,7 @@ the calls refer to this site. More details can be seen in the documentation.</p>
 
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.collection_protocol_util.collection_protocol_util.merge_cps">
-<code class="sig-name descname">merge_cps</code><span class="sig-paren">(</span><em class="sig-param">src_cp</em>, <em class="sig-param">trg_cp</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.collection_protocol_util.collection_protocol_util.merge_cps" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">merge_cps</code><span class="sig-paren">(</span><em class="sig-param">src_cp</em>, <em class="sig-param">trg_cp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/collection_protocol_util.html#collection_protocol_util.merge_cps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.collection_protocol_util.collection_protocol_util.merge_cps" title="Permalink to this definition">¶</a></dt>
 <dd><p>Merge two Collection protocols</p>
 <p>Merge two Colelction Protocols which are defined in src_cp and trg_cp together. To call this function the short titles of
 the source and target collection protocol has to be known. The merged Protocol is the one with short title tgtCpShortTitle,
@@ -195,11 +355,11 @@ has no specific formats.</p>
 
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.collection_protocol_util.collection_protocol_util.search_cps">
-<code class="sig-name descname">search_cps</code><span class="sig-paren">(</span><em class="sig-param">searchstring=None</em>, <em class="sig-param">title=None</em>, <em class="sig-param">piid=None</em>, <em class="sig-param">reponame=None</em>, <em class="sig-param">startat=None</em>, <em class="sig-param">maxresults=None</em>, <em class="sig-param">detailedlist=None</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.collection_protocol_util.collection_protocol_util.search_cps" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">search_cps</code><span class="sig-paren">(</span><em class="sig-param">searchstring=None</em>, <em class="sig-param">title=None</em>, <em class="sig-param">piid=None</em>, <em class="sig-param">reponame=None</em>, <em class="sig-param">startat=None</em>, <em class="sig-param">maxresults=None</em>, <em class="sig-param">detailedlist=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/collection_protocol_util.html#collection_protocol_util.search_cps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.collection_protocol_util.collection_protocol_util.search_cps" title="Permalink to this definition">¶</a></dt>
 <dd><p>Search for Colelction Protocols with specific values.</p>
 <p>Search for one or more Collection Protocols with the search_string defined. The search string looks like:
 http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/np/collection-protocols?{param_1}={value_1}&amp;…&amp;{param_x}={value_x}
-With the class collection_protocol_util from os_util and function ::search_cps:: the search string is generated
+With the class collection_protocol_util from os_util and function &lt;search_cps&gt; the search string is generated
 and this function is called. Not all keys from OpenSpecimen can be easily searched after.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -224,7 +384,7 @@ and this function is called. Not all keys from OpenSpecimen can be easily search
 
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.collection_protocol_util.collection_protocol_util.update_cp">
-<code class="sig-name descname">update_cp</code><span class="sig-paren">(</span><em class="sig-param">cpid</em>, <em class="sig-param">short_title=None</em>, <em class="sig-param">title=None</em>, <em class="sig-param">pi_mail=None</em>, <em class="sig-param">time_start=None</em>, <em class="sig-param">time_end=None</em>, <em class="sig-param">sites=None</em>, <em class="sig-param">man_id=False</em>, <em class="sig-param">coords=None</em>, <em class="sig-param">consentsWaived=None</em>, <em class="sig-param">eth_cons_id=None</em>, <em class="sig-param">part_no=None</em>, <em class="sig-param">desc_url=None</em>, <em class="sig-param">visitNameFmt=None</em>, <em class="sig-param">specimenLabelFmt=None</em>, <em class="sig-param">derivativeLabelFmt=None</em>, <em class="sig-param">man_visit_name=False</em>, <em class="sig-param">man_spec_label=True</em>, <em class="sig-param">aliquots_in_same=None</em>, <em class="sig-param">activity=None</em>, <em class="sig-param">aliquotLabelFmt=None</em>, <em class="sig-param">ppidFmt=None</em>, <em class="sig-param">specimenCentric=None</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.collection_protocol_util.collection_protocol_util.update_cp" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">update_cp</code><span class="sig-paren">(</span><em class="sig-param">cpid</em>, <em class="sig-param">short_title=None</em>, <em class="sig-param">title=None</em>, <em class="sig-param">pi_mail=None</em>, <em class="sig-param">time_start=None</em>, <em class="sig-param">time_end=None</em>, <em class="sig-param">sites=None</em>, <em class="sig-param">man_id=False</em>, <em class="sig-param">coords=None</em>, <em class="sig-param">consentsWaived=None</em>, <em class="sig-param">eth_cons_id=None</em>, <em class="sig-param">part_no=None</em>, <em class="sig-param">desc_url=None</em>, <em class="sig-param">visitNameFmt=None</em>, <em class="sig-param">specimenLabelFmt=None</em>, <em class="sig-param">derivativeLabelFmt=None</em>, <em class="sig-param">man_visit_name=False</em>, <em class="sig-param">man_spec_label=True</em>, <em class="sig-param">aliquots_in_same=None</em>, <em class="sig-param">activity=None</em>, <em class="sig-param">aliquotLabelFmt=None</em>, <em class="sig-param">ppidFmt=None</em>, <em class="sig-param">specimenCentric=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/collection_protocol_util.html#collection_protocol_util.update_cp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.collection_protocol_util.collection_protocol_util.update_cp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update a Collection protocol with the given Parameters.</p>
 <p>Update a collection protocol with the Parameters passed to the function. The Collection protocol ID
 cpid is mandatory.</p>
@@ -271,7 +431,7 @@ cpid is mandatory.</p>
 <span id="openspecimenapiconnector-os-util-cpevent-util-module"></span><h2>OpenSpecimenAPIconnector.os_util.cpevent_util module<a class="headerlink" href="#module-OpenSpecimenAPIconnector.os_util.cpevent_util" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="OpenSpecimenAPIconnector.os_util.cpevent_util.cpevent_util">
-<em class="property">class </em><code class="sig-prename descclassname">OpenSpecimenAPIconnector.os_util.cpevent_util.</code><code class="sig-name descname">cpevent_util</code><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.cpevent_util.cpevent_util" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">OpenSpecimenAPIconnector.os_util.cpevent_util.</code><code class="sig-name descname">cpevent_util</code><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/cpevent_util.html#cpevent_util"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.cpevent_util.cpevent_util" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Handles the Events of corresponding to a Collection Protocol</p>
 <p>This class allows you to handle the events in Openspecimen. One can create an event,
@@ -285,13 +445,11 @@ The API calls are documented in <a class="reference external" href="https://open
 the calls refer to this site. More details can be seen in the documentation.</p>
 </div>
 <p class="rubric">Examples</p>
-<p>A code Examples, where also events are handled is in the Jupyter-Notebook:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ jupyter notebook main.ipynb
-</pre></div>
-</div>
+<p>A code Examples, where also events are handled is in the Jupyter-Notebook</p>
+<p>$ jupyter notebook main.ipynb</p>
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.cpevent_util.cpevent_util.create_event">
-<code class="sig-name descname">create_event</code><span class="sig-paren">(</span><em class="sig-param">label</em>, <em class="sig-param">point</em>, <em class="sig-param">cp</em>, <em class="sig-param">site</em>, <em class="sig-param">diagnosis</em>, <em class="sig-param">status</em>, <em class="sig-param">activity</em>, <em class="sig-param">unit</em>, <em class="sig-param">code=None</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.cpevent_util.cpevent_util.create_event" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_event</code><span class="sig-paren">(</span><em class="sig-param">label</em>, <em class="sig-param">point</em>, <em class="sig-param">cp</em>, <em class="sig-param">site</em>, <em class="sig-param">diagnosis</em>, <em class="sig-param">status</em>, <em class="sig-param">activity</em>, <em class="sig-param">unit</em>, <em class="sig-param">code=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/cpevent_util.html#cpevent_util.create_event"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.cpevent_util.cpevent_util.create_event" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create an event for a given Collection Protocol.</p>
 <p>Create an event for a given Collection Protocol. Details of the parameters can be found in
 the parameters section.</p>
@@ -320,7 +478,7 @@ the parameters section.</p>
 
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.cpevent_util.cpevent_util.update_event">
-<code class="sig-name descname">update_event</code><span class="sig-paren">(</span><em class="sig-param">eventid</em>, <em class="sig-param">label=None</em>, <em class="sig-param">point=None</em>, <em class="sig-param">cp=None</em>, <em class="sig-param">site=None</em>, <em class="sig-param">diagnosis=None</em>, <em class="sig-param">status=None</em>, <em class="sig-param">activity=None</em>, <em class="sig-param">unit=None</em>, <em class="sig-param">code=None</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.cpevent_util.cpevent_util.update_event" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">update_event</code><span class="sig-paren">(</span><em class="sig-param">eventid</em>, <em class="sig-param">label=None</em>, <em class="sig-param">point=None</em>, <em class="sig-param">cp=None</em>, <em class="sig-param">site=None</em>, <em class="sig-param">diagnosis=None</em>, <em class="sig-param">status=None</em>, <em class="sig-param">activity=None</em>, <em class="sig-param">unit=None</em>, <em class="sig-param">code=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/cpevent_util.html#cpevent_util.update_event"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.cpevent_util.cpevent_util.update_event" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update an event for a given Collection Protocol.</p>
 <p>Update an event for a given Collection Protocol. To use this function one has to know the eventid,
 it can for Examples be seen in the URL, if one click on the event in the GUI. The URL looks like:
@@ -362,7 +520,7 @@ For Examples, one can extract the eventid with an event-key from OpenSpecimen, w
 <span id="openspecimenapiconnector-os-util-cpr-util-module"></span><h2>OpenSpecimenAPIconnector.os_util.cpr_util module<a class="headerlink" href="#module-OpenSpecimenAPIconnector.os_util.cpr_util" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="OpenSpecimenAPIconnector.os_util.cpr_util.cpr_util">
-<em class="property">class </em><code class="sig-prename descclassname">OpenSpecimenAPIconnector.os_util.cpr_util.</code><code class="sig-name descname">cpr_util</code><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.cpr_util.cpr_util" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">OpenSpecimenAPIconnector.os_util.cpr_util.</code><code class="sig-name descname">cpr_util</code><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/cpr_util.html#cpr_util"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.cpr_util.cpr_util" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Handles the API calls to registrate participants to a Collection Protocol</p>
 <p>Handles the OpenSpecimen API calls to registrate participants to an existing Collection Protocol.
@@ -381,11 +539,11 @@ the calls refer to this site. More details can be seen in the documentation.</p>
 </div></blockquote>
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.cpr_util.cpr_util.create_registration">
-<code class="sig-name descname">create_registration</code><span class="sig-paren">(</span><em class="sig-param">regdate</em>, <em class="sig-param">cpid=None</em>, <em class="sig-param">cptitle=None</em>, <em class="sig-param">cpshorttitle=None</em>, <em class="sig-param">ppid=None</em>, <em class="sig-param">firstname=None</em>, <em class="sig-param">middlename=None</em>, <em class="sig-param">lastname=None</em>, <em class="sig-param">uid=None</em>, <em class="sig-param">birthdate=None</em>, <em class="sig-param">vitalstatus=None</em>, <em class="sig-param">deathdate=None</em>, <em class="sig-param">gender=None</em>, <em class="sig-param">race=None</em>, <em class="sig-param">ethnicities=None</em>, <em class="sig-param">sexgenotype=None</em>, <em class="sig-param">pmis=None</em>, <em class="sig-param">mrn=None</em>, <em class="sig-param">sitename=None</em>, <em class="sig-param">empi=None</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.cpr_util.cpr_util.create_registration" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_registration</code><span class="sig-paren">(</span><em class="sig-param">regdate</em>, <em class="sig-param">cpid=None</em>, <em class="sig-param">cptitle=None</em>, <em class="sig-param">cpshorttitle=None</em>, <em class="sig-param">ppid=None</em>, <em class="sig-param">firstname=None</em>, <em class="sig-param">middlename=None</em>, <em class="sig-param">lastname=None</em>, <em class="sig-param">uid=None</em>, <em class="sig-param">birthdate=None</em>, <em class="sig-param">vitalstatus=None</em>, <em class="sig-param">deathdate=None</em>, <em class="sig-param">gender=None</em>, <em class="sig-param">race=None</em>, <em class="sig-param">ethnicities=None</em>, <em class="sig-param">sexgenotype=None</em>, <em class="sig-param">pmis=None</em>, <em class="sig-param">mrn=None</em>, <em class="sig-param">sitename=None</em>, <em class="sig-param">empi=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/cpr_util.html#cpr_util.create_registration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.cpr_util.cpr_util.create_registration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Register a participant to a Collection Protocol.</p>
 <p>This function can create a new participant to an already existing Collection Protocol. To use this function one
-has to known either the Collection Protocoll id ::cpId::,the title of the Collection Protocol ::cpTitle:: or
-the short title of the Collection Protocol ::cpshorttitle:: .
+has to known either the Collection Protocoll id &lt;cpId&gt;,the title of the Collection Protocol &lt;cpTitle&gt; or
+the short title of the Collection Protocol &lt;cpshorttitle&gt; .
 Those values can be seen via GUI, extracted from the responses with the class collection_protocol in os_core or
 collection_protocol_util in os_util.</p>
 <div class="admonition note">
@@ -434,7 +592,7 @@ XXYY syndrome, Mosaic including XXXXY, Penta X syndrome}</p></li>
 
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.cpr_util.cpr_util.get_participants">
-<code class="sig-name descname">get_participants</code><span class="sig-paren">(</span><em class="sig-param">lastname=None</em>, <em class="sig-param">uid=None</em>, <em class="sig-param">birthdate=None</em>, <em class="sig-param">pmi=None</em>, <em class="sig-param">empi=None</em>, <em class="sig-param">reqreginfo=None</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.cpr_util.cpr_util.get_participants" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_participants</code><span class="sig-paren">(</span><em class="sig-param">lastname=None</em>, <em class="sig-param">uid=None</em>, <em class="sig-param">birthdate=None</em>, <em class="sig-param">pmi=None</em>, <em class="sig-param">empi=None</em>, <em class="sig-param">reqreginfo=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/cpr_util.html#cpr_util.get_participants"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.cpr_util.cpr_util.get_participants" title="Permalink to this definition">¶</a></dt>
 <dd><p>Search for one or more participants</p>
 <p>Get the details of one or more participants, which are sepecified with the parameters from the function.
 The parameters are optional and if its all empty 100 participants will get returned, default order is with PPID.
@@ -466,7 +624,7 @@ This function should be used before creating a participant to see if a participa
 
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.cpr_util.cpr_util.get_registrations">
-<code class="sig-name descname">get_registrations</code><span class="sig-paren">(</span><em class="sig-param">cpid=None</em>, <em class="sig-param">registrationdate=None</em>, <em class="sig-param">ppid=None</em>, <em class="sig-param">name=None</em>, <em class="sig-param">birthdate=None</em>, <em class="sig-param">uid=None</em>, <em class="sig-param">specimen=None</em>, <em class="sig-param">includestats=None</em>, <em class="sig-param">startat=None</em>, <em class="sig-param">maxresults=None</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.cpr_util.cpr_util.get_registrations" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_registrations</code><span class="sig-paren">(</span><em class="sig-param">cpid=None</em>, <em class="sig-param">registrationdate=None</em>, <em class="sig-param">ppid=None</em>, <em class="sig-param">name=None</em>, <em class="sig-param">birthdate=None</em>, <em class="sig-param">uid=None</em>, <em class="sig-param">specimen=None</em>, <em class="sig-param">includestats=None</em>, <em class="sig-param">startat=None</em>, <em class="sig-param">maxresults=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/cpr_util.html#cpr_util.get_registrations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.cpr_util.cpr_util.get_registrations" title="Permalink to this definition">¶</a></dt>
 <dd><p>Search for one or more participants</p>
 <p>Get the details of one or more participants, which are sepecified with the parameters from the function.
 The parameters are optional and if its all empty 100 participants will get returned, default order is with PPID.</p>
@@ -496,7 +654,7 @@ The parameters are optional and if its all empty 100 participants will get retur
 
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.cpr_util.cpr_util.register_to_cp">
-<code class="sig-name descname">register_to_cp</code><span class="sig-paren">(</span><em class="sig-param">cprid</em>, <em class="sig-param">regdate</em>, <em class="sig-param">cpid</em>, <em class="sig-param">ppid</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.cpr_util.cpr_util.register_to_cp" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">register_to_cp</code><span class="sig-paren">(</span><em class="sig-param">cprid</em>, <em class="sig-param">regdate</em>, <em class="sig-param">cpid</em>, <em class="sig-param">ppid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/cpr_util.html#cpr_util.register_to_cp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.cpr_util.cpr_util.register_to_cp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Register a Participant to another protocol</p>
 <p>Register an existing Participant to another Collection protocol.</p>
 <dl class="field-list simple">
@@ -520,11 +678,11 @@ This is a protocol setting.</p></li>
 
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.cpr_util.cpr_util.update_registration">
-<code class="sig-name descname">update_registration</code><span class="sig-paren">(</span><em class="sig-param">regdate</em>, <em class="sig-param">cprid</em>, <em class="sig-param">id_</em>, <em class="sig-param">cpid=None</em>, <em class="sig-param">cptitle=None</em>, <em class="sig-param">cpshorttitle=None</em>, <em class="sig-param">ppid=None</em>, <em class="sig-param">firstname=None</em>, <em class="sig-param">middlename=None</em>, <em class="sig-param">lastname=None</em>, <em class="sig-param">uid=None</em>, <em class="sig-param">birthdate=None</em>, <em class="sig-param">vitalstatus=None</em>, <em class="sig-param">deathdate=None</em>, <em class="sig-param">gender=None</em>, <em class="sig-param">race=None</em>, <em class="sig-param">ethnicities=None</em>, <em class="sig-param">sexgenotype=None</em>, <em class="sig-param">pmis=None</em>, <em class="sig-param">mrn=None</em>, <em class="sig-param">sitename=None</em>, <em class="sig-param">empi=None</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.cpr_util.cpr_util.update_registration" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">update_registration</code><span class="sig-paren">(</span><em class="sig-param">regdate</em>, <em class="sig-param">cprid</em>, <em class="sig-param">id_</em>, <em class="sig-param">cpid=None</em>, <em class="sig-param">cptitle=None</em>, <em class="sig-param">cpshorttitle=None</em>, <em class="sig-param">ppid=None</em>, <em class="sig-param">firstname=None</em>, <em class="sig-param">middlename=None</em>, <em class="sig-param">lastname=None</em>, <em class="sig-param">uid=None</em>, <em class="sig-param">birthdate=None</em>, <em class="sig-param">vitalstatus=None</em>, <em class="sig-param">deathdate=None</em>, <em class="sig-param">gender=None</em>, <em class="sig-param">race=None</em>, <em class="sig-param">ethnicities=None</em>, <em class="sig-param">sexgenotype=None</em>, <em class="sig-param">pmis=None</em>, <em class="sig-param">mrn=None</em>, <em class="sig-param">sitename=None</em>, <em class="sig-param">empi=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/cpr_util.html#cpr_util.update_registration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.cpr_util.cpr_util.update_registration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Register a Participant to a Collection Protocol.</p>
 <p>This function can create a new participant to an already existing Collection Protocol. To use this function one
-has to know either the Collection Protocoll id ::cpId::,the title of the Collection Protocol ::cpTitle:: or
-the short title of the Collection Protocol ::cpshorttitle:: .
+has to know either the Collection Protocoll id &lt;cpId&gt;,the title of the Collection Protocol &lt;cpTitle&gt; or
+the short title of the Collection Protocol &lt;cpshorttitle&gt; .
 Those values can be seen via GUI, extracted from the responses with the class collection_protocol in os_core or
 collection_protocol_util in os_util.  For updating a participant the cprid has to be known. This can be seen via GUI
 or with searching the participant first.</p>
@@ -580,7 +738,7 @@ XXYY syndrome, Mosaic including XXXXY, Penta X syndrome}</p></li>
 <span id="openspecimenapiconnector-os-util-csv-exp-util-module"></span><h2>OpenSpecimenAPIconnector.os_util.csv_exp_util module<a class="headerlink" href="#module-OpenSpecimenAPIconnector.os_util.csv_exp_util" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="OpenSpecimenAPIconnector.os_util.csv_exp_util.csv_exporter">
-<em class="property">class </em><code class="sig-prename descclassname">OpenSpecimenAPIconnector.os_util.csv_exp_util.</code><code class="sig-name descname">csv_exporter</code><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.csv_exp_util.csv_exporter" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">OpenSpecimenAPIconnector.os_util.csv_exp_util.</code><code class="sig-name descname">csv_exporter</code><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/csv_exp_util.html#csv_exporter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.csv_exp_util.csv_exporter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Handles the export of CSV files from open specimen for different entities like collection protocols, specimens etc etc.</p>
 <p>This class handles the CSV export of various different entities and creates CSV files of the requested entities like collection protocols, institutes etc.
@@ -595,7 +753,7 @@ XXYY syndrome, Mosaic including XXXXY, Penta X syndrome}</p></li>
 <p>$ jupyter notebook main.ipynb</p>
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.csv_exp_util.csv_exporter.csv_export">
-<code class="sig-name descname">csv_export</code><span class="sig-paren">(</span><em class="sig-param">objecttype</em>, <em class="sig-param">recordids=None</em>, <em class="sig-param">cpid=None</em>, <em class="sig-param">ppids=None</em>, <em class="sig-param">entitytype=None</em>, <em class="sig-param">formname=None</em>, <em class="sig-param">specimenlabels=None</em>, <em class="sig-param">csv=False</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.csv_exp_util.csv_exporter.csv_export" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">csv_export</code><span class="sig-paren">(</span><em class="sig-param">objecttype</em>, <em class="sig-param">recordids=None</em>, <em class="sig-param">cpid=None</em>, <em class="sig-param">ppids=None</em>, <em class="sig-param">entitytype=None</em>, <em class="sig-param">formname=None</em>, <em class="sig-param">specimenlabels=None</em>, <em class="sig-param">csv=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/csv_exp_util.html#csv_exporter.csv_export"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.csv_exp_util.csv_exporter.csv_export" title="Permalink to this definition">¶</a></dt>
 <dd><p>Export CV for entity collection protocol</p>
 <p>Export function for collection protocols</p>
 <dl class="field-list simple">
@@ -630,7 +788,7 @@ used with the extension object type</p></li>
 <span id="openspecimenapiconnector-os-util-institute-util-module"></span><h2>OpenSpecimenAPIconnector.os_util.institute_util module<a class="headerlink" href="#module-OpenSpecimenAPIconnector.os_util.institute_util" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="OpenSpecimenAPIconnector.os_util.institute_util.institutes_util">
-<em class="property">class </em><code class="sig-prename descclassname">OpenSpecimenAPIconnector.os_util.institute_util.</code><code class="sig-name descname">institutes_util</code><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.institute_util.institutes_util" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">OpenSpecimenAPIconnector.os_util.institute_util.</code><code class="sig-name descname">institutes_util</code><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/institute_util.html#institutes_util"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.institute_util.institutes_util" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Handles the API calls for the institutes</p>
 <p>Handles the OpenSpecimen API calls for the institutes. This class can
@@ -648,7 +806,7 @@ the calls refer to this site. More details can be seen in the documentation.</p>
 </div></blockquote>
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.institute_util.institutes_util.create_institute">
-<code class="sig-name descname">create_institute</code><span class="sig-paren">(</span><em class="sig-param">institutename</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.institute_util.institutes_util.create_institute" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_institute</code><span class="sig-paren">(</span><em class="sig-param">institutename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/institute_util.html#institutes_util.create_institute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.institute_util.institutes_util.create_institute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates an Institute.</p>
 <p>Creates an Institute in OpenSpecimen.</p>
 <dl class="field-list simple">
@@ -665,7 +823,7 @@ the calls refer to this site. More details can be seen in the documentation.</p>
 <span id="openspecimenapiconnector-os-util-query-util-module"></span><h2>OpenSpecimenAPIconnector.os_util.query_util module<a class="headerlink" href="#module-OpenSpecimenAPIconnector.os_util.query_util" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="OpenSpecimenAPIconnector.os_util.query_util.query_util">
-<em class="property">class </em><code class="sig-prename descclassname">OpenSpecimenAPIconnector.os_util.query_util.</code><code class="sig-name descname">query_util</code><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.query_util.query_util" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">OpenSpecimenAPIconnector.os_util.query_util.</code><code class="sig-name descname">query_util</code><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/query_util.html#query_util"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.query_util.query_util" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Handles the API calls for the queries</p>
 <p>Handles the OpenSpecimen API calls for the queries. This class can
@@ -683,7 +841,7 @@ the calls refer to this site. More details can be seen in the documentation.</p>
 </div></blockquote>
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.query_util.query_util.create_aql">
-<code class="sig-name descname">create_aql</code><span class="sig-paren">(</span><em class="sig-param">cpid</em>, <em class="sig-param">aql</em>, <em class="sig-param">rowmode='OFF'</em>, <em class="sig-param">columnexpr='true'</em>, <em class="sig-param">isodate='true'</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.query_util.query_util.create_aql" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_aql</code><span class="sig-paren">(</span><em class="sig-param">cpid</em>, <em class="sig-param">aql</em>, <em class="sig-param">rowmode='OFF'</em>, <em class="sig-param">columnexpr='true'</em>, <em class="sig-param">isodate='true'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/query_util.html#query_util.create_aql"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.query_util.query_util.create_aql" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a Query in OpenSpecimen</p>
 <p>Creates a Query which is stored in the Queries in OpenSpecimen. The query language
 can be extracted from the OpenSpecimen GUI query generator.</p>
@@ -708,9 +866,9 @@ can be extracted from the OpenSpecimen GUI query generator.</p>
 
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.query_util.query_util.execute_query">
-<code class="sig-name descname">execute_query</code><span class="sig-paren">(</span><em class="sig-param">qryid</em>, <em class="sig-param">start='0'</em>, <em class="sig-param">results='100'</em>, <em class="sig-param">rowmode='OFF'</em>, <em class="sig-param">drivingform='Participant'</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.query_util.query_util.execute_query" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">execute_query</code><span class="sig-paren">(</span><em class="sig-param">qryid</em>, <em class="sig-param">start='0'</em>, <em class="sig-param">results='100'</em>, <em class="sig-param">rowmode='OFF'</em>, <em class="sig-param">drivingform='Participant'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/query_util.html#query_util.execute_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.query_util.query_util.execute_query" title="Permalink to this definition">¶</a></dt>
 <dd><p>Execute a saved Query.</p>
-<p>Execute an already existing Query with the OpenSpecimen’s unique Query ID ::qryid:: .
+<p>Execute an already existing Query with the OpenSpecimen’s unique Query ID &lt;qryid&gt; .
 The query ID can be seen via clicking on the Queries in OpenSpecimen and it is the
 number after # in the title.</p>
 <dl class="field-list simple">
@@ -734,7 +892,7 @@ number after # in the title.</p>
 
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.query_util.query_util.search_query">
-<code class="sig-name descname">search_query</code><span class="sig-paren">(</span><em class="sig-param">cpid=None</em>, <em class="sig-param">searchstring=None</em>, <em class="sig-param">start=None</em>, <em class="sig-param">max_=None</em>, <em class="sig-param">countreq=None</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.query_util.query_util.search_query" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">search_query</code><span class="sig-paren">(</span><em class="sig-param">cpid=None</em>, <em class="sig-param">searchstring=None</em>, <em class="sig-param">start=None</em>, <em class="sig-param">max_=None</em>, <em class="sig-param">countreq=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/query_util.html#query_util.search_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.query_util.query_util.search_query" title="Permalink to this definition">¶</a></dt>
 <dd><p>Search for list of queries with specific suburl.</p>
 <p>Search for one or more queries with the parameters in the suburl defined. The search URL looks like:
 http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/np/saved-queries?{param_1}={value_1}&amp;…&amp;{param_x}={value_x}</p>
@@ -764,7 +922,7 @@ http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/np/saved-queries?{param_1}
 <span id="openspecimenapiconnector-os-util-site-util-module"></span><h2>OpenSpecimenAPIconnector.os_util.site_util module<a class="headerlink" href="#module-OpenSpecimenAPIconnector.os_util.site_util" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="OpenSpecimenAPIconnector.os_util.site_util.site_util">
-<em class="property">class </em><code class="sig-prename descclassname">OpenSpecimenAPIconnector.os_util.site_util.</code><code class="sig-name descname">site_util</code><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.site_util.site_util" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">OpenSpecimenAPIconnector.os_util.site_util.</code><code class="sig-name descname">site_util</code><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/site_util.html#site_util"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.site_util.site_util" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Handles the calls for sites</p>
 <p>This class handles the API calls for OpenSpecimen Sites. It can create, update and search
@@ -777,12 +935,12 @@ the calls refer to this site. More details can be seen in the documentation.</p>
 </div>
 <p class="rubric">Examples</p>
 <dl class="simple">
-<dt>A code Examples, where the collection protocols are handled is in the Jupyter-Notebook::</dt><dd><p>$ jupyter notebook main.ipynb</p>
+<dt>A code Examples, where the collection protocols are handled is in the Jupyter-Notebook</dt><dd><p>$ jupyter notebook main.ipynb</p>
 </dd>
 </dl>
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.site_util.site_util.create_sites">
-<code class="sig-name descname">create_sites</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">institutename</em>, <em class="sig-param">type_</em>, <em class="sig-param">coordinators=None</em>, <em class="sig-param">address=None</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.site_util.site_util.create_sites" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_sites</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">institutename</em>, <em class="sig-param">type_</em>, <em class="sig-param">coordinators=None</em>, <em class="sig-param">address=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/site_util.html#site_util.create_sites"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.site_util.site_util.create_sites" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a site in OpenSpecimen</p>
 <p>Create a site in OpenSpecimen with an API call.</p>
 <dl class="field-list simple">
@@ -806,7 +964,7 @@ the calls refer to this site. More details can be seen in the documentation.</p>
 
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.site_util.site_util.search_sites">
-<code class="sig-name descname">search_sites</code><span class="sig-paren">(</span><em class="sig-param">sitename=None</em>, <em class="sig-param">institutename=None</em>, <em class="sig-param">maxresults=100</em>, <em class="sig-param">siteExtension=True</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.site_util.site_util.search_sites" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">search_sites</code><span class="sig-paren">(</span><em class="sig-param">sitename=None</em>, <em class="sig-param">institutename=None</em>, <em class="sig-param">maxresults=100</em>, <em class="sig-param">siteExtension=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/site_util.html#site_util.search_sites"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.site_util.site_util.search_sites" title="Permalink to this definition">¶</a></dt>
 <dd><p>Search for Sites with specific values.</p>
 <p>Search for one or more sites with the values in search_string defined. The search string looks like:
 http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/np/sites?{param_1}={value_1}&amp;…&amp;{param_x}={value_x}
@@ -831,7 +989,7 @@ This string gets generated here. If siteExtension is true, the detailed site par
 
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.site_util.site_util.update_sites">
-<code class="sig-name descname">update_sites</code><span class="sig-paren">(</span><em class="sig-param">siteid</em>, <em class="sig-param">name=None</em>, <em class="sig-param">institutename=None</em>, <em class="sig-param">type_=None</em>, <em class="sig-param">coordinators=None</em>, <em class="sig-param">address=None</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.site_util.site_util.update_sites" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">update_sites</code><span class="sig-paren">(</span><em class="sig-param">siteid</em>, <em class="sig-param">name=None</em>, <em class="sig-param">institutename=None</em>, <em class="sig-param">type_=None</em>, <em class="sig-param">coordinators=None</em>, <em class="sig-param">address=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/site_util.html#site_util.update_sites"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.site_util.site_util.update_sites" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update a site in OpenSpecimen</p>
 <p>Update a site in OpenSpecimen with an API call. In order to update a site one has to know
 the ID of the site which can be seen in the GUI, by clicking on the site, the URL looks like:
@@ -864,7 +1022,7 @@ for Examples, by name with the function search_sites and then the ID can be extr
 <span id="openspecimenapiconnector-os-util-specimen-util-module"></span><h2>OpenSpecimenAPIconnector.os_util.specimen_util module<a class="headerlink" href="#module-OpenSpecimenAPIconnector.os_util.specimen_util" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="OpenSpecimenAPIconnector.os_util.specimen_util.specimen_util">
-<em class="property">class </em><code class="sig-prename descclassname">OpenSpecimenAPIconnector.os_util.specimen_util.</code><code class="sig-name descname">specimen_util</code><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.specimen_util.specimen_util" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">OpenSpecimenAPIconnector.os_util.specimen_util.</code><code class="sig-name descname">specimen_util</code><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/specimen_util.html#specimen_util"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.specimen_util.specimen_util" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Handles the calls for Specimens</p>
 <p>This class handles the API calls for OpenSpecimen Specimens. It can create, update, delete,
@@ -879,12 +1037,12 @@ the calls refer to this site. More details can be seen in the documentation.</p>
 </div>
 <p class="rubric">Examples</p>
 <dl class="simple">
-<dt>A code Examples, where the Specimens/Derivatives/Aliquots are handled is in the Jupyter-Notebook::</dt><dd><p>$ jupyter notebook main.ipynb</p>
+<dt>A code Examples, where the Specimens/Derivatives/Aliquots are handled is in the Jupyter-Notebook</dt><dd><p>$ jupyter notebook main.ipynb</p>
 </dd>
 </dl>
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.specimen_util.specimen_util.create_specimen">
-<code class="sig-name descname">create_specimen</code><span class="sig-paren">(</span><em class="sig-param">specimenclass</em>, <em class="sig-param">specimentype</em>, <em class="sig-param">pathology</em>, <em class="sig-param">anatomic</em>, <em class="sig-param">laterality</em>, <em class="sig-param">initqty</em>, <em class="sig-param">avaqty</em>, <em class="sig-param">visitid</em>, <em class="sig-param">recqlt</em>, <em class="sig-param">userid</em>, <em class="sig-param">colltime=None</em>, <em class="sig-param">rectime=None</em>, <em class="sig-param">lineage='New'</em>, <em class="sig-param">status='Collected'</em>, <em class="sig-param">stor_name=None</em>, <em class="sig-param">storlocx=None</em>, <em class="sig-param">storlocy=None</em>, <em class="sig-param">concetration=None</em>, <em class="sig-param">biohazard=None</em>, <em class="sig-param">comments=None</em>, <em class="sig-param">collproc=None</em>, <em class="sig-param">label=None</em>, <em class="sig-param">conttype=None</em>, <em class="sig-param">extensionudn=None</em>, <em class="sig-param">extensionmap=None</em>, <em class="sig-param">extensiondict=None</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.specimen_util.specimen_util.create_specimen" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_specimen</code><span class="sig-paren">(</span><em class="sig-param">specimenclass</em>, <em class="sig-param">specimentype</em>, <em class="sig-param">pathology</em>, <em class="sig-param">anatomic</em>, <em class="sig-param">laterality</em>, <em class="sig-param">initqty</em>, <em class="sig-param">avaqty</em>, <em class="sig-param">visitid</em>, <em class="sig-param">recqlt</em>, <em class="sig-param">userid</em>, <em class="sig-param">colltime=None</em>, <em class="sig-param">rectime=None</em>, <em class="sig-param">lineage='New'</em>, <em class="sig-param">status='Collected'</em>, <em class="sig-param">stor_name=None</em>, <em class="sig-param">storlocx=None</em>, <em class="sig-param">storlocy=None</em>, <em class="sig-param">concetration=None</em>, <em class="sig-param">biohazard=None</em>, <em class="sig-param">comments=None</em>, <em class="sig-param">collproc=None</em>, <em class="sig-param">label=None</em>, <em class="sig-param">conttype=None</em>, <em class="sig-param">extensionudn=None</em>, <em class="sig-param">extensionmap=None</em>, <em class="sig-param">extensiondict=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/specimen_util.html#specimen_util.create_specimen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.specimen_util.specimen_util.create_specimen" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a Specimen to a visit</p>
 <p>Create a Specimen to an already existing Visit. In order to use this function one has to know,
 the mandatory details of the specimen e.g. the class of the Specimen.</p>
@@ -935,9 +1093,9 @@ it has to be left empty.</p>
 
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.specimen_util.specimen_util.delete_specimens">
-<code class="sig-name descname">delete_specimens</code><span class="sig-paren">(</span><em class="sig-param">specimenids</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.specimen_util.specimen_util.delete_specimens" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">delete_specimens</code><span class="sig-paren">(</span><em class="sig-param">specimenids</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/specimen_util.html#specimen_util.delete_specimens"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.specimen_util.specimen_util.delete_specimens" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete a Specimen/Derivative/Aliquot</p>
-<p>Delete an already existing Specimen/Derivative/Aliquot. The Parameters ::specimenid:: is the uniqe ID of the Specimen/
+<p>Delete an already existing Specimen/Derivative/Aliquot. The Parameters &lt;specimenid&gt; is the uniqe ID of the Specimen/
 Derivative/Aliquot which is generated automatically from OpenSpecimen. To get the ID one can click in the GUI on the
 Specimen/Derivative/Aliquot and read it from the URL, with format:
 http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/cp-view/{cpid}/specimen/{specimenid}/… .
@@ -959,7 +1117,7 @@ The URL of the specimens, which should be deleted, has the form “?id=specimeni
 
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.specimen_util.specimen_util.search_specimens">
-<code class="sig-name descname">search_specimens</code><span class="sig-paren">(</span><em class="sig-param">label=None</em>, <em class="sig-param">cprid=None</em>, <em class="sig-param">eventid=None</em>, <em class="sig-param">visitid=None</em>, <em class="sig-param">maxres='100'</em>, <em class="sig-param">exact='false'</em>, <em class="sig-param">extension='true'</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.specimen_util.specimen_util.search_specimens" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">search_specimens</code><span class="sig-paren">(</span><em class="sig-param">label=None</em>, <em class="sig-param">cprid=None</em>, <em class="sig-param">eventid=None</em>, <em class="sig-param">visitid=None</em>, <em class="sig-param">maxres='100'</em>, <em class="sig-param">exact='false'</em>, <em class="sig-param">extension='true'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/specimen_util.html#specimen_util.search_specimens"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.specimen_util.specimen_util.search_specimens" title="Permalink to this definition">¶</a></dt>
 <dd><p>Search for Specimen with specific values.</p>
 <p>Search for one or more Specimens with the values in the search_string defined. The search string looks like:
 http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/np/specimens?{param_1}={value_1}&amp;…&amp;{param_x}={value_x}</p>
@@ -986,7 +1144,7 @@ http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/np/specimens?{param_1}={va
 
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.specimen_util.specimen_util.update_specimen">
-<code class="sig-name descname">update_specimen</code><span class="sig-paren">(</span><em class="sig-param">specimenid</em>, <em class="sig-param">label=None</em>, <em class="sig-param">specimenclass=None</em>, <em class="sig-param">specimentype=None</em>, <em class="sig-param">pathology=None</em>, <em class="sig-param">anatomic=None</em>, <em class="sig-param">laterality=None</em>, <em class="sig-param">initqty=None</em>, <em class="sig-param">avaqty=None</em>, <em class="sig-param">visitid=None</em>, <em class="sig-param">recqlt=None</em>, <em class="sig-param">colltime=None</em>, <em class="sig-param">rectime=None</em>, <em class="sig-param">lineage='New'</em>, <em class="sig-param">status='Collected'</em>, <em class="sig-param">stor_name=None</em>, <em class="sig-param">storlocx=None</em>, <em class="sig-param">storlocy=None</em>, <em class="sig-param">concetration=None</em>, <em class="sig-param">biohazard=None</em>, <em class="sig-param">userid=None</em>, <em class="sig-param">comments=None</em>, <em class="sig-param">collproc=None</em>, <em class="sig-param">conttype=None</em>, <em class="sig-param">extensionudn=None</em>, <em class="sig-param">extensionmap=None</em>, <em class="sig-param">extensiondict=None</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.specimen_util.specimen_util.update_specimen" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">update_specimen</code><span class="sig-paren">(</span><em class="sig-param">specimenid</em>, <em class="sig-param">label=None</em>, <em class="sig-param">specimenclass=None</em>, <em class="sig-param">specimentype=None</em>, <em class="sig-param">pathology=None</em>, <em class="sig-param">anatomic=None</em>, <em class="sig-param">laterality=None</em>, <em class="sig-param">initqty=None</em>, <em class="sig-param">avaqty=None</em>, <em class="sig-param">visitid=None</em>, <em class="sig-param">recqlt=None</em>, <em class="sig-param">colltime=None</em>, <em class="sig-param">rectime=None</em>, <em class="sig-param">lineage='New'</em>, <em class="sig-param">status='Collected'</em>, <em class="sig-param">stor_name=None</em>, <em class="sig-param">storlocx=None</em>, <em class="sig-param">storlocy=None</em>, <em class="sig-param">concetration=None</em>, <em class="sig-param">biohazard=None</em>, <em class="sig-param">userid=None</em>, <em class="sig-param">comments=None</em>, <em class="sig-param">collproc=None</em>, <em class="sig-param">conttype=None</em>, <em class="sig-param">extensionudn=None</em>, <em class="sig-param">extensionmap=None</em>, <em class="sig-param">extensiondict=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/specimen_util.html#specimen_util.update_specimen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.specimen_util.specimen_util.update_specimen" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update an existing Specimen</p>
 <p>Update an existing Specimen in order to use this function one has to know the specimenid. This can be seen via the GUI
 by clicking on the desired specimen, and read from the URL: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/cps/{cpid}/specimens/{specimenid}/… .
@@ -1043,11 +1201,11 @@ Or via search Specimen, for Examples by name and then extract the ID via key [�
 <span id="openspecimenapiconnector-os-util-users-util-module"></span><h2>OpenSpecimenAPIconnector.os_util.users_util module<a class="headerlink" href="#module-OpenSpecimenAPIconnector.os_util.users_util" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="OpenSpecimenAPIconnector.os_util.users_util.user_util">
-<em class="property">class </em><code class="sig-prename descclassname">OpenSpecimenAPIconnector.os_util.users_util.</code><code class="sig-name descname">user_util</code><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.users_util.user_util" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">OpenSpecimenAPIconnector.os_util.users_util.</code><code class="sig-name descname">user_util</code><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/users_util.html#user_util"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.users_util.user_util" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.users_util.user_util.assign_role">
-<code class="sig-name descname">assign_role</code><span class="sig-paren">(</span><em class="sig-param">userid</em>, <em class="sig-param">siteid</em>, <em class="sig-param">cpid</em>, <em class="sig-param">role</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.users_util.user_util.assign_role" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">assign_role</code><span class="sig-paren">(</span><em class="sig-param">userid</em>, <em class="sig-param">siteid</em>, <em class="sig-param">cpid</em>, <em class="sig-param">role</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/users_util.html#user_util.assign_role"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.users_util.user_util.assign_role" title="Permalink to this definition">¶</a></dt>
 <dd><p>Assign a role to a user</p>
 <p>Assign a role to a user with ID {userid} in OpenSpecimen. To use this function one has to know the ID of
 the user, the site, the collection protocol and the name of the role. The user Id can be seen in the
@@ -1074,7 +1232,7 @@ Or with the function get_all_users and then extract the ID to the wanted user.</
 
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.users_util.user_util.change_password">
-<code class="sig-name descname">change_password</code><span class="sig-paren">(</span><em class="sig-param">userid</em>, <em class="sig-param">newpw</em>, <em class="sig-param">oldpw=None</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.users_util.user_util.change_password" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">change_password</code><span class="sig-paren">(</span><em class="sig-param">userid</em>, <em class="sig-param">newpw</em>, <em class="sig-param">oldpw=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/users_util.html#user_util.change_password"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.users_util.user_util.change_password" title="Permalink to this definition">¶</a></dt>
 <dd><p>Change the password of a user</p>
 <p>Change the Password of a user. If the API-User is Superadmin, the parameters are userid, newpassword.
 If the User isn’t the Superadmin, nor the Superadmin changes his own password the parameters are userid,
@@ -1103,7 +1261,7 @@ the Superadmin changes his password.</p></li>
 
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.users_util.user_util.create_user">
-<code class="sig-name descname">create_user</code><span class="sig-paren">(</span><em class="sig-param">first</em>, <em class="sig-param">last</em>, <em class="sig-param">email</em>, <em class="sig-param">login</em>, <em class="sig-param">institute</em>, <em class="sig-param">type_</em>, <em class="sig-param">phone=None</em>, <em class="sig-param">address=None</em>, <em class="sig-param">domain='openSpecimen'</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.users_util.user_util.create_user" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_user</code><span class="sig-paren">(</span><em class="sig-param">first</em>, <em class="sig-param">last</em>, <em class="sig-param">email</em>, <em class="sig-param">login</em>, <em class="sig-param">institute</em>, <em class="sig-param">type_</em>, <em class="sig-param">phone=None</em>, <em class="sig-param">address=None</em>, <em class="sig-param">domain='openSpecimen'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/users_util.html#user_util.create_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.users_util.user_util.create_user" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a user</p>
 <p>Create a User in OpenSpecimen. This function parses the input to a dict,
 what OpenSpecimen can understand.</p>
@@ -1132,7 +1290,7 @@ what OpenSpecimen can understand.</p>
 
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.users_util.user_util.update_user">
-<code class="sig-name descname">update_user</code><span class="sig-paren">(</span><em class="sig-param">userid</em>, <em class="sig-param">first</em>, <em class="sig-param">last</em>, <em class="sig-param">email</em>, <em class="sig-param">login</em>, <em class="sig-param">institute</em>, <em class="sig-param">phone=None</em>, <em class="sig-param">type_=None</em>, <em class="sig-param">address=None</em>, <em class="sig-param">domain='openspecimen'</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.users_util.user_util.update_user" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">update_user</code><span class="sig-paren">(</span><em class="sig-param">userid</em>, <em class="sig-param">first</em>, <em class="sig-param">last</em>, <em class="sig-param">email</em>, <em class="sig-param">login</em>, <em class="sig-param">institute</em>, <em class="sig-param">phone=None</em>, <em class="sig-param">type_=None</em>, <em class="sig-param">address=None</em>, <em class="sig-param">domain='openspecimen'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/users_util.html#user_util.update_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.users_util.user_util.update_user" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update a user</p>
 <p>Update a User in OpenSpecimen. To use this function one has to know the ID of the user.
 This can be seen in the GUI if one clicks on the user and reads from the URL which has
@@ -1175,7 +1333,7 @@ to the function, they stay the same.</p>
 <span id="openspecimenapiconnector-os-util-visit-util-module"></span><h2>OpenSpecimenAPIconnector.os_util.visit_util module<a class="headerlink" href="#module-OpenSpecimenAPIconnector.os_util.visit_util" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="OpenSpecimenAPIconnector.os_util.visit_util.visit_util">
-<em class="property">class </em><code class="sig-prename descclassname">OpenSpecimenAPIconnector.os_util.visit_util.</code><code class="sig-name descname">visit_util</code><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.visit_util.visit_util" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">OpenSpecimenAPIconnector.os_util.visit_util.</code><code class="sig-name descname">visit_util</code><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/visit_util.html#visit_util"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.visit_util.visit_util" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Handles the API calls for Visits</p>
 <p>This class handles the API calls for OpenSpecimen Visits. It can create, update,
@@ -1189,12 +1347,12 @@ the calls refer to this site. More details can be seen in the documentation.</p>
 </div>
 <p class="rubric">Examples</p>
 <dl class="simple">
-<dt>A code Examples, where the visits are handled is in the Jupyter-Notebook::</dt><dd><p>$ jupyter notebook main.ipynb</p>
+<dt>A code Examples, where the visits are handled is in the Jupyter-Notebook</dt><dd><p>$ jupyter notebook main.ipynb</p>
 </dd>
 </dl>
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.visit_util.visit_util.add_visit">
-<code class="sig-name descname">add_visit</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">site</em>, <em class="sig-param">eventid=None</em>, <em class="sig-param">eventlabel=None</em>, <em class="sig-param">cprid=None</em>, <em class="sig-param">ppid=None</em>, <em class="sig-param">cptitle=None</em>, <em class="sig-param">cpshorttitle=None</em>, <em class="sig-param">cpid=None</em>, <em class="sig-param">diagnosis=None</em>, <em class="sig-param">clinicalstatus=None</em>, <em class="sig-param">activity=None</em>, <em class="sig-param">visitstatus='Complete'</em>, <em class="sig-param">missedreason=None</em>, <em class="sig-param">missedby=None</em>, <em class="sig-param">comments=None</em>, <em class="sig-param">pathologynumber=None</em>, <em class="sig-param">cohort=None</em>, <em class="sig-param">visitdate=None</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.visit_util.visit_util.add_visit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_visit</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">site</em>, <em class="sig-param">eventid=None</em>, <em class="sig-param">eventlabel=None</em>, <em class="sig-param">cprid=None</em>, <em class="sig-param">ppid=None</em>, <em class="sig-param">cptitle=None</em>, <em class="sig-param">cpshorttitle=None</em>, <em class="sig-param">cpid=None</em>, <em class="sig-param">diagnosis=None</em>, <em class="sig-param">clinicalstatus=None</em>, <em class="sig-param">activity=None</em>, <em class="sig-param">visitstatus='Complete'</em>, <em class="sig-param">missedreason=None</em>, <em class="sig-param">missedby=None</em>, <em class="sig-param">comments=None</em>, <em class="sig-param">pathologynumber=None</em>, <em class="sig-param">cohort=None</em>, <em class="sig-param">visitdate=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/visit_util.html#visit_util.add_visit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.visit_util.visit_util.add_visit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a visit to a Participant.</p>
 <p>Add a visit to a participant in OpenSpecimen via API call. To use this function, one has to know the
 Parameters of the Participant, event and site.</p>
@@ -1243,7 +1401,7 @@ cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are ma
 
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.visit_util.visit_util.add_visit_speci">
-<code class="sig-name descname">add_visit_speci</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">lineage</em>, <em class="sig-param">av_qty</em>, <em class="sig-param">user</em>, <em class="sig-param">init_qty</em>, <em class="sig-param">spec_class</em>, <em class="sig-param">spec_type</em>, <em class="sig-param">anat_site</em>, <em class="sig-param">site</em>, <em class="sig-param">path</em>, <em class="sig-param">speclabel=None</em>, <em class="sig-param">eventid=None</em>, <em class="sig-param">eventlabel=None</em>, <em class="sig-param">cprid=None</em>, <em class="sig-param">ppid=None</em>, <em class="sig-param">cptitle=None</em>, <em class="sig-param">cpshorttitle=None</em>, <em class="sig-param">cpid=None</em>, <em class="sig-param">diagnosis=None</em>, <em class="sig-param">clinicalstatus=None</em>, <em class="sig-param">activity=None</em>, <em class="sig-param">visitstatus=None</em>, <em class="sig-param">missedreason=None</em>, <em class="sig-param">missedby=None</em>, <em class="sig-param">comments=None</em>, <em class="sig-param">pathologynumber=None</em>, <em class="sig-param">cohort=None</em>, <em class="sig-param">visitdate=None</em>, <em class="sig-param">laterality=None</em>, <em class="sig-param">rec_qlt=None</em>, <em class="sig-param">colltime=None</em>, <em class="sig-param">rectime=None</em>, <em class="sig-param">status='Collected'</em>, <em class="sig-param">stor_name=None</em>, <em class="sig-param">storlocx=None</em>, <em class="sig-param">storlocy=None</em>, <em class="sig-param">concentration=None</em>, <em class="sig-param">biohazrad=None</em>, <em class="sig-param">collproc=None</em>, <em class="sig-param">conttype=None</em>, <em class="sig-param">extensionudn=None</em>, <em class="sig-param">extensionmap=None</em>, <em class="sig-param">extensiondict=None</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.visit_util.visit_util.add_visit_speci" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_visit_speci</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">lineage</em>, <em class="sig-param">av_qty</em>, <em class="sig-param">user</em>, <em class="sig-param">init_qty</em>, <em class="sig-param">spec_class</em>, <em class="sig-param">spec_type</em>, <em class="sig-param">anat_site</em>, <em class="sig-param">site</em>, <em class="sig-param">path</em>, <em class="sig-param">speclabel=None</em>, <em class="sig-param">eventid=None</em>, <em class="sig-param">eventlabel=None</em>, <em class="sig-param">cprid=None</em>, <em class="sig-param">ppid=None</em>, <em class="sig-param">cptitle=None</em>, <em class="sig-param">cpshorttitle=None</em>, <em class="sig-param">cpid=None</em>, <em class="sig-param">diagnosis=None</em>, <em class="sig-param">clinicalstatus=None</em>, <em class="sig-param">activity=None</em>, <em class="sig-param">visitstatus=None</em>, <em class="sig-param">missedreason=None</em>, <em class="sig-param">missedby=None</em>, <em class="sig-param">comments=None</em>, <em class="sig-param">pathologynumber=None</em>, <em class="sig-param">cohort=None</em>, <em class="sig-param">visitdate=None</em>, <em class="sig-param">laterality=None</em>, <em class="sig-param">rec_qlt=None</em>, <em class="sig-param">colltime=None</em>, <em class="sig-param">rectime=None</em>, <em class="sig-param">status='Collected'</em>, <em class="sig-param">stor_name=None</em>, <em class="sig-param">storlocx=None</em>, <em class="sig-param">storlocy=None</em>, <em class="sig-param">concentration=None</em>, <em class="sig-param">biohazrad=None</em>, <em class="sig-param">collproc=None</em>, <em class="sig-param">conttype=None</em>, <em class="sig-param">extensionudn=None</em>, <em class="sig-param">extensionmap=None</em>, <em class="sig-param">extensiondict=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/visit_util.html#visit_util.add_visit_speci"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.visit_util.visit_util.add_visit_speci" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a visit and a specimen in one call.</p>
 <p>Add a visit and a specimen in OpenSpecimen via one API call. To use this function, one has to know the
 Parameters of the participant, event and site.</p>
@@ -1319,7 +1477,7 @@ cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are ma
 
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.visit_util.visit_util.search_visit_cprid">
-<code class="sig-name descname">search_visit_cprid</code><span class="sig-paren">(</span><em class="sig-param">cprid</em>, <em class="sig-param">includestats='false'</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.visit_util.visit_util.search_visit_cprid" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">search_visit_cprid</code><span class="sig-paren">(</span><em class="sig-param">cprid</em>, <em class="sig-param">includestats='false'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/visit_util.html#visit_util.search_visit_cprid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.visit_util.visit_util.search_visit_cprid" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a Visit by the Collection protocol Registration Id.</p>
 <p>Get a visit by the Collection Protocoll Registration ID. Those parameters have to be known
 in order to know this function. They can be extracted from calling a search function in the
@@ -1342,7 +1500,7 @@ os_core class visits.</p>
 
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.visit_util.visit_util.search_visit_namespr">
-<code class="sig-name descname">search_visit_namespr</code><span class="sig-paren">(</span><em class="sig-param">visitname=None</em>, <em class="sig-param">sprnumber=None</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.visit_util.visit_util.search_visit_namespr" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">search_visit_namespr</code><span class="sig-paren">(</span><em class="sig-param">visitname=None</em>, <em class="sig-param">sprnumber=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/visit_util.html#visit_util.search_visit_namespr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.visit_util.visit_util.search_visit_namespr" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a Visit by the name or the Surgical pathology number</p>
 <p>Get one or more visits by the name or the surgical pathology number. Those parameters have to be known
 in order to know this function. If just the visitname is passed, one returns a visit with the corresponding name.
@@ -1366,7 +1524,7 @@ it works as logical AND.</p>
 
 <dl class="method">
 <dt id="OpenSpecimenAPIconnector.os_util.visit_util.visit_util.update_visit">
-<code class="sig-name descname">update_visit</code><span class="sig-paren">(</span><em class="sig-param">visitid</em>, <em class="sig-param">name=None</em>, <em class="sig-param">site=None</em>, <em class="sig-param">eventid=None</em>, <em class="sig-param">eventlabel=None</em>, <em class="sig-param">cprid=None</em>, <em class="sig-param">ppid=None</em>, <em class="sig-param">cptitle=None</em>, <em class="sig-param">cpshorttitle=None</em>, <em class="sig-param">diagnosis=None</em>, <em class="sig-param">clinicalstatus=None</em>, <em class="sig-param">activity=None</em>, <em class="sig-param">visitstatus=None</em>, <em class="sig-param">missedreason=None</em>, <em class="sig-param">missedby=None</em>, <em class="sig-param">comments=None</em>, <em class="sig-param">pathologynumber=None</em>, <em class="sig-param">cohort=None</em>, <em class="sig-param">visitdate=None</em>, <em class="sig-param">cpid=None</em><span class="sig-paren">)</span><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.visit_util.visit_util.update_visit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">update_visit</code><span class="sig-paren">(</span><em class="sig-param">visitid</em>, <em class="sig-param">name=None</em>, <em class="sig-param">site=None</em>, <em class="sig-param">eventid=None</em>, <em class="sig-param">eventlabel=None</em>, <em class="sig-param">cprid=None</em>, <em class="sig-param">ppid=None</em>, <em class="sig-param">cptitle=None</em>, <em class="sig-param">cpshorttitle=None</em>, <em class="sig-param">diagnosis=None</em>, <em class="sig-param">clinicalstatus=None</em>, <em class="sig-param">activity=None</em>, <em class="sig-param">visitstatus=None</em>, <em class="sig-param">missedreason=None</em>, <em class="sig-param">missedby=None</em>, <em class="sig-param">comments=None</em>, <em class="sig-param">pathologynumber=None</em>, <em class="sig-param">cohort=None</em>, <em class="sig-param">visitdate=None</em>, <em class="sig-param">cpid=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/OpenSpecimenAPIconnector/os_util/visit_util.html#visit_util.update_visit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#OpenSpecimenAPIconnector.os_util.visit_util.visit_util.update_visit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updating a visit</p>
 <p>Update an existing visit with ID visitid and the parameters params. All parameters are
 optional for updating and  those which are not passed stay the same. Those parameters and
@@ -1426,66 +1584,50 @@ cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are ma
 </div>
 
 
+           </div>
+           
           </div>
-          
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="OpenSpecimenAPIconnector.os_core.html" class="btn btn-neutral float-left" title="OpenSpecimenAPIconnector.os_core package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Christian Schorn, Simon Streit.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="../index.html">OpenSpecimenAPIConnector</a></h1>
 
+    </section>
 
+  </div>
+  
 
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
 
-
-
-
-
-<h3>Navigation</h3>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="../index.html">Documentation overview</a><ul>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script>$('#searchbox').show(0);</script>
-
-
-
-
-
-
-
-
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2021, Christian Schron, Simon Streit.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.0</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-      |
-      <a href="../_sources/source/OpenSpecimenAPIconnector.os_util.rst.txt"
-          rel="nofollow">Page source</a>
-    </div>
-
+  
+  
     
+   
 
-    
-  </body>
+</body>
 </html>

@@ -1,0 +1,438 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>OpenSpecimenAPIconnector.os_core.csv_bulk &mdash; OpenSpecimenAPIConnector 0.9.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> OpenSpecimenAPIConnector
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stuff.html">Paragraph Level Markup</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/OpenSpecimenAPIconnector.html">OpenSpecimenAPIconnector package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">OpenSpecimenAPIConnector</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>OpenSpecimenAPIconnector.os_core.csv_bulk</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for OpenSpecimenAPIconnector.os_core.csv_bulk</h1><div class="highlight"><pre>
+<span></span><span class="ch">#! /bin/python3</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
+
+<span class="kn">from</span> <span class="nn">.req_util</span> <span class="k">import</span> <span class="n">OS_request_gen</span>
+<span class="kn">from</span> <span class="nn">.jsons</span> <span class="k">import</span> <span class="n">Json_factory</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">config_manager</span>
+
+<div class="viewcode-block" id="csv_bulk"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.csv_bulk.csv_bulk">[docs]</a><span class="k">class</span> <span class="nc">csv_bulk</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Handles the OpenSpecimen CSV Bulk Importer via API.</span>
+
+<span class="sd">    Handles the API calls of the OpenSpecimen&#39;s Bulk Importer for all the different schemas. </span>
+<span class="sd">    This class can get the templates to a schema, upload the csv-files, run the job, get the job status</span>
+<span class="sd">    and get the job report.</span>
+
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    The OpenSpecimen Documentation of the Bulk Import can be seen at </span>
+<span class="sd">    https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/440434702/Bulk+Import+via+API .</span>
+<span class="sd">    File uploading in OpenSpecimen are two calls, which here are two seperated calls, via the</span>
+<span class="sd">    function bulk_import from the os_util class bulk_operations these calls get one call.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Constructor of the class csv_bulk</span>
+
+<span class="sd">        Constructor of the class csv_bulk. It also connects this class to the OpenSpecimen specific requests class</span>
+<span class="sd">        OS_request_gen, and the OpenSpecimen standard JSON-dict generator class JSON_factory</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">=</span> <span class="n">config_manager</span><span class="o">.</span><span class="n">get_url</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;/import-jobs&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">auth</span> <span class="o">=</span> <span class="n">config_manager</span><span class="o">.</span><span class="n">get_auth</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span> <span class="o">=</span> <span class="n">OS_request_gen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">auth</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Json_fact</span> <span class="o">=</span> <span class="n">Json_factory</span><span class="p">()</span>
+
+<div class="viewcode-block" id="csv_bulk.ausgabe"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.csv_bulk.csv_bulk.ausgabe">[docs]</a>    <span class="k">def</span> <span class="nf">ausgabe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Testing of the URL and authentification.</span>
+
+<span class="sd">        If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.</span>
+<span class="sd">        The function prints the URL and login data to the output terminal, which was handed over to the class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">auth</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="csv_bulk.get_template"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.csv_bulk.csv_bulk.get_template">[docs]</a>    <span class="k">def</span> <span class="nf">get_template</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schemaname</span><span class="p">):</span>
+    
+        <span class="sd">&quot;&quot;&quot;Get the Templates to the corresponding schema</span>
+
+<span class="sd">        Get the Templates of a OpenSpecimen schema and load it into an empty pandas dataframe,</span>
+<span class="sd">        where the OpenSpecimen specific keys are the header of the dataframe. To use this class, one has to know the </span>
+<span class="sd">        schemanames which are used in OpenSpecimen. They are written in camelCase.</span>
+
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        The schemanames can be seen at: https://docs.google.com/spreadsheets/d/1fFcL91jSoTxusoBdxM_sr6TkLt65f25YPgfV-AYps4g/edit#gid=0</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        schemaname : string</span>
+<span class="sd">            String in camelCase of the schema, permissable values are: cp, specimen, cpr, user, userRoles, site, shipment,</span>
+<span class="sd">            institute, dpRequirement, distributionProtocol, distributionOrder, storageContainer, storageContainertype,</span>
+<span class="sd">            containerShipment, cpe, masterSpecimen, participant, sr, visit, specimenAliquot, specimenDerivatice,</span>
+<span class="sd">            specimenDisposal, consent</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas core dataframe</span>
+<span class="sd">            Empty dataframe with OpenSpecimen&#39;s keys to the corresponding schema.</span>
+<span class="sd">        data binary csv file</span>
+<span class="sd">            The raw csv file </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">schemes</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;cp&quot;</span><span class="p">,</span> <span class="s2">&quot;specimen&quot;</span><span class="p">,</span> <span class="s2">&quot;cpr&quot;</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;userRoles&quot;</span><span class="p">,</span> <span class="s2">&quot;site&quot;</span><span class="p">,</span> <span class="s2">&quot;shipment&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;institute&quot;</span><span class="p">,</span> <span class="s2">&quot;dpRequirement&quot;</span><span class="p">,</span> <span class="s2">&quot;distributionProtocol&quot;</span><span class="p">,</span> <span class="s2">&quot;distributionOrder&quot;</span><span class="p">,</span> <span class="s2">&quot;storageContainer&quot;</span><span class="p">,</span> <span class="s2">&quot;storageContainerType&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;containerShipment&quot;</span><span class="p">,</span> <span class="s2">&quot;cpe&quot;</span><span class="p">,</span> <span class="s2">&quot;masterSpecimen&quot;</span><span class="p">,</span> <span class="s2">&quot;participant&quot;</span><span class="p">,</span> <span class="s2">&quot;sr&quot;</span><span class="p">,</span> <span class="s2">&quot;visit&quot;</span><span class="p">,</span> <span class="s2">&quot;specimenAliquot&quot;</span><span class="p">,</span> <span class="s2">&quot;specimenDerivative&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;specimenDisposal&quot;</span><span class="p">,</span> <span class="s2">&quot;consent&quot;</span><span class="p">]</span>
+       
+        <span class="k">assert</span> <span class="n">schemaname</span> <span class="ow">in</span> <span class="n">schemes</span><span class="p">,</span> <span class="s2">&quot;Non permissible schema please check documentation for permissible values&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;/input-file-template?schema=&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">schemaname</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">get_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    
+        <span class="n">data</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+        <span class="n">ret_val</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">,</span><span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;python&#39;</span><span class="p">)</span>
+       
+        <span class="k">return</span> <span class="n">ret_val</span><span class="p">,</span> <span class="n">data</span></div>
+
+<div class="viewcode-block" id="csv_bulk.upload_csv"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.csv_bulk.csv_bulk.upload_csv">[docs]</a>    <span class="k">def</span> <span class="nf">upload_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Upload a CSV file to OpenSpecimen</span>
+
+<span class="sd">        This function handles the uploading of a CSV file to OpenSpecimen. This creates a job with a file-ID.</span>
+<span class="sd">        With the file-ID the job then can be started via the function run_upload.</span>
+
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        The values are separated by comma &#39;,&#39;. This is the OpenSpecimen standard format.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : string</span>
+<span class="sd">            The name of the file as string with the ending, here .csv . </span>
+<span class="sd">        </span>
+<span class="sd">        file : binary</span>
+<span class="sd">            The file itself which should get uploaded.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list</span>
+<span class="sd">            The Job-ID as list with length 1.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;/input-file&#39;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+        <span class="n">files</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="s1">&#39;text/csv&#39;</span><span class="p">))]</span>
+
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">post_request</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)[</span><span class="s2">&quot;fileId&quot;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="csv_bulk.run_upload"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.csv_bulk.csv_bulk.run_upload">[docs]</a>    <span class="k">def</span> <span class="nf">run_upload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schemaname</span><span class="p">,</span> <span class="n">fileid</span><span class="p">,</span> <span class="n">operation</span> <span class="o">=</span> <span class="s1">&#39;CREATE&#39;</span><span class="p">,</span> <span class="n">dateformat</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">timeformat</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Run a job which is already created.</span>
+
+<span class="sd">        Runs a Job, which is already created. The schema and file-ID have to be known. Moreover, one has to specify if </span>
+<span class="sd">        the job updates already existing objects or create new ones.</span>
+
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        The date and timeformat can be left empty, if it is compatible with OpenSpecimen.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        schemaname : string</span>
+<span class="sd">            String in camelCase of the schema, permissable values are: cp, specimen, cpr, user, userRoles, site, shipment,</span>
+<span class="sd">            institute, dpRequirement, distributionProtocol, distributionOrder, storageContainer, storageContainertype,</span>
+<span class="sd">            containerShipment, cpe, masterSpecimen, participant, sr, visit, specimenAliquot, specimenDerivative,</span>
+<span class="sd">            specimenDisposal, consent</span>
+
+<span class="sd">        fileid : string</span>
+<span class="sd">            The file-ID, from OpenSpecimen generated, which is generated when the file is uploaded.</span>
+
+<span class="sd">        operation : string</span>
+<span class="sd">            The permissable operations are &#39;CREATE&#39; and &#39;UPDATE&#39;.</span>
+
+<span class="sd">        dateformat : string</span>
+<span class="sd">            An optional Parameters, which has to be specified if the format is not compatible with OpenSpecimen.</span>
+
+<span class="sd">        timeformat : string</span>
+<span class="sd">            An optional Parameters, which has to be specified if the format is not compatible with OpenSpecimen. </span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        string</span>
+<span class="sd">            A tuple with the format (&#39;JOBID&#39;, &#39;Response Text&#39;).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Json_fact</span><span class="o">.</span><span class="n">create_bulk_import_job</span><span class="p">(</span><span class="n">schemaname</span><span class="o">=</span><span class="n">schemaname</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="n">operation</span><span class="p">,</span> <span class="n">fileid</span><span class="o">=</span><span class="n">fileid</span><span class="p">,</span>
+                                                            <span class="n">dateformat</span><span class="o">=</span><span class="n">dateformat</span><span class="p">,</span> <span class="n">timeformat</span><span class="o">=</span><span class="n">timeformat</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">post_request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="csv_bulk.get_job_status"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.csv_bulk.csv_bulk.get_job_status">[docs]</a>    <span class="k">def</span> <span class="nf">get_job_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">jobid</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Get the Job status.</span>
+
+<span class="sd">        Get the status of a job with the ID &lt;jobid&gt; . The status of the job has to be known and </span>
+<span class="sd">        can be seen via GUI in JOBS. The number after # in the title is the ID. The codes are:</span>
+<span class="sd">        200 : Bulk Import request was successfully processed.</span>
+<span class="sd">        401 : Authorisation failed, user doesn’t have the authority.</span>
+<span class="sd">        500 : Internal server error, encountered server error while performing operations.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        jobid : int</span>
+<span class="sd">            ID of the job.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        string</span>
+<span class="sd">            A string with the status code as mentioned above.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">jobid</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+        
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">get_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span></div>
+
+
+<div class="viewcode-block" id="csv_bulk.job_report"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.csv_bulk.csv_bulk.job_report">[docs]</a>    <span class="k">def</span> <span class="nf">job_report</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">jobid</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Download a job report.</span>
+
+<span class="sd">        Get the status of a job with the ID &lt;jobid&gt; . The status of the job has to be known and </span>
+<span class="sd">        can be seen via GUI in JOBS or in the corresponding schema with View Past Imports. The number </span>
+<span class="sd">        after # in the title is the ID. Generates a JSON-dict of the JOB containing the information</span>
+<span class="sd">        which were uploaded and the additional fields OS_IMPORT_STATUS, OS_ERROR_MESSAGE.</span>
+<span class="sd">        The status and error message can be extracted when converted to a list with location [-2,-1],</span>
+<span class="sd">        or when converted to a dict with keys [&#39;OS_IMPORT_STATUS&#39;] and [&#39;OS_ERROR_MESSAGE&#39;].</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        jobid : int</span>
+<span class="sd">            ID of the job.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        string</span>
+<span class="sd">            Job details as CSV like string separated by &#39;,&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">jobid</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/output&#39;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">get_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Christian Schorn, Simon Streit.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

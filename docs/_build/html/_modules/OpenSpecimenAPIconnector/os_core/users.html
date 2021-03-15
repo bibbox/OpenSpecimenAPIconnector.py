@@ -1,0 +1,479 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>OpenSpecimenAPIconnector.os_core.users &mdash; OpenSpecimenAPIConnector 0.9.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> OpenSpecimenAPIConnector
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stuff.html">Paragraph Level Markup</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/OpenSpecimenAPIconnector.html">OpenSpecimenAPIconnector package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">OpenSpecimenAPIConnector</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>OpenSpecimenAPIconnector.os_core.users</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for OpenSpecimenAPIconnector.os_core.users</h1><div class="highlight"><pre>
+<span></span><span class="ch">#! /bin/python3</span>
+
+<span class="c1"># imports</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="kn">from</span> <span class="nn">.req_util</span> <span class="k">import</span> <span class="n">OS_request_gen</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">config_manager</span>
+
+<div class="viewcode-block" id="users"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.users.users">[docs]</a><span class="k">class</span> <span class="nc">users</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;Handles the API calls for Users</span>
+
+<span class="sd">    This class handles the API calls for users. Get all or specific user information, create a user, change his/her/their password,</span>
+<span class="sd">    get user-roles of or assign a specific role to a user.</span>
+
+<span class="sd">    Note</span>
+<span class="sd">    -----</span>
+<span class="sd">    In order to use this and also the other classes, the user has to know OpenSpecimen. The users have to know which requests</span>
+<span class="sd">    are needed and what content should be uploaded. The API documentation of OpenSpecimen is in:</span>
+<span class="sd">    https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Constructor of the Class Users</span>
+<span class="sd">        </span>
+<span class="sd">        Constructor of the class users can handle the basic API-calls of the users in OpenSpecimen.</span>
+<span class="sd">        Connects this class to OpenSpecimen specific request handle (os_core.request_util.py).</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        base_url : string</span>
+<span class="sd">            URL to openspecimen, has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng</span>
+<span class="sd">        auth : tuple</span>
+<span class="sd">            Consists of two strings ( loginname , password)</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">=</span> <span class="n">config_manager</span><span class="o">.</span><span class="n">get_url</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">auth</span> <span class="o">=</span> <span class="n">config_manager</span><span class="o">.</span><span class="n">get_auth</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span> <span class="o">=</span> <span class="n">OS_request_gen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">auth</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="users.ausgabe"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.users.users.ausgabe">[docs]</a>    <span class="k">def</span> <span class="nf">ausgabe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Testing of the URL and authentification.</span>
+<span class="sd">        </span>
+<span class="sd">        If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.</span>
+<span class="sd">        The function prints the URL and login data  to the output terminal, which was handed over to the class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">auth</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="users.get_all_users"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.users.users.get_all_users">[docs]</a>    <span class="k">def</span> <span class="nf">get_all_users</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Get all Users from OpenSpecimen</span>
+
+<span class="sd">        Returns all users within the OpenSpecimen disrtibution.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            Returns all users as JSON dict, or an OpenSpecimen&#39;s error message</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;/users&quot;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">get_request</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="users.get_user"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.users.users.get_user">[docs]</a>    <span class="k">def</span> <span class="nf">get_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">userId</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Get the User with ID</span>
+
+<span class="sd">        Get the User with ID from OpenSpecimen. To use this function, one has to know the ID of the user.</span>
+<span class="sd">        This can be seen in the GUI if one clicks on the User and reads from the URL, which has</span>
+<span class="sd">        the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/users/{userid}/... .</span>
+<span class="sd">        Or with the function get_all_users and then extract the ID to the wanted user.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        userId : int</span>
+<span class="sd">            ID of the User which one wants to get.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            JSON dict of the details of the specified user with ID or the OpenSpecimen&#39;s error message</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;/users/&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">userId</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">get_request</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+ 
+<div class="viewcode-block" id="users.change_password"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.users.users.change_password">[docs]</a>    <span class="k">def</span> <span class="nf">change_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; Change the password of a user</span>
+
+<span class="sd">        Change the password of a user. If the API-User is Superadmin, the parameters are userId,newPassword.</span>
+<span class="sd">        If the user isn&#39;t a Superadmin nor the Superadmin changes his own password, the parameters are userId,</span>
+<span class="sd">        oldPassword, newPassword.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ---------</span>
+<span class="sd">        params : string</span>
+<span class="sd">            JSON formatted string with parameters userId, oldPassword[mandatory, if not SuperAdmin] newPassword</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            Dict with status code. 200 password updated, 400 invalid Parameters, 500 unknown error.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;/users/password&quot;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="o">+</span><span class="n">endpoint</span>
+        <span class="n">payload</span><span class="o">=</span><span class="n">params</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">put_request</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="users.create_user"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.users.users.create_user">[docs]</a>    <span class="k">def</span> <span class="nf">create_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Create a user</span>
+
+<span class="sd">        Create a user in OpenSpecimen. To use this function, one has to know the parameters.</span>
+<span class="sd">        They are explained in the parameters section. Or one can use the os_util class user_util.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        params : string</span>
+<span class="sd">            JSON formatted string with parameters: firstName, lastName, emailAddress, phoneNumber,</span>
+<span class="sd">            domainName, loginName, instituteName, type, address[optional], activityStatus</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            JSON dict with details of the created user or the OpenSpecimen&#39;s error message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;/users&quot;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="o">+</span><span class="n">endpoint</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">post_request</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="users.delete_user"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.users.users.delete_user">[docs]</a>    <span class="k">def</span> <span class="nf">delete_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">userid</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Delete a user</span>
+
+<span class="sd">        Delete a user in OpenSpecimen. To use this function, one has to know ID of the user.</span>
+<span class="sd">        This can be seen in the GUI, if one clicks on the user and reads from the URL, which has</span>
+<span class="sd">        the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/users/{userid}/... .</span>
+<span class="sd">        Or with the function get_all_users and then extract the ID to the wanted user.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        userid : int</span>
+<span class="sd">            String or int of the User Id which one wants to delete. Gets converted to a string.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            JSON dict with details of the deleted user or the OpenSpecimen&#39;s error message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;/users/&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">userid</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;/?close=true&quot;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="o">+</span><span class="n">endpoint</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">delete_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="users.get_roles"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.users.users.get_roles">[docs]</a>    <span class="k">def</span> <span class="nf">get_roles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">userid</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Get the roles of a user</span>
+
+<span class="sd">        Get the roles of a user with ID in OpenSpecimen. To use this function, one has to know the ID of </span>
+<span class="sd">        the user. This can be seen in the GUI, if one clicks on the user and reads from the URL, which has</span>
+<span class="sd">        the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/users/{userid}/... .</span>
+<span class="sd">        Or with the function get_all_users and then extract the ID to the wanted user.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        userid : int</span>
+<span class="sd">            Int of the User Id which one wants to delete. Gets converted to a string.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            JSON dict with Details of the Roles of the User with ID userid or the OpenSpecimen&#39;s error message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;/rbac/subjects/&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">userid</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;/roles&#39;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="o">+</span><span class="n">endpoint</span>
+
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">get_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="users.assign_role"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.users.users.assign_role">[docs]</a>    <span class="k">def</span> <span class="nf">assign_role</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">userid</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Assign a role to a User</span>
+
+<span class="sd">        Assign a role to a user with ID in OpenSpecimen. To use this function, one has to know the ID of </span>
+<span class="sd">        the user. This can be seen in the GUI, if one clicks on the user and reads from the URL, which has</span>
+<span class="sd">        the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/users/{userid}/... .</span>
+<span class="sd">        Or with the function get_all_users and then extract the ID to the wanted user.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        userid : int</span>
+<span class="sd">            Int of the User ID, which one wants to delete. Gets converted to a string.</span>
+<span class="sd">        </span>
+<span class="sd">        params : string</span>
+<span class="sd">            JSON formatted string with parameters: site(dict with sitedetail), collectionProtocol</span>
+<span class="sd">            (dict with Collection protocol detail), role(dict with detail of the role)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            JSON dict with Details of the Roles of the User with ID userid or the OpenSpecimen&#39;s error message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;/rbac/subjects/&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">userid</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;/roles&#39;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">post_request</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="users.update_user"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.users.users.update_user">[docs]</a>    <span class="k">def</span> <span class="nf">update_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">userid</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;Update a User</span>
+
+<span class="sd">        Update a User in OpenSpecimen. To use this function, one has to know the parameters.</span>
+<span class="sd">        They are explained in the parameters section. Or one can use the os_util class user_util.</span>
+<span class="sd">        Also the ID of the user, which gets updated, has to be known.</span>
+<span class="sd">        This can be seen in the GUI, if one clicks on the user and reads from the URL, which has</span>
+<span class="sd">        the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/users/{userid}/... .</span>
+<span class="sd">        Or with the function get_all_users and then extract the ID to the wanted user.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        userid : int</span>
+<span class="sd">            ID of the User.</span>
+
+<span class="sd">        params : string</span>
+<span class="sd">            JSON formatted string with parameters: firstName, lastName, emailAddress, phoneNumber,</span>
+<span class="sd">            domainName, loginName, instituteName, type, address[optional], activityStatus</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            JSON dict with Details of the updated User or the OpenSpecimen&#39;s error message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;/users/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">userid</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="o">+</span><span class="n">endpoint</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">put_request</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Christian Schorn, Simon Streit.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

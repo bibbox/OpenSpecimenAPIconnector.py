@@ -13,14 +13,16 @@
 import os
 import sys
 import dateutil
+import sphinx_rtd_theme
+
 sys.path.insert(0, os.path.abspath('../src/'))
 
 
 # -- Project information -----------------------------------------------------
 
 project = 'OpenSpecimenAPIConnector'
-copyright = '2021, Christian Schron, Simon Streit'
-author = 'Christian Schron, Simon Streit'
+copyright = '2021, Christian Schorn, Simon Streit'
+author = 'Christian Schorn, Simon Streit'
 
 # The full version, including alpha/beta/rc tags
 release = '0.9.1'
@@ -32,8 +34,18 @@ release = '0.9.1'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.napoleon'
+    'sphinx.ext.napoleon',
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.autodoc",
+    "sphinx.ext.mathjax",
+    "sphinx.ext.viewcode",
 ]
+
+templates_path = ['_templates']
+source_suffix = '.rst'
+exclude_patterns = []
+locale_dirs = ['locale/']
+gettext_compact = False
 
 napoleon_google_docstring = False
 napoleon_use_param = False
@@ -53,7 +65,15 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+# html_theme = 'alabaster'
+
+html_theme = "sphinx_rtd_theme"
+
+html_theme_options = {
+    'logo_only': True,
+    'navigation_depth': 5,
+}
+html_context = {}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

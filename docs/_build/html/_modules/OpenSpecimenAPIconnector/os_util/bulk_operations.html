@@ -1,0 +1,298 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>OpenSpecimenAPIconnector.os_util.bulk_operations &mdash; OpenSpecimenAPIConnector 0.9.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> OpenSpecimenAPIConnector
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stuff.html">Paragraph Level Markup</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/OpenSpecimenAPIconnector.html">OpenSpecimenAPIconnector package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">OpenSpecimenAPIConnector</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>OpenSpecimenAPIconnector.os_util.bulk_operations</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for OpenSpecimenAPIconnector.os_util.bulk_operations</h1><div class="highlight"><pre>
+<span></span><span class="ch">#! /bin/python3</span>
+
+<span class="kn">from</span> <span class="nn">..os_core.csv_bulk</span> <span class="k">import</span> <span class="n">csv_bulk</span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">pandas</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<div class="viewcode-block" id="bulk_operations"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_util.html#OpenSpecimenAPIconnector.os_util.bulk_operations.bulk_operations">[docs]</a><span class="k">class</span> <span class="nc">bulk_operations</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;Handles the OpenSpecimen CSV Bulk Importer via API.</span>
+
+<span class="sd">    Handles the API calls of the OpenSpecimen&#39;s Bulk Importer for all the different schemas. </span>
+<span class="sd">    This class makes and executes an Import JOB.</span>
+
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    The OpenSpecimen Documentation of Bulk Import can be seen at </span>
+<span class="sd">    https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/440434702/Bulk+Import+via+API .</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Constructor of the class csv_bulk</span>
+
+<span class="sd">        Constructor of the class csv_bulk. It also connects this class to the os_core class csv_bulk.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csv_bulk</span> <span class="o">=</span> <span class="n">csv_bulk</span><span class="p">()</span>
+
+<div class="viewcode-block" id="bulk_operations.bulk_import"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_util.html#OpenSpecimenAPIconnector.os_util.bulk_operations.bulk_operations.bulk_import">[docs]</a>    <span class="k">def</span> <span class="nf">bulk_import</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">schemaname</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="s1">&#39;CREATE&#39;</span><span class="p">,</span>
+                    <span class="n">dateformat</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeformat</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;Make and Run a CSV-bulk import job</span>
+
+<span class="sd">        Make a JOB, precisely upload a file to OpenSpecimen, extract the file-ID token from this return</span>
+<span class="sd">        and then execute it with the right schema and operation (Create or Update). To use this function one has to</span>
+<span class="sd">        know which entity should be created or updated and which fields are mandatory. </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        file : binary</span>
+<span class="sd">            The file to upload, is a CSV-file with separator &#39;,&#39;.</span>
+<span class="sd">        </span>
+<span class="sd">        filename : string</span>
+<span class="sd">            Name of the file with ending (.csv)</span>
+<span class="sd">        </span>
+<span class="sd">        schemaname : string</span>
+<span class="sd">            The schemaname in OpenSpecimen with permissable values are: cp, cpr, user, userRoles,</span>
+<span class="sd">            site, shipment, institute, dpRequirement, distributionProtocol, distributionorder,</span>
+<span class="sd">            storagecontainer, storagecontainerType, containerShipment, cpe, masterSpecimen, participant,</span>
+<span class="sd">            sr, visit, specimenAliquot, specimenDerivative, specimendisposal, consent</span>
+
+<span class="sd">        operation : string</span>
+<span class="sd">            String with Information if the file updates data or create it. Default value = &#39;CREATE&#39;.</span>
+<span class="sd">            Permissable values are CREATE or UPDATE</span>
+<span class="sd">        </span>
+<span class="sd">        dateformat : string</span>
+<span class="sd">            If another dateformat than in the OpenSpecimen System configuration is taken, this has to be specified.</span>
+<span class="sd">        </span>
+<span class="sd">        timeformat : string</span>
+<span class="sd">           If another timeformat than in the OpenSpecimen System configuration is taken, this has to be specified.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Pandas DataFrame </span>
+<span class="sd">            Data Frame with label, OS_IMPORT_STATUS OS_IMPORT_MESSAGE as column headers.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">fileid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">csv_bulk</span><span class="o">.</span><span class="n">upload_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+        <span class="n">upload_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">csv_bulk</span><span class="o">.</span><span class="n">run_upload</span><span class="p">(</span><span class="n">schemaname</span><span class="o">=</span><span class="n">schemaname</span><span class="p">,</span> <span class="n">fileid</span><span class="o">=</span><span class="n">fileid</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="n">operation</span><span class="p">,</span>
+                                           <span class="n">dateformat</span><span class="o">=</span><span class="n">dateformat</span><span class="p">,</span> <span class="n">timeformat</span><span class="o">=</span><span class="n">timeformat</span><span class="p">)</span>
+
+        <span class="n">jobid</span> <span class="o">=</span> <span class="n">upload_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">job_pending</span> <span class="o">=</span> <span class="kc">True</span>    
+        <span class="k">while</span> <span class="n">job_pending</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">csv_bulk</span><span class="o">.</span><span class="n">get_job_status</span><span class="p">(</span><span class="n">jobid</span><span class="p">))</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span> <span class="c1"># limit request rate</span>
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;FAILED&quot;</span> <span class="ow">or</span> <span class="n">status</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;COMPLETED&quot;</span><span class="p">:</span>
+                <span class="n">job_pending</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">csv_bulk</span><span class="o">.</span><span class="n">job_report</span><span class="p">(</span><span class="n">jobid</span><span class="p">)</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s2">&quot;0&quot;</span><span class="p">)</span>
+        <span class="n">found</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[</span><span class="n">ret</span><span class="p">[</span><span class="s2">&quot;OS_IMPORT_STATUS&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;SUCCESS&#39;</span><span class="p">)]</span>
+        <span class="n">found_same</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[</span><span class="n">ret</span><span class="p">[</span><span class="s2">&quot;OS_ERROR_MESSAGE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;same&#39;</span><span class="p">,</span> <span class="n">na</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
+
+        <span class="n">check</span> <span class="o">=</span> <span class="n">found_same</span><span class="o">.</span><span class="n">count</span><span class="p">()[</span><span class="s2">&quot;OS_IMPORT_STATUS&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">found</span><span class="o">.</span><span class="n">count</span><span class="p">()[</span><span class="s2">&quot;OS_ERROR_MESSAGE&quot;</span><span class="p">]</span>
+        
+        <span class="k">assert</span> <span class="n">check</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="s2">&quot;OS_IMPORT_STATUS&quot;</span><span class="p">]),</span> <span class="s2">&quot;Error creating </span><span class="si">{}</span><span class="s2"> by CSV: </span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">schemaname</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="n">ret</span><span class="o">.</span><span class="n">empty</span><span class="p">,</span> <span class="s2">&quot;Error creating </span><span class="si">{}</span><span class="s2"> by CSV: Empty Return&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">schemaname</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Christian Schorn, Simon Streit.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

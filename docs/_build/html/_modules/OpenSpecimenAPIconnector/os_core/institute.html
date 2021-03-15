@@ -1,0 +1,420 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>OpenSpecimenAPIconnector.os_core.institute &mdash; OpenSpecimenAPIConnector 0.9.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> OpenSpecimenAPIConnector
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stuff.html">Paragraph Level Markup</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/OpenSpecimenAPIconnector.html">OpenSpecimenAPIconnector package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">OpenSpecimenAPIConnector</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>OpenSpecimenAPIconnector.os_core.institute</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for OpenSpecimenAPIconnector.os_core.institute</h1><div class="highlight"><pre>
+<span></span><span class="ch">#! /bin/python3</span>
+
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">.req_util</span> <span class="k">import</span> <span class="n">OS_request_gen</span>
+<span class="kn">from</span> <span class="nn">.url</span> <span class="k">import</span> <span class="n">url_gen</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">config_manager</span>
+
+<div class="viewcode-block" id="institutes"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.institute.institutes">[docs]</a><span class="k">class</span> <span class="nc">institutes</span><span class="p">():</span>
+
+    <span class="sd">&quot;&quot;&quot;Handles the API calls for the institutes</span>
+
+<span class="sd">    Handles the OpenSpecimen API calls for the institutes. This class can </span>
+<span class="sd">    create, delete, update institutes. One can search via different parameters for an institute and</span>
+<span class="sd">    get all Collection protocols corresponding to an institute. Get one or all institutes.</span>
+
+<span class="sd">    Note</span>
+<span class="sd">    -----</span>
+<span class="sd">    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes, one can</span>
+<span class="sd">    just pass the parameters via a JSON-formatted string. This means the user has to know the keywords.</span>
+<span class="sd">    The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and </span>
+<span class="sd">    the calls refer to this site. More details can be seen in the documentation.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    Code examples, where the institutes are handled, is in the Jupyter-Notebook:</span>
+
+<span class="sd">        $ jupyter notebook main.ipynb</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Constructor of the Class Institutes</span>
+
+<span class="sd">        Constructor of the class institutes can handle the basic API-calls</span>
+<span class="sd">        of the institutes in OpenSpecimen. Connects this class to OpenSpecimen</span>
+<span class="sd">        specific URL Generator Class (os_core/url.py)</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        base_url : string</span>
+<span class="sd">        URL to openspecimen, has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng</span>
+<span class="sd">        auth : tuple</span>
+<span class="sd">        Consists of two strings ( loginname , password)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">=</span> <span class="n">config_manager</span><span class="o">.</span><span class="n">get_url</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;/institutes&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">auth</span> <span class="o">=</span> <span class="n">config_manager</span><span class="o">.</span><span class="n">get_auth</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span> <span class="o">=</span> <span class="n">OS_request_gen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">auth</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">urls</span> <span class="o">=</span> <span class="n">url_gen</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="institutes.ausgabe"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.institute.institutes.ausgabe">[docs]</a>    <span class="k">def</span> <span class="nf">ausgabe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Testing of the URL and Authentification.</span>
+
+<span class="sd">        If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.</span>
+<span class="sd">        The function prints the URL and login data to the output terminal, which was handed over to the class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">auth</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="institutes.create_institute"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.institute.institutes.create_institute">[docs]</a>    <span class="k">def</span> <span class="nf">create_institute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Create an Institute.</span>
+
+<span class="sd">        Creates an institute in OpenSpecimen. In order to use this function one has to know</span>
+<span class="sd">        the parameters which OpenSpecimen needs to create an institute. One can use it via the os_util class</span>
+<span class="sd">        institute_util. This allows just the basic definition. </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        params : string</span>
+<span class="sd">            JSON formatted string with Parameters: name (Name of the Institute)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        json-dict</span>
+<span class="sd">            Either details of the created institute as JSON-dict or the OpenSpecimen&#39;s error message. </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">post_request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="institutes.delete_institute"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.institute.institutes.delete_institute">[docs]</a>    <span class="k">def</span> <span class="nf">delete_institute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inid</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Delete an Institute </span>
+
+<span class="sd">        Delete an existing institute in OpenSpecimen with ID &lt;inid&gt;.</span>
+<span class="sd">        The ID is created from OpenSpecimen and can, for Examples, be seen in the GUI</span>
+<span class="sd">        under Institutes. When clicking on the institute, the URL looks like:</span>
+<span class="sd">        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/institutes/{inid}/overview .</span>
+<span class="sd">        Otherwise, one can search with the function search_institutes for Examples by name and extract the ID from there.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ---------</span>
+<span class="sd">        inid : int</span>
+<span class="sd">            The ID of the Institute, generated by the system, will get converted to a string.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-dict</span>
+<span class="sd">            Details of the deleted institute or the OpenSpecimen&#39;s error message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">inid</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">delete_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="institutes.search_institutes"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.institute.institutes.search_institutes">[docs]</a>    <span class="k">def</span> <span class="nf">search_institutes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">substring</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Search for Institutes with specific substring.</span>
+
+<span class="sd">        Search for one or more institutes with the substring. The search URL looks like:</span>
+<span class="sd">        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/np/institutes?{param_1}={value_1}&amp;...&amp;{param_x}={value_x}</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        substring : string</span>
+<span class="sd">            Substring of the Institutename.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-dict</span>
+<span class="sd">            Details of all matching institutes or the OpenSpecimen&#39;s error message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;?name=&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">substring</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">get_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="institutes.get_all_institutes"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.institute.institutes.get_all_institutes">[docs]</a>    <span class="k">def</span> <span class="nf">get_all_institutes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Get all Institutes</span>
+
+<span class="sd">        Get all institutes within the OpenSpecimen distribution, which is defined in the base_url.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-dict</span>
+<span class="sd">            Details of all institutes which are in the OpenSpecimen Distribution.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">get_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="institutes.get_institute"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.institute.institutes.get_institute">[docs]</a>    <span class="k">def</span> <span class="nf">get_institute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inid</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Get the institute with the ID inid</span>
+
+<span class="sd">        Get the details of the Institute with the unique ID inid.</span>
+<span class="sd">        This ID is automatically generated by OpenSpecimen at Protocol creation.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        inid : int</span>
+<span class="sd">            The System&#39;s ID of the Institute, will be converted to a string.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-dict</span>
+<span class="sd">            Details of the Institute with the specified ID, or the OpenSpecimen error message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">inid</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">get_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="institutes.update_institute"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.institute.institutes.update_institute">[docs]</a>    <span class="k">def</span> <span class="nf">update_institute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inid</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Updates an existing Institute with ID inid with the Parameters params</span>
+
+<span class="sd">        Updates an existing institute with the automatically generated OpenSpecimen&#39;s system wide</span>
+<span class="sd">        unique Institute ID instituteid, with the Parameters params which are passed to the function.</span>
+<span class="sd">        The ID of the institute has to be known and can, for Examples, be seen in the GUI by clicking on </span>
+<span class="sd">        the institutes, which has the format http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/institutes/{inid}/....or via the function search_institutes.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ---------</span>
+<span class="sd">        instituteid :  int</span>
+<span class="sd">            Unique Institute ID which is generated automatically from the system. It will be converted to a string.</span>
+<span class="sd">        </span>
+<span class="sd">        institutename : string</span>
+<span class="sd">            New name of the institute, if it is left empty, nothing will be updated.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-dict</span>
+<span class="sd">            JSON-dict with the details of the updated institute or the OpenSpecimen&#39;s error message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">inid</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">put_request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Christian Schorn, Simon Streit.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

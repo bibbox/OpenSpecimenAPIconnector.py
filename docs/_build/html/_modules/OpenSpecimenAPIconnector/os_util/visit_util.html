@@ -1,0 +1,697 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>OpenSpecimenAPIconnector.os_util.visit_util &mdash; OpenSpecimenAPIConnector 0.9.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> OpenSpecimenAPIConnector
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stuff.html">Paragraph Level Markup</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/OpenSpecimenAPIconnector.html">OpenSpecimenAPIconnector package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">OpenSpecimenAPIConnector</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>OpenSpecimenAPIconnector.os_util.visit_util</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for OpenSpecimenAPIconnector.os_util.visit_util</h1><div class="highlight"><pre>
+<span></span><span class="ch">#! /bin/python3</span>
+
+<span class="kn">from</span> <span class="nn">..os_core.visit</span> <span class="k">import</span> <span class="n">visit</span>
+<span class="kn">from</span> <span class="nn">..os_core.jsons</span> <span class="k">import</span> <span class="n">Json_factory</span>
+<span class="kn">from</span> <span class="nn">..os_core.url</span> <span class="k">import</span> <span class="n">url_gen</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">pandas</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<div class="viewcode-block" id="visit_util"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_util.html#OpenSpecimenAPIconnector.os_util.visit_util.visit_util">[docs]</a><span class="k">class</span> <span class="nc">visit_util</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;Handles the API calls for Visits</span>
+
+<span class="sd">    This class handles the API calls for OpenSpecimen Visits. It can create, update, </span>
+<span class="sd">    search visits with different parameters, add visits and specimens in one call.</span>
+<span class="sd">    The outputs are JSON dicts or the Error messages as dict. </span>
+
+<span class="sd">    Note</span>
+<span class="sd">    -----</span>
+<span class="sd">    In order to use this and also the other classes, the user has to know OpenSpecimen.</span>
+<span class="sd">    The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and </span>
+<span class="sd">    the calls refer to this site. More details can be seen in the documentation.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    A code Examples, where the visits are handled is in the Jupyter-Notebook</span>
+<span class="sd">        $ jupyter notebook main.ipynb</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Constructor of the Class visit</span>
+<span class="sd">        </span>
+<span class="sd">        Constructor of the class visit, can handle the basic API-calls</span>
+<span class="sd">        of the visits in OpenSpecimen. It also connects this class to the os_core classes</span>
+<span class="sd">        visit, Json_factory, url_gen.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        base_url : string</span>
+<span class="sd">            URL to openspecimen, has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng</span>
+<span class="sd">        auth : tuple</span>
+<span class="sd">            Consists of two strings ( loginname , password)</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">visit</span> <span class="o">=</span> <span class="n">visit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jsons</span> <span class="o">=</span> <span class="n">Json_factory</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url_gen</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="visit_util.add_visit"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_util.html#OpenSpecimenAPIconnector.os_util.visit_util.visit_util.add_visit">[docs]</a>    <span class="k">def</span> <span class="nf">add_visit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">site</span><span class="p">,</span> <span class="n">eventid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">eventlabel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cprid</span><span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ppid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cptitle</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cpshorttitle</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">cpid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">diagnosis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">clinicalstatus</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">activity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">visitstatus</span><span class="o">=</span><span class="s2">&quot;Complete&quot;</span><span class="p">,</span> <span class="n">missedreason</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">missedby</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comments</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">pathologynumber</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">cohort</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">visitdate</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;Add a visit to a Participant.</span>
+
+<span class="sd">        Add a visit to a participant in OpenSpecimen via API call. To use this function, one has to know the</span>
+<span class="sd">        Parameters of the Participant, event and site.</span>
+
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        Mandatory fields are -cprId or (ppid and cpTitle) or (ppid and cpShortTitle) or (ppid and cpid)</span>
+<span class="sd">        - name, site     </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name : string</span>
+<span class="sd">            Name of the Visit.</span>
+
+<span class="sd">        site : string</span>
+<span class="sd">            Site to which the Visit belongs to.</span>
+
+<span class="sd">        eventid : int</span>
+<span class="sd">            ID of the event to which the visit belongs to.[optional]</span>
+
+<span class="sd">        eventlabel : string</span>
+<span class="sd">            Label of the event to which the visit belongs to.[optional]</span>
+
+<span class="sd">        cprid : int</span>
+<span class="sd">            Identifier of the Collection Protocoll Registration to which the visit belongs to.</span>
+<span class="sd">            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.</span>
+
+<span class="sd">        ppid : string</span>
+<span class="sd">            Identifier of the Participant to whom the visit belongs to.</span>
+<span class="sd">            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.</span>
+
+<span class="sd">        cptitle : string</span>
+<span class="sd">            Name of the Collection Protocol.</span>
+<span class="sd">            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.</span>
+
+<span class="sd">        cpshorttitle : title</span>
+<span class="sd">            Acronym of the Collection Protocol.</span>
+<span class="sd">            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.</span>
+
+<span class="sd">        cpid : int</span>
+<span class="sd">            Identifier of the Collection Protocol.</span>
+<span class="sd">            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.</span>
+
+<span class="sd">        diagnosis : string</span>
+<span class="sd">            Name of the diagnoses of the visit.</span>
+
+<span class="sd">        clinicalstatus : string</span>
+<span class="sd">            Clinical Status of the visit.[optional]</span>
+
+<span class="sd">        activity : string</span>
+<span class="sd">            Activity Status of the Visit.[optional]</span>
+
+<span class="sd">        visitstatus : string</span>
+<span class="sd">            Status of the visit.[optional]</span>
+
+<span class="sd">        missedreason : string</span>
+<span class="sd">            Reason why the visit was missed.[optional]</span>
+
+<span class="sd">        missedby : string</span>
+<span class="sd">            Details of the person who missed the visit.[optional]</span>
+
+<span class="sd">        comments : string</span>
+<span class="sd">            Comments regarding the visit.[optional]</span>
+
+<span class="sd">        pathologynumber : string</span>
+<span class="sd">            Surgical Pathology number. [optional]</span>
+
+<span class="sd">        cohort : string</span>
+<span class="sd">            Cohorts to which the visit belongs to. [optional]</span>
+
+<span class="sd">        visitdate : string</span>
+<span class="sd">            Date when the visit will occur, if empty takes the current date.[optional]</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            Details of the visit as JSON dict or the Openspecimen&#39;s error message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">vis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jsons</span><span class="o">.</span><span class="n">add_visit_json</span><span class="p">(</span><span class="n">cprid</span><span class="o">=</span><span class="n">cprid</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">site</span><span class="o">=</span><span class="n">site</span><span class="p">,</span> <span class="n">eventid</span><span class="o">=</span><span class="n">eventid</span><span class="p">,</span> <span class="n">eventlabel</span><span class="o">=</span><span class="n">eventlabel</span><span class="p">,</span> <span class="n">ppid</span><span class="o">=</span><span class="n">ppid</span><span class="p">,</span> <span class="n">cptitle</span><span class="o">=</span><span class="n">cptitle</span><span class="p">,</span> 
+                                        <span class="n">cpshorttitle</span><span class="o">=</span><span class="n">cpshorttitle</span><span class="p">,</span> <span class="n">diagnosis</span><span class="o">=</span><span class="n">diagnosis</span><span class="p">,</span><span class="n">clinicalstatus</span><span class="o">=</span><span class="n">clinicalstatus</span><span class="p">,</span> <span class="n">activity</span><span class="o">=</span><span class="n">activity</span><span class="p">,</span>
+                                        <span class="n">visitstatus</span><span class="o">=</span><span class="n">visitstatus</span><span class="p">,</span> <span class="n">missedreason</span><span class="o">=</span><span class="n">missedreason</span><span class="p">,</span> <span class="n">missedby</span><span class="o">=</span><span class="n">missedby</span><span class="p">,</span> <span class="n">comments</span><span class="o">=</span><span class="n">comments</span><span class="p">,</span>
+                                        <span class="n">pathologynumber</span><span class="o">=</span><span class="n">pathologynumber</span><span class="p">,</span> <span class="n">cohort</span><span class="o">=</span><span class="n">cohort</span><span class="p">,</span> <span class="n">visitdate</span><span class="o">=</span><span class="n">visitdate</span><span class="p">,</span> <span class="n">cpid</span><span class="o">=</span><span class="n">cpid</span><span class="p">)</span>
+        
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visit</span><span class="o">.</span><span class="n">add_visit</span><span class="p">(</span><span class="n">params</span> <span class="o">=</span> <span class="n">vis</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">r</span></div>
+
+
+<div class="viewcode-block" id="visit_util.add_visit_speci"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_util.html#OpenSpecimenAPIconnector.os_util.visit_util.visit_util.add_visit_speci">[docs]</a>    <span class="k">def</span> <span class="nf">add_visit_speci</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>  <span class="n">name</span><span class="p">,</span> <span class="n">lineage</span><span class="p">,</span> <span class="n">av_qty</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">init_qty</span><span class="p">,</span> <span class="n">spec_class</span><span class="p">,</span> <span class="n">spec_type</span><span class="p">,</span> <span class="n">anat_site</span><span class="p">,</span> <span class="n">site</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span>
+                        <span class="n">speclabel</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">eventid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">eventlabel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cprid</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ppid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cptitle</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cpshorttitle</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">cpid</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">diagnosis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">clinicalstatus</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">activity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">visitstatus</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">missedreason</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">missedby</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comments</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pathologynumber</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cohort</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">visitdate</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">laterality</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rec_qlt</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>                        
+                        <span class="n">colltime</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">rectime</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s2">&quot;Collected&quot;</span><span class="p">,</span> <span class="n">stor_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">storlocx</span> <span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">storlocy</span> <span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">concentration</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                        <span class="n">biohazrad</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">collproc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">conttype</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">extensionudn</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">extensionmap</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                        <span class="n">extensiondict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Add a visit and a specimen in one call.</span>
+<span class="sd">        </span>
+<span class="sd">        Add a visit and a specimen in OpenSpecimen via one API call. To use this function, one has to know the</span>
+<span class="sd">        Parameters of the participant, event and site.</span>
+
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        Mandatory fields are -cprId or (ppid and cpTitle) or (ppid and cpShortTitle) or (ppid and cpid)</span>
+<span class="sd">        - name, site</span>
+<span class="sd">        The label is mandatory if the Protocolsettings are such that the Label is created manually, otherwise</span>
+<span class="sd">        it has to be left empty.  </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        cprid : int</span>
+<span class="sd">            Identifier of the Collection Protocoll Registration to which the visit belongs to.</span>
+<span class="sd">            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.</span>
+
+<span class="sd">        name : string</span>
+<span class="sd">            Name of the Visit.</span>
+<span class="sd">        </span>
+<span class="sd">        lineage : string</span>
+<span class="sd">            Lineage of the specimen, if created it is New.</span>
+<span class="sd">        </span>
+<span class="sd">        av_qty : int</span>
+<span class="sd">            The available quantity of a specimen.</span>
+<span class="sd">        </span>
+<span class="sd">        user : int</span>
+<span class="sd">            ID of the user who creates the specimen. If not specified the API user is taken.</span>
+<span class="sd">        </span>
+<span class="sd">        init_qty : int</span>
+<span class="sd">            The initial quantity of a specimen.</span>
+
+<span class="sd">        spec_class : string</span>
+<span class="sd">            Class of the specimen.</span>
+<span class="sd">        </span>
+<span class="sd">        spec_type : string</span>
+<span class="sd">            Type of the specimen, belongs to the class.</span>
+<span class="sd">        </span>
+<span class="sd">        anat_site : string</span>
+<span class="sd">            The anatomic site of the specimen.</span>
+
+<span class="sd">        site : string</span>
+<span class="sd">            Site to which the visit belongs to.</span>
+<span class="sd">        site,</span>
+<span class="sd">        eventid : int</span>
+<span class="sd">            ID of the event to which the visit belongs to.[optional]</span>
+<span class="sd">        </span>
+<span class="sd">        eventlabel : string</span>
+<span class="sd">            Label of the event to which the visit belongs to.[optional]</span>
+<span class="sd">        </span>
+<span class="sd">        ppid : string</span>
+<span class="sd">            Identifier of the Participant to whom the visit belongs to.</span>
+<span class="sd">            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.</span>
+<span class="sd">        </span>
+<span class="sd">        cptitle : string</span>
+<span class="sd">            Name of the Collection Protocol.</span>
+<span class="sd">            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.</span>
+<span class="sd">        </span>
+<span class="sd">        cpshorttitle : title</span>
+<span class="sd">            Acronym of the Collection Protocol.</span>
+<span class="sd">            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.</span>
+<span class="sd">        </span>
+<span class="sd">        cpid : int</span>
+<span class="sd">            Identifier of the Collection Protocol.</span>
+<span class="sd">            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.</span>
+
+<span class="sd">        diagnosis : string</span>
+<span class="sd">            Name of the diagnoses of the visit.</span>
+<span class="sd">        </span>
+<span class="sd">        clinicalstatus : string</span>
+<span class="sd">            Clinical Status of the visit.[optional]</span>
+<span class="sd">        </span>
+<span class="sd">        activity : stringsite,</span>
+<span class="sd">            Activity Status of the visit.[optional]</span>
+
+<span class="sd">        visitstatus : string</span>
+<span class="sd">            Status of the visit.[optional]</span>
+
+<span class="sd">        missedreason : string</span>
+<span class="sd">            Reason why the visit was missed.[optional]</span>
+
+<span class="sd">        missedby : string</span>
+<span class="sd">            Details of the person who missed the visit.[optional]</span>
+
+<span class="sd">        comments : string</span>
+<span class="sd">            Comments regarding the visit.[optional]</span>
+<span class="sd">        </span>
+<span class="sd">        pathologynumber : string</span>
+<span class="sd">            Surgical Pathology number. [optional]</span>
+<span class="sd">        </span>
+<span class="sd">        cohort : string</span>
+<span class="sd">            Cohorts to which the visit belongs to. [optional]</span>
+
+<span class="sd">        visitdate : string</span>
+<span class="sd">            Date when the visit will occur, if empty takes the current date.[optional]</span>
+<span class="sd">        </span>
+<span class="sd">        pathology : string</span>
+<span class="sd">            Pathologystatus of the Specimen.</span>
+<span class="sd">        </span>
+<span class="sd">        laterality : string</span>
+<span class="sd">            The laterality of the specimen.</span>
+<span class="sd">               </span>
+<span class="sd">        recqlt : string</span>
+<span class="sd">            The received quality.</span>
+<span class="sd">   </span>
+<span class="sd">        colltime : string</span>
+<span class="sd">            Date and Time of the collection event, the format is in the OpenSpecimen&#39;s System configuration.[optional]</span>
+<span class="sd">            </span>
+<span class="sd">        rectime : string</span>
+<span class="sd">            Date and Time of the received event, the format is in the OpenSpecimen&#39;s System configuration.[optional]</span>
+<span class="sd">                        </span>
+<span class="sd">        status : string</span>
+<span class="sd">            Status of the Specimen, default is &#39;Collected&#39;.</span>
+<span class="sd">        </span>
+<span class="sd">        stor_name : string</span>
+<span class="sd">            Name of the container. [optional]</span>
+<span class="sd">        </span>
+<span class="sd">        storlocx : int</span>
+<span class="sd">            Position of the specimen in the Container in x direction.[optional]</span>
+
+<span class="sd">        storlocy : int</span>
+<span class="sd">            Position of the specimen in the container in y direction.[optional]</span>
+<span class="sd">            </span>
+<span class="sd">        concetration  : int</span>
+<span class="sd">            Concentration of the specimen[optional].</span>
+<span class="sd">        </span>
+<span class="sd">        biohazard : string</span>
+<span class="sd">            Biohazards of that specimen.[optional]</span>
+<span class="sd">                    </span>
+<span class="sd">        comments : string</span>
+<span class="sd">            Comments regarding to the specimen[optional].</span>
+<span class="sd">        </span>
+<span class="sd">        collproc : string</span>
+<span class="sd">            The procedure of the collection[otpional].</span>
+
+<span class="sd">        conttype : string</span>
+<span class="sd">            Type of the storage container.</span>
+<span class="sd">            </span>
+<span class="sd">        extensionudn : string</span>
+<span class="sd">            OpenSpecimen&#39;s boolean true/false. If true, the extension keys are the udn values of the corresponding form.[optional]</span>
+<span class="sd">        </span>
+<span class="sd">        extensionmap : string</span>
+<span class="sd">            The name of the form which should be taken.[optional]</span>
+
+<span class="sd">        extensiondict : dict</span>
+<span class="sd">            The dictionary of the extensions, has to be created manually. Either with udn or name (as defined before). [optional]</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            Details of the visit and specimen as JSON dict or the Openspecimen&#39;s error message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">vis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jsons</span><span class="o">.</span><span class="n">add_visit_json</span><span class="p">(</span><span class="n">cprid</span><span class="o">=</span><span class="n">cprid</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">site</span><span class="o">=</span><span class="n">site</span><span class="p">,</span> <span class="n">eventid</span><span class="o">=</span><span class="n">eventid</span><span class="p">,</span> <span class="n">eventlabel</span><span class="o">=</span><span class="n">eventlabel</span><span class="p">,</span> <span class="n">ppid</span><span class="o">=</span><span class="n">ppid</span><span class="p">,</span> <span class="n">cptitle</span><span class="o">=</span><span class="n">cptitle</span><span class="p">,</span> 
+                                        <span class="n">cpshorttitle</span><span class="o">=</span><span class="n">cpshorttitle</span><span class="p">,</span> <span class="n">diagnosis</span><span class="o">=</span><span class="n">diagnosis</span><span class="p">,</span><span class="n">clinicalstatus</span><span class="o">=</span><span class="n">clinicalstatus</span><span class="p">,</span> <span class="n">activity</span><span class="o">=</span><span class="n">activity</span><span class="p">,</span>
+                                        <span class="n">visitstatus</span><span class="o">=</span><span class="n">visitstatus</span><span class="p">,</span> <span class="n">missedreason</span><span class="o">=</span><span class="n">missedreason</span><span class="p">,</span> <span class="n">missedby</span><span class="o">=</span><span class="n">missedby</span><span class="p">,</span> <span class="n">comments</span><span class="o">=</span><span class="n">comments</span><span class="p">,</span>
+                                        <span class="n">pathologynumber</span><span class="o">=</span><span class="n">pathologynumber</span><span class="p">,</span> <span class="n">cohort</span><span class="o">=</span><span class="n">cohort</span><span class="p">,</span> <span class="n">visitdate</span><span class="o">=</span><span class="n">visitdate</span><span class="p">,</span> <span class="n">cpid</span><span class="o">=</span><span class="n">cpid</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">stor_name</span><span class="o">!=</span><span class="kc">None</span><span class="p">:</span>
+            <span class="n">storloc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jsons</span><span class="o">.</span><span class="n">storage_location_json</span><span class="p">(</span><span class="n">name</span><span class="o">=</span> <span class="n">stor_name</span><span class="p">,</span> <span class="n">xpos</span><span class="o">=</span><span class="n">storlocx</span><span class="p">,</span> <span class="n">ypos</span><span class="o">=</span> <span class="n">storlocy</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">storloc</span><span class="o">=</span><span class="kc">None</span>
+
+        <span class="n">speci</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jsons</span><span class="o">.</span><span class="n">create_specimen_json</span><span class="p">(</span><span class="n">lineage</span><span class="o">=</span><span class="n">lineage</span><span class="p">,</span>  <span class="n">avaqty</span><span class="o">=</span><span class="n">av_qty</span><span class="p">,</span> <span class="n">userid</span><span class="o">=</span><span class="n">user</span><span class="p">,</span> <span class="n">initqty</span><span class="o">=</span><span class="n">init_qty</span><span class="p">,</span> <span class="n">colltime</span><span class="o">=</span><span class="n">colltime</span><span class="p">,</span>
+                                        <span class="n">specimenclass</span><span class="o">=</span><span class="n">spec_class</span><span class="p">,</span> <span class="n">specimentype</span><span class="o">=</span><span class="n">spec_type</span><span class="p">,</span> <span class="n">anatomic</span><span class="o">=</span><span class="n">anat_site</span><span class="p">,</span> <span class="n">storloc</span> <span class="o">=</span> <span class="n">storloc</span><span class="p">,</span>
+                                        <span class="n">label</span><span class="o">=</span><span class="n">speclabel</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="p">,</span> <span class="n">conttype</span> <span class="o">=</span> <span class="n">conttype</span><span class="p">,</span> <span class="n">collproc</span><span class="o">=</span><span class="n">collproc</span><span class="p">,</span> <span class="n">recqlt</span><span class="o">=</span><span class="n">rec_qlt</span><span class="p">,</span>
+                                        <span class="n">concentration</span><span class="o">=</span><span class="n">concentration</span><span class="p">,</span> <span class="n">pathology</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">laterality</span><span class="o">=</span><span class="n">laterality</span><span class="p">,</span> <span class="n">rectime</span><span class="o">=</span><span class="n">rectime</span><span class="p">)</span>
+
+        <span class="n">vis</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">vis</span><span class="p">)</span>
+        <span class="n">speci</span><span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">speci</span><span class="p">)</span>
+
+        <span class="n">params</span><span class="o">=</span><span class="p">{}</span>
+        <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;visit&quot;</span><span class="p">:</span><span class="n">vis</span><span class="p">,</span>
+            <span class="s2">&quot;specimens&quot;</span><span class="p">:[</span><span class="n">speci</span><span class="p">]}</span>
+
+        <span class="n">params</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+        
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visit</span><span class="o">.</span><span class="n">add_visit_specimen</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">r</span></div>
+    
+
+<div class="viewcode-block" id="visit_util.update_visit"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_util.html#OpenSpecimenAPIconnector.os_util.visit_util.visit_util.update_visit">[docs]</a>    <span class="k">def</span> <span class="nf">update_visit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">visitid</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">site</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">eventid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">eventlabel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cprid</span><span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ppid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cptitle</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                    <span class="n">cpshorttitle</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">diagnosis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">clinicalstatus</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">activity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">visitstatus</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">missedreason</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="n">missedby</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comments</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pathologynumber</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cohort</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">visitdate</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cpid</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;Updating a visit</span>
+
+<span class="sd">        Update an existing visit with ID visitid and the parameters params. All parameters are</span>
+<span class="sd">        optional for updating and  those which are not passed stay the same. Those parameters and </span>
+<span class="sd">        the visit Id have to be known to use this function and can</span>
+<span class="sd">        be found out in the GUI by clicking on a participant and the visit. It looks like:</span>
+<span class="sd">        http(s)://&lt;host&gt;:&lt;port&gt;/openspeicmen/cp-view/{cpid}/participant/{cprid}/visits/detail/ocerview?visitId={visitid}&amp;eventId={eventId} .</span>
+<span class="sd">        Or via the function get_visit_namespr, when one knows the name of the visit and then extracts the id from there.</span>
+
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        All parameters are optional, except the visitid. The parameters which are not passed will stay the same.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        visitid : int </span>
+<span class="sd">            Id of the visit, gets converted to a string</span>
+<span class="sd">        </span>
+<span class="sd">        name : string</span>
+<span class="sd">            Name of the visit.</span>
+<span class="sd">        </span>
+<span class="sd">        site : string</span>
+<span class="sd">            Site to which the visit belongs to.</span>
+<span class="sd">        </span>
+<span class="sd">        eventid : int</span>
+<span class="sd">            ID of the event to which the visit belongs to.[optional]</span>
+<span class="sd">        </span>
+<span class="sd">        eventlabel : string</span>
+<span class="sd">            Label of the event to which the visit belongs to.[optional]</span>
+<span class="sd">        </span>
+<span class="sd">        cprid : int</span>
+<span class="sd">            Identifier of the Collection Protocoll Registration to which the visit belongs to.</span>
+<span class="sd">            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.</span>
+
+<span class="sd">        ppid : string</span>
+<span class="sd">            Identifier of the Participant to whom the visit belongs to.</span>
+<span class="sd">            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.</span>
+<span class="sd">        </span>
+<span class="sd">        cptitle : string</span>
+<span class="sd">            Name of the Collection Protocol.</span>
+<span class="sd">            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.</span>
+<span class="sd">        </span>
+<span class="sd">        cpshorttitle : title</span>
+<span class="sd">            Acronym of the Collection Protocol.</span>
+<span class="sd">            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.</span>
+<span class="sd">        </span>
+<span class="sd">        cpid : int</span>
+<span class="sd">            Identifier of the Collection Protocol.</span>
+<span class="sd">            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.</span>
+
+<span class="sd">        diagnosis : string</span>
+<span class="sd">            Name of the diagnoses of the visit.</span>
+<span class="sd">        </span>
+<span class="sd">        clinicalstatus : string</span>
+<span class="sd">            Clinical Status of the visit.[optional]</span>
+<span class="sd">        </span>
+<span class="sd">        activity : string</span>
+<span class="sd">            Activity Status of the visit.[optional]</span>
+
+<span class="sd">        visitstatus : string</span>
+<span class="sd">            Status of the visit.[optional]</span>
+
+<span class="sd">        missedreason : string</span>
+<span class="sd">            Reason why the visit was missed.[optional]</span>
+
+<span class="sd">        missedby : string</span>
+<span class="sd">            Details of the person who missed the visit.[optional]</span>
+
+<span class="sd">        comments : string</span>
+<span class="sd">            Comments regarding the visit.[optional]</span>
+<span class="sd">        </span>
+<span class="sd">        pathologynumber : string</span>
+<span class="sd">            Surgical Pathology number. [optional]</span>
+<span class="sd">        </span>
+<span class="sd">        cohort : string</span>
+<span class="sd">            Cohorts to which the visit belongs to. [optional]</span>
+
+<span class="sd">        visitdate : string</span>
+<span class="sd">            Date when the visit will occur, if empty takes the current date.[optional]</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            JSON-dict with details of the updated visit or OpenSpecimens Error message</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">vis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jsons</span><span class="o">.</span><span class="n">add_visit_json</span><span class="p">(</span><span class="n">cprid</span><span class="o">=</span><span class="n">cprid</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">site</span><span class="o">=</span><span class="n">site</span><span class="p">,</span> <span class="n">eventid</span><span class="o">=</span><span class="n">eventid</span><span class="p">,</span> <span class="n">eventlabel</span><span class="o">=</span><span class="n">eventlabel</span><span class="p">,</span> <span class="n">ppid</span><span class="o">=</span><span class="n">ppid</span><span class="p">,</span> <span class="n">cptitle</span><span class="o">=</span><span class="n">cptitle</span><span class="p">,</span> 
+                                        <span class="n">cpshorttitle</span><span class="o">=</span><span class="n">cpshorttitle</span><span class="p">,</span> <span class="n">diagnosis</span><span class="o">=</span><span class="n">diagnosis</span><span class="p">,</span><span class="n">clinicalstatus</span><span class="o">=</span><span class="n">clinicalstatus</span><span class="p">,</span> <span class="n">activity</span><span class="o">=</span><span class="n">activity</span><span class="p">,</span>
+                                        <span class="n">visitstatus</span><span class="o">=</span><span class="n">visitstatus</span><span class="p">,</span> <span class="n">missedreason</span><span class="o">=</span><span class="n">missedreason</span><span class="p">,</span> <span class="n">missedby</span><span class="o">=</span><span class="n">missedby</span><span class="p">,</span> <span class="n">comments</span><span class="o">=</span><span class="n">comments</span><span class="p">,</span>
+                                        <span class="n">pathologynumber</span><span class="o">=</span><span class="n">pathologynumber</span><span class="p">,</span> <span class="n">cohort</span><span class="o">=</span><span class="n">cohort</span><span class="p">,</span> <span class="n">visitdate</span><span class="o">=</span><span class="n">visitdate</span><span class="p">,</span> <span class="n">cpid</span><span class="o">=</span><span class="n">cpid</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visit</span><span class="o">.</span><span class="n">update_visit</span><span class="p">(</span><span class="n">visitid</span> <span class="o">=</span> <span class="n">visitid</span><span class="p">,</span> <span class="n">params</span> <span class="o">=</span> <span class="n">vis</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">r</span></div>
+
+<div class="viewcode-block" id="visit_util.search_visit_namespr"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_util.html#OpenSpecimenAPIconnector.os_util.visit_util.visit_util.search_visit_namespr">[docs]</a>    <span class="k">def</span> <span class="nf">search_visit_namespr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">visitname</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sprnumber</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Get a Visit by the name or the Surgical pathology number</span>
+
+<span class="sd">        Get one or more visits by the name or the surgical pathology number. Those parameters have to be known </span>
+<span class="sd">        in order to know this function. If just the visitname is passed, one returns a visit with the corresponding name.</span>
+<span class="sd">        If just the surgical pathology number is passed it returns all visits with this number. If both are passed</span>
+<span class="sd">        it works as logical AND.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        visitname : string</span>
+<span class="sd">            Substring of the name of the visit.</span>
+
+<span class="sd">        sprnumber : string</span>
+<span class="sd">            Surgical Pathology number of the visits.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            JSON-dict with details of the visits.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">searchstring</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">search_visit_name_spr</span><span class="p">(</span><span class="n">visitname</span> <span class="o">=</span> <span class="n">visitname</span><span class="p">,</span> <span class="n">sprnumber</span> <span class="o">=</span> <span class="n">sprnumber</span><span class="p">)</span>
+
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visit</span><span class="o">.</span><span class="n">get_visit_namespr</span><span class="p">(</span><span class="n">search_string</span> <span class="o">=</span><span class="n">searchstring</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">r</span></div>
+    
+<div class="viewcode-block" id="visit_util.search_visit_cprid"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_util.html#OpenSpecimenAPIconnector.os_util.visit_util.visit_util.search_visit_cprid">[docs]</a>    <span class="k">def</span> <span class="nf">search_visit_cprid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cprid</span><span class="p">,</span> <span class="n">includestats</span> <span class="o">=</span> <span class="s2">&quot;false&quot;</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;Get a Visit by the Collection protocol Registration Id.</span>
+
+<span class="sd">        Get a visit by the Collection Protocoll Registration ID. Those parameters have to be known </span>
+<span class="sd">        in order to know this function. They can be extracted from calling a search function in the </span>
+<span class="sd">        os_core class visits.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        cprid : int</span>
+<span class="sd">            Identifier of the collection protocol registration.</span>
+<span class="sd">        </span>
+<span class="sd">        includestats : string</span>
+<span class="sd">            OpenSpecimen&#39;s boolean true/false. If true the stats of the participants, e.g. number of visits are included.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            JSON-dict with details of the visit.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">searchstring</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">search_visit_cprid</span><span class="p">(</span><span class="n">cprid</span> <span class="o">=</span> <span class="n">cprid</span><span class="p">,</span> <span class="n">includestats</span> <span class="o">=</span> <span class="n">includestats</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visit</span><span class="o">.</span><span class="n">get_visits_cpr</span><span class="p">(</span><span class="n">search_string</span> <span class="o">=</span> <span class="n">searchstring</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">r</span></div></div>
+        
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Christian Schorn, Simon Streit.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

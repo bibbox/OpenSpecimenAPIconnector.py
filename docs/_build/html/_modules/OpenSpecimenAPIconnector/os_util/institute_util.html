@@ -1,0 +1,270 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>OpenSpecimenAPIconnector.os_util.institute_util &mdash; OpenSpecimenAPIConnector 0.9.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> OpenSpecimenAPIConnector
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stuff.html">Paragraph Level Markup</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/OpenSpecimenAPIconnector.html">OpenSpecimenAPIconnector package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">OpenSpecimenAPIConnector</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>OpenSpecimenAPIconnector.os_util.institute_util</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for OpenSpecimenAPIconnector.os_util.institute_util</h1><div class="highlight"><pre>
+<span></span><span class="ch">#! /bin/python3</span>
+
+
+<span class="kn">from</span> <span class="nn">..os_core.url</span> <span class="k">import</span> <span class="n">url_gen</span>
+<span class="kn">from</span> <span class="nn">..os_core.jsons</span> <span class="k">import</span> <span class="n">Json_factory</span>
+<span class="kn">from</span> <span class="nn">..os_core.institute</span> <span class="k">import</span> <span class="n">institutes</span>
+
+
+<div class="viewcode-block" id="institutes_util"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_util.html#OpenSpecimenAPIconnector.os_util.institute_util.institutes_util">[docs]</a><span class="k">class</span> <span class="nc">institutes_util</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;Handles the API calls for the institutes</span>
+
+<span class="sd">    Handles the OpenSpecimen API calls for the institutes. This class can </span>
+<span class="sd">    create, and update institutes. The other calls are in the os_core class institutes.</span>
+<span class="sd">    </span>
+<span class="sd">    Note</span>
+<span class="sd">    -----</span>
+<span class="sd">    In order to use this and also the other classes, the user has to know OpenSpecimen. </span>
+<span class="sd">    The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and </span>
+<span class="sd">    the calls refer to this site. More details can be seen in the documentation.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    A code Examples, where the institutes are handled is in the Jupyter-Notebook:</span>
+
+<span class="sd">        $ jupyter notebook main.ipynb</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Constructor of the Class institutes_util</span>
+
+<span class="sd">        Constructor of the class institutes_util, can handle the  API-calls</span>
+<span class="sd">        to create and update the institutes in OpenSpecimen. Connects this class os_core</span>
+<span class="sd">        classes institutes and Json_factory</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        base_url : string</span>
+<span class="sd">            URL to openspecimen, has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng</span>
+<span class="sd">        auth : tuple</span>
+<span class="sd">            Consists of two strings ( loginname , password)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">institutes</span> <span class="o">=</span> <span class="n">institutes</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jsons</span> <span class="o">=</span> <span class="n">Json_factory</span><span class="p">()</span>
+
+<div class="viewcode-block" id="institutes_util.create_institute"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_util.html#OpenSpecimenAPIconnector.os_util.institute_util.institutes_util.create_institute">[docs]</a>    <span class="k">def</span> <span class="nf">create_institute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">institutename</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Creates an Institute.</span>
+
+<span class="sd">        Creates an Institute in OpenSpecimen. </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        institutename : string</span>
+<span class="sd">            the name of the institute.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jsons</span><span class="o">.</span><span class="n">create_institute</span><span class="p">(</span><span class="n">institutename</span> <span class="o">=</span> <span class="n">institutename</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">institutes</span><span class="o">.</span><span class="n">create_institute</span><span class="p">(</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">r</span></div></div>
+        
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Christian Schorn, Simon Streit.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,493 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>OpenSpecimenAPIconnector.os_core.collection_protocol &mdash; OpenSpecimenAPIConnector 0.9.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> OpenSpecimenAPIConnector
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stuff.html">Paragraph Level Markup</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/OpenSpecimenAPIconnector.html">OpenSpecimenAPIconnector package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">OpenSpecimenAPIConnector</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>OpenSpecimenAPIconnector.os_core.collection_protocol</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for OpenSpecimenAPIconnector.os_core.collection_protocol</h1><div class="highlight"><pre>
+<span></span><span class="ch">#! /bin/python3</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">.req_util</span> <span class="k">import</span> <span class="n">OS_request_gen</span>
+<span class="kn">from</span> <span class="nn">.jsons</span> <span class="k">import</span> <span class="n">Json_factory</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">config_manager</span>
+
+<div class="viewcode-block" id="collection_protocol"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.collection_protocol.collection_protocol">[docs]</a><span class="k">class</span> <span class="nc">collection_protocol</span><span class="p">():</span>
+
+    <span class="sd">&quot;&quot;&quot;Handles the calls Collection Protocol</span>
+
+<span class="sd">    This class handles the API calls for OpenSpecimen Collection Protocol. It can create, delete, </span>
+<span class="sd">    search a Protocol with different parameters, can get all Collection Protocols in the system and can </span>
+<span class="sd">    get the template of the Collection Protocols as JSON dict or as Pandas dataframe.</span>
+<span class="sd">    The output is a JSON dict or the error message as JSON dict, except the Pandas dataframe.</span>
+<span class="sd">    </span>
+
+<span class="sd">    Note</span>
+<span class="sd">    -----</span>
+<span class="sd">    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes, one can</span>
+<span class="sd">    just pass the parameters via a JSON-formatted string. This means the user has to know the keywords.</span>
+<span class="sd">    The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and </span>
+<span class="sd">    the calls refer to this site. More details can be seen in the documentation.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    A code Examples, where the Collection protocols are handled, is in the Jupyter-Notebook</span>
+
+<span class="sd">        $ jupyter notebook main.ipynb</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Constructor of the Class collection_protocol</span>
+
+<span class="sd">        Constructor of the class collection_protocol can handle the basic API-calls</span>
+<span class="sd">        of the collection protocol in OpenSpecimen. Connects this class to OpenSpecimen</span>
+<span class="sd">        specific request handle (os_core.request_util.py).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        base_url : string</span>
+<span class="sd">            URL to openspecimen, has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng</span>
+<span class="sd">        auth : tuple</span>
+<span class="sd">            Consists of two strings (loginname , password)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">=</span> <span class="n">config_manager</span><span class="o">.</span><span class="n">get_url</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;/collection-protocols&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">auth</span> <span class="o">=</span> <span class="n">config_manager</span><span class="o">.</span><span class="n">get_auth</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span> <span class="o">=</span> <span class="n">OS_request_gen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">auth</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jsons</span> <span class="o">=</span> <span class="n">Json_factory</span><span class="p">()</span>
+
+<div class="viewcode-block" id="collection_protocol.ausgabe"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.collection_protocol.collection_protocol.ausgabe">[docs]</a>    <span class="k">def</span> <span class="nf">ausgabe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Testing of the URL and authentification.</span>
+
+<span class="sd">        If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.</span>
+<span class="sd">        The function prints the URL and login data to the output terminal, which was handed over to the class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">auth</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="collection_protocol.create_collection_protocol"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.collection_protocol.collection_protocol.create_collection_protocol">[docs]</a>    <span class="k">def</span> <span class="nf">create_collection_protocol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Creates a Collection Protocol</span>
+
+<span class="sd">        Creates a Collection Protocol in OpenSpecimen. In order to use this function, one has to know</span>
+<span class="sd">        the parameters which OpenSpecimen needs to create a protocol. One can use it via the os_util class</span>
+<span class="sd">        collection_protocol_util. This allows just the basic definition, if one has Extensions </span>
+<span class="sd">        e.g. BBMRI contact, this fields have to be added separately. </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        params : string</span>
+<span class="sd">            JSON formatted string with parameters: title, shortTitle, code[optional], startDate[optional],</span>
+<span class="sd">            endDate[optional], principalInvestigator, coordinators[optional], irbId[optonal],</span>
+<span class="sd">            anticipatedParticipantsCount[optional], activityStatus, visitNameFmt[optional],</span>
+<span class="sd">            specimenLabel[optional], derivedlabelFormat[optional], ppIdFormat[optional], cpSites,</span>
+<span class="sd">            manualPpidEnabled[optional], manualVisitNameEnabled[optional], manualSpecLabelEnabled[optional]</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        json-dict</span>
+<span class="sd">            Either error details of the created protocol </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">post_request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">payload</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="collection_protocol.delete_collection_protocol"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.collection_protocol.collection_protocol.delete_collection_protocol">[docs]</a>    <span class="k">def</span> <span class="nf">delete_collection_protocol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cpid</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Delete a Collection Protocol with OpenSpecimens unique CollectionProtocolID</span>
+
+<span class="sd">        Delete an already existing Collection Protocol. The Parameters &lt;cpid&gt; is the uniqe ID of the Collection Protocol</span>
+<span class="sd">        which is generated automatically from OpenSpecimen. To get the ID, one can click in the GUI on the Collection Protocol</span>
+<span class="sd">        Details button and read it from the URL, with the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/#/cp-view/{cpid}/overview.</span>
+<span class="sd">        Another possibility is to search via &#39;search_collection_protocols&#39; for a specific Parameters and then extract the ID</span>
+<span class="sd">        from the JSON-dict which gets returned.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        cpid: int</span>
+<span class="sd">            The unique ID of the collection protocol which OpenSpecimen creates itself as a string or integer. </span>
+<span class="sd">            It will get converted to a string.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-dict</span>
+<span class="sd">            Details of the Collection Protocol which is deleted or the OpenSpecimen error message as dict.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">cpid</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">delete_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="collection_protocol.search_collection_protocols"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.collection_protocol.collection_protocol.search_collection_protocols">[docs]</a>    <span class="k">def</span> <span class="nf">search_collection_protocols</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">search_string</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Search for  Collection Protocols with specific values.</span>
+
+<span class="sd">        Search for one or more Collection Protocols with the search_string defined. The search string looks like:</span>
+<span class="sd">        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/np/collection-protocols?{param_1}={value_1}&amp;...&amp;{param_x}={value_x}</span>
+<span class="sd">        With the class collection_protocol_util from os_util and function &lt;search_cps&gt; the search string is generated</span>
+<span class="sd">        and this function is called. Not all keys from OpenSpecimen can be easily searched for.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        search_string : string</span>
+<span class="sd">            String with the following format: ?{param_1}={value_1}&amp;...&amp;{param_x}={value_x} . The parameters can be one of the following:</span>
+<span class="sd">            searchString (OpenSpecimen&#39;s AQL)[optional], title[optional], piId (Principa Investigator)[optional], </span>
+<span class="sd">            repositoryName[optional], startAt[optional], maxResults[optional], detailedList[optional]</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-dict</span>
+<span class="sd">            [Details of the matching Collection Protocols, if no one matches it, is an empty list.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span>  <span class="nb">str</span><span class="p">(</span><span class="n">search_string</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="o">+</span><span class="n">endpoint</span>
+        
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">get_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="collection_protocol.get_all_collection_protocols"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.collection_protocol.collection_protocol.get_all_collection_protocols">[docs]</a>    <span class="k">def</span> <span class="nf">get_all_collection_protocols</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Get all Collection Protocol</span>
+
+<span class="sd">        Get all Collection Protocols within the OpenSpecimen distribution, which is defined in the base_url.</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-dict</span>
+<span class="sd">            Details of all Collection Protocols, which are in the OpenSpecimenDistribution.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">get_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="collection_protocol.get_collection_protocol"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.collection_protocol.collection_protocol.get_collection_protocol">[docs]</a>    <span class="k">def</span> <span class="nf">get_collection_protocol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cpid</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Get the Collection Protocol with the ID cpid</span>
+
+<span class="sd">        Get the details of the Collection Protocol with the unique ID cpid.</span>
+<span class="sd">        This ID is generated automatically from OpenSpecimen when the Protocol is created.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        cpid : int</span>
+<span class="sd">            The System&#39;s ID of the Collection Protocol will be converted to a string.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-dict</span>
+<span class="sd">            Details of the Collection Protocol with the specified ID, or the OpenSpecimen error message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">cpid</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">get_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="collection_protocol.merge_colelction_protocols"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.collection_protocol.collection_protocol.merge_colelction_protocols">[docs]</a>    <span class="k">def</span> <span class="nf">merge_colelction_protocols</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Merge two Collection Protocols</span>
+
+<span class="sd">        Merge two Collection Protocols which are defined in params. To call this function the short titles of</span>
+<span class="sd">        the source and target collection protocol have to be known. The Parameters &lt;params&gt; is a json-formatted string,</span>
+<span class="sd">        with keys srcCPShortTitle and tgtCpShorttitle. The merged Protocol is the one with short title tgtCpShortTitle,</span>
+<span class="sd">        with merge logic outer. </span>
+
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        Merging is restricted to Super Admins. The CPs must have the same format for PPID, visits and specimens. </span>
+<span class="sd">        Or the target CP has no specific formats. </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        params : string</span>
+<span class="sd">            JSON formatted string with keys srcCpShortTitle and tgtCpShortTitle and the corresponding short titles as values.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-dict</span>
+<span class="sd">            JSON dict with the short titles of the source and target Collection Protocols.           </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;/merge&#39;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">post_request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="collection_protocol.update_collection_protocol"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.collection_protocol.collection_protocol.update_collection_protocol">[docs]</a>    <span class="k">def</span> <span class="nf">update_collection_protocol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cpid</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Updates an existing Collection Protocol with ID cpid with the Parameters params</span>
+
+<span class="sd">            Updates an existing Collection Protocol with the automatically generated OpenSpecimen&#39;s system wide</span>
+<span class="sd">            unique Collection Protocol ID cpid, with the Parameters params which are passed to the function.</span>
+<span class="sd">            The ID of the Collection Protocol has to be known and can, for example, be seen in the GUI by clicking on </span>
+<span class="sd">            the Collection Protocol, which has the format http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/cps/{cpid}/... .</span>
+<span class="sd">            Or via the function search_collection_protocols or get_all_collection_protocols</span>
+
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">            For updating, all parameters are optional. Those parameters which are not passed to the function, will stay the same as before.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ---------</span>
+<span class="sd">        cpid : int</span>
+<span class="sd">            Unique Collection Protocol ID which is generated automatically from the System. It will be converted to a string.</span>
+
+<span class="sd">        params : string</span>
+<span class="sd">            JSON-formatted string with the parameters should get updated. The keys which can get updated are: </span>
+<span class="sd">            title, shortTitle, code[optional], startDate[optional], endDate[optional], principalInvestigator, </span>
+<span class="sd">            coordinators[optional], irbId[optonal], anticipatedParticipantsCount[optional], activityStatus, visitNameFmt[optional],</span>
+<span class="sd">            specimenLabel[optional], derivedlabelFormat[optional], ppIdFormat[optional], cpSites,</span>
+<span class="sd">            manualPpidEnabled[optional], manualVisitNameEnabled[optional], manualSpecLabelEnabled[optional]</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-dict</span>
+<span class="sd">            JSON-dict with the details of the updated Collection Protocol or the OpenSpecimen&#39;s error message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">cpid</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">put_request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="collection_protocol.get_cp_pandas_template"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.collection_protocol.collection_protocol.get_cp_pandas_template">[docs]</a>    <span class="k">def</span> <span class="nf">get_cp_pandas_template</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Template for the Collection Protocol</span>
+
+<span class="sd">        Template for the Collection Protocol as specified within the system. If, for Examples, some extension details</span>
+<span class="sd">        for the Collection Protocols exists, this function will return also those values. These values are converted into a pandas </span>
+<span class="sd">        dataframe, precisely, it is the header of a pandas data frame.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.core.dataframe</span>
+<span class="sd">            Empty pandas dataframe with OpenSpecimen keys as header inclusive extension details.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">site_template_endpoint</span> <span class="o">=</span> <span class="s2">&quot;/import-jobs/input-file-template?schema=cp&quot;</span>
+        <span class="n">site_template_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">site_template_endpoint</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">get_request</span><span class="p">(</span><span class="n">site_template_url</span><span class="p">)</span>
+        <span class="n">cp_pandas_template</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">decode</span><span class="p">()])</span>
+
+        <span class="k">return</span> <span class="n">cp_pandas_template</span></div></div>
+
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Christian Schorn, Simon Streit.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

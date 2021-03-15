@@ -621,6 +621,8 @@ class integrationTest:
         self.ID['event']=response['id']
         self.logFile.write(str(response)+ ' \n')
 
+        input()
+
         ##Visits
         #Create a Visit
         self.logFile.write('-Create a Visit- \n')

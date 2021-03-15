@@ -1,0 +1,503 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>OpenSpecimenAPIconnector.os_util.collection_protocol_util &mdash; OpenSpecimenAPIConnector 0.9.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> OpenSpecimenAPIConnector
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stuff.html">Paragraph Level Markup</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/OpenSpecimenAPIconnector.html">OpenSpecimenAPIconnector package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">OpenSpecimenAPIConnector</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>OpenSpecimenAPIconnector.os_util.collection_protocol_util</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for OpenSpecimenAPIconnector.os_util.collection_protocol_util</h1><div class="highlight"><pre>
+<span></span><span class="ch">#! /bin/python3</span>
+
+<span class="kn">from</span> <span class="nn">..os_core.collection_protocol</span> <span class="k">import</span> <span class="n">collection_protocol</span>
+<span class="kn">from</span> <span class="nn">..os_core.jsons</span> <span class="k">import</span> <span class="n">Json_factory</span>
+<span class="kn">from</span> <span class="nn">..os_core.url</span> <span class="k">import</span> <span class="n">url_gen</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<div class="viewcode-block" id="collection_protocol_util"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_util.html#OpenSpecimenAPIconnector.os_util.collection_protocol_util.collection_protocol_util">[docs]</a><span class="k">class</span> <span class="nc">collection_protocol_util</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;Utility class for Site API calls</span>
+
+<span class="sd">    This class handles the API calls for OpenSpecimen Collection Protocol. It can create, update, </span>
+<span class="sd">    search  and merge  Protocols.</span>
+<span class="sd">    The output is a JSON dict or the Error message as JSON dict, except the Pandas dataframe.</span>
+
+<span class="sd">    Note</span>
+<span class="sd">    -----</span>
+<span class="sd">    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can</span>
+<span class="sd">    just pass the parameters via JSON-formatted string. This means the user has to know the keywords.</span>
+<span class="sd">    The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and </span>
+<span class="sd">    the calls refer to this site. More details can be seen in the documentation.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    A code Examples, where the Collection protocols are handled is in the Jupyter-Notebook</span>
+
+<span class="sd">        $ jupyter notebook main.ipynb</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Constructor of the Class collection_protocol_util</span>
+
+<span class="sd">        Constructor of the class colelction_protocol, can handle the basic API-calls</span>
+<span class="sd">        of the collection protocol in OpenSpecimen. Connects this class to OpenSpecimen</span>
+<span class="sd">        specific request handle (os_core.request_util.py) and the os_core classes</span>
+<span class="sd">        Json_fatory, url_gen and collection_protocol</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        base_url : string</span>
+<span class="sd">            URL to openspecimen, has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng</span>
+<span class="sd">        auth : tuple</span>
+<span class="sd">            Consits of two strings ( loginname , password)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">jsons</span> <span class="o">=</span> <span class="n">Json_factory</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">urls</span> <span class="o">=</span> <span class="n">url_gen</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cps</span> <span class="o">=</span> <span class="n">collection_protocol</span><span class="p">()</span>
+
+  
+<div class="viewcode-block" id="collection_protocol_util.search_cps"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_util.html#OpenSpecimenAPIconnector.os_util.collection_protocol_util.collection_protocol_util.search_cps">[docs]</a>    <span class="k">def</span> <span class="nf">search_cps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">searchstring</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">piid</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">reponame</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">startat</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">maxresults</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">detailedlist</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Search for Colelction Protocols with specific values.</span>
+
+<span class="sd">        Search for one or more Collection Protocols with the search_string defined. The search string looks like:</span>
+<span class="sd">        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/np/collection-protocols?{param_1}={value_1}&amp;...&amp;{param_x}={value_x}</span>
+<span class="sd">        With the class collection_protocol_util from os_util and function &lt;search_cps&gt; the search string is generated</span>
+<span class="sd">        and this function is called. Not all keys from OpenSpecimen can be easily searched after.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        search_string : string</span>
+<span class="sd">            openSpecimen&#39;s Advanced Query Language[optional]. Substring of the title or shorttitle</span>
+
+<span class="sd">        title : string</span>
+<span class="sd">            Name of the desired Collection Protocol</span>
+<span class="sd">        </span>
+<span class="sd">        ppid : string or int</span>
+<span class="sd">            Id of the Pricincipal Investigator, gets converted to a string[optional].</span>
+<span class="sd">        </span>
+<span class="sd">        reponame : string</span>
+<span class="sd">            Name of the Repository in which the Collection Protocol is[optional].</span>
+<span class="sd">        </span>
+<span class="sd">        startat : int</span>
+<span class="sd">            Value which one of the outcomes is the first to show, if not specified OpenSpecimen takes 0.</span>
+<span class="sd">        </span>
+<span class="sd">        maxresults : int</span>
+<span class="sd">            Value how many Collection Protocols are shown, if not specified OpenSpecimen takes 100.</span>
+<span class="sd">        </span>
+<span class="sd">        detailedList: string</span>
+<span class="sd">            String in OpenSpecimen&#39;s boolean format, permissable values are true/false. If not specified, OpenSpecimen takes false.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-dict</span>
+<span class="sd">            [Details of the matching Collection Protocols, if no one matches it is an empty list.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">search_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">urls</span><span class="o">.</span><span class="n">cp_search_url_gen</span><span class="p">(</span><span class="n">searchstring</span> <span class="o">=</span> <span class="n">searchstring</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="n">title</span><span class="p">,</span> <span class="n">piid</span> <span class="o">=</span> <span class="n">piid</span><span class="p">,</span> <span class="n">reponame</span> <span class="o">=</span> <span class="n">reponame</span><span class="p">,</span>
+                                                    <span class="n">startat</span> <span class="o">=</span> <span class="n">startat</span><span class="p">,</span> <span class="n">maxresults</span> <span class="o">=</span> <span class="n">maxresults</span><span class="p">,</span> <span class="n">detailedlist</span> <span class="o">=</span> <span class="n">detailedlist</span><span class="p">)</span>
+
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cps</span><span class="o">.</span><span class="n">search_collection_protocols</span><span class="p">(</span><span class="n">search_string</span> <span class="o">=</span> <span class="n">search_string</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">r</span></div>
+
+<div class="viewcode-block" id="collection_protocol_util.merge_cps"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_util.html#OpenSpecimenAPIconnector.os_util.collection_protocol_util.collection_protocol_util.merge_cps">[docs]</a>    <span class="k">def</span> <span class="nf">merge_cps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src_cp</span><span class="p">,</span> <span class="n">trg_cp</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Merge two Collection protocols</span>
+
+<span class="sd">        Merge two Colelction Protocols which are defined in src_cp and trg_cp together. To call this function the short titles of</span>
+<span class="sd">        the source and target collection protocol has to be known. The merged Protocol is the one with short title tgtCpShortTitle,</span>
+<span class="sd">        with merge logic outer. </span>
+
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        Merging is restricted to Super Admins. The CPs must have the same format for PPI, visits and specimens. Or the target CP </span>
+<span class="sd">        has no specific formats. </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        src_cp : string</span>
+<span class="sd">            String with the shortTitle of the source collection Protocol.</span>
+<span class="sd">        </span>
+<span class="sd">        trgcp : string</span>
+<span class="sd">            String with the shortTitle of the target collection Protocol.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-dict</span>
+<span class="sd">            JSON dict with the short titles of the source and target Colelction Protocols.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jsons</span><span class="o">.</span><span class="n">merge_cps</span><span class="p">(</span><span class="n">src_cp</span> <span class="o">=</span> <span class="n">src_cp</span><span class="p">,</span> <span class="n">trg_cp</span> <span class="o">=</span> <span class="n">trg_cp</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cps</span><span class="o">.</span><span class="n">merge_colelction_protocols</span><span class="p">(</span><span class="n">params</span> <span class="o">=</span> <span class="n">data</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">r</span></div>
+
+
+<div class="viewcode-block" id="collection_protocol_util.create_cp"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_util.html#OpenSpecimenAPIconnector.os_util.collection_protocol_util.collection_protocol_util.create_cp">[docs]</a>    <span class="k">def</span> <span class="nf">create_cp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">short_title</span> <span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">pi_mail</span><span class="p">,</span> <span class="n">sites</span><span class="p">,</span> <span class="n">time_start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">time_end</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="n">man_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">consentsWaived</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">eth_cons_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">part_no</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">desc_url</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">visitNameFmt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">specimenLabelFmt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                           <span class="n">derivativeLabelFmt</span> <span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">man_visit_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">man_spec_label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">aliquots_in_same</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">activity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">aliquotLabelFmt</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ppidFmt</span><span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">specimenCentric</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;Create a Collection protocol with the given Parameters</span>
+<span class="sd">        </span>
+<span class="sd">        Create a collection protocol with the Parameters passed to the function.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        short_title : string</span>
+<span class="sd">            Short title of the Collection Protocol.</span>
+
+<span class="sd">        title : string</span>
+<span class="sd">            Title of the Collection Protocol.</span>
+
+<span class="sd">        pi_mail : string</span>
+<span class="sd">            Email Address of the Principal Investigator.</span>
+<span class="sd">        </span>
+<span class="sd">        time_start: string</span>
+<span class="sd">            String with the start_time of the collection Protocol in the timeformat specified in the System configuration.</span>
+<span class="sd">        </span>
+<span class="sd">        time_end: string</span>
+<span class="sd">            String with the end_time of the collection Protocol in the timeformat specified in the System configuration.</span>
+
+<span class="sd">        sites: list</span>
+<span class="sd">            Sites which are assigned to the collection Protocl.</span>
+<span class="sd">        </span>
+<span class="sd">        man_id : string</span>
+<span class="sd">            OpenSpecimen&#39;s boolean true/false if the manual PPID creation is enabled.</span>
+
+<span class="sd">        coords: dict</span>
+<span class="sd">            dict with Coordinators and coordinator ids in it.</span>
+
+<span class="sd">        consentsWaived : string</span>
+<span class="sd">            OpenSpecimen&#39;s boolean true/false if consent should be waived.</span>
+
+<span class="sd">        eth_cons_id : string</span>
+<span class="sd">            Ethical aproavel id.</span>
+
+<span class="sd">        part_no : string</span>
+<span class="sd">            String with number of anticipated Participant count.</span>
+
+<span class="sd">        desc_url = string</span>
+<span class="sd">            URL with the decription of the Collection Protocol.</span>
+<span class="sd">        </span>
+<span class="sd">        visitNameFMT : string</span>
+<span class="sd">            String which contains the OpenSpecimen&#39;s token for creating Visit Names automatically.</span>
+
+<span class="sd">        man_visit_name : string</span>
+<span class="sd">            String with OpenSpecimen&#39;s boolean format if the Visits should be created manually.</span>
+<span class="sd">        </span>
+<span class="sd">        man_spec_label : string</span>
+<span class="sd">            String with OpenSpecimen&#39;s boolean format if the Specimen Labels should be created manually.</span>
+<span class="sd">        </span>
+<span class="sd">        man_spec_label : string</span>
+<span class="sd">            String with OpenSpecimen&#39;s boolean format if the Aliquotes are stored in the same Container.</span>
+<span class="sd">        </span>
+<span class="sd">        activity : string</span>
+<span class="sd">            String with the acitivity status of the Specimen.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            Details of the created Collection Protocol, or the OpenSpecimen&#39;s error message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jsons</span><span class="o">.</span><span class="n">create_CP_json</span><span class="p">(</span><span class="n">short_title</span><span class="o">=</span><span class="n">short_title</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">pi_mail</span><span class="o">=</span><span class="n">pi_mail</span><span class="p">,</span> <span class="n">time_start</span><span class="o">=</span><span class="n">time_start</span><span class="p">,</span> <span class="n">time_end</span><span class="o">=</span><span class="n">time_end</span><span class="p">,</span>
+                    <span class="n">sites</span><span class="o">=</span><span class="n">sites</span><span class="p">,</span> <span class="n">man_id</span><span class="o">=</span><span class="n">man_id</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="n">coords</span><span class="p">,</span> <span class="n">consentsWaived</span><span class="o">=</span><span class="n">consentsWaived</span><span class="p">,</span> <span class="n">eth_cons_id</span><span class="o">=</span><span class="n">eth_cons_id</span><span class="p">,</span> <span class="n">part_no</span><span class="o">=</span><span class="n">part_no</span><span class="p">,</span>
+                    <span class="n">desc_url</span><span class="o">=</span><span class="n">desc_url</span><span class="p">,</span> <span class="n">visitNameFmt</span><span class="o">=</span><span class="n">visitNameFmt</span><span class="p">,</span> <span class="n">specimenLabelFmt</span><span class="o">=</span><span class="n">specimenLabelFmt</span><span class="p">,</span> <span class="n">derivativeLabelFmt</span><span class="o">=</span><span class="n">derivativeLabelFmt</span><span class="p">,</span>
+                    <span class="n">man_visit_name</span><span class="o">=</span><span class="n">man_visit_name</span><span class="p">,</span> <span class="n">man_spec_label</span><span class="o">=</span><span class="n">man_spec_label</span><span class="p">,</span> <span class="n">aliquots_in_same</span><span class="o">=</span><span class="n">aliquots_in_same</span><span class="p">,</span> <span class="n">activity</span><span class="o">=</span><span class="n">activity</span><span class="p">,</span>
+                    <span class="n">aliquotLabelFmt</span><span class="o">=</span><span class="n">aliquotLabelFmt</span><span class="p">,</span> <span class="n">ppidFmt</span><span class="o">=</span><span class="n">ppidFmt</span><span class="p">,</span> <span class="n">specimenCentric</span><span class="o">=</span><span class="n">specimenCentric</span><span class="p">)</span>
+
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cps</span><span class="o">.</span><span class="n">create_collection_protocol</span><span class="p">(</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">r</span></div>
+    
+<div class="viewcode-block" id="collection_protocol_util.update_cp"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_util.html#OpenSpecimenAPIconnector.os_util.collection_protocol_util.collection_protocol_util.update_cp">[docs]</a>    <span class="k">def</span> <span class="nf">update_cp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cpid</span><span class="p">,</span> <span class="n">short_title</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pi_mail</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">time_start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">time_end</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sites</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">man_id</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">consentsWaived</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">eth_cons_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">part_no</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">desc_url</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">visitNameFmt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">specimenLabelFmt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                           <span class="n">derivativeLabelFmt</span> <span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">man_visit_name</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">man_spec_label</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">aliquots_in_same</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">activity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">aliquotLabelFmt</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ppidFmt</span><span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">specimenCentric</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Update a Collection protocol with the given Parameters.</span>
+<span class="sd">        </span>
+<span class="sd">        Update a collection protocol with the Parameters passed to the function. The Collection protocol ID </span>
+<span class="sd">        cpid is mandatory.</span>
+
+<span class="sd">        Note</span>
+<span class="sd">        -----</span>
+<span class="sd">        The parameters except cpid are mandatory. All values not passed will not get changed.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        cpid : int</span>
+<span class="sd">            ID of the Colelction Protocol which should get updated.</span>
+
+<span class="sd">        short_title : string</span>
+<span class="sd">            Short title of the Collection Protocol.</span>
+
+<span class="sd">        title : string</span>
+<span class="sd">            Title of the Collection Protocol.</span>
+
+<span class="sd">        pi_mail : string</span>
+<span class="sd">            Email Address of the Principal Investigator.</span>
+<span class="sd">        </span>
+<span class="sd">        time_start: string</span>
+<span class="sd">            String with the start_time of the collection Protocol in the timeformat specified in the System configuration.</span>
+<span class="sd">        </span>
+<span class="sd">        time_end: string</span>
+<span class="sd">            String with the end_time of the collection Protocol in the timeformat specified in the System configuration.</span>
+
+<span class="sd">        sites: list</span>
+<span class="sd">            Sites which are assigned to the Collection Protocl.</span>
+<span class="sd">        </span>
+<span class="sd">        man_id : string</span>
+<span class="sd">            OpenSpecimen&#39;s boolean true/false if the manual PPID creation is enabled.</span>
+
+<span class="sd">        coords: dict</span>
+<span class="sd">            dict with Coordinators and coordinator ids in it.</span>
+
+<span class="sd">        consentsWaived : string</span>
+<span class="sd">            OpenSpecimen&#39;s boolean true/false if consent should be waived.</span>
+
+<span class="sd">        eth_cons_id : string</span>
+<span class="sd">            Ethical aproavel id.</span>
+
+<span class="sd">        part_no : string</span>
+<span class="sd">            String with number of anticipated Participant count.</span>
+
+<span class="sd">        desc_url = string</span>
+<span class="sd">            URL with the decription of the Collection Protocol.</span>
+<span class="sd">        </span>
+<span class="sd">        visitNameFMT : string</span>
+<span class="sd">            String which contains the OpenSpecimen&#39;s token for creating Visit Names automatically.</span>
+
+<span class="sd">        man_visit_name : string</span>
+<span class="sd">            String with OpenSpecimen&#39;s boolean format if the Visits should be created manually.</span>
+<span class="sd">        </span>
+<span class="sd">        man_spec_label : string</span>
+<span class="sd">            String with OpenSpecimen&#39;s boolean format if the Specimen Labels should be created manually.</span>
+<span class="sd">        </span>
+<span class="sd">        man_spec_label : string</span>
+<span class="sd">            String with OpenSpecimen&#39;s boolean format if the Aliquotes are stored in the same Container.</span>
+<span class="sd">        </span>
+<span class="sd">        activity : string</span>
+<span class="sd">            String with the acitivity status of the Specimen.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            Details of the created Collection Protocol, or the OpenSpecimen&#39;s error message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+    
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jsons</span><span class="o">.</span><span class="n">create_CP_json</span><span class="p">(</span><span class="n">cpid</span> <span class="o">=</span><span class="n">cpid</span><span class="p">,</span> <span class="n">short_title</span><span class="o">=</span><span class="n">short_title</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">pi_mail</span><span class="o">=</span><span class="n">pi_mail</span><span class="p">,</span> <span class="n">time_start</span><span class="o">=</span><span class="n">time_start</span><span class="p">,</span> <span class="n">time_end</span><span class="o">=</span><span class="n">time_end</span><span class="p">,</span>
+                    <span class="n">sites</span><span class="o">=</span><span class="n">sites</span><span class="p">,</span> <span class="n">man_id</span><span class="o">=</span><span class="n">man_id</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="n">coords</span><span class="p">,</span> <span class="n">consentsWaived</span><span class="o">=</span><span class="n">consentsWaived</span><span class="p">,</span> <span class="n">eth_cons_id</span><span class="o">=</span><span class="n">eth_cons_id</span><span class="p">,</span> <span class="n">part_no</span><span class="o">=</span><span class="n">part_no</span><span class="p">,</span>
+                    <span class="n">desc_url</span><span class="o">=</span><span class="n">desc_url</span><span class="p">,</span> <span class="n">visitNameFmt</span><span class="o">=</span><span class="n">visitNameFmt</span><span class="p">,</span> <span class="n">specimenLabelFmt</span><span class="o">=</span><span class="n">specimenLabelFmt</span><span class="p">,</span> <span class="n">derivativeLabelFmt</span><span class="o">=</span><span class="n">derivativeLabelFmt</span><span class="p">,</span>
+                    <span class="n">man_visit_name</span><span class="o">=</span><span class="n">man_visit_name</span><span class="p">,</span> <span class="n">man_spec_label</span><span class="o">=</span><span class="n">man_spec_label</span><span class="p">,</span> <span class="n">aliquots_in_same</span><span class="o">=</span><span class="n">aliquots_in_same</span><span class="p">,</span> <span class="n">activity</span><span class="o">=</span><span class="n">activity</span><span class="p">,</span>
+                    <span class="n">aliquotLabelFmt</span><span class="o">=</span><span class="n">aliquotLabelFmt</span><span class="p">,</span> <span class="n">ppidFmt</span><span class="o">=</span><span class="n">ppidFmt</span><span class="p">,</span> <span class="n">specimenCentric</span><span class="o">=</span><span class="n">specimenCentric</span><span class="p">)</span>
+        
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cps</span><span class="o">.</span><span class="n">update_collection_protocol</span><span class="p">(</span><span class="n">cpid</span> <span class="o">=</span><span class="n">cpid</span><span class="p">,</span> <span class="n">params</span> <span class="o">=</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">r</span></div></div>
+
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Christian Schorn, Simon Streit.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,298 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>OpenSpecimenAPIconnector.os_util.csv_exp_util &mdash; OpenSpecimenAPIConnector 0.9.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> OpenSpecimenAPIConnector
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stuff.html">Paragraph Level Markup</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/OpenSpecimenAPIconnector.html">OpenSpecimenAPIconnector package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">OpenSpecimenAPIConnector</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>OpenSpecimenAPIconnector.os_util.csv_exp_util</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for OpenSpecimenAPIconnector.os_util.csv_exp_util</h1><div class="highlight"><pre>
+<span></span><span class="ch">#! /bin/python3</span>
+
+<span class="kn">from</span> <span class="nn">..os_core.csv_export</span> <span class="k">import</span> <span class="n">CSV_exporter</span>
+<span class="kn">from</span> <span class="nn">..os_core.jsons</span> <span class="k">import</span> <span class="n">Json_factory</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">pandas</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1">## TODO Add all the other entities currently in export operations. Da sollten wir nochmal drüber sprechen</span>
+
+<div class="viewcode-block" id="csv_exporter"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_util.html#OpenSpecimenAPIconnector.os_util.csv_exp_util.csv_exporter">[docs]</a><span class="k">class</span> <span class="nc">csv_exporter</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;Handles the export of CSV files from open specimen for different entities like collection protocols, specimens etc etc.</span>
+
+<span class="sd">    This class handles the CSV export of various different entities and creates CSV files of the requested entities like collection protocols, institutes etc.</span>
+<span class="sd">    Note</span>
+<span class="sd">    -----</span>
+<span class="sd">    In order to use this and also the other classes, the user has to know OpenSpecimen. </span>
+<span class="sd">    The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and </span>
+<span class="sd">    the calls refer to this site. More details can be seen in the documentation.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    A code Examples, where the Institutes are handled is in the Jupyter-Notebook:</span>
+
+<span class="sd">    $ jupyter notebook main.ipynb</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Constructor of the Class csv_export</span>
+
+<span class="sd">        Constructor of the class csv export holds the base parameters for the corresponding OpenSpecimen instance </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        base_url : string</span>
+<span class="sd">            URL to openspecimen, has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng</span>
+<span class="sd">        auth : tuple</span>
+<span class="sd">            Consists of two strings ( loginname , password)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">export</span> <span class="o">=</span> <span class="n">CSV_exporter</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">json</span> <span class="o">=</span> <span class="n">Json_factory</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="csv_exporter.csv_export"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_util.html#OpenSpecimenAPIconnector.os_util.csv_exp_util.csv_exporter.csv_export">[docs]</a>    <span class="k">def</span> <span class="nf">csv_export</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objecttype</span><span class="p">,</span> <span class="n">recordids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cpid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ppids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="n">entitytype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">formname</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                            <span class="n">specimenlabels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">csv</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Export CV for entity collection protocol</span>
+
+<span class="sd">        Export function for collection protocols </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        objecttype: string </span>
+<span class="sd">            Identifying the general object to be exported.</span>
+<span class="sd">            Permissible Values: institute, site, user, cpr, specimen, extensions, storageContainer</span>
+<span class="sd">        recordids: list or string</span>
+<span class="sd">            Comma seperated list of record ids for fetching selected entries by their identifier. (Sites, Institutes, Users and Containers) </span>
+<span class="sd">        cp_id: string </span>
+<span class="sd">            Collection protocol id of export target not neccesary for objects higher in the hierachy like institue or site.</span>
+<span class="sd">            For all others it can be specified or set to -1 which means all data in the system.</span>
+<span class="sd">        ppids: list or string</span>
+<span class="sd">            List of comma seperated participant identifiers; String if its a singular participant to be exported</span>
+<span class="sd">            Used in combination with specimen object type as a parameter</span>
+<span class="sd">        entitytype: string</span>
+<span class="sd">            Paramter defining the entity for data extraction (e.g. attached form at participant level)</span>
+<span class="sd">            used with the extension object type</span>
+<span class="sd">        formname: string</span>
+<span class="sd">            Defines the form to be downloaded in context of the extension object type together with the specified entity </span>
+<span class="sd">        specimenlabels: list or string</span>
+<span class="sd">            List of comma seperated specimen identifiers or str if its a singular specimen to be exported        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        job: Pandas DataFrame or CSV binary File</span>
+<span class="sd">            Returns the csv file as Pandas data frame or CSV binary string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">create_csv_export_job</span><span class="p">(</span><span class="n">objecttype</span> <span class="o">=</span> <span class="n">objecttype</span><span class="p">,</span> <span class="n">cpid</span> <span class="o">=</span> <span class="n">cpid</span><span class="p">,</span>
+                <span class="n">entitytype</span> <span class="o">=</span> <span class="n">entitytype</span><span class="p">,</span> <span class="n">formname</span> <span class="o">=</span> <span class="n">formname</span><span class="p">)</span>
+        
+        <span class="n">job_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">export</span><span class="o">.</span><span class="n">create_export_job</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">)</span>
+
+        <span class="n">job</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">export</span><span class="o">.</span><span class="n">get_job_output</span><span class="p">(</span><span class="n">job_id</span> <span class="o">=</span> <span class="n">job_id</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">csv</span><span class="p">:</span>
+           <span class="n">job</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">job</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Christian Schorn, Simon Streit.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,372 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>OpenSpecimenAPIconnector.os_util.site_util &mdash; OpenSpecimenAPIConnector 0.9.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> OpenSpecimenAPIConnector
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stuff.html">Paragraph Level Markup</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/OpenSpecimenAPIconnector.html">OpenSpecimenAPIconnector package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">OpenSpecimenAPIConnector</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>OpenSpecimenAPIconnector.os_util.site_util</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for OpenSpecimenAPIconnector.os_util.site_util</h1><div class="highlight"><pre>
+<span></span><span class="ch">#! /bin/python3</span>
+
+<span class="kn">from</span> <span class="nn">..os_core.site</span> <span class="k">import</span> <span class="n">sites</span>
+<span class="kn">from</span> <span class="nn">..os_core.jsons</span> <span class="k">import</span> <span class="n">Json_factory</span>
+<span class="kn">from</span> <span class="nn">..os_core.url</span> <span class="k">import</span> <span class="n">url_gen</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<div class="viewcode-block" id="site_util"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_util.html#OpenSpecimenAPIconnector.os_util.site_util.site_util">[docs]</a><span class="k">class</span> <span class="nc">site_util</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;Handles the calls for sites</span>
+<span class="sd">    </span>
+<span class="sd">    This class handles the API calls for OpenSpecimen Sites. It can create, update and search </span>
+<span class="sd">    sites with different parameters. The other calls are in the os_core class sites.</span>
+<span class="sd">    </span>
+<span class="sd">    Note</span>
+<span class="sd">    -----</span>
+<span class="sd">    In order to use this and also the other classes, the user has to know OpenSpecimen. </span>
+<span class="sd">    The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and </span>
+<span class="sd">    the calls refer to this site. More details can be seen in the documentation.</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    A code Examples, where the collection protocols are handled is in the Jupyter-Notebook</span>
+<span class="sd">        $ jupyter notebook main.ipynb</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Constructor of the Class sites</span>
+
+<span class="sd">        Constructor of the class sites, can handle the basic API-calls</span>
+<span class="sd">        of the sites in OpenSpecimen. It connects this class to OpenSpecimen</span>
+<span class="sd">        specific request handle (os_core.request_util.py). Also it connects this class</span>
+<span class="sd">        to the os_core classes, url_gen, Json_factory and sites.</span>
+
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        base_url : string</span>
+<span class="sd">            URL to openspecimen, has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng</span>
+<span class="sd">        auth : tuple</span>
+<span class="sd">            Consists of two strings ( loginname , password)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">jsons</span> <span class="o">=</span> <span class="n">Json_factory</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">urls</span> <span class="o">=</span> <span class="n">url_gen</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sites</span> <span class="o">=</span> <span class="n">sites</span><span class="p">()</span>
+
+<div class="viewcode-block" id="site_util.search_sites"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_util.html#OpenSpecimenAPIconnector.os_util.site_util.site_util.search_sites">[docs]</a>    <span class="k">def</span> <span class="nf">search_sites</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sitename</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">institutename</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">maxresults</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">siteExtension</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Search for Sites with specific values.</span>
+
+<span class="sd">        Search for one or more sites with the values in search_string defined. The search string looks like:</span>
+<span class="sd">        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/np/sites?{param_1}={value_1}&amp;...&amp;{param_x}={value_x}</span>
+<span class="sd">        This string gets generated here. If siteExtension is true, the detailed site parameters will get returned.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        sitename : string</span>
+<span class="sd">            Substring of the sitenames.</span>
+
+<span class="sd">        institutename : string</span>
+<span class="sd">            Substring of the Institutenames</span>
+<span class="sd">        </span>
+<span class="sd">        maxresults : int</span>
+<span class="sd">            Defines how many results will get returned maximally.</span>
+
+<span class="sd">        siteExtension : boolean</span>
+<span class="sd">            If true, returns also the extension details.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-dict</span>
+<span class="sd">            Details of the matching sites, if no one matches it is an empty list.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">search_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">urls</span><span class="o">.</span><span class="n">site_search_url_gen</span><span class="p">(</span><span class="n">sitename</span> <span class="o">=</span> <span class="n">sitename</span><span class="p">,</span> <span class="n">institutename</span> <span class="o">=</span> <span class="n">institutename</span><span class="p">,</span> <span class="n">maxresults</span> <span class="o">=</span> <span class="n">maxresults</span><span class="p">)</span>     
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sites</span><span class="o">.</span><span class="n">search_sites</span><span class="p">(</span><span class="n">search_string</span> <span class="o">=</span> <span class="n">search_string</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">siteExtension</span><span class="p">:</span>
+            <span class="n">si</span> <span class="o">=</span><span class="p">[]</span>
+            <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">r</span><span class="p">:</span>
+                <span class="n">siteid</span><span class="o">=</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+                <span class="n">si</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sites</span><span class="o">.</span><span class="n">get_site</span><span class="p">(</span><span class="n">siteid</span> <span class="o">=</span> <span class="n">siteid</span><span class="p">))</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">si</span>
+
+        <span class="k">return</span> <span class="n">r</span></div>
+
+    
+<div class="viewcode-block" id="site_util.create_sites"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_util.html#OpenSpecimenAPIconnector.os_util.site_util.site_util.create_sites">[docs]</a>    <span class="k">def</span> <span class="nf">create_sites</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">institutename</span><span class="p">,</span> <span class="n">type_</span><span class="p">,</span> <span class="n">coordinators</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">address</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;Create a site in OpenSpecimen</span>
+<span class="sd">        </span>
+<span class="sd">        Create a site in OpenSpecimen with an API call. </span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name : string</span>
+<span class="sd">            Name of the site.</span>
+
+<span class="sd">        institutename : string</span>
+<span class="sd">            Name of the institute where the site belongs to.</span>
+<span class="sd">        </span>
+<span class="sd">        type_ : string</span>
+<span class="sd">            Type of the site, permissable values are: collection site, repository, laboratory, not specified.</span>
+<span class="sd">        </span>
+<span class="sd">        coordiantors : dict</span>
+<span class="sd">            Dict with identifier of coordinators.[optional]</span>
+
+<span class="sd">        address : string</span>
+<span class="sd">            String with the Address of the site[optional].</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            Details of the created site as dictionary or the OpenSpecimen&#39;s error message.</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jsons</span><span class="o">.</span><span class="n">create_site</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">,</span> <span class="n">institutename</span> <span class="o">=</span> <span class="n">institutename</span><span class="p">,</span> <span class="n">type_</span> <span class="o">=</span> <span class="n">type_</span><span class="p">,</span>
+                <span class="n">coordinators</span> <span class="o">=</span> <span class="n">coordinators</span><span class="p">,</span> <span class="n">address</span> <span class="o">=</span> <span class="n">address</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sites</span><span class="o">.</span><span class="n">create_sites</span><span class="p">(</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">r</span></div>
+
+
+<div class="viewcode-block" id="site_util.update_sites"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_util.html#OpenSpecimenAPIconnector.os_util.site_util.site_util.update_sites">[docs]</a>    <span class="k">def</span> <span class="nf">update_sites</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">siteid</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">institutename</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">type_</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">coordinators</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">address</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;Update a site in OpenSpecimen</span>
+<span class="sd">        </span>
+<span class="sd">        Update a site in OpenSpecimen with an API call. In order to update a site one has to know</span>
+<span class="sd">        the ID of the site which can be seen in the GUI, by clicking on the site, the URL looks like:</span>
+<span class="sd">        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/sites/{siteid}/overview. Or it can be first searched for,</span>
+<span class="sd">        for Examples, by name with the function search_sites and then the ID can be extracted from there.</span>
+<span class="sd">                </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        siteid : int</span>
+<span class="sd">            Unique Identifier of the Site</span>
+
+<span class="sd">        name : string</span>
+<span class="sd">            Name of the Site.</span>
+
+<span class="sd">        institutename : string</span>
+<span class="sd">            Name of the institute where the site belongs to.</span>
+<span class="sd">        </span>
+<span class="sd">        type_ : string</span>
+<span class="sd">            Type of the site, permissable values are: collection site, repository, laboratory, not specified.</span>
+<span class="sd">        </span>
+<span class="sd">        coordiantors : dict</span>
+<span class="sd">            Dict with identifier of coordinators.[optional]</span>
+
+<span class="sd">        address : string</span>
+<span class="sd">            String with the Address of the site[optional].</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            Details of the created site as dictionary or the OpenSpecimen&#39;s error message.</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jsons</span><span class="o">.</span><span class="n">create_site</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">,</span> <span class="n">institutename</span> <span class="o">=</span> <span class="n">institutename</span><span class="p">,</span> <span class="n">type_</span> <span class="o">=</span> <span class="n">type_</span><span class="p">,</span>
+                <span class="n">coordinators</span> <span class="o">=</span> <span class="n">coordinators</span><span class="p">,</span> <span class="n">address</span> <span class="o">=</span> <span class="n">address</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sites</span><span class="o">.</span><span class="n">update_site</span><span class="p">(</span><span class="n">siid</span> <span class="o">=</span> <span class="n">siteid</span><span class="p">,</span> <span class="n">params</span> <span class="o">=</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">r</span></div></div>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Christian Schorn, Simon Streit.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

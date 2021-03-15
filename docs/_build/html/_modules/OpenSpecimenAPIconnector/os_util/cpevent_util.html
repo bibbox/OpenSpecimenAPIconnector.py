@@ -1,0 +1,365 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>OpenSpecimenAPIconnector.os_util.cpevent_util &mdash; OpenSpecimenAPIConnector 0.9.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> OpenSpecimenAPIConnector
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stuff.html">Paragraph Level Markup</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/OpenSpecimenAPIconnector.html">OpenSpecimenAPIconnector package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">OpenSpecimenAPIConnector</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>OpenSpecimenAPIconnector.os_util.cpevent_util</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for OpenSpecimenAPIconnector.os_util.cpevent_util</h1><div class="highlight"><pre>
+<span></span><span class="ch">#! /bin/python3</span>
+
+<span class="kn">from</span> <span class="nn">..os_core.collection_protocol_event</span> <span class="k">import</span> <span class="n">collection_protocol_event</span>
+<span class="kn">from</span> <span class="nn">..os_core.jsons</span> <span class="k">import</span> <span class="n">Json_factory</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">pandas</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<div class="viewcode-block" id="cpevent_util"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_util.html#OpenSpecimenAPIconnector.os_util.cpevent_util.cpevent_util">[docs]</a><span class="k">class</span> <span class="nc">cpevent_util</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;Handles the Events of corresponding to a Collection Protocol</span>
+
+<span class="sd">    This class allows you to handle the events in Openspecimen. One can create an event,</span>
+<span class="sd">    but first the corresponding Collection Protocol has to be created, for Examples via os_core.collection_protocol.py.</span>
+<span class="sd">    or one can update an existing event. The other calls are in the os_core class collection_protocol_event.py.</span>
+<span class="sd">    The output is a JSON dict with either details or the Openspecimen error message.</span>
+
+<span class="sd">    Note</span>
+<span class="sd">    -----</span>
+<span class="sd">    In order to use this and also the other classes, the user has to know OpenSpecimen.</span>
+<span class="sd">    The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and </span>
+<span class="sd">    the calls refer to this site. More details can be seen in the documentation.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    A code Examples, where also events are handled is in the Jupyter-Notebook</span>
+
+<span class="sd">    $ jupyter notebook main.ipynb</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Constructor of the Class cpevent_util</span>
+
+<span class="sd">        Constructor of the class cpevent_util, can handle the basic API-calls</span>
+<span class="sd">        of the collection protocol events in OpenSpecimen. Connects this class to the</span>
+<span class="sd">        os_core classes collection_protocol_event and Json_factory.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        base_url : string</span>
+<span class="sd">            URL to openspecimen, has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng</span>
+<span class="sd">        auth : tuple</span>
+<span class="sd">            Consists of two strings ( loginname , password)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span class="n">collection_protocol_event</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jsons</span> <span class="o">=</span> <span class="n">Json_factory</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="cpevent_util.create_event"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_util.html#OpenSpecimenAPIconnector.os_util.cpevent_util.cpevent_util.create_event">[docs]</a>    <span class="k">def</span> <span class="nf">create_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">point</span><span class="p">,</span> <span class="n">cp</span><span class="p">,</span> <span class="n">site</span><span class="p">,</span> <span class="n">diagnosis</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">activity</span><span class="p">,</span> <span class="n">unit</span><span class="p">,</span> <span class="n">code</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Create an event for a given Collection Protocol.</span>
+
+<span class="sd">        Create an event for a given Collection Protocol. Details of the parameters can be found in</span>
+<span class="sd">        the parameters section.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        label : string</span>
+<span class="sd">            Label of the Event, has to be unique.</span>
+<span class="sd">        </span>
+<span class="sd">        point : string or int</span>
+<span class="sd">            Starting Point of the event, Value + unit (e.g. DAYS).</span>
+<span class="sd">        </span>
+<span class="sd">        cp : string</span>
+<span class="sd">            title of the collection protocol.</span>
+<span class="sd">        </span>
+<span class="sd">        site : string</span>
+<span class="sd">            The default Site of the event.</span>
+<span class="sd">        </span>
+<span class="sd">        diagnosis : string</span>
+<span class="sd">            Defines the permissable values of the diagnosis.</span>
+<span class="sd">        </span>
+<span class="sd">        status : string</span>
+<span class="sd">            Defines the permissable values of the clinical status.</span>
+<span class="sd">        </span>
+<span class="sd">        acitivity : string</span>
+<span class="sd">            Defines the activity status of the event.</span>
+<span class="sd">        </span>
+<span class="sd">        unit : string</span>
+<span class="sd">            Defines which unit has the starting point.</span>
+<span class="sd">        </span>
+<span class="sd">        code : string</span>
+<span class="sd">            the event code, is optional. In order to define condionals in the workflow, one needs the event code.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        json dict</span>
+<span class="sd">            Returns a json dict with the details of the created event, or the OpenSpecimen error message. </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jsons</span><span class="o">.</span><span class="n">create_cp_event_json</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span><span class="p">,</span> <span class="n">point</span> <span class="o">=</span> <span class="n">point</span><span class="p">,</span> <span class="n">cp</span> <span class="o">=</span> <span class="n">cp</span><span class="p">,</span> <span class="n">site</span> <span class="o">=</span> <span class="n">site</span><span class="p">,</span> 
+                    <span class="n">diagnosis</span> <span class="o">=</span> <span class="n">diagnosis</span><span class="p">,</span> <span class="n">status</span> <span class="o">=</span> <span class="n">status</span><span class="p">,</span> <span class="n">activity</span> <span class="o">=</span> <span class="n">activity</span><span class="p">,</span> <span class="n">unit</span> <span class="o">=</span> <span class="n">unit</span><span class="p">,</span> <span class="n">code</span> <span class="o">=</span> <span class="n">code</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">create_event</span><span class="p">(</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">r</span></div>
+
+
+<div class="viewcode-block" id="cpevent_util.update_event"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_util.html#OpenSpecimenAPIconnector.os_util.cpevent_util.cpevent_util.update_event">[docs]</a>    <span class="k">def</span> <span class="nf">update_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eventid</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">point</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">cp</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">site</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">diagnosis</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                     <span class="n">status</span> <span class="o">=</span> <span class="kc">None</span> <span class="p">,</span> <span class="n">activity</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">unit</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">code</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    
+        <span class="sd">&quot;&quot;&quot;Update an event for a given Collection Protocol.</span>
+
+<span class="sd">        Update an event for a given Collection Protocol. To use this function one has to know the eventid,</span>
+<span class="sd">        it can for Examples be seen in the URL, if one click on the event in the GUI. The URL looks like:</span>
+<span class="sd">        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/#/cps/{CollectionProtocolId}/specimen-requirements?eventId={eventid}</span>
+<span class="sd">        For Examples, one can extract the eventid with an event-key from OpenSpecimen, when first the function</span>
+<span class="sd">        &quot;get_all_events(self, cpid)&quot; for a specific Collection Protocol, with the Collection Protocol ID is called.</span>
+
+<span class="sd">        Note</span>
+<span class="sd">        -----</span>
+<span class="sd">        All parameters except the eventid are optional. If they are not passed to the function they stay the same as before.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        eventid : int</span>
+<span class="sd">            The ID of the event. Gets converted to a string.</span>
+
+<span class="sd">        label : string</span>
+<span class="sd">            Label of the event, has to be unique.</span>
+<span class="sd">        </span>
+<span class="sd">        point : int</span>
+<span class="sd">            Starting Point of the event, Value + unit (e.g. DAYS).</span>
+<span class="sd">        </span>
+<span class="sd">        cp : string</span>
+<span class="sd">            title of the collection protocol.</span>
+<span class="sd">        </span>
+<span class="sd">        site : string</span>
+<span class="sd">            The default Site of the event.</span>
+<span class="sd">        </span>
+<span class="sd">        diagnosis : string</span>
+<span class="sd">            Defines the permissable values of the diagnosis.</span>
+<span class="sd">        </span>
+<span class="sd">        status : string</span>
+<span class="sd">            Defines the permissable values of the clinical status.</span>
+<span class="sd">        </span>
+<span class="sd">        acitivity : string</span>
+<span class="sd">            Defines the activity status of the event.</span>
+<span class="sd">        </span>
+<span class="sd">        unit : string</span>
+<span class="sd">            Defines which unit has the starting point.</span>
+<span class="sd">        </span>
+<span class="sd">        code : string</span>
+<span class="sd">            the event code, is optional. In order to define condionals in the workflow, one needs the event code.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        json dict</span>
+<span class="sd">            Returns a json dict with the details of the created event, or the OpenSpecimen error message. </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jsons</span><span class="o">.</span><span class="n">create_cp_event_json</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span><span class="p">,</span> <span class="n">point</span> <span class="o">=</span> <span class="n">point</span><span class="p">,</span> <span class="n">cp</span> <span class="o">=</span> <span class="n">cp</span><span class="p">,</span> <span class="n">site</span> <span class="o">=</span> <span class="n">site</span><span class="p">,</span> 
+                    <span class="n">diagnosis</span> <span class="o">=</span> <span class="n">diagnosis</span><span class="p">,</span> <span class="n">status</span> <span class="o">=</span> <span class="n">status</span><span class="p">,</span> <span class="n">activity</span> <span class="o">=</span> <span class="n">activity</span><span class="p">,</span> <span class="n">unit</span> <span class="o">=</span> <span class="n">unit</span><span class="p">,</span> <span class="n">code</span> <span class="o">=</span> <span class="n">code</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">update_event</span><span class="p">(</span><span class="n">eventid</span> <span class="o">=</span> <span class="n">eventid</span><span class="p">,</span> <span class="n">params</span> <span class="o">=</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">r</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Christian Schorn, Simon Streit.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

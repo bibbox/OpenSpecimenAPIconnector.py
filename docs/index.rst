@@ -7,10 +7,19 @@ Welcome to OpenSpecimenAPIConnector's documentation!
 ====================================================
 
 .. toctree::
+   :caption: OpenSpecimenAPIConnector Documentation
    :maxdepth: 2
-   :caption: Contents:
 
+   installing
+   stuff
 
+.. toctree::
+   :caption: OpenSpecimenAPIConnector Modules
+   :maxdepth: 4
+
+   source/OpenSpecimenAPIconnector
+
+   
 
 Indices and tables
 ==================
@@ -18,3 +27,6 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+Lists
+=====

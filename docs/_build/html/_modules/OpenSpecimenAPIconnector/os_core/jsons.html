@@ -1,0 +1,1295 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>OpenSpecimenAPIconnector.os_core.jsons &mdash; OpenSpecimenAPIConnector 0.9.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> OpenSpecimenAPIConnector
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stuff.html">Paragraph Level Markup</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/OpenSpecimenAPIconnector.html">OpenSpecimenAPIconnector package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">OpenSpecimenAPIConnector</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>OpenSpecimenAPIconnector.os_core.jsons</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for OpenSpecimenAPIconnector.os_core.jsons</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">date</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">dateutil.relativedelta</span> <span class="k">import</span> <span class="n">relativedelta</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+
+
+
+<div class="viewcode-block" id="Json_factory"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.jsons.Json_factory">[docs]</a><span class="k">class</span> <span class="nc">Json_factory</span><span class="p">():</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="c1">## first approach to be overhauled</span>
+    <span class="c1">##TODO Decide upon way of json creation/storage for OS operations, the current idea is to set mandatory values to</span>
+    <span class="c1">## boolean true by default. than a random generator can create the values in fixed order and they can be set</span>
+    <span class="c1">## according to the boolean. Even better would be the restriction to use pandas data frames directly and create the</span>
+    <span class="c1">## json once data entry is done. Another important question is how to deal with custom value fields in various cases.</span>
+    <span class="c1">## Further, where possible, the csv import option should be used and json creation should be left to the numerous</span>
+    <span class="c1">## methods within Open Specimen</span>
+    <span class="c1"># creation jsons:</span>
+    <span class="c1"># participant</span>
+<div class="viewcode-block" id="Json_factory.create_participant_json"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_participant_json">[docs]</a>    <span class="k">def</span> <span class="nf">create_participant_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">regdate</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">id_</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">cpid</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">cptitle</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+                        <span class="n">cpshorttitle</span> <span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ppid</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">firstname</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">middlename</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+                        <span class="n">lastname</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">uid</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">birthdate</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">vitalstatus</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+                        <span class="n">deathdate</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">gender</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">race</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ethnicities</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">cprid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">sexgenotype</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">pmis</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">mrn</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">sitename</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">empi</span> <span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Creates a JSON-formated string for participant creation</span>
+<span class="sd">        This function creates the json corresponding to the cpr_util function</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----- </span>
+<span class="sd">        Mandatory parameters are passed as positional arguments in the caliing function</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        regdate : string</span>
+<span class="sd">            Mandatory field with date of registration in the format which is defined in the systemsettings of openSpecimen.</span>
+<span class="sd">        cprid : int</span>
+<span class="sd">            Unique ID of the Participant&#39;s Registration.</span>
+<span class="sd">        id_ : int</span>
+<span class="sd">            Unique ID of the Participant.</span>
+<span class="sd">        cpid : int</span>
+<span class="sd">            Unique ID of the Collection Protocol, which is autogenerated from OpenSpecimen. cpid or cptitle or cpshorttile is mandatory.</span>
+<span class="sd">        </span>
+<span class="sd">        cptitle : string</span>
+<span class="sd">            Unique title of the Collection Protocol. cpid or cptitle or cpshorttile is mandatory.</span>
+<span class="sd">        cpshorttitle : string</span>
+<span class="sd">            Unique Acronym of the Collection Protocol. cpid or cptitle or cpshorttile is mandatory.</span>
+<span class="sd">        </span>
+<span class="sd">        ppid : string</span>
+<span class="sd">            Participant protocol ID, is mandatory if created manaully and have to be empty if it is autogenerated.</span>
+<span class="sd">            This is a protocol setting.</span>
+<span class="sd">        </span>
+<span class="sd">        firstname : string</span>
+<span class="sd">            Participants first name.</span>
+<span class="sd">        </span>
+<span class="sd">        middlename : string</span>
+<span class="sd">            Participants middle name.</span>
+<span class="sd">        </span>
+<span class="sd">        lastname : string</span>
+<span class="sd">            Participants last name.</span>
+<span class="sd">        </span>
+<span class="sd">        uid : string</span>
+<span class="sd">            Unique identifier e.g. social security number.</span>
+<span class="sd">        </span>
+<span class="sd">        birthdate : string</span>
+<span class="sd">            Birthdate in the format which is defined in the systemsettings of OpenSpecimen.</span>
+<span class="sd">        vitalstatus : string</span>
+<span class="sd">            Vital status of the Participant.</span>
+<span class="sd">        </span>
+<span class="sd">        deathdate : string</span>
+<span class="sd">            Deathdate in the format which is defined in the systemsettings of OpenSpecimen.</span>
+<span class="sd">        </span>
+<span class="sd">        gender : string</span>
+<span class="sd">            Gender of the participant, permissable values are Male, Female, Unknown, Unspecified.</span>
+<span class="sd">        </span>
+<span class="sd">        race : string</span>
+<span class="sd">            Participants racial origination, permissable values are {American Indian or Alaska Native, Asian, black or Afro American, Native Hawaiian</span>
+<span class="sd">            or other Pacific Islander, Not REported, Unknown, White}</span>
+<span class="sd">        </span>
+<span class="sd">        ethnicities : string</span>
+<span class="sd">            Participants ethnicities, permissable values are: {Hispanic or Latino, Not Hispanic or Latino, Not Reported, Unknown}</span>
+<span class="sd">        </span>
+<span class="sd">        sexgenotype : string</span>
+<span class="sd">            Participants sex Genotype, permissable values are {XX Genotype, XY Genotype, XXX, Klinefelter’s Syndrome, XXXY syndrome, </span>
+<span class="sd">            XXYY syndrome, Mosaic including XXXXY, Penta X syndrome}</span>
+<span class="sd">        </span>
+<span class="sd">        pmis : string</span>
+<span class="sd">            Collection of the Participants medical record numner.</span>
+<span class="sd">        </span>
+<span class="sd">        mrn : string</span>
+<span class="sd">            Participants medical record number.</span>
+<span class="sd">        sitename : string</span>
+<span class="sd">            Name of the site, where the participant is registrated.</span>
+<span class="sd">        empi : string</span>
+<span class="sd">            Enterprise master patient index number.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-dict</span>
+<span class="sd">            Details of the updated Participant or the OpenSpecimen error message as Dictornary.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">part</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">id_</span><span class="p">,</span>
+            <span class="s2">&quot;firstName&quot;</span><span class="p">:</span> <span class="n">firstname</span><span class="p">,</span>
+            <span class="s2">&quot;middleName&quot;</span><span class="p">:</span> <span class="n">middlename</span><span class="p">,</span>
+            <span class="s2">&quot;lastName&quot;</span><span class="p">:</span> <span class="n">lastname</span><span class="p">,</span>
+            <span class="s2">&quot;uid&quot;</span><span class="p">:</span><span class="n">uid</span><span class="p">,</span>
+            <span class="s2">&quot;birthDate&quot;</span><span class="p">:</span> <span class="n">birthdate</span><span class="p">,</span>
+            <span class="s2">&quot;vitalStatus&quot;</span><span class="p">:</span> <span class="n">vitalstatus</span><span class="p">,</span>
+            <span class="s2">&quot;deathDate&quot;</span><span class="p">:</span> <span class="n">deathdate</span><span class="p">,</span>
+            <span class="s2">&quot;gender&quot;</span><span class="p">:</span> <span class="n">gender</span><span class="p">,</span>
+            <span class="s2">&quot;race&quot;</span><span class="p">:</span> <span class="n">race</span><span class="p">,</span>
+            <span class="s2">&quot;sexGenotype&quot;</span><span class="p">:</span> <span class="n">sexgenotype</span><span class="p">,</span>
+            <span class="s2">&quot;ethnicities&quot;</span><span class="p">:</span> <span class="n">ethnicities</span><span class="p">,</span>
+            <span class="s2">&quot;pmis&quot;</span><span class="p">:</span> <span class="n">pmis</span><span class="p">,</span>
+            <span class="s2">&quot;mrn&quot;</span><span class="p">:</span> <span class="n">mrn</span><span class="p">,</span>
+            <span class="s2">&quot;siteName&quot;</span><span class="p">:</span> <span class="n">sitename</span><span class="p">,</span>
+            <span class="s2">&quot;empi&quot;</span><span class="p">:</span> <span class="n">empi</span>                
+        <span class="p">}</span>
+
+        <span class="n">part</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">part</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;cpId&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">cpid</span><span class="p">),</span>
+            <span class="s2">&quot;registrationDate&quot;</span><span class="p">:</span> <span class="n">regdate</span><span class="p">,</span>
+            <span class="s2">&quot;ppid&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">ppid</span><span class="p">),</span>
+            <span class="s2">&quot;cpShortTitle&quot;</span><span class="p">:</span> <span class="n">cpshorttitle</span><span class="p">,</span>
+            <span class="s2">&quot;cpTitle&quot;</span><span class="p">:</span> <span class="n">cptitle</span>
+        <span class="p">}</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+
+        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;participant&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">part</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+    <span class="c1"># Collection Protocoll</span>
+<div class="viewcode-block" id="Json_factory.create_CP_json"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_CP_json">[docs]</a>    <span class="k">def</span> <span class="nf">create_CP_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">short_title</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pi_mail</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">time_start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">time_end</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sites</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">man_id</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">consentsWaived</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">eth_cons_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">part_no</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">desc_url</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">visitNameFmt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">specimenLabelFmt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                           <span class="n">derivativeLabelFmt</span> <span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">man_visit_name</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">man_spec_label</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">aliquots_in_same</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">activity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">aliquotLabelFmt</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ppidFmt</span><span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">specimenCentric</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">cpid</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Creates the JSON-formated string corresponding to the collection_protocol_util funciton create_CP</span>
+<span class="sd">        </span>
+<span class="sd">        Note</span>
+<span class="sd">        -----</span>
+<span class="sd">        Mandatory paramters are passed as positional args within the calling util class</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        short_title : string</span>
+<span class="sd">            Short title of the Collection Protocol.</span>
+<span class="sd">        title : string</span>
+<span class="sd">            Title of the Collection Protocol.</span>
+<span class="sd">        pi_mail : string</span>
+<span class="sd">            Email Address of the Principal Investigator.</span>
+<span class="sd">        </span>
+<span class="sd">        time_start: string</span>
+<span class="sd">            String with the start_time of the collection Protocol in the timeformat specified in the System configuration.</span>
+<span class="sd">        </span>
+<span class="sd">        time_end: string</span>
+<span class="sd">            String with the end_time of the collection Protocol in the timeformat specified in the System configuration.</span>
+<span class="sd">        sites: list</span>
+<span class="sd">            Sites which are assigned to the collection Protocol.</span>
+<span class="sd">        </span>
+<span class="sd">        man_id : string</span>
+<span class="sd">            OpenSpecimen&#39;s boolean true/false if the manual PPID creation is enabled.</span>
+<span class="sd">        coords: dict</span>
+<span class="sd">            dict with Coordinators and coordinator ids in it.</span>
+<span class="sd">        consentsWaived : string</span>
+<span class="sd">            OpenSpecimen&#39;s boolean true/false if consent should be waived.</span>
+<span class="sd">        eth_cons_id : string</span>
+<span class="sd">            Ethical aproavel id.</span>
+<span class="sd">        part_no : string</span>
+<span class="sd">            String with number of anticipated Participant count.</span>
+<span class="sd">        desc_url = string</span>
+<span class="sd">            URL with the decription of the Collection Protocol.</span>
+<span class="sd">        </span>
+<span class="sd">        visitNameFMT : string</span>
+<span class="sd">            String which contains the OpenSpecimen&#39;s token for creating Visit Names automatically.</span>
+<span class="sd">        man_visit_name : string</span>
+<span class="sd">            String with OpenSpecimen&#39;s boolean format if the Visits should be created manually.</span>
+<span class="sd">        </span>
+<span class="sd">        man_spec_label : string</span>
+<span class="sd">            String with OpenSpecimen&#39;s boolean format if the Specimen Labels should be created manually.</span>
+<span class="sd">        </span>
+<span class="sd">        man_spec_label : string</span>
+<span class="sd">            String with OpenSpecimen&#39;s boolean format if the Aliquotes are stored in the same Container.</span>
+<span class="sd">        </span>
+<span class="sd">        activity : string</span>
+<span class="sd">            String with the acitivity status of the Specimen.</span>
+<span class="sd">        cpid : int</span>
+<span class="sd">            Integer with the Unique ID of the Collection Protocol.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-formated-string </span>
+<span class="sd">            Collection protocol information neccesary for creation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">site_arr</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">sites</span><span class="p">:</span>
+            <span class="n">site_arr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                
+                    <span class="p">{</span><span class="s2">&quot;siteName&quot;</span><span class="p">:</span> <span class="n">item</span><span class="p">},</span>
+                
+            <span class="p">)</span>
+        
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">cpid</span><span class="p">,</span>
+            <span class="s2">&quot;shortTitle&quot;</span><span class="p">:</span> <span class="n">short_title</span><span class="p">,</span>
+            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="n">title</span><span class="p">,</span>
+            <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">&quot;principalInvestigator&quot;</span><span class="p">:</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;loginName&quot;</span><span class="p">:</span> <span class="n">pi_mail</span><span class="p">,</span>
+                    <span class="s2">&quot;domain&quot;</span><span class="p">:</span> <span class="s2">&quot;openspecimen&quot;</span>
+                <span class="p">},</span>
+            <span class="s2">&quot;startDate&quot;</span><span class="p">:</span> <span class="n">time_start</span><span class="p">,</span>
+            <span class="s2">&quot;endDate&quot;</span><span class="p">:</span> <span class="n">time_end</span><span class="p">,</span>
+            <span class="s2">&quot;ppidFmt&quot;</span><span class="p">:</span> <span class="n">ppidFmt</span><span class="p">,</span>
+            <span class="s2">&quot;manualPpidEnabled&quot;</span><span class="p">:</span> <span class="n">man_id</span><span class="p">,</span>
+            <span class="s2">&quot;cpSites&quot;</span><span class="p">:</span> <span class="n">site_arr</span><span class="p">,</span>
+            <span class="s2">&quot;consentsWaived&quot;</span><span class="p">:</span> <span class="n">consentsWaived</span><span class="p">,</span>
+            <span class="s2">&quot;irbId&quot;</span><span class="p">:</span> <span class="n">eth_cons_id</span><span class="p">,</span>
+            <span class="s2">&quot;anticipatedParticipantsCount&quot;</span><span class="p">:</span> <span class="n">part_no</span><span class="p">,</span>
+            <span class="s2">&quot;descriptionUrl&quot;</span><span class="p">:</span> <span class="n">desc_url</span><span class="p">,</span>
+            <span class="s2">&quot;specimenLabelFmt&quot;</span><span class="p">:</span> <span class="n">specimenLabelFmt</span><span class="p">,</span>
+            <span class="s2">&quot;derivativeLabelFmt&quot;</span><span class="p">:</span> <span class="n">derivativeLabelFmt</span><span class="p">,</span>
+            <span class="s2">&quot;aliquotLabelFmt&quot;</span><span class="p">:</span> <span class="n">aliquotLabelFmt</span><span class="p">,</span>
+            <span class="s2">&quot;visitNameFmt&quot;</span><span class="p">:</span> <span class="n">visitNameFmt</span><span class="p">,</span>
+            <span class="s2">&quot;manualVisitNameEnabled&quot;</span><span class="p">:</span> <span class="n">man_visit_name</span><span class="p">,</span>
+            <span class="s2">&quot;manualSpecLabelEnabled&quot;</span><span class="p">:</span> <span class="n">man_spec_label</span><span class="p">,</span>
+            <span class="s2">&quot;aliquotsInSameContainer&quot;</span><span class="p">:</span> <span class="n">aliquots_in_same</span><span class="p">,</span>
+            <span class="s2">&quot;activityStatus&quot;</span><span class="p">:</span> <span class="n">activity</span><span class="p">,</span>
+            <span class="s2">&quot;specimenCentric&quot;</span><span class="p">:</span> <span class="n">specimenCentric</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="n">coords</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;coordinators&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;loginName&quot;</span> <span class="p">:</span> <span class="n">coords</span><span class="p">,</span><span class="s2">&quot;domain&quot;</span> <span class="p">:</span> <span class="s2">&quot;openspecimen&quot;</span><span class="p">}</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+    <span class="c1"># Collection Protocol event</span>
+<div class="viewcode-block" id="Json_factory.create_cp_event_json"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_cp_event_json">[docs]</a>    <span class="k">def</span> <span class="nf">create_cp_event_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">point</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">site</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">diagnosis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">activity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;Create JSON-formated string needed for event creation</span>
+<span class="sd">        </span>
+<span class="sd">        Create an event for a given Collection Protocol. Details of the parameters can be found in</span>
+<span class="sd">        the parameters section.</span>
+<span class="sd">        </span>
+<span class="sd">        Note</span>
+<span class="sd">        -----</span>
+<span class="sd">        Mandatory paramters are passed as positional args within the calling util class</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        label : string</span>
+<span class="sd">            Label of the Event, has to be unique.</span>
+<span class="sd">        </span>
+<span class="sd">        point : string or int</span>
+<span class="sd">            Starting Point of the event, Value + unit (e.g. DAYS).</span>
+<span class="sd">        </span>
+<span class="sd">        cp : string</span>
+<span class="sd">            title of the collection protocol.</span>
+<span class="sd">        </span>
+<span class="sd">        site : string</span>
+<span class="sd">            The default Site of the event.</span>
+<span class="sd">        </span>
+<span class="sd">        diagnosis : string</span>
+<span class="sd">            Defines the permissable values of the diagnosis.</span>
+<span class="sd">        </span>
+<span class="sd">        status : string</span>
+<span class="sd">            Defines the permissable values of the clinical status.</span>
+<span class="sd">        </span>
+<span class="sd">        acitivity : string</span>
+<span class="sd">            DEfines the activity status of the event.</span>
+<span class="sd">        </span>
+<span class="sd">        unit : string</span>
+<span class="sd">            Defines which unit has the starting point.</span>
+<span class="sd">        </span>
+<span class="sd">        code : string</span>
+<span class="sd">            the Event code, is optional. In order to define condionals in the workflow, one need the Event code.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-formated string</span>
+<span class="sd">            Returns a JSON-formated string with the given details for cp event creation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;eventLabel&quot;</span><span class="p">:</span> <span class="n">label</span><span class="p">,</span>
+            <span class="s2">&quot;clinicalDiagnosis&quot;</span><span class="p">:</span> <span class="n">diagnosis</span><span class="p">,</span>
+            <span class="s2">&quot;clinicalStatus&quot;</span><span class="p">:</span> <span class="n">status</span><span class="p">,</span>
+            <span class="s2">&quot;collectionProtocol&quot;</span><span class="p">:</span> <span class="n">cp</span><span class="p">,</span>
+            <span class="s2">&quot;defaultSite&quot;</span><span class="p">:</span> <span class="n">site</span><span class="p">,</span>
+            <span class="s2">&quot;activityStatus&quot;</span><span class="p">:</span> <span class="n">activity</span><span class="p">,</span>
+            <span class="s2">&quot;eventPoint&quot;</span><span class="p">:</span> <span class="n">point</span><span class="p">,</span>
+            <span class="s2">&quot;eventPointUnit&quot;</span><span class="p">:</span> <span class="n">unit</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">params</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Json_factory.create_specimen_json"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_specimen_json">[docs]</a>    <span class="k">def</span> <span class="nf">create_specimen_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">specimenclass</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">specimentype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pathology</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">anatomic</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                            <span class="n">laterality</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">initqty</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">avaqty</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">visitid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">userid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">colltime</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                            <span class="n">rectime</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">recqlt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lineage</span><span class="o">=</span><span class="s1">&#39;New&#39;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s1">&#39;Collected&#39;</span><span class="p">,</span> <span class="n">storloc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">concentration</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                            <span class="n">biohazard</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comments</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="n">collproc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">conttype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">extension</span> <span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+
+        <span class="sd">&quot;&quot;&quot;Create a API Json String for a Specimen</span>
+<span class="sd">        Create the JSON String neccesary for creating a specimen</span>
+<span class="sd">        </span>
+<span class="sd">        Note</span>
+<span class="sd">        -----</span>
+<span class="sd">        Mandatory paramters are passed as positional args within the calling util class</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        label : string</span>
+<span class="sd">            UUID of specimen generated automatically if not set to manual in corresponding collection protocol</span>
+<span class="sd">        </span>
+<span class="sd">        specimenclass : string</span>
+<span class="sd">            Class of the specimen.</span>
+<span class="sd">        </span>
+<span class="sd">        specimentype : string</span>
+<span class="sd">            Type of the specimen, belongs to the class.</span>
+<span class="sd">        </span>
+<span class="sd">        pathology : string</span>
+<span class="sd">            Pathologystatus of the Specimen.</span>
+<span class="sd">        </span>
+<span class="sd">        anatomic : string</span>
+<span class="sd">            The anatomic site of the specimen.</span>
+<span class="sd">        </span>
+<span class="sd">        laterality : string</span>
+<span class="sd">            The laterality of the specimen.</span>
+<span class="sd">        </span>
+<span class="sd">        initqty : int</span>
+<span class="sd">            The initial quantity of a specimen.</span>
+<span class="sd">        </span>
+<span class="sd">        avaqty : int</span>
+<span class="sd">            The available quantity of a specimen.</span>
+<span class="sd">        </span>
+<span class="sd">        visitid : int</span>
+<span class="sd">            The unique identifier of the visit.</span>
+<span class="sd">        recqlt : string</span>
+<span class="sd">            The received quality.</span>
+<span class="sd">            </span>
+<span class="sd">        colltime : string</span>
+<span class="sd">            Date and Time of the collection event, the format is in the OpenSpecimen&#39;s System configuration.[optional]</span>
+<span class="sd">            </span>
+<span class="sd">        rectime : string</span>
+<span class="sd">            Date and Time of the received event, the format is in the OpenSpecimen&#39;s System configuration.[optional]</span>
+<span class="sd">            </span>
+<span class="sd">        lineage : string</span>
+<span class="sd">            Lineage of the specimen, default value is New.</span>
+<span class="sd">            </span>
+<span class="sd">        status : string</span>
+<span class="sd">            Status of the Specimen, default is &#39;Collected&#39;.</span>
+<span class="sd">        </span>
+<span class="sd">        stor_name : string</span>
+<span class="sd">            Name of the container. [optional]</span>
+<span class="sd">        </span>
+<span class="sd">        storlocx : int</span>
+<span class="sd">            Position of the specimen in the Container in x direction.[optional]</span>
+<span class="sd">        </span>
+<span class="sd">        storlocy : int</span>
+<span class="sd">            Position of the specimen int the container in y direction.[optional]</span>
+<span class="sd">            </span>
+<span class="sd">        concetration  : int</span>
+<span class="sd">            Concentration of the specimen[optional].</span>
+<span class="sd">        </span>
+<span class="sd">        biohazard : string</span>
+<span class="sd">            Biohazards of that specimen.[optional]</span>
+<span class="sd">        </span>
+<span class="sd">        userid : int</span>
+<span class="sd">            ID of the user who creates the specimen. If not specified the API user is taken.</span>
+<span class="sd">            </span>
+<span class="sd">        comments : string</span>
+<span class="sd">            Comments regarding to the specimen[optional].</span>
+<span class="sd">        </span>
+<span class="sd">        collproc : string</span>
+<span class="sd">            The procedure of the collection[otpional].</span>
+<span class="sd">        </span>
+<span class="sd">        conttype : string</span>
+<span class="sd">            Type of the storage conatiner.</span>
+<span class="sd">            </span>
+<span class="sd">        extension : JSON-String</span>
+<span class="sd">            JSON-formated-string containing the dict of specimnen extensions created during call to the corresponding util class </span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            JSON-formated-string with the complete specimen to be created</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="n">label</span><span class="p">,</span>
+            <span class="s2">&quot;specimenClass&quot;</span><span class="p">:</span> <span class="n">specimenclass</span><span class="p">,</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">specimentype</span><span class="p">,</span>
+            <span class="s2">&quot;pathology&quot;</span><span class="p">:</span> <span class="n">pathology</span><span class="p">,</span>
+            <span class="s2">&quot;anatomicSite&quot;</span><span class="p">:</span> <span class="n">anatomic</span><span class="p">,</span>
+            <span class="s2">&quot;laterality&quot;</span><span class="p">:</span> <span class="n">laterality</span><span class="p">,</span>
+            <span class="s2">&quot;initialQty&quot;</span><span class="p">:</span> <span class="n">initqty</span><span class="p">,</span>
+            <span class="s2">&quot;availableQty&quot;</span><span class="p">:</span> <span class="n">avaqty</span><span class="p">,</span>
+            <span class="s2">&quot;visitId&quot;</span><span class="p">:</span> <span class="n">visitid</span><span class="p">,</span>
+            <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="n">status</span><span class="p">,</span>
+            <span class="s2">&quot;storageLocation&quot;</span><span class="p">:</span> <span class="n">storloc</span><span class="p">,</span>
+            <span class="s2">&quot;concetration&quot;</span><span class="p">:</span> <span class="n">concentration</span><span class="p">,</span>
+            <span class="s2">&quot;biohazard&quot;</span><span class="p">:</span> <span class="n">biohazard</span><span class="p">,</span>
+            <span class="s2">&quot;comments&quot;</span><span class="p">:</span> <span class="n">comments</span><span class="p">,</span>
+            <span class="s2">&quot;collectionEvent&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">userid</span><span class="p">},</span>
+                    <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="n">colltime</span><span class="p">,</span>
+                    <span class="s2">&quot;container&quot;</span><span class="p">:</span> <span class="n">conttype</span><span class="p">,</span>
+                    <span class="s2">&quot;procedure&quot;</span><span class="p">:</span> <span class="n">collproc</span>
+                     <span class="p">},</span>
+            <span class="s2">&quot;receivedEvent&quot;</span><span class="p">:{</span>
+                <span class="s2">&quot;user&quot;</span><span class="p">:{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">userid</span><span class="p">},</span>
+                <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="n">rectime</span><span class="p">,</span>
+                <span class="s2">&quot;receivedQuality&quot;</span><span class="p">:</span> <span class="n">recqlt</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;extensionDetail&quot;</span><span class="p">:</span> <span class="n">extension</span>
+            <span class="p">}</span>
+        
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Json_factory.create_extension"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_extension">[docs]</a>    <span class="k">def</span> <span class="nf">create_extension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attrsmap</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">extensiondict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">useudn</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;useUdn&quot;</span><span class="p">:</span> <span class="n">useudn</span><span class="p">,</span>
+            <span class="s2">&quot;attryMap&quot;</span><span class="p">:</span> <span class="n">attrsmap</span><span class="p">,</span>
+            <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">extensiondict</span>
+        <span class="p">}</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+    
+    <span class="c1"># Create CSV export job  </span>
+<div class="viewcode-block" id="Json_factory.create_csv_export_job"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_csv_export_job">[docs]</a>    <span class="k">def</span> <span class="nf">create_csv_export_job</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objecttype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">recordids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cpid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ppids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="n">entitytype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">formname</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                            <span class="n">specimenlabels</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    
+        <span class="sd">&quot;&quot;&quot;Create JSON formated string neccesary for exporting an collection protocol (should be implemented but is not see OpenSpecimen 7.2)</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        objecttype: string </span>
+<span class="sd">            Identifying the general object to be exported.</span>
+<span class="sd">            Permissible Values: &quot;institute&quot;, &quot;site&quot;, &quot;user&quot;, &quot;cpr&quot;, &quot;specimen&quot;, &quot;extensions&quot;, &quot;storageContainer&quot;</span>
+<span class="sd">        recordids: list or string</span>
+<span class="sd">            Comma seperated list of record ids for fetching selected entries by their identifier. (Sites, Institutes, Users and Containers) </span>
+<span class="sd">        cp_id: string </span>
+<span class="sd">            Collection protocol id of export target not neccesary for objects higher in the hierachy like institue or site.</span>
+<span class="sd">            For all others it can be specified or set to &quot;-1&quot; which means all data in the system.</span>
+<span class="sd">        ppids: list or string</span>
+<span class="sd">            List of comma seperated participant identifiers; String if its a singular participant to be exported</span>
+<span class="sd">            Used in combination with specimen object type as a paramter</span>
+<span class="sd">        entitytype: string</span>
+<span class="sd">            Paramter defining the entity for data extraction (e.g.: attached form at participant level)</span>
+<span class="sd">            used with the extension object type</span>
+<span class="sd">        formname: string</span>
+<span class="sd">            Defines the form to be downloaded in context of the extension object type together with the specified entity </span>
+<span class="sd">        specimenlabels: list or string</span>
+<span class="sd">            List of comma seperated specimen identifiers; str if its a singular specimen to be exported</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-formated-string </span>
+<span class="sd">            Json data needed for creating an export job for the given entity</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">object_types</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;institute&quot;</span><span class="p">,</span> <span class="s2">&quot;site&quot;</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;cpr&quot;</span><span class="p">,</span> <span class="s2">&quot;specimen&quot;</span><span class="p">,</span> <span class="s2">&quot;extensions&quot;</span><span class="p">,</span> <span class="s2">&quot;storageContainer&quot;</span><span class="p">,</span> <span class="s2">&quot;distributionProtocol&quot;</span><span class="p">,</span> <span class="s2">&quot;cp&quot;</span><span class="p">,</span> <span class="s2">&quot;cpe&quot;</span><span class="p">]</span>
+        <span class="n">entity_types</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Participant&quot;</span><span class="p">,</span> <span class="s2">&quot;Visit&quot;</span><span class="p">,</span> <span class="s2">&quot;Specimen&quot;</span><span class="p">,</span> <span class="s2">&quot;SpecimenEvent&quot;</span><span class="p">,</span> <span class="s2">&quot;SpecimenCollectionGroup&quot;</span><span class="p">,</span> <span class="s2">&quot;CollectionProtocol&quot;</span><span class="p">]</span>
+        <span class="n">objecttype</span> <span class="o">=</span> <span class="n">objecttype</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        
+        <span class="k">assert</span> <span class="n">objecttype</span> <span class="ow">in</span> <span class="n">object_types</span><span class="p">,</span> <span class="s2">&quot;Object Type </span><span class="si">{}</span><span class="s2"> not allowed check documentation&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">objecttype</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">entitytype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">entitytype</span> <span class="ow">in</span> <span class="n">entity_types</span><span class="p">,</span> <span class="s2">&quot;Entity Type </span><span class="si">{}</span><span class="s2"> not allowed check documentation&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">entitytype</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">objecttype</span> <span class="o">==</span> <span class="s2">&quot;cpr&quot;</span> <span class="ow">or</span> <span class="n">objecttype</span> <span class="o">==</span> <span class="s2">&quot;specimen&quot;</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">cpid</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="p">,</span> <span class="s2">&quot;cpid may not be none with objecttype </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">objecttype</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">objecttype</span> <span class="o">==</span> <span class="s2">&quot;extensions&quot;</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">formname</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">entitytype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;Please specify formname and the entitytype the given form is attached to&quot;</span>
+            <span class="k">assert</span> <span class="n">cpid</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="p">,</span> <span class="s2">&quot;cpid may not be none with objecttype </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">objecttype</span><span class="p">)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;ppids&quot;</span><span class="p">:</span> <span class="n">ppids</span><span class="p">,</span>
+                <span class="s2">&quot;specimenLabels&quot;</span><span class="p">:</span> <span class="n">specimenlabels</span><span class="p">,</span>
+                <span class="s2">&quot;entityType&quot;</span><span class="p">:</span> <span class="n">entitytype</span><span class="p">,</span>
+                <span class="s2">&quot;formName&quot;</span><span class="p">:</span> <span class="n">formname</span><span class="p">,</span>
+                <span class="s2">&quot;cpId&quot;</span><span class="p">:</span> <span class="n">cpid</span>
+            <span class="p">}</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;objectType&quot;</span><span class="p">:</span> <span class="n">objecttype</span><span class="p">,</span>
+            <span class="s2">&quot;recordIds&quot;</span><span class="p">:</span> <span class="n">recordids</span><span class="p">,</span>
+            <span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="n">params</span>
+        <span class="p">}</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+    
+    <span class="c1"># Create Any AQL Query</span>
+<div class="viewcode-block" id="Json_factory.execute_aql"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.execute_aql">[docs]</a>    <span class="k">def</span> <span class="nf">execute_aql</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cpid</span><span class="p">,</span> <span class="n">aql</span><span class="p">,</span> <span class="n">rowmode</span><span class="o">=</span><span class="s1">&#39;OFF&#39;</span><span class="p">,</span> <span class="n">columnexpr</span><span class="o">=</span><span class="s1">&#39;true&#39;</span><span class="p">,</span> <span class="n">isodate</span><span class="o">=</span><span class="s1">&#39;true&#39;</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;Create JSON formated string to execute a specified query passed to the method</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        cp_id: string </span>
+<span class="sd">            Collection protocoll id of export target</span>
+<span class="sd">        aql: string</span>
+<span class="sd">            query command in the OpenSpecimen Syntax (see OpenSpecimen API) </span>
+<span class="sd">        rowmode: string</span>
+<span class="sd">           Specifies whether multi-valued attributes result in a single row or one row per value. </span>
+<span class="sd">           Default value is OFF. Other permitted values are SHALLOW and DEEP. </span>
+<span class="sd">           Try out to see what fits best for your use case. </span>
+<span class="sd">        columnexpr: string </span>
+<span class="sd">            Specifies whether the column labels or AQL expression needs to be included in the query response. </span>
+<span class="sd">            By default, user friendly column labels are included in query response.	</span>
+<span class="sd">        isodate: string</span>
+<span class="sd">            Specifies how the date column values needs to be serialised in the query response. </span>
+<span class="sd">            If true, then date/time values are serialised using ISO format: yyyy-MM-dd&#39;T&#39;HH:mm:ss. </span>
+<span class="sd">            Otherwise, date/time values are serialised using the format specified in OS locale settings</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-formated-string </span>
+<span class="sd">            Json data needed for executing a system query</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;cpId&quot;</span> <span class="p">:</span> <span class="n">cpid</span><span class="p">,</span>
+            <span class="s2">&quot;aql&quot;</span> <span class="p">:</span> <span class="n">aql</span><span class="p">,</span>
+            <span class="s2">&quot;wideRowMode&quot;</span> <span class="p">:</span> <span class="n">rowmode</span><span class="p">,</span>
+            <span class="s2">&quot;outputColumnExprs&quot;</span> <span class="p">:</span> <span class="n">columnexpr</span><span class="p">,</span>
+            <span class="s2">&quot;outputIsoDateTime&quot;</span> <span class="p">:</span> <span class="n">isodate</span>
+        <span class="p">}</span>
+        
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">params</span><span class="p">)</span></div>
+
+    <span class="c1"># Execute Saved Query</span>
+<div class="viewcode-block" id="Json_factory.execute_query"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.execute_query">[docs]</a>    <span class="k">def</span> <span class="nf">execute_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">results</span><span class="p">,</span> <span class="n">drivingform</span><span class="o">=</span><span class="s2">&quot;Participant&quot;</span><span class="p">,</span> <span class="n">rowmode</span><span class="o">=</span><span class="s2">&quot;OFF&quot;</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;Create JSON formated string neccesary for execution of a saved query </span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        start: string </span>
+<span class="sd">            Used for paginating the results. If start=5, the output result will start from row number 5.</span>
+<span class="sd">        results: string</span>
+<span class="sd">            Used for paginating the results. If results=10, the output result will be maximum 10 rows</span>
+<span class="sd">        drivingform: string</span>
+<span class="sd">            Driving form determines the search perspective. When left empty, it defaults to Participant.</span>
+<span class="sd">            (For Examples when drivingForm is Participant, the root table is &#39;catissue_coll_prot_reg&#39; </span>
+<span class="sd">            which is then used to join with the other tables.</span>
+<span class="sd">            Similarly when drivingForm is Specimen, the root table will be catissue_specimen, </span>
+<span class="sd">            which will be joined with the other tables.) rowmode: string</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-formatted-string </span>
+<span class="sd">            Json data needed for executing a query saved within an Openspecimen appliance</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">params</span><span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;drivingForm&quot;</span><span class="p">:</span> <span class="n">drivingform</span><span class="p">,</span>
+            <span class="s2">&quot;wideRowMode&quot;</span><span class="p">:</span> <span class="n">rowmode</span><span class="p">,</span>
+            <span class="s2">&quot;startAt&quot;</span><span class="p">:</span> <span class="n">start</span><span class="p">,</span>
+            <span class="s2">&quot;maxResults&quot;</span><span class="p">:</span><span class="n">results</span>
+        <span class="p">}</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">params</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Json_factory.create_bulk_import_job"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_bulk_import_job">[docs]</a>    <span class="k">def</span> <span class="nf">create_bulk_import_job</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schemaname</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fileid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                   <span class="n">dateformat</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeformat</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Create JSON formated string neccesary for creating a bulk import operation to be handled by OpenSpecimen</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        schemaname : string</span>
+<span class="sd">            The Openspecimen schematype, that defines the expected CSV file structure for the entity to be created   </span>
+<span class="sd">        operation : string</span>
+<span class="sd">            Either CREATE or UPDATE duplicate entries will be ignored in case of creation. </span>
+<span class="sd">        fileid: string</span>
+<span class="sd">            The file id created internally by OpenSpecimen, which needs to be passed to the API                      </span>
+<span class="sd">        dateformat: string</span>
+<span class="sd">            Specification of date format used in the OpenSpecimen API. See link for details</span>
+<span class="sd">            https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/68976690/Date+and+time+formats</span>
+<span class="sd">        timeformat: string</span>
+<span class="sd">            Specification of time format used in the OpenSpecimen API. See link for details</span>
+<span class="sd">            https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/68976690/Date+and+time+formats</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-formated-string </span>
+<span class="sd">            Json data needed for creating an CSV file import job for the given entity</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;objectType&quot;</span><span class="p">:</span> <span class="n">schemaname</span><span class="p">,</span>
+                    <span class="s2">&quot;importType&quot;</span><span class="p">:</span> <span class="n">operation</span><span class="p">,</span>
+                    <span class="s2">&quot;inputFileId&quot;</span><span class="p">:</span> <span class="n">fileid</span><span class="p">,</span>
+                    <span class="s2">&quot;dateFormat&quot;</span><span class="p">:</span><span class="n">dateformat</span><span class="p">,</span>
+                    <span class="s2">&quot;timeFormat&quot;</span><span class="p">:</span><span class="n">timeformat</span>
+                    <span class="p">}</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Json_factory.get_registrations"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.get_registrations">[docs]</a>    <span class="k">def</span> <span class="nf">get_registrations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cpid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">registrationdate</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ppid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">birthdate</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">uid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">specimen</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                    <span class="n">includestats</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">startat</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">maxresults</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">exactmatch</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Create JSON formated string neccesary for creating a bulk import operation to be handled by OpenSpecimen</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        cpid : string</span>
+<span class="sd">            Collection protol id of the participants to be queried</span>
+<span class="sd">        registrationdate: string</span>
+<span class="sd">            Date formatted string to query participants registered especially on this date</span>
+<span class="sd">        ppid: string</span>
+<span class="sd">            OpenSpecimen internal unique id or part of a unique id to be matched (exact matching is defind in exact match)</span>
+<span class="sd">        name: string</span>
+<span class="sd">            Name of the participant to be matched</span>
+<span class="sd">        birthdate: string</span>
+<span class="sd">            Date formatted string containing the birthdate of a particiapnt to be queried</span>
+<span class="sd">        uid: string</span>
+<span class="sd">            Social Security number  or different national identifier</span>
+<span class="sd">        specimen: string</span>
+<span class="sd">            Participants whose specimen labels or barcodes contain this Parameters value as a substring will be matched</span>
+<span class="sd">        includestats: string</span>
+<span class="sd">            Include additional statitics within the response (visits specimens etc.)</span>
+<span class="sd">        startat: string</span>
+<span class="sd">            startat and maxResults are useful in implementing pagination of participants list. When not specified, </span>
+<span class="sd">            startAt defaults to 0. When startAt = n, the first element of the response is (n + 1)th participant satisfying the query criteria.</span>
+<span class="sd">        maxresults: string</span>
+<span class="sd">            This Parameters specifies how many participant records should be included in the API response. </span>
+<span class="sd">        exactmatch: string</span>
+<span class="sd">            Specifies whether the PPID should be exact match or sub-string match. Boolean true means exact match. Otherwise it is substring match.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-formated-string</span>
+<span class="sd">            CP id of target of merge action</span>
+<span class="sd">            Json data needed for creating an CSV file import job for the given entity</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;cpId&quot;</span><span class="p">:</span> <span class="n">cpid</span><span class="p">,</span>
+            <span class="s2">&quot;registrationDate&quot;</span><span class="p">:</span> <span class="n">registrationdate</span><span class="p">,</span>
+            <span class="s2">&quot;ppid&quot;</span><span class="p">:</span> <span class="n">ppid</span><span class="p">,</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s2">&quot;dob&quot;</span><span class="p">:</span> <span class="n">birthdate</span><span class="p">,</span>
+            <span class="s2">&quot;uid&quot;</span><span class="p">:</span> <span class="n">uid</span><span class="p">,</span>
+            <span class="s2">&quot;specimen&quot;</span><span class="p">:</span> <span class="n">specimen</span><span class="p">,</span>
+            <span class="s2">&quot;includeStats&quot;</span><span class="p">:</span> <span class="n">includestats</span><span class="p">,</span>
+            <span class="s2">&quot;startAt&quot;</span><span class="p">:</span> <span class="n">startat</span><span class="p">,</span>
+            <span class="s2">&quot;maxResults&quot;</span><span class="p">:</span> <span class="n">maxresults</span><span class="p">,</span>
+            <span class="s2">&quot;exactMatch&quot;</span><span class="p">:</span> <span class="n">exactmatch</span>
+        <span class="p">}</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">params</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Json_factory.add_visit_json"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.add_visit_json">[docs]</a>    <span class="k">def</span> <span class="nf">add_visit_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cprid</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">site</span><span class="p">,</span> <span class="n">eventid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">eventlabel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">ppid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cptitle</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cpshorttitle</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">diagnosis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">clinicalstatus</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">activity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">visitstatus</span><span class="o">=</span><span class="s2">&quot;Complete&quot;</span><span class="p">,</span> <span class="n">missedreason</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">missedby</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comments</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">pathologynumber</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">cohort</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">visitdate</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cpid</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+    
+        <span class="sd">&quot;&quot;&quot;Create JSON formated string neccesary for adding an visit</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        cprid : int</span>
+<span class="sd">            Identifier of the Collection Protocoll Registration to which the Visit belongs.</span>
+<span class="sd">            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.</span>
+<span class="sd">        </span>
+<span class="sd">        name : string</span>
+<span class="sd">            Name of the Visit.</span>
+
+<span class="sd">        site : string</span>
+<span class="sd">            Site to which the Visit belongs.</span>
+
+<span class="sd">        eventid : int</span>
+<span class="sd">            ID of the event to which the visit belongs.[optional]</span>
+
+<span class="sd">        eventlabel : string</span>
+<span class="sd">            Label of the event to which the visit belongs.[optional]</span>
+
+<span class="sd">        ppid : string</span>
+<span class="sd">            Identifier of the Participant to whom the Visit belongs.</span>
+<span class="sd">            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.</span>
+
+<span class="sd">        cptitle : string</span>
+<span class="sd">            Name of the Collection Protocol.</span>
+<span class="sd">            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.</span>
+
+<span class="sd">        cpshorttitle : title</span>
+<span class="sd">            Acronym of the Collection Protocol.</span>
+<span class="sd">            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.</span>
+
+<span class="sd">        diagnosis : string</span>
+<span class="sd">            Name of the diagnoses of the visit.</span>
+
+<span class="sd">        clinicalstatus : string</span>
+<span class="sd">            Clinical Status of the visit.[optional]</span>
+
+<span class="sd">        activity : string</span>
+<span class="sd">            Activity Status of the Visit.[optional]</span>
+
+<span class="sd">        visitstatus : string</span>
+<span class="sd">            Status of the visit.[optional]</span>
+
+<span class="sd">        missedreason : string</span>
+<span class="sd">            Reason why the visit was missed.[optional]</span>
+
+<span class="sd">        missedby : string</span>
+<span class="sd">            Details of the person who missed the visit.[optional]</span>
+
+<span class="sd">        comments : string</span>
+<span class="sd">            Commets regarding the visit.[optional]</span>
+
+<span class="sd">        pathologynumber : string</span>
+<span class="sd">            Surgical Pathology number. [optional]</span>
+
+<span class="sd">        cohort : string</span>
+<span class="sd">            Cohorts to which the Visit belongs. [optional]</span>
+
+<span class="sd">        visitdate : string</span>
+<span class="sd">            Date when the visit will occur, if empty takes the current date.[optional]</span>
+
+<span class="sd">        cpid : int</span>
+<span class="sd">            Identifier of the Collection Protocol.</span>
+<span class="sd">            cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-formatted string</span>
+<span class="sd">            Json data necessary to add an visit via API call</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;cprId&quot;</span><span class="p">:</span> <span class="n">cprid</span><span class="p">,</span>
+            <span class="s2">&quot;eventId&quot;</span><span class="p">:</span> <span class="n">eventid</span><span class="p">,</span>
+            <span class="s2">&quot;eventLabel&quot;</span><span class="p">:</span> <span class="n">eventlabel</span><span class="p">,</span>
+            <span class="s2">&quot;ppid&quot;</span><span class="p">:</span> <span class="n">ppid</span><span class="p">,</span>
+            <span class="s2">&quot;cpTitle&quot;</span><span class="p">:</span> <span class="n">cptitle</span><span class="p">,</span>
+            <span class="s2">&quot;cpShortTitle&quot;</span><span class="p">:</span><span class="n">cpshorttitle</span><span class="p">,</span>
+            <span class="s2">&quot;cpId&quot;</span><span class="p">:</span> <span class="n">cpid</span><span class="p">,</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s2">&quot;clinicalDiagnoses&quot;</span><span class="p">:</span> <span class="n">diagnosis</span><span class="p">,</span>
+            <span class="s2">&quot;clinicalStatus&quot;</span><span class="p">:</span> <span class="n">clinicalstatus</span><span class="p">,</span>
+            <span class="s2">&quot;activityStatus&quot;</span><span class="p">:</span> <span class="n">activity</span><span class="p">,</span>
+            <span class="s2">&quot;site&quot;</span><span class="p">:</span> <span class="n">site</span><span class="p">,</span>
+            <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="n">visitstatus</span><span class="p">,</span>
+            <span class="s2">&quot;missedReason&quot;</span><span class="p">:</span> <span class="n">missedreason</span><span class="p">,</span>
+            <span class="s2">&quot;missedBy&quot;</span><span class="p">:</span> <span class="n">missedby</span><span class="p">,</span>
+            <span class="s2">&quot;comments&quot;</span><span class="p">:</span> <span class="n">comments</span><span class="p">,</span>
+            <span class="s2">&quot;surgicalPathologyNumber&quot;</span><span class="p">:</span> <span class="n">pathologynumber</span><span class="p">,</span>
+            <span class="s2">&quot;cohort&quot;</span><span class="p">:</span> <span class="n">cohort</span><span class="p">,</span>
+            <span class="s2">&quot;visitDate&quot;</span><span class="p">:</span> <span class="n">visitdate</span>
+        <span class="p">}</span>
+        
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">params</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Json_factory.storage_location_json"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.storage_location_json">[docs]</a>    <span class="k">def</span> <span class="nf">storage_location_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xpos</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ypos</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;Create JSON-formatted string to neccesary to retrieve storage location via API </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        id: string</span>
+<span class="sd">            Identifier of the Storage Container within OpenSpecimen.</span>
+<span class="sd">        name: string</span>
+<span class="sd">            Storage Container name</span>
+<span class="sd">        xpos: string </span>
+<span class="sd">            x-coordinate within the given storage conatiner grid (if applicable) </span>
+<span class="sd">        ypos: string</span>
+<span class="sd">            y-coordinate within the given storage container grid (if applicable)     </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-formated string</span>
+<span class="sd">            JSON foramted string that is needed to retrieve the storage location of a specimen </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">id_</span><span class="p">,</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s2">&quot;positionX&quot;</span><span class="p">:</span> <span class="n">xpos</span><span class="p">,</span>
+            <span class="s2">&quot;positionY&quot;</span><span class="p">:</span> <span class="n">ypos</span>
+        <span class="p">}</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+        
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Json_factory.merge_cps"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.merge_cps">[docs]</a>    <span class="k">def</span> <span class="nf">merge_cps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src_cp</span><span class="p">,</span> <span class="n">trg_cp</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;Create JSON-formatted string to neccesary to retrieve storage location via API </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        src_cp: string</span>
+<span class="sd">            CP id of source collection protocoll for merge</span>
+<span class="sd">        trg_cp: string</span>
+<span class="sd">            CP id of target of merge action</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-formated string</span>
+<span class="sd">            JSON-formated string neccesary for merging to CP&#39;s via API</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;srcCpShortTitle&quot;</span><span class="p">:</span> <span class="n">src_cp</span><span class="p">,</span>
+            <span class="s2">&quot;tgtCpShortTitle&quot;</span><span class="p">:</span> <span class="n">trg_cp</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Json_factory.create_institute"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_institute">[docs]</a>    <span class="k">def</span> <span class="nf">create_institute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">institutename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inst_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">get_csv</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create JSON-formatted string to neccesary to retrieve storage location via API </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        institutename: string</span>
+<span class="sd">            Name of the institute</span>
+<span class="sd">        inst_id:</span>
+<span class="sd">            institute_id needed for updating when creating an institute via csv</span>
+<span class="sd">        get_csv: bool</span>
+<span class="sd">            Return a CSV for creating an institute</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-formated string</span>
+<span class="sd">            JSON-formated string neccesary for creating an institute</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">institutename</span>
+        <span class="p">}</span>
+        
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+        
+        <span class="k">if</span> <span class="n">get_csv</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;identifier&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">inst_id</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Json_factory.get_participants"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.get_participants">[docs]</a>    <span class="k">def</span> <span class="nf">get_participants</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lastname</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">uid</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">birthdate</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">pmi</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">empi</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">reqreginfo</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Create JSON-formatted string to neccesary to retrieve storage location via API </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ---------</span>
+<span class="sd">        lastname : string</span>
+<span class="sd">            Substring of the Lastname of a Paritcipant.</span>
+<span class="sd">        </span>
+<span class="sd">        uid : string</span>
+<span class="sd">            Country specific unique social security number.</span>
+
+<span class="sd">        birthdate : string</span>
+<span class="sd">            The date of registration in the format, which is defined in the System settings.</span>
+<span class="sd">        </span>
+<span class="sd">        pmi : dict</span>
+<span class="sd">            Dict with details of the Medical records number mrn and the assigned site with key siteName.</span>
+
+<span class="sd">        empi : string</span>
+<span class="sd">            Enterprise wide unique ID assigned to the participant.</span>
+
+<span class="sd">        reqreginfo : string</span>
+<span class="sd">            OpenSpecimen&#39;s boolean (true/false). If true it returns details of the participant</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-formated string</span>
+<span class="sd">            JSON-formated string neccesary for creating an institute</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        
+        <span class="n">data</span> <span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;lastName&quot;</span> <span class="p">:</span> <span class="n">lastname</span><span class="p">,</span>
+            <span class="s2">&quot;birthDate&quot;</span> <span class="p">:</span> <span class="n">birthdate</span><span class="p">,</span>
+            <span class="s2">&quot;uid&quot;</span> <span class="p">:</span> <span class="n">uid</span><span class="p">,</span>
+            <span class="s2">&quot;empi&quot;</span> <span class="p">:</span> <span class="n">empi</span><span class="p">,</span>
+            <span class="s2">&quot;reqRegInfo&quot;</span> <span class="p">:</span> <span class="n">reqreginfo</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="n">pmi</span><span class="o">==</span><span class="kc">None</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;pmi&#39;</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;pmi&quot;</span><span class="p">]</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;mrn&quot;</span> <span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">pmi</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                <span class="s2">&quot;siteName&quot;</span> <span class="p">:</span> <span class="n">pmi</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="p">}</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Json_factory.create_site"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_site">[docs]</a>    <span class="k">def</span> <span class="nf">create_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">institutename</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">type_</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">coordinators</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">address</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Create a Site</span>
+
+<span class="sd">        Create the payload to create a site in OpenSpecimen via API.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name : string</span>
+<span class="sd">            String with the name of the site.</span>
+<span class="sd">        institutename : string</span>
+<span class="sd">            String with the name of the institute.</span>
+<span class="sd">        type_ : string</span>
+<span class="sd">            String with the type of the site.</span>
+<span class="sd">        coordinators : string</span>
+<span class="sd">            String with the login-name of the coordinators.</span>
+<span class="sd">        address : string</span>
+<span class="sd">            String with the address of the institute.</span>
+<span class="sd">        site_id: string</span>
+<span class="sd">            String with site id for upadting via csv</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        string</span>
+<span class="sd">            JSON-formatted string to create a site such that OpenSpecimen can read it.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s2">&quot;instituteName&quot;</span> <span class="p">:</span> <span class="n">institutename</span><span class="p">,</span>
+            <span class="s2">&quot;coordinators&quot;</span> <span class="p">:</span> <span class="n">coordinators</span><span class="p">,</span>
+            <span class="s2">&quot;type&quot;</span> <span class="p">:</span> <span class="n">type_</span><span class="p">,</span>
+            <span class="s2">&quot;address&quot;</span> <span class="p">:</span> <span class="n">address</span>
+        <span class="p">}</span>
+            
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+        
+
+<div class="viewcode-block" id="Json_factory.create_user_json"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_user_json">[docs]</a>    <span class="k">def</span> <span class="nf">create_user_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">last</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">email</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">phone</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">login</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">institute</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                        <span class="n">type_</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">address</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">domain</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;Create User</span>
+
+<span class="sd">        Create the payload for creating a user in OpenSpecimen.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        first : string</span>
+<span class="sd">            First name of the user.</span>
+<span class="sd">        last : string</span>
+<span class="sd">            Last name of the user.</span>
+<span class="sd">        email : string</span>
+<span class="sd">            Email-address of the user.</span>
+<span class="sd">        phone : string</span>
+<span class="sd">            Phone number of the user.</span>
+<span class="sd">        login : string</span>
+<span class="sd">            Login name of the user.</span>
+<span class="sd">        institute : string</span>
+<span class="sd">            Institute to which the user belongs.</span>
+<span class="sd">        type_ : string</span>
+<span class="sd">            Type of the user.</span>
+<span class="sd">        address : string</span>
+<span class="sd">            Address of the user.</span>
+<span class="sd">        domain : string</span>
+<span class="sd">            Domain where the user belongs to.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        string</span>
+<span class="sd">            JSON formatted string to create an user such that Openspecimen can read it</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;firstName&quot;</span> <span class="p">:</span> <span class="n">first</span><span class="p">,</span>
+            <span class="s2">&quot;lastName&quot;</span> <span class="p">:</span> <span class="n">last</span><span class="p">,</span>
+            <span class="s2">&quot;emailAddress&quot;</span> <span class="p">:</span> <span class="n">email</span><span class="p">,</span>
+            <span class="s2">&quot;phoneNumber&quot;</span> <span class="p">:</span> <span class="n">phone</span><span class="p">,</span>
+            <span class="s2">&quot;domainName&quot;</span> <span class="p">:</span> <span class="n">domain</span><span class="p">,</span>
+            <span class="s2">&quot;loginName&quot;</span> <span class="p">:</span> <span class="n">login</span><span class="p">,</span>
+            <span class="s2">&quot;instituteName&quot;</span> <span class="p">:</span> <span class="n">institute</span><span class="p">,</span>
+            <span class="s2">&quot;type&quot;</span> <span class="p">:</span> <span class="n">type_</span><span class="p">,</span>
+            <span class="s2">&quot;address&quot;</span> <span class="p">:</span> <span class="n">address</span>
+        <span class="p">}</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Json_factory.change_user_pw_json"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.change_user_pw_json">[docs]</a>    <span class="k">def</span> <span class="nf">change_user_pw_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">userid</span><span class="p">,</span> <span class="n">newpw</span><span class="p">,</span> <span class="n">oldpw</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Change Password</span>
+
+<span class="sd">        Change the password of an user via API.</span>
+<span class="sd">        </span>
+<span class="sd">        Note</span>
+<span class="sd">        -----</span>
+<span class="sd">        If an user changes its own password, the old password is mandatory.</span>
+<span class="sd">        If the user who changes the password is a superadmin, the new password is enough.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        userid : int</span>
+<span class="sd">            Integer with the unique ID of the user, which password should be changed.</span>
+<span class="sd">        newpw : string</span>
+<span class="sd">            String with the new password, care about the password complexity.</span>
+<span class="sd">        oldpw : string</span>
+<span class="sd">            String with the old password.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        string</span>
+<span class="sd">            JSO-formatted string  to change the password, such that OpenSpecimen can read it.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;userId&quot;</span> <span class="p">:</span> <span class="n">userid</span><span class="p">,</span>
+            <span class="s2">&quot;oldPassword&quot;</span> <span class="p">:</span> <span class="n">oldpw</span><span class="p">,</span>
+            <span class="s2">&quot;newPassword&quot;</span> <span class="p">:</span> <span class="n">newpw</span>
+        <span class="p">}</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Json_factory.assign_user_role_json"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.assign_user_role_json">[docs]</a>    <span class="k">def</span> <span class="nf">assign_user_role_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">siteid</span><span class="p">,</span> <span class="n">cpid</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Assign Role</span>
+
+<span class="sd">        Assign a Role to a Collection Protocol.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        siteid : int</span>
+<span class="sd">            Integer with the Unique ID of the site, where the User belongs.</span>
+<span class="sd">        cpid : int</span>
+<span class="sd">            Integer with the unique ID of the Collection protocol.</span>
+<span class="sd">        role : string</span>
+<span class="sd">            String with the name of the Role.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        string</span>
+<span class="sd">            JSON-formatted string such that OpenSpecimen can read it.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;site&quot;</span><span class="p">:{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span><span class="n">siteid</span><span class="p">},</span>
+            <span class="s2">&quot;collectionProtocol&quot;</span><span class="p">:{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span><span class="n">cpid</span><span class="p">},</span>
+            <span class="s2">&quot;role&quot;</span><span class="p">:{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="n">role</span><span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Json_factory.register_to_cp"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.register_to_cp">[docs]</a>    <span class="k">def</span> <span class="nf">register_to_cp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cprid</span><span class="p">,</span> <span class="n">regdate</span><span class="p">,</span> <span class="n">cpid</span><span class="p">,</span> <span class="n">ppid</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Register a Registration to another Protocol</span>
+
+<span class="sd">        Register an existing Registration to another Collection Protocol.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        cprid : int</span>
+<span class="sd">            Integer with the existing Registration Id of the Participant.</span>
+<span class="sd">        regdate: string</span>
+<span class="sd">            Dete of the Regisrtation to the new protocol.</span>
+<span class="sd">        cpid : int</span>
+<span class="sd">            Integer with the unique ID of the Collection Protocol.</span>
+<span class="sd">        ppid : string</span>
+<span class="sd">            String with the Participant protocol ID.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        string</span>
+<span class="sd">            Json-formatted string for register a Participant to another Protocol such that OpenSpecimen can read it.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;participant&quot;</span><span class="p">:{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span><span class="n">cprid</span><span class="p">},</span>
+            <span class="s2">&quot;registrationDate&quot;</span><span class="p">:</span><span class="n">regdate</span><span class="p">,</span>
+            <span class="s2">&quot;cpId&quot;</span><span class="p">:</span><span class="n">cpid</span><span class="p">,</span>
+            <span class="s2">&quot;ppid&quot;</span><span class="p">:</span><span class="n">ppid</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Christian Schorn, Simon Streit.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

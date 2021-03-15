@@ -1,0 +1,432 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>OpenSpecimenAPIconnector.os_core.req_util &mdash; OpenSpecimenAPIConnector 0.9.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> OpenSpecimenAPIConnector
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stuff.html">Paragraph Level Markup</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/OpenSpecimenAPIconnector.html">OpenSpecimenAPIconnector package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">OpenSpecimenAPIConnector</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>OpenSpecimenAPIconnector.os_core.req_util</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for OpenSpecimenAPIconnector.os_core.req_util</h1><div class="highlight"><pre>
+<span></span>
+<span class="c1">#! /bin/python3</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<div class="viewcode-block" id="OS_request_gen"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.req_util.OS_request_gen">[docs]</a><span class="k">class</span> <span class="nc">OS_request_gen</span><span class="p">():</span>
+    
+    <span class="sd">&quot;&quot;&quot;Generates OpenSpecimen specific requests</span>
+<span class="sd">     </span>
+<span class="sd">    This class generates OpenSpecimen specific requests such that headers and authentification are created automatically.</span>
+<span class="sd">    With this class the users have to specify which requests they do need, the url and the payload, which should be sent</span>
+<span class="sd">    to OpenSpecimen. The payload alters for different requests and can be seen in the OpenSpecimen&#39;s API documentation.</span>
+<span class="sd">    The class can handle the following requests: GET, POST(formdata, files, json-formatted string), PUT, DELETE, HEADER.</span>
+<span class="sd">    </span>
+<span class="sd">    Note</span>
+<span class="sd">    -----</span>
+<span class="sd">    In order to use this and also the other classes, the user has to know OpenSpecimen. The users have to know which requests</span>
+<span class="sd">    are needed and what content should be uploaded. The API documentation of OpenSpecimen is in:</span>
+<span class="sd">    https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    A code Examples, where those requests are used, is in the Jupyter-Notebook</span>
+<span class="sd">        $ jupyter notebook main.ipynb</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">auth</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;Constructor of the class OS_request_gen()</span>
+<span class="sd">        </span>
+<span class="sd">        Constructor of the class OS_request_gen(). It generates the possible headers for the different requests,</span>
+<span class="sd">        which are json_headers, zip_headers, form_data_headers, file_headers.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        auth : string</span>
+<span class="sd">            String as tuple with the format &quot;( API-User, Password)&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">json_headers</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;content-type&#39;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span> <span class="s1">&#39;cache-control&#39;</span><span class="p">:</span> <span class="s2">&quot;no-cache&quot;</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zip_headers</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;content-type&#39;</span><span class="p">:</span> <span class="s2">&quot;application/zip&quot;</span><span class="p">,</span> <span class="s1">&#39;cache-control&#39;</span><span class="p">:</span> <span class="s2">&quot;no-cache&quot;</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">form_data_headers</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;content-type&#39;</span><span class="p">:</span> <span class="s2">&quot;form-data&quot;</span><span class="p">,</span> <span class="s1">&#39;cache-control&#39;</span><span class="p">:</span> <span class="s2">&quot;no-cache&quot;</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_headers</span><span class="o">=</span><span class="p">{</span>
+            <span class="s1">&#39;cache-control&#39;</span><span class="p">:</span> <span class="s2">&quot;no-cache&quot;</span><span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">auth</span> <span class="o">=</span> <span class="n">auth</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user_name</span> <span class="o">=</span> <span class="n">auth</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="OS_request_gen.get_request"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.req_util.OS_request_gen.get_request">[docs]</a>    <span class="k">def</span> <span class="nf">get_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;Generates GET requests for OpenSpecimen</span>
+<span class="sd">        </span>
+<span class="sd">        Generates GET request for OpenSpecimen, which always contains the URL in the format</span>
+<span class="sd">        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/... . It is used for searching objects and </span>
+<span class="sd">        downloading templates or collections. If one downloads a larger file, the Parameters</span>
+<span class="sd">        stream has to be set to &quot;True&quot;.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        url : string</span>
+<span class="sd">            URL for the get request as string has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/...</span>
+<span class="sd">            </span>
+<span class="sd">        stream : bool</span>
+<span class="sd">            Can be set to &quot;True&quot; for larger files, which takes a while to download. Default value is &quot;False&quot;.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        http(s) response</span>
+<span class="sd">            The response of the request consists of status code, header and body. The type of the body alters</span>
+<span class="sd">            for different requests.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">stream</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">auth</span><span class="p">,</span>
+            <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">zip_headers</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="n">stream</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">auth</span><span class="p">,</span>
+                                 <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">json_headers</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">r</span></div>
+
+
+<div class="viewcode-block" id="OS_request_gen.post_request"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.req_util.OS_request_gen.post_request">[docs]</a>    <span class="k">def</span> <span class="nf">post_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">form_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Generates POST requests for OpenSpecimen</span>
+<span class="sd">        </span>
+<span class="sd">        Generates POST request for OpenSpecimen, which always contains the URL in the format</span>
+<span class="sd">        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/... . This request is most times used </span>
+<span class="sd">        for creating or updating objects in OpenSpecimen and the data is either a JSON-dict</span>
+<span class="sd">        with the keys from OpenSpecimen or a binary-file content( this needs a second call to</span>
+<span class="sd">        execute the job)</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        url : string</span>
+<span class="sd">            URL for the get request as string has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/...</span>
+<span class="sd">            </span>
+<span class="sd">        data : json-formatted strings</span>
+<span class="sd">            Json-formatted string, with the keys from OpenSpecimen.</span>
+<span class="sd">            </span>
+<span class="sd">        form_data : bool</span>
+<span class="sd">            Default value is &quot;False&quot;. Can be set to &quot;True&quot; if, for Examples, forms (.xml-files) are uploaded.</span>
+<span class="sd">        </span>
+<span class="sd">        files : binary</span>
+<span class="sd">            Default value is &quot;None&quot;. Contains tuple with name + ending and file itself.</span>
+<span class="sd">        </span>
+<span class="sd">        params : json formatted string</span>
+<span class="sd">            Json-formatted string, with the keys from OpenSpecimen.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        http(s) response</span>
+<span class="sd">            The response of the request consists of status code, header and body. The type of the body alters</span>
+<span class="sd">            for different requests.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="n">form_data</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s2">&quot;POST&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">auth</span><span class="p">,</span>
+                                 <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">form_data_headers</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">form_data</span><span class="o">==</span><span class="kc">False</span> <span class="ow">and</span> <span class="n">files</span><span class="o">==</span><span class="kc">None</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s2">&quot;POST&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">auth</span><span class="p">,</span>
+                                 <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">json_headers</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">files</span><span class="o">!=</span><span class="kc">None</span><span class="p">:</span>
+            <span class="n">r</span><span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s2">&quot;POST&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">auth</span><span class="p">,</span> 
+                                 <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">file_headers</span><span class="p">,</span><span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">r</span></div>
+
+
+<div class="viewcode-block" id="OS_request_gen.put_request"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.req_util.OS_request_gen.put_request">[docs]</a>    <span class="k">def</span> <span class="nf">put_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;Generates PUT requests for OpenSpecimen</span>
+<span class="sd">        </span>
+<span class="sd">        Generates PUT request for OpenSpecimen, which always contains the URL in the format</span>
+<span class="sd">        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/... . This request is most times used </span>
+<span class="sd">        for updating objects in OpenSpecimen and the data is a JSON-dict with the keys </span>
+<span class="sd">        from OpenSpecimen.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        url : string</span>
+<span class="sd">            URL for the get request as string has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/...</span>
+<span class="sd">            </span>
+<span class="sd">        data : json-formatted strings</span>
+<span class="sd">            Json-formatted string, with the keys from OpenSpecimen.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        http(s) response</span>
+<span class="sd">            The response of the request consists of status code, header and body. The type of the body alters</span>
+<span class="sd">            for different request.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s2">&quot;PUT&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">auth</span><span class="p">,</span>
+                             <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">json_headers</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">r</span></div>
+
+
+<div class="viewcode-block" id="OS_request_gen.delete_request"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.req_util.OS_request_gen.delete_request">[docs]</a>    <span class="k">def</span> <span class="nf">delete_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;Generates DELETE requests for OpenSpecimen</span>
+<span class="sd">        </span>
+<span class="sd">        Generates DELETE request for OpenSpecimen, which always contains the URL in the format</span>
+<span class="sd">        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity}/{objectID} . Is used for deleting objects </span>
+<span class="sd">        of a desired entity e.g. specimens. Usually OpenSpecimen requires the ID of the object in the URL.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        url : string</span>
+<span class="sd">            URL for the get request as string has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity}/{objectID}</span>
+<span class="sd">            </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        http(s) response</span>
+<span class="sd">            The response of the request consists of status code, header and body. The type of the body alters</span>
+<span class="sd">            for different requests.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s2">&quot;DELETE&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">auth</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">r</span></div>
+
+
+<div class="viewcode-block" id="OS_request_gen.head_request"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.req_util.OS_request_gen.head_request">[docs]</a>    <span class="k">def</span> <span class="nf">head_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;Generates HEAD requests for OpenSpecimen</span>
+<span class="sd">        </span>
+<span class="sd">        Generates a HEAD request for OpenSpecimen, which always contains the URL in the format</span>
+<span class="sd">        http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity} . It is used for getting</span>
+<span class="sd">        the header of an object. Usually OpenSpecimen requires the entity of the object in the URL.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        url : string</span>
+<span class="sd">            URL for the get request as string has the form: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng/{entity}</span>
+<span class="sd">            </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        http(s) response</span>
+<span class="sd">            The response of the request consists of status code, header and body. The type of the body alters</span>
+<span class="sd">            for different request.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s2">&quot;HEAD&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">auth</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">r</span></div>
+
+<div class="viewcode-block" id="OS_request_gen.user_name"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.req_util.OS_request_gen.user_name">[docs]</a>    <span class="k">def</span> <span class="nf">user_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;Returns the OpenSpecimen Login name</span>
+<span class="sd">        </span>
+<span class="sd">        Returns the OpenSpecimen login name of the API-User.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        string</span>
+<span class="sd">            The API-User&#39;s login name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_name</span></div></div>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Christian Schorn, Simon Streit.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

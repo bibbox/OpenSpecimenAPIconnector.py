@@ -1,0 +1,572 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>OpenSpecimenAPIconnector.os_core.collection_protocol_registration &mdash; OpenSpecimenAPIConnector 0.9.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> OpenSpecimenAPIConnector
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stuff.html">Paragraph Level Markup</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/OpenSpecimenAPIconnector.html">OpenSpecimenAPIconnector package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">OpenSpecimenAPIConnector</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>OpenSpecimenAPIconnector.os_core.collection_protocol_registration</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for OpenSpecimenAPIconnector.os_core.collection_protocol_registration</h1><div class="highlight"><pre>
+<span></span><span class="ch">#! /bin/python3</span>
+
+<span class="c1"># Import</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="kn">from</span> <span class="nn">.req_util</span> <span class="k">import</span> <span class="n">OS_request_gen</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">config_manager</span>
+
+<div class="viewcode-block" id="collection_protocol_registration"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.collection_protocol_registration.collection_protocol_registration">[docs]</a><span class="k">class</span> <span class="nc">collection_protocol_registration</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;Handles the API calls to registrate participants to a Collection Protocol</span>
+
+<span class="sd">    Handles the OpenSpecimen API calls to registrate participants to an existing Collection Protocol.</span>
+<span class="sd">    This class can create participants, delete participants, register existing participants to another protocol,</span>
+<span class="sd">    merge participants, get the details of an existing participant or more existing participants, update a participant,</span>
+<span class="sd">    get the consent forms of a participant, download a consent form and delete consents form of participants.</span>
+
+<span class="sd">    Note</span>
+<span class="sd">    -----</span>
+<span class="sd">    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can</span>
+<span class="sd">    just pass the parameters via JSON-formatted string. This means the user has to know the keywords.</span>
+<span class="sd">    The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and </span>
+<span class="sd">    the calls refer to this site. More details can be seen in the documentation.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    A code Examples, where also Participants are registrated is in the Jupyter-Notebook</span>
+
+<span class="sd">        $ jupyter notebook main.ipynb</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Constructor of the core class collection_protocol_registration</span>
+
+<span class="sd">        Constructor of the class collection_protocol_event. Connects this class to OpenSpecimen</span>
+<span class="sd">        specific request handle (os_core.request_util.py).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        base_url : string</span>
+<span class="sd">            URL to openspecimen, has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng</span>
+<span class="sd">        auth : tuple</span>
+<span class="sd">            Consists of two strings ( loginname , password)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">=</span> <span class="n">config_manager</span><span class="o">.</span><span class="n">get_url</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;/collection-protocol-registrations&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">auth</span> <span class="o">=</span> <span class="n">config_manager</span><span class="o">.</span><span class="n">get_auth</span><span class="p">()</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span> <span class="o">=</span> <span class="n">OS_request_gen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">auth</span><span class="p">)</span>
+
+<div class="viewcode-block" id="collection_protocol_registration.ausgabe"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.collection_protocol_registration.collection_protocol_registration.ausgabe">[docs]</a>    <span class="k">def</span> <span class="nf">ausgabe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Testing of the URL and authentification.</span>
+
+<span class="sd">        If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.</span>
+<span class="sd">        The function prints the URL and login data to the output terminal, which was handed over to the class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">auth</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="collection_protocol_registration.create_participant"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.collection_protocol_registration.collection_protocol_registration.create_participant">[docs]</a>    <span class="k">def</span> <span class="nf">create_participant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Create or update a participant to a Collection Protocol.</span>
+
+<span class="sd">        This function can create a new participant or update an existing participant to an already existing</span>
+<span class="sd">        Collection Protocol. To use this function one has to know either the Collection Protocoll id &lt;cpId&gt;,</span>
+<span class="sd">        the title of the Collection Protocol &lt;cpTitle&gt; or the short title of the Collection Protocol &lt;cpshorttitle&gt; .</span>
+<span class="sd">        Those values can be seen via GUI, extracted from the responses with the class collection_protocol in os_core or</span>
+<span class="sd">        collection_protocol_util in os_util. To update a participant, one has to specify the unique ID of the participant.</span>
+<span class="sd">        This Id can be searched via the function get_participant_matches in the os_core class participants.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        params : string</span>
+<span class="sd">            JSON formatted string with the parameters of the participant. The paramter participant is a JSON-formatted string itself,</span>
+<span class="sd">            for creating a participant it can be left empty; for updating the ID of the participant is needed. The keys of the participant</span>
+<span class="sd">            dict are id[mandatory for updating], firstName, middleName, lastName, uid, birthdate, vitalStatus, deathDate, gender,</span>
+<span class="sd">            race, ethnicities, sexGenotype, pmis, mrn, siteName, empi.</span>
+
+<span class="sd">        One of the following keys is mandatory to identify the protocol where the participant is created or updated cpId, cpTitle or cpShortTitle.</span>
+
+<span class="sd">            The key ppid has to be left blank, if it is set to be autogenerated by the system and is mandatory, if it is created manually.</span>
+
+<span class="sd">        registrationDate is a mandatory key, the date format is YYYY-MM-DD .</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-dict</span>
+<span class="sd">            Details of the created or updated Participant or the OpenSpecimen error message as Dictionary.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">post_request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="collection_protocol_registration.delete_consent"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.collection_protocol_registration.collection_protocol_registration.delete_consent">[docs]</a>    <span class="k">def</span> <span class="nf">delete_consent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cprid</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Delete a consent form of a participant.</span>
+
+<span class="sd">        Deletes a consent form of an existing participant with the uniquely participant ID &lt;cprid&gt;</span>
+<span class="sd">        which is generated from the system. The ID has to be known and can be seen for Examples via </span>
+<span class="sd">        the GUI in the URL: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/cp-view/{cpId}/participants/{cprid}/...</span>
+<span class="sd">        or with the function get_participant_matches in the os_core class participants.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ---------</span>
+<span class="sd">        cprid : int</span>
+<span class="sd">            System generated unique ID of the participant. Will get converted to a string.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-dict</span>
+<span class="sd">            dict with value true or error message </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">cprid</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/consent-form&#39;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">delete_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="collection_protocol_registration.delete_participant"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.collection_protocol_registration.collection_protocol_registration.delete_participant">[docs]</a>    <span class="k">def</span> <span class="nf">delete_participant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cprid</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Delete a participant from a Collection Protocol</span>
+
+<span class="sd">        Deletes an existing participant with the uniquely participant ID &lt;cprid&gt;</span>
+<span class="sd">        which is generated from the system. The ID has to be known and can be seen for Examples via </span>
+<span class="sd">        the GUI in the URL: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/cp-view/{cpId}/participants/{cprid}/...</span>
+<span class="sd">        or with the function get_participant_matches in the os_core class participants.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ---------</span>
+<span class="sd">        cprid : int</span>
+<span class="sd">            System generated unique ID of the participant. Will get converted to a string.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-dict</span>
+<span class="sd">            Details of the deleted participant or OpenSpecimen&#39;s error message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">cprid</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">delete_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="collection_protocol_registration.download_consent_form"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.collection_protocol_registration.collection_protocol_registration.download_consent_form">[docs]</a>    <span class="k">def</span> <span class="nf">download_consent_form</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cprid</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Download the consent form of a participant.</span>
+
+<span class="sd">        Downloads the consent form of an existing participant with the uniquely participant ID &lt;cprid&gt;</span>
+<span class="sd">        which is generated from the system. The ID has to be known and can be seen for Examples via </span>
+<span class="sd">        the GUI in the URL: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/cp-view/{cpId}/participants/{cprid}/...</span>
+<span class="sd">        or with the function get_participant_matches in the os_core class participants.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ---------</span>
+<span class="sd">        cprid : int</span>
+<span class="sd">            System generated unique ID of the participant. Will get converted to a string.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        binary</span>
+<span class="sd">            Binary file content of the consent form or a status code.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">cprid</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/consent-form&#39;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">get_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">r</span></div>
+
+
+<div class="viewcode-block" id="collection_protocol_registration.get_consents"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.collection_protocol_registration.collection_protocol_registration.get_consents">[docs]</a>    <span class="k">def</span> <span class="nf">get_consents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cprid</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Get the consent form of a participant.</span>
+
+<span class="sd">        Gets the consent form of an existing participant with the uniquely participant ID &lt;cprid&gt;</span>
+<span class="sd">        which is generated from the system. The ID has to be known and can be seen for Examples via </span>
+<span class="sd">        the GUI in the URL: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/cp-view/{cpId}/participants/{cprid}/...</span>
+<span class="sd">        or with the function get_participant_matches in the os_core class participants.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ---------</span>
+<span class="sd">        cprid : int</span>
+<span class="sd">            System generated unique ID of the participant. Will get converted to a string.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-dict</span>
+<span class="sd">            Details of the consent form or the openSpecimen&#39;s error message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">cprid</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/consents&#39;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">get_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">r</span></div>
+
+
+<div class="viewcode-block" id="collection_protocol_registration.get_registration"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.collection_protocol_registration.collection_protocol_registration.get_registration">[docs]</a>    <span class="k">def</span> <span class="nf">get_registration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cprid</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Get the details form of a participant.</span>
+
+<span class="sd">        Gets the details as JSON-dict form of an existing participant with the uniquely participant ID &lt;cprid&gt;</span>
+<span class="sd">        which is generated from the system. The ID has to be known and can be seen for Examples via </span>
+<span class="sd">        the GUI in the URL: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/cp-view/{cpId}/participants/{cprid}/...</span>
+<span class="sd">        or with the function get_participant_matches in the os_core class participants.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ---------</span>
+<span class="sd">        cprid : int</span>
+<span class="sd">            System generated unique ID of the participant. Will get converted to a string.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-dict</span>
+<span class="sd">            Details of the participant or the openSpecimen&#39;s error message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+ 
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">cprid</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">get_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="collection_protocol_registration.get_registrations"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.collection_protocol_registration.collection_protocol_registration.get_registrations">[docs]</a>    <span class="k">def</span> <span class="nf">get_registrations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Search for one or more participants</span>
+
+<span class="sd">        Gets the details of one or more participants, which are specified in the parameters.</span>
+<span class="sd">        The Parameters are passed via a JSON-formatted string. This function is used in the </span>
+<span class="sd">        os_util class cpr_util, where the specific parameters can be passed.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ---------</span>
+<span class="sd">        params : string</span>
+<span class="sd">            Json formatted string with keys: cpId, registrationDate[optional], name(substring of first, last or middlename)[optional],</span>
+<span class="sd">            ppid[optional], participantId[optional], dob[optional], specimen[optional], startAt(default=0)[optional],</span>
+<span class="sd">            maxResults(default=100)[optional], includeStats(default=false)[optional], exactMatch(default=false)[optional]</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-dict</span>
+<span class="sd">            Details of the Participant, who are matching the search criteria.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;/list&#39;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+        <span class="n">payload</span><span class="o">=</span> <span class="n">params</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">post_request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+  
+<div class="viewcode-block" id="collection_protocol_registration.register_to_cp"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.collection_protocol_registration.collection_protocol_registration.register_to_cp">[docs]</a>    <span class="k">def</span> <span class="nf">register_to_cp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Register a participant to another Collection Protocol</span>
+
+<span class="sd">        Registers an already existing Participant to another Collection Protocol.</span>
+<span class="sd">        The Participants unique ID has to be known and can be seen for Examples via </span>
+<span class="sd">        the GUI in the URL: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/cp-view/{cpId}/participants/{cprid}/...</span>
+<span class="sd">        or with the function get_participant_matches in the os_core class participants.</span>
+<span class="sd">        Also, the collection protocol ID of the Protocol in which the participant is registered at has to be known.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ---------</span>
+<span class="sd">        params : string</span>
+<span class="sd">            JSON-formatted string with the Parameters: the keys are participant( value is a dict with key id and value</span>
+<span class="sd">            Pariticipant ID[mandatory])[mandatory], registrationDate [mandatory], cpId [mandatory],</span>
+<span class="sd">            ppid[mandatory if manually generated, leave empty if system-generated]</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-dict</span>
+<span class="sd">            JSON-dict of the participant which is registred to another protocol.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">post_request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="collection_protocol_registration.merge_participants"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.collection_protocol_registration.collection_protocol_registration.merge_participants">[docs]</a>    <span class="k">def</span> <span class="nf">merge_participants</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_from</span><span class="p">,</span> <span class="n">id_to</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Merge Participant x to Participant y</span>
+
+<span class="sd">        Merges Participant with the unique Participant ID &lt;id_from&gt; to the Participant with</span>
+<span class="sd">        unique Participant ID &lt;id_to&gt;. This will move data from all visits and specimens from the source participant to the target participant</span>
+<span class="sd">        and then deletes the source participant.</span>
+<span class="sd">        The Participants unique ID has to be known and can be seen for Examples via </span>
+<span class="sd">        the GUI in the URL: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/cp-view/{cpId}/participants/{cprid}/...</span>
+<span class="sd">        or with the function get_participant_matches in the os_core class participants.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        id_from : int</span>
+<span class="sd">            System generated unique ID of the source participant. Will get converted to a string.</span>
+<span class="sd">        </span>
+<span class="sd">        id_to : int</span>
+<span class="sd">            System generated unique ID of the target participant. Will get converted to a string.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-dict</span>
+<span class="sd">           Returns details of the merged participants as JSON-dict or OpenSpecimen&#39;s error message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">id_from</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="s1">&#39;{</span><span class="se">\&quot;</span><span class="s1">participant</span><span class="se">\&quot;</span><span class="s1">:{</span><span class="se">\&quot;</span><span class="s1">id</span><span class="se">\&quot;</span><span class="s1">:</span><span class="se">\&quot;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">id_to</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&quot;</span><span class="s1">}}&#39;</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">put_request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="collection_protocol_registration.update_participant"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.collection_protocol_registration.collection_protocol_registration.update_participant">[docs]</a>    <span class="k">def</span> <span class="nf">update_participant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cprid</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Update a participant already in a Collection Protocol.</span>
+
+<span class="sd">        This function can update an existing participant with a unique Participant ID &lt;cprid&gt; to an already existing</span>
+<span class="sd">        Collection Protocol. To use this function one has to know either the Collection Protocoll id &lt;cpId&gt;,</span>
+<span class="sd">        the title of the Collection Protocol &lt;cpTitle&gt; or the short title of the Collection Protocol &lt;cpshorttitle&gt; .</span>
+<span class="sd">        Those values can be seen via GUI, extracted from the responses with the class collection_protocol in os_core or</span>
+<span class="sd">        collection_protocol_util in os_util. To update a participant, one has to specify the unique ID of the participant.</span>
+<span class="sd">        This Id can be searched via the function get_participant_matches in the os_core class participants.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        cprid : int</span>
+<span class="sd">            System generated unique ID of the participant. Will get converted to a string.</span>
+
+<span class="sd">        params : string</span>
+<span class="sd">            JSON formatted string with the parameters of the participant. The paramter participant is a JSON-formatted string itself,</span>
+<span class="sd">            the parameters which are passed will get updated. The keys of the participant</span>
+<span class="sd">            dict are id[mandatory], firstName, middleName, lastName, uid, birthdate, vitalStatus, deathDate, gender,</span>
+<span class="sd">            race, ethnicities, sexGenotype, pmis, mrn, siteName, empi.</span>
+
+<span class="sd">        One of the following keys is mandatory to identify the protocol, where the participant is created or updated cpId, cpTitle or cpShortTitle.</span>
+
+<span class="sd">            The key ppid has to be left blank, if it is set to be autogenerated by the system and is mandatory, if it is created manually.</span>
+
+<span class="sd">        registrationDate is a mandatory key, the date format is YYYY-MM-DD .</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JSON-dict</span>
+<span class="sd">            Details of the created or updated Participant or the OpenSpecimen error message as Dictionary.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">cprid</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">put_request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Christian Schorn, Simon Streit.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

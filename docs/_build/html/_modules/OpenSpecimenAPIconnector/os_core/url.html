@@ -1,0 +1,590 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>OpenSpecimenAPIconnector.os_core.url &mdash; OpenSpecimenAPIConnector 0.9.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> OpenSpecimenAPIConnector
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stuff.html">Paragraph Level Markup</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/OpenSpecimenAPIconnector.html">OpenSpecimenAPIconnector package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">OpenSpecimenAPIConnector</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>OpenSpecimenAPIconnector.os_core.url</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for OpenSpecimenAPIconnector.os_core.url</h1><div class="highlight"><pre>
+<span></span><span class="ch">#! /bin/python3</span>
+
+
+<span class="k">def</span> <span class="nf">_write_instance</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s1">&#39;&amp;&#39;</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;Helper function to write the search string.</span>
+
+<span class="sd">    Helps to write the search string, can handle lists and values.</span>
+<span class="sd">    The different entities have to be known and can be found out with the documentation.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    entity : string</span>
+<span class="sd">        The name of the search Parameters.</span>
+
+<span class="sd">    value : string or list</span>
+<span class="sd">        The values corresponding to the entity.</span>
+
+<span class="sd">    sep :  string</span>
+<span class="sd">        The separator between the search parameters and values, most times OS takes &#39;&amp;&#39;.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    string</span>
+<span class="sd">        String with the &#39;entities=values&amp;....&#39;, such that Openspecimen can dissolve it.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">instance</span><span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="nb">list</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
+            <span class="n">instance</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;=&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;+&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sep</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">instance</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;=&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;+&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sep</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">instance</span>
+
+<div class="viewcode-block" id="url_gen"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.url.url_gen">[docs]</a><span class="k">class</span> <span class="nc">url_gen</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;Generates the endpoint URL for search- and list operations</span>
+
+<span class="sd">    This class generates the Parameters string used  in search operations. It can also be used on arrays and lists.</span>
+<span class="sd">    For Examples deleting a list of specimens can be handled with this class. </span>
+<span class="sd">    Parameters strings look like &#39;?entity1=value1&amp;...&amp;entityx=valuex&#39;. To specify a list/array operation Parameters string</span>
+<span class="sd">    format follows the following rule &#39;?entity=value1,...,valuex&amp;&#39;</span>
+
+<span class="sd">    Note</span>
+<span class="sd">    -----</span>
+<span class="sd">    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes, one can</span>
+<span class="sd">    just pass the parameters via a JSON-formatted string. This means the user has to know the keywords.</span>
+<span class="sd">    The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and </span>
+<span class="sd">    the calls refer to this site. More details can be seen in the documentation.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Constructor of the class url_gen</span>
+
+<span class="sd">        The constructor of the class url_gen. The base_url is set in the util_classes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="url_gen.site_search_url_gen"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.url.url_gen.site_search_url_gen">[docs]</a>    <span class="k">def</span> <span class="nf">site_search_url_gen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sitename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">institutename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">maxresults</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Generates the string for Site</span>
+
+<span class="sd">        This function generates the Parameters string to search for sites, with names or the sites to an institute.</span>
+<span class="sd">        Sitename and Institutename can be lists, they are handled as a logical AND. </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        sitename : string or list</span>
+<span class="sd">            Substring of the Site which wants to be searched for as string or list.</span>
+
+<span class="sd">        instituename : string or list</span>
+<span class="sd">            Substring of the Institute which want to be searched for as string or list.</span>
+<span class="sd">        </span>
+<span class="sd">        maxresults : string or int</span>
+<span class="sd">            The maximum results what should be shown. OpenSpecimen&#39;s and here the default-value is 100.</span>
+<span class="sd">            Gets converted to a string.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        string</span>
+<span class="sd">            endpoint of the searchoperation, looks like &#39;?name=&#39;sitename1&amp;name=sitename2&amp;...&amp;institute=institutenamex&#39;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+   
+        <span class="n">url_string</span> <span class="o">=</span> <span class="s1">&#39;/?&#39;</span>
+
+        <span class="k">if</span> <span class="n">sitename</span><span class="o">!=</span><span class="kc">None</span><span class="p">:</span>
+            <span class="n">url_string</span> <span class="o">+=</span> <span class="n">_write_instance</span><span class="p">(</span><span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">sitename</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">institutename</span><span class="o">!=</span><span class="kc">None</span><span class="p">:</span>
+            <span class="n">url_string</span> <span class="o">+=</span> <span class="n">_write_instance</span><span class="p">(</span><span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;institute&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">institutename</span><span class="p">)</span>
+        
+        <span class="n">url_string</span> <span class="o">+=</span> <span class="s1">&#39;maxResults=&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">maxresults</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">url_string</span></div>
+
+<div class="viewcode-block" id="url_gen.cp_search_url_gen"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.url.url_gen.cp_search_url_gen">[docs]</a>    <span class="k">def</span> <span class="nf">cp_search_url_gen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">searchstring</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">piid</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">reponame</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">startat</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">maxresults</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">detailedlist</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Generates the Parameters string for Collection Protocol search</span>
+
+<span class="sd">        This function generates the Parameters string to search for collection protocols.</span>
+<span class="sd">        Permissable values are specified within OpenSpecimen.</span>
+<span class="sd">        Values can be passed as lists single parameters will be added as logical AND. </span>
+
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        All parameters can be passed to the function as lists and will be reformated to be accepted by Openspecimen.</span>
+<span class="sd">        Parameters permissible to be lists are marked as such within the parameters section.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        searchstring : string or list</span>
+<span class="sd">            Substring of the title and short title which want to be searched for as string or list.</span>
+
+<span class="sd">        title : string or list</span>
+<span class="sd">            Substring of the title which wants to be searched for as string or list.</span>
+<span class="sd">        </span>
+<span class="sd">        ppid : string or int</span>
+<span class="sd">            The ID of the principal investigator as string or int. Gets converted to a string.</span>
+
+<span class="sd">        reponame : string or list</span>
+<span class="sd">            Name of the repositories as string or list.</span>
+<span class="sd">        </span>
+<span class="sd">        startat : string or int</span>
+<span class="sd">            Defines which row of the search outcome will be the first to show in the return(default n=0)</span>
+
+<span class="sd">        maxresults : string or int</span>
+<span class="sd">            Defines how many rows of the search outcome will be shown, default value is 100.</span>
+
+<span class="sd">        detailedlist : string</span>
+<span class="sd">            String with true or false, if true extension details will be shown.</span>
+<span class="sd">        </span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        string</span>
+<span class="sd">            Parameters string specific for the given  searchoperation to be added to the URL endpoint the e.g.: &#39;?query=&#39;searchstring&amp;title=title&amp;...&amp;detailedList=true&#39;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">url_string</span><span class="o">=</span><span class="s1">&#39;?&#39;</span>
+
+        <span class="k">if</span> <span class="n">searchstring</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">url_string</span> <span class="o">+=</span> <span class="n">_write_instance</span><span class="p">(</span><span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;query&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">searchstring</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">title</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">url_string</span> <span class="o">+=</span> <span class="n">_write_instance</span><span class="p">(</span><span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">title</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">piid</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">url_string</span> <span class="o">+=</span> <span class="n">_write_instance</span><span class="p">(</span><span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;piId&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">piid</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">reponame</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">url_string</span> <span class="o">+=</span> <span class="n">_write_instance</span><span class="p">(</span><span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;repositoryName&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">reponame</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">startat</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">url_string</span> <span class="o">+=</span> <span class="n">_write_instance</span><span class="p">(</span><span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;startAt&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">startat</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">maxresults</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">url_string</span> <span class="o">+=</span> <span class="n">_write_instance</span><span class="p">(</span><span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;maxResults&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">maxresults</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">detailedlist</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;true&#39;</span><span class="p">:</span>
+            <span class="n">url_string</span> <span class="o">+=</span> <span class="n">_write_instance</span><span class="p">(</span><span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;detailedList&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">detailedlist</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+        
+        <span class="n">url_string</span> <span class="o">=</span> <span class="n">url_string</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">url_string</span></div>
+
+
+<div class="viewcode-block" id="url_gen.query_url_gen"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.url.url_gen.query_url_gen">[docs]</a>    <span class="k">def</span> <span class="nf">query_url_gen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cpid</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">searchstring</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">start</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">max_</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">countreq</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Generates the URL endpoint for searching a query.</span>
+
+<span class="sd">        Generates the string of the URL endpoint to searching for queries. </span>
+
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        All parameters can be passed to the function as lists and will be reformated to be accepted by Openspecimen.</span>
+<span class="sd">        Parameters permissible to be lists are marked as such within the parameters section.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        cpid : string or int</span>
+<span class="sd">            ID of the Collection Protocol, where the query is assigned to. Gets converted to a string.</span>
+
+<span class="sd">        searchstring : string</span>
+<span class="sd">            Substring of the query-title.</span>
+
+<span class="sd">        start : string or int</span>
+<span class="sd">            Defines the startrow, of the search outcome. Default is 0, gets converted to a string.</span>
+
+<span class="sd">        max_ : string or int</span>
+<span class="sd">            Max results to displayed, default value is 100. Gets converted to a string.</span>
+
+<span class="sd">        countreq : true/false</span>
+<span class="sd">            String with true or false. If true shows the total number of saved queries.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        string</span>
+<span class="sd">            The URL endpoint to search for queries.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">url_string</span> <span class="o">=</span> <span class="s1">&#39;?&#39;</span>
+
+        <span class="k">if</span> <span class="n">cpid</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">url_string</span> <span class="o">+=</span> <span class="n">_write_instance</span><span class="p">(</span><span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;cpId&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">cpid</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">searchstring</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">url_string</span> <span class="o">+=</span> <span class="n">_write_instance</span><span class="p">(</span><span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;searchString&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">searchstring</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">start</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">url_string</span> <span class="o">+=</span> <span class="n">_write_instance</span><span class="p">(</span><span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;start&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">start</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">max_</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">url_string</span> <span class="o">+=</span> <span class="n">_write_instance</span><span class="p">(</span><span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;max&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">max_</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">countreq</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">url_string</span> <span class="o">+=</span> <span class="n">_write_instance</span><span class="p">(</span><span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;countReq&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">countreq</span><span class="p">)</span>
+
+        <span class="n">url_string</span> <span class="o">=</span> <span class="n">url_string</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        
+        <span class="k">return</span> <span class="n">url_string</span></div>
+
+
+<div class="viewcode-block" id="url_gen.search_specimen"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.url.url_gen.search_specimen">[docs]</a>    <span class="k">def</span> <span class="nf">search_specimen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cprid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">eventid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">visitid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">maxres</span><span class="o">=</span><span class="s2">&quot;100&quot;</span><span class="p">,</span> <span class="n">exact</span><span class="o">=</span><span class="s2">&quot;false&quot;</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s2">&quot;true&quot;</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Generates the searchstring for Specimens</span>
+
+<span class="sd">        This function generates the string to search for collection protocols, with the permissable values from OpenSpecimen. </span>
+<span class="sd">        The values can be lists, they are handled as a logical OR. The values not passed to the function will be ignored.</span>
+
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        All parameters can be passed to the function as lists and will be reformated to be accepted by Openspecimen.</span>
+<span class="sd">        Parameters permissibke to be lists are marked as such within the paramters section.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        label : string or list</span>
+<span class="sd">            The label of the specimen. If a list is passed it searches for multiple labels (logical OR)</span>
+
+<span class="sd">        cprid : string or int</span>
+<span class="sd">            The Collection Protocol Registration ID of the specimen. Gets converted to a string.</span>
+
+<span class="sd">        enventid : string or int</span>
+<span class="sd">            The Event ID of the anticipated Specimen. If searching with cprid the eventid or visitid is mandatory.</span>
+
+<span class="sd">        visitid : string or int</span>
+<span class="sd">            The Visit ID of the anticipated Specimen. If searching with cprid the eventid or visitid is mandatory.</span>
+<span class="sd">        </span>
+<span class="sd">        maxres : string or int</span>
+<span class="sd">            The maximum results to display as int or string, gets converted to a string. The default value is 100.</span>
+<span class="sd">        </span>
+<span class="sd">        exact : string</span>
+<span class="sd">            Openspecimen&#39;s boolean true/false. If true, the search parameters have to match exactly.</span>
+<span class="sd">        </span>
+<span class="sd">        extensions : string</span>
+<span class="sd">            Openspecimen&#39;s boolean value true/false. If true, the extensionDetails will be shown in the results.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        string</span>
+<span class="sd">            String of the URL endpoint for searching after specimens.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">url_string</span> <span class="o">=</span> <span class="s1">&#39;?&#39;</span>
+
+        <span class="k">if</span> <span class="n">label</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">url_string</span> <span class="o">+=</span> <span class="n">_write_instance</span><span class="p">(</span><span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">label</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">cprid</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">url_string</span> <span class="o">+=</span> <span class="n">_write_instance</span><span class="p">(</span><span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;cprId&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">cprid</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">eventid</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">url_string</span> <span class="o">+=</span> <span class="n">_write_instance</span><span class="p">(</span><span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;eventId&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">eventid</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">visitid</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">url_string</span> <span class="o">+=</span> <span class="n">_write_instance</span><span class="p">(</span><span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;visitId&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">visitid</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">maxres</span> <span class="o">!=</span><span class="s2">&quot;100&quot;</span><span class="p">:</span>
+            <span class="n">url_string</span> <span class="o">+=</span> <span class="n">_write_instance</span><span class="p">(</span><span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;maxResults&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">maxres</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">exact</span> <span class="o">==</span> <span class="s1">&#39;true&#39;</span><span class="p">:</span>
+            <span class="n">url_string</span> <span class="o">+=</span> <span class="n">_write_instance</span><span class="p">(</span><span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;exactMatch&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">exact</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">extension</span> <span class="o">==</span> <span class="s1">&#39;true&#39;</span><span class="p">:</span>
+            <span class="n">url_string</span> <span class="o">+=</span> <span class="n">_write_instance</span><span class="p">(</span><span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;includeExtensions&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">extension</span><span class="p">)</span>
+        
+        <span class="n">url_string</span><span class="o">=</span> <span class="n">url_string</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">url_string</span></div>
+
+<div class="viewcode-block" id="url_gen.delete_specimens"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.url.url_gen.delete_specimens">[docs]</a>    <span class="k">def</span> <span class="nf">delete_specimens</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">specimenids</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Generates the URL endpoint for deleting Specimens</span>
+
+<span class="sd">        Generates the string of the URL endpoint for deleting one or more specimens.</span>
+<span class="sd">        Looks like &#39;?id=specimenid1,...,specimenidx&#39;</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        specimenids : string/int or list of string/int</span>
+<span class="sd">            The specimen IDs which one wants to delete, gets converted to a string.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        string</span>
+<span class="sd">            The url endpoint as string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">url_string</span> <span class="o">=</span> <span class="s1">&#39;?id=&#39;</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">specimenids</span><span class="p">,</span><span class="nb">list</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">id_</span> <span class="ow">in</span> <span class="n">specimenids</span><span class="p">:</span>
+                <span class="n">url_string</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">id_</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span>
+            <span class="n">url_string</span> <span class="o">=</span> <span class="n">url_string</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">url_string</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">specimenids</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">url_string</span></div>
+
+
+<div class="viewcode-block" id="url_gen.search_visit_name_spr"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.url.url_gen.search_visit_name_spr">[docs]</a>    <span class="k">def</span> <span class="nf">search_visit_name_spr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">visitname</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sprnumber</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Generates the URL endpoint for searching a Visit</span>
+
+<span class="sd">        Generates the string of the URL endpoint for searching one or more visits by</span>
+<span class="sd">        the name or surgical pathology number.It looks like &#39;?name=visitname&amp;sprNumber=sprnumber&#39;</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        visitname : string</span>
+<span class="sd">            The visit name which one wants to get.</span>
+
+<span class="sd">        sprnumber : string or int</span>
+<span class="sd">            The surgical pathology number as int or string, gets converted to a string</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        string</span>
+<span class="sd">            The url endpoint as string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">url_string</span> <span class="o">=</span> <span class="s1">&#39;?&#39;</span>
+
+        <span class="k">if</span> <span class="n">visitname</span><span class="o">!=</span><span class="kc">None</span><span class="p">:</span>
+            <span class="n">url_string</span> <span class="o">+=</span> <span class="s1">&#39;visitName=&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">visitname</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">sprnumber</span><span class="o">!=</span><span class="kc">None</span><span class="p">:</span>
+            <span class="n">url_string</span> <span class="o">+=</span> <span class="s1">&#39;sprNumber=&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sprnumber</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">url_string</span></div>
+
+<div class="viewcode-block" id="url_gen.search_visit_cprid"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.url.url_gen.search_visit_cprid">[docs]</a>    <span class="k">def</span> <span class="nf">search_visit_cprid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cprid</span> <span class="p">,</span> <span class="n">includestats</span><span class="o">=</span><span class="s2">&quot;false&quot;</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Generates the URL endpoint for searching a visit</span>
+
+<span class="sd">        Generates the string of the URL endpoint for searching visits by the</span>
+<span class="sd">        Collection Protocol Registration ID.It looks like &#39;?cprId=cprid&amp;includeStats=true/false&#39;</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        cprid : string or int</span>
+<span class="sd">            The Visit ID which one wants to get. Gets converted to a string.</span>
+
+<span class="sd">        includestats : string</span>
+<span class="sd">            OpenSpecimens boolean type true/false. Default is false and thus optional. </span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        string</span>
+<span class="sd">            The url endpoint as string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">url_string</span> <span class="o">=</span> <span class="s1">&#39;?&#39;</span>
+        <span class="n">url_string</span> <span class="o">+=</span> <span class="n">_write_instance</span><span class="p">(</span><span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;cprId&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">cprid</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">includestats</span><span class="o">==</span> <span class="s1">&#39;true&#39;</span><span class="p">:</span>
+            <span class="n">url_string</span> <span class="o">+=</span> <span class="n">_write_instance</span><span class="p">(</span><span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;includeStats&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">includestats</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">url_string</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Christian Schorn, Simon Streit.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

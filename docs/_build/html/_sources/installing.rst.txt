@@ -1,0 +1,34 @@
+************
+Installation
+************
+
+Install the package:
+
+.. code:: console
+
+    $ pip install OpenSpecimenApiConnector
+
+In your ``sript.py`` file:
+
+.. code:: python
+
+    import OpenSpecimenApiConnector as os_conn
+    import OpenSpecimenApiConnector.os_core as os_core
+    import OpenSpecimenApiConnector.os_util as os_util
+
+   
+
+.. note::
+    Adding this theme as an extension is what enables localization of theme
+    strings in your translated output. If these strings are not translated in
+    your output, either we lack the localized strings for your locale, or you
+    are using an old version of the theme.
+
+More Files and Demos
+===================
+
+
+.. code:: python
+
+    html_theme = "sphinx_rtd_theme"
+    html_theme_path = ["_themes", ]

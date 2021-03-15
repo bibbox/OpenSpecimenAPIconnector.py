@@ -1,0 +1,480 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>OpenSpecimenAPIconnector.os_core.visit &mdash; OpenSpecimenAPIConnector 0.9.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> OpenSpecimenAPIConnector
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stuff.html">Paragraph Level Markup</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/OpenSpecimenAPIconnector.html">OpenSpecimenAPIconnector package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">OpenSpecimenAPIConnector</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>OpenSpecimenAPIconnector.os_core.visit</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for OpenSpecimenAPIconnector.os_core.visit</h1><div class="highlight"><pre>
+<span></span><span class="ch">#! /bin/python3</span>
+
+<span class="c1"># Import</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">config_manager</span>
+
+<span class="kn">from</span> <span class="nn">.req_util</span> <span class="k">import</span> <span class="n">OS_request_gen</span>
+
+<div class="viewcode-block" id="visit"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.visit.visit">[docs]</a><span class="k">class</span> <span class="nc">visit</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;Handles the API calls for Visits</span>
+<span class="sd">    </span>
+<span class="sd">    This class handles the API calls for OpenSpecimen visits. It can create, delete, </span>
+<span class="sd">    search visits with different parameters. Further visits can be added to a collection protocol within the system.</span>
+<span class="sd">    The outputs are JSON dicts or the error messages as dict.</span>
+<span class="sd">    </span>
+<span class="sd">    Note</span>
+<span class="sd">    -----</span>
+<span class="sd">    In order to use this and also the other classes, the user has to know OpenSpecimen. In the core classes one can</span>
+<span class="sd">    just pass the parameters via a JSON-formatted string. This means the user has to know the keywords.</span>
+<span class="sd">    The API calls are documented in https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/1116035/REST+APIs and </span>
+<span class="sd">    the calls refer to this site. More details can be seen in the documentation.</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    A code Examples, where the visits are handled, is in the Jupyter-Notebook</span>
+<span class="sd">        $ jupyter notebook main.ipynb</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Constructor of the Class visit</span>
+<span class="sd">        </span>
+<span class="sd">        Constructor of the class visit, can handle the basic API-calls</span>
+<span class="sd">        of the visits in OpenSpecimen. Connects this class to OpenSpecimen</span>
+<span class="sd">        specific request handle (os_core.request_util.py).</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        base_url : string</span>
+<span class="sd">            URL to openspecimen, has the format: http(s)://&lt;host&gt;:&lt;port&gt;/openspecimen/rest/ng</span>
+<span class="sd">        auth : tuple</span>
+<span class="sd">            Consists of two strings ( loginname , password)</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">=</span> <span class="n">config_manager</span><span class="o">.</span><span class="n">get_url</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">auth</span> <span class="o">=</span> <span class="n">config_manager</span><span class="o">.</span><span class="n">get_auth</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span> <span class="o">=</span> <span class="n">OS_request_gen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">auth</span><span class="p">)</span>
+
+<div class="viewcode-block" id="visit.ausgabe"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.visit.visit.ausgabe">[docs]</a>    <span class="k">def</span> <span class="nf">ausgabe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Testing of the URL and authentification.</span>
+<span class="sd">        </span>
+<span class="sd">        If there are any unexpected errors, one can easily test if the URL and login data is spelled correctly.</span>
+<span class="sd">        The function prints the URL and login data  to the output terminal, which was handed over to the class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">auth</span><span class="p">)</span>        </div>
+
+
+<div class="viewcode-block" id="visit.add_visit"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.visit.visit.add_visit">[docs]</a>    <span class="k">def</span> <span class="nf">add_visit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Add a visit to a Participant.</span>
+<span class="sd">        </span>
+<span class="sd">        Add a visit to a participant in OpenSpecimen via API call. To use this function, one has to know the</span>
+<span class="sd">        parameters of the participant, event and site.</span>
+
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        Mandatory fields are -cprId or (ppid and cpTitle) or (ppid and cpShortTitle)</span>
+<span class="sd">        - name, site</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        params : string</span>
+<span class="sd">            JSON formatted string with parameters: cprId, eventId, eventLabel, ppid, cptitle, cpShorttitle, name,</span>
+<span class="sd">            clinicalDiagnoses[optional], clinicalStatus[optional], activityStatus [optional], site, status(permissable</span>
+<span class="sd">            values: COMPLETE, PENDING, MISSED), missedReason[optional], missedBy[optional], comments[optional],</span>
+<span class="sd">            surgicalPathologyNumber[optional], cohort[optional], visitDate[optional]</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            Details of the visit as JSON dict or the Openspecimen&#39;s error message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;/visits&#39;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">post_request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="visit.add_visit_specimen"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.visit.visit.add_visit_specimen">[docs]</a>    <span class="k">def</span> <span class="nf">add_visit_specimen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Generate a visit and corresponding specimens</span>
+
+<span class="sd">        Create a visit and specimens in one call. To use this function one has to know the parameters</span>
+<span class="sd">        of the participants and events. Or one can use the create_visit_specimens function from the os_util</span>
+<span class="sd">        class visit_util. </span>
+
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        The visit fields can be seen in add_visit and the ones for specimens are in create specimen.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        params : string</span>
+<span class="sd">            JSON formatted string with parameters visit (dict-like string with details of the visit),</span>
+<span class="sd">            specimens(dict-like string with details of the specimens)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            JSON dict with the details of the created visit and specimens or OpenSpecimen&#39;s error message</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;/visits/collect&#39;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">post_request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="visit.delete_visit"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.visit.visit.delete_visit">[docs]</a>    <span class="k">def</span> <span class="nf">delete_visit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">visitid</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Delete a Visit from OpenSpecimen</span>
+
+<span class="sd">        Delete an existing visit in OpenSpecimen with the Visit ID visitid. This has to be known and can</span>
+<span class="sd">        be found out in the GUI by clicking on a participant and the visit. It looks like:</span>
+<span class="sd">        http(s)://&lt;host&gt;:&lt;port&gt;/openspeicmen/cp-view/{cpid}/participant/{cprid}/visits/detail/ocerview?visitId={visitid}&amp;eventId={eventId} .</span>
+<span class="sd">        Or via the function get_visit_namespr, when one knows the name of the visit and then extract the ID from there.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        visitid : int</span>
+<span class="sd">            ID of the visit, gets converted to a string.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            JSON-dict with the details of the deleted visit or the OpenSpecimen&#39;s error message</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;/visits/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">visitid</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">delete_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="visit.get_visit"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.visit.visit.get_visit">[docs]</a>    <span class="k">def</span> <span class="nf">get_visit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">visitid</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Get a Visit from OpenSpecimen</span>
+
+<span class="sd">        Get an existing visit in OpenSpecimen with the Visit ID visitid. This has to be known and can</span>
+<span class="sd">        be found out in the GUI by clicking on a participant and the visit. It looks like:</span>
+<span class="sd">        http(s)://&lt;host&gt;:&lt;port&gt;/openspeicmen/cp-view/{cpid}/participant/{cprid}/visits/detail/ocerview?visitId={visitid}&amp;eventId={eventId} .</span>
+<span class="sd">        Or via the function get_visit_namespr, when one knows the name of the visit and then extract the id from there.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        visitid : int</span>
+<span class="sd">            ID of the visit, gets converted to a string.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            JSON-dict with the details of the visit with ID visitid or the OpenSpecimen&#39;s error message</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;/visits/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">visitid</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">get_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="visit.get_visit_namespr"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.visit.visit.get_visit_namespr">[docs]</a>    <span class="k">def</span> <span class="nf">get_visit_namespr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">search_string</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Get a Visit by the Name or the Surgical Pathology Number</span>
+
+<span class="sd">        Get one or more visits by name or surgical pathology number. Parameters have to be known in advance </span>
+<span class="sd">        in order to use this function. If just the visitname is passed, one returns a visit with the corresponding name.</span>
+<span class="sd">        If just the surgical pathology number is passed, it returns all visits attached to this number. If both are passed,</span>
+<span class="sd">        it works as logical AND.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        search_string : string</span>
+<span class="sd">            string in the format &#39;?name=visitname(optional)&amp;sprNumer=sprnumber(optional)</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            JSON-dict with details of the visits.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;/visits/bynamespr&#39;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">search_string</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">get_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="visit.get_visits_cpr"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.visit.visit.get_visits_cpr">[docs]</a>    <span class="k">def</span> <span class="nf">get_visits_cpr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">search_string</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Get a Visit by the Collection Protocol Registration ID.</span>
+
+<span class="sd">        Get a visit by the collection protocoll registration ID. Parameters have to be known in advance </span>
+<span class="sd">        in order to use this function. They can be extracted from calling a search function in the </span>
+<span class="sd">        os_core class visits.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        search_string : string</span>
+<span class="sd">            string in the format &#39;?cprId=cprid&amp;includeStats=true/false(optional)&#39;</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            JSON-dict with details of the visit.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;/visits&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">search_string</span><span class="p">)</span>
+        <span class="n">url</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">endpoint</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">get_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+        
+<div class="viewcode-block" id="visit.update_visit"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.visit.visit.update_visit">[docs]</a>    <span class="k">def</span> <span class="nf">update_visit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">visitid</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;Updating a visit</span>
+
+<span class="sd">        Update an existing visit with ID visitid and the parameters params. All parameters are</span>
+<span class="sd">        optional for updating and those which are not passed, stay the same. Those parameters and </span>
+<span class="sd">        the visit ID have to be known to use this function and can</span>
+<span class="sd">        be found out in the GUI by clicking on a participant and the visit. It looks like:</span>
+<span class="sd">        http(s)://&lt;host&gt;:&lt;port&gt;/openspeicmen/cp-view/{cpid}/participant/{cprid}/visits/detail/ocerview?visitId={visitid}&amp;eventId={eventId} .</span>
+<span class="sd">        Or via the function get_visit_namespr, when one knows the name of the visit and then extract the ID from there.</span>
+
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        Mandatory fields are -cprId or (ppid and cpTitle) or (ppid and cpShortTitle),</span>
+<span class="sd">        - name, -site</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        visitid : int</span>
+<span class="sd">            ID of the visit as int or string, gets converted to a string</span>
+<span class="sd">        </span>
+<span class="sd">        params : string</span>
+<span class="sd">            JSON- formatted string with parameters: cprId, eventId, eventLabel, eventPoint[optional], ppid, cptitle, cpShorttitle, name,</span>
+<span class="sd">            clinicalDiagnoses[optional], clinicalStatus[optional], activityStatus [optional], site, status(permissable</span>
+<span class="sd">            values: COMPLETE, PENDING, MISSED), missedReason[optional], missedBy[optional], comments[optional],</span>
+<span class="sd">            surgicalPathologyNumber[optional], cohort[optional], visitDate[optional]</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            JSON-dict with details of the updated visit or OpenSpecimens error message </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;/visits/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">visitid</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span><span class="n">endpoint</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">put_request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Christian Schorn, Simon Streit.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
