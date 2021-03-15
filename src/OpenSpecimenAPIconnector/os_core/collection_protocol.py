@@ -24,7 +24,7 @@ class collection_protocol():
 
     Examples
     --------
-    A code Examples, where the Collection protocols are handled, is in the Jupyter-Notebook::
+    A code Examples, where the Collection protocols are handled, is in the Jupyter-Notebook
 
         $ jupyter notebook main.ipynb
     """
@@ -95,7 +95,7 @@ class collection_protocol():
 
         """Delete a Collection Protocol with OpenSpecimens unique CollectionProtocolID
 
-        Delete an already existing Collection Protocol. The Parameters ::cpid:: is the uniqe ID of the Collection Protocol
+        Delete an already existing Collection Protocol. The Parameters <cpid> is the uniqe ID of the Collection Protocol
         which is generated automatically from OpenSpecimen. To get the ID, one can click in the GUI on the Collection Protocol
         Details button and read it from the URL, with the format: http(s)://<host>:<port>/openspecimen/#/cp-view/{cpid}/overview.
         Another possibility is to search via 'search_collection_protocols' for a specific Parameters and then extract the ID
@@ -126,7 +126,7 @@ class collection_protocol():
 
         Search for one or more Collection Protocols with the search_string defined. The search string looks like:
         http(s)://<host>:<port>/openspecimen/rest/np/collection-protocols?{param_1}={value_1}&...&{param_x}={value_x}
-        With the class collection_protocol_util from os_util and function ::search_cps:: the search string is generated
+        With the class collection_protocol_util from os_util and function <search_cps> the search string is generated
         and this function is called. Not all keys from OpenSpecimen can be easily searched for.
 
         Parameters
@@ -198,7 +198,7 @@ class collection_protocol():
         """Merge two Collection Protocols
 
         Merge two Collection Protocols which are defined in params. To call this function the short titles of
-        the source and target collection protocol have to be known. The Parameters ::params:: is a json-formatted string,
+        the source and target collection protocol have to be known. The Parameters <params> is a json-formatted string,
         with keys srcCPShortTitle and tgtCpShorttitle. The merged Protocol is the one with short title tgtCpShortTitle,
         with merge logic outer. 
 
@@ -230,7 +230,7 @@ class collection_protocol():
 
             Updates an existing Collection Protocol with the automatically generated OpenSpecimen's system wide
             unique Collection Protocol ID cpid, with the Parameters params which are passed to the function.
-            The ID of the Collection Protocol has to be known and can, for Examples, be seen in the GUI by clicking on 
+            The ID of the Collection Protocol has to be known and can, for example, be seen in the GUI by clicking on 
             the Collection Protocol, which has the format http(s)://<host>:<port>/openspecimen/cps/{cpid}/... .
             Or via the function search_collection_protocols or get_all_collection_protocols
 

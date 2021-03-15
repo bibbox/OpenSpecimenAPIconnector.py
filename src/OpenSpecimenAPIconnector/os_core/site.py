@@ -26,7 +26,7 @@ class sites():
     
     Examples
     --------
-    A code Examples, where the Collection protocols are handled, is in the Jupyter-Notebook::
+    A code Examples, where the Collection protocols are handled, is in the Jupyter-Notebook
         $ jupyter notebook main.ipynb
     """
 
@@ -90,7 +90,7 @@ class sites():
         
         """Delete a site with OpenSpecimen's uniques Site ID
         
-        Delete an already existing site. The Parameters ::siid:: is the uniqe ID of the site
+        Delete an already existing site. The Parameters <siid> is the uniqe ID of the site
         which is generated automatically from OpenSpecimen. To get the ID, one can click in the GUI on the sites
         page of the desired site and read it from the URL, with format: http(s)://<host>:<port>/openspecimen/#/sites/{siid}/overview .
         Another possibility is to search via 'search_sites' for a specific Parameters and then extract the ID
@@ -119,7 +119,7 @@ class sites():
         """Search for sites with specific values.
         Search for one or more sites with the values in search_string defined. The search string looks like:
         http(s)://<host>:<port>/openspecimen/rest/np/sites?{param_1}={value_1}&...&{param_x}={value_x}
-        With the class sites_util from os_util and function ::search_sites:: the search string is generated
+        With the class sites_util from os_util and function <search_sites> the search string is generated
         automatically and this function is called. Not all keys from OpenSpecimen can be easily searched for.
         
         Parameters

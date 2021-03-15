@@ -177,7 +177,7 @@ class csv_bulk:
 
         """Get the Job status.
 
-        Get the status of a job with the ID ::jobid:: . The status of the job has to be known and 
+        Get the status of a job with the ID <jobid> . The status of the job has to be known and 
         can be seen via GUI in JOBS. The number after # in the title is the ID. The codes are:
         200 : Bulk Import request was successfully processed.
         401 : Authorisation failed, user doesn’t have the authority.
@@ -206,7 +206,7 @@ class csv_bulk:
 
         """Download a job report.
 
-        Get the status of a job with the ID ::jobid:: . The status of the job has to be known and 
+        Get the status of a job with the ID <jobid> . The status of the job has to be known and 
         can be seen via GUI in JOBS or in the corresponding schema with View Past Imports. The number 
         after # in the title is the ID. Generates a JSON-dict of the JOB containing the information
         which were uploaded and the additional fields OS_IMPORT_STATUS, OS_ERROR_MESSAGE.

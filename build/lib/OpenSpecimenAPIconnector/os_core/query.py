@@ -114,7 +114,7 @@ class query:
 
         """Execute a saved Query.
 
-        Execute an already existing query with the OpenSpecimen's unique Query ID ::qryid:: .
+        Execute an already existing query with the OpenSpecimen's unique Query ID <qryid> .
         The query ID can be seen via clicking on the queries in OpenSpecimen and it is the
         number after # in the title.
 

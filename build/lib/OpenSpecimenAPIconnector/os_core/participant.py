@@ -60,9 +60,9 @@ class participant:
 
     def get_participant(self, ppid):
 
-        """Get the participant with the Participant Protocol ID ::ppid::
+        """Get the participant with the Participant Protocol ID <ppid>
 
-        Get the details of the Participant with the Collection protocol wide unique ID ::ppid::.
+        Get the details of the Participant with the Collection protocol wide unique ID <ppid>.
         This ID can be generated automatically from OpenSpecimen or generated manually, which has
         to be specified when the Collection Protocol is created.
 

@@ -3,7 +3,7 @@
 
 '''
     Road to official version:
-    ::::::TODO::::::
+    TODO
     - Extend TODO-List
     - Person_Extensions in openspecimen
     - Some_fields in Collections have to be loaded separatly

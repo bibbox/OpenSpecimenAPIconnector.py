@@ -25,7 +25,7 @@ class collection_protocol_registration:
     Examples
     --------
 
-    A code Examples, where also Participants are registrated is in the Jupyter-Notebook::
+    A code Examples, where also Participants are registrated is in the Jupyter-Notebook
 
         $ jupyter notebook main.ipynb
     """
@@ -64,8 +64,8 @@ class collection_protocol_registration:
         """Create or update a participant to a Collection Protocol.
 
         This function can create a new participant or update an existing participant to an already existing
-        Collection Protocol. To use this function one has to know either the Collection Protocoll id ::cpId::,
-        the title of the Collection Protocol ::cpTitle:: or the short title of the Collection Protocol ::cpshorttitle:: .
+        Collection Protocol. To use this function one has to know either the Collection Protocoll id <cpId>,
+        the title of the Collection Protocol <cpTitle> or the short title of the Collection Protocol <cpshorttitle> .
         Those values can be seen via GUI, extracted from the responses with the class collection_protocol in os_core or
         collection_protocol_util in os_util. To update a participant, one has to specify the unique ID of the participant.
         This Id can be searched via the function get_participant_matches in the os_core class participants.
@@ -101,7 +101,7 @@ class collection_protocol_registration:
 
         """Delete a consent form of a participant.
 
-        Deletes a consent form of an existing participant with the uniquely participant ID ::cprid::
+        Deletes a consent form of an existing participant with the uniquely participant ID <cprid>
         which is generated from the system. The ID has to be known and can be seen for Examples via 
         the GUI in the URL: http(s)://<host>:<port>/openspecimen/cp-view/{cpId}/participants/{cprid}/...
         or with the function get_participant_matches in the os_core class participants.
@@ -128,7 +128,7 @@ class collection_protocol_registration:
 
         """Delete a participant from a Collection Protocol
 
-        Deletes an existing participant with the uniquely participant ID ::cprid::
+        Deletes an existing participant with the uniquely participant ID <cprid>
         which is generated from the system. The ID has to be known and can be seen for Examples via 
         the GUI in the URL: http(s)://<host>:<port>/openspecimen/cp-view/{cpId}/participants/{cprid}/...
         or with the function get_participant_matches in the os_core class participants.
@@ -155,7 +155,7 @@ class collection_protocol_registration:
 
         """Download the consent form of a participant.
 
-        Downloads the consent form of an existing participant with the uniquely participant ID ::cprid::
+        Downloads the consent form of an existing participant with the uniquely participant ID <cprid>
         which is generated from the system. The ID has to be known and can be seen for Examples via 
         the GUI in the URL: http(s)://<host>:<port>/openspecimen/cp-view/{cpId}/participants/{cprid}/...
         or with the function get_participant_matches in the os_core class participants.
@@ -182,7 +182,7 @@ class collection_protocol_registration:
 
         """Get the consent form of a participant.
 
-        Gets the consent form of an existing participant with the uniquely participant ID ::cprid::
+        Gets the consent form of an existing participant with the uniquely participant ID <cprid>
         which is generated from the system. The ID has to be known and can be seen for Examples via 
         the GUI in the URL: http(s)://<host>:<port>/openspecimen/cp-view/{cpId}/participants/{cprid}/...
         or with the function get_participant_matches in the os_core class participants.
@@ -209,7 +209,7 @@ class collection_protocol_registration:
 
         """Get the details form of a participant.
 
-        Gets the details as JSON-dict form of an existing participant with the uniquely participant ID ::cprid::
+        Gets the details as JSON-dict form of an existing participant with the uniquely participant ID <cprid>
         which is generated from the system. The ID has to be known and can be seen for Examples via 
         the GUI in the URL: http(s)://<host>:<port>/openspecimen/cp-view/{cpId}/participants/{cprid}/...
         or with the function get_participant_matches in the os_core class participants.
@@ -296,8 +296,8 @@ class collection_protocol_registration:
 
         """Merge Participant x to Participant y
 
-        Merges Participant with the unique Participant ID ::id_from:: to the Participant with
-        unique Participant ID ::id_to::. This will move data from all visits and specimens from the source participant to the target participant
+        Merges Participant with the unique Participant ID <id_from> to the Participant with
+        unique Participant ID  <id_to>. This will move data from all visits and specimens from the source participant to the target participant
         and then deletes the source participant.
         The Participants unique ID has to be known and can be seen for Examples via 
         the GUI in the URL: http(s)://<host>:<port>/openspecimen/cp-view/{cpId}/participants/{cprid}/...
@@ -329,9 +329,9 @@ class collection_protocol_registration:
 
         """Update a participant already in a Collection Protocol.
 
-        This function can update an existing participant with a unique Participant ID ::cprid:: to an already existing
-        Collection Protocol. To use this function one has to know either the Collection Protocoll id ::cpId::,
-        the title of the Collection Protocol ::cpTitle:: or the short title of the Collection Protocol ::cpshorttitle:: .
+        This function can update an existing participant with a unique Participant ID <cprid> to an already existing
+        Collection Protocol. To use this function one has to know either the Collection Protocoll id <cpId>,
+        the title of the Collection Protocol <cpTitle> or the short title of the Collection Protocol <cpshorttitle> .
         Those values can be seen via GUI, extracted from the responses with the class collection_protocol in os_core or
         collection_protocol_util in os_util. To update a participant, one has to specify the unique ID of the participant.
         This Id can be searched via the function get_participant_matches in the os_core class participants.

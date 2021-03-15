@@ -20,7 +20,7 @@ class OS_request_gen():
     
     Examples
     --------
-    A code Examples, where those requests are used, is in the Jupyter-Notebook::
+    A code Examples, where those requests are used, is in the Jupyter-Notebook
         $ jupyter notebook main.ipynb
     """
 

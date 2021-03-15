@@ -25,7 +25,7 @@ class collection_protocol_event:
     Examples
     --------
 
-    A code Examples, where also Events are handled is in the Jupyter-Notebook::
+    A code Examples, where also Events are handled is in the Jupyter-Notebook
 
         $ jupyter notebook main.ipynb
     """

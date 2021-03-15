@@ -91,7 +91,7 @@ class institutes():
 
         """Delete an Institute 
 
-        Delete an existing institute in OpenSpecimen with ID ::inid::.
+        Delete an existing institute in OpenSpecimen with ID <inid>.
         The ID is created from OpenSpecimen and can, for Examples, be seen in the GUI
         under Institutes. When clicking on the institute, the URL looks like:
         http(s)://<host>:<port>/openspecimen/institutes/{inid}/overview .

@@ -22,7 +22,7 @@ class site_util:
     
     Examples
     --------
-    A code Examples, where the collection protocols are handled is in the Jupyter-Notebook::
+    A code Examples, where the collection protocols are handled is in the Jupyter-Notebook
         $ jupyter notebook main.ipynb
     """
 

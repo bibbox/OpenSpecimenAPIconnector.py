@@ -90,7 +90,7 @@ class query_util:
 
         """Execute a saved Query.
 
-        Execute an already existing Query with the OpenSpecimen's unique Query ID ::qryid:: .
+        Execute an already existing Query with the OpenSpecimen's unique Query ID <qryid> .
         The query ID can be seen via clicking on the Queries in OpenSpecimen and it is the
         number after # in the title.
 

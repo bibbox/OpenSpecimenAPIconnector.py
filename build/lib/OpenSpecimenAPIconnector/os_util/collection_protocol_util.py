@@ -25,7 +25,7 @@ class collection_protocol_util:
     Examples
     --------
 
-    A code Examples, where the Collection protocols are handled is in the Jupyter-Notebook::
+    A code Examples, where the Collection protocols are handled is in the Jupyter-NotebookS
 
         $ jupyter notebook main.ipynb
     """
@@ -58,7 +58,7 @@ class collection_protocol_util:
 
         Search for one or more Collection Protocols with the search_string defined. The search string looks like:
         http(s)://<host>:<port>/openspecimen/rest/np/collection-protocols?{param_1}={value_1}&...&{param_x}={value_x}
-        With the class collection_protocol_util from os_util and function ::search_cps:: the search string is generated
+        With the class collection_protocol_util from os_util and function <search_cps> the search string is generated
         and this function is called. Not all keys from OpenSpecimen can be easily searched after.
 
         Parameters

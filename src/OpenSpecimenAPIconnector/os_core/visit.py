@@ -24,7 +24,7 @@ class visit:
     
     Examples
     --------
-    A code Examples, where the visits are handled, is in the Jupyter-Notebook::
+    A code Examples, where the visits are handled, is in the Jupyter-Notebook
         $ jupyter notebook main.ipynb
     """
 

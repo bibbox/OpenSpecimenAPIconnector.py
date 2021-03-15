@@ -25,7 +25,7 @@ class cpevent_util:
     Examples
     --------
 
-    A code Examples, where also events are handled is in the Jupyter-Notebook::
+    A code Examples, where also events are handled is in the Jupyter-Notebook
 
     $ jupyter notebook main.ipynb
     """

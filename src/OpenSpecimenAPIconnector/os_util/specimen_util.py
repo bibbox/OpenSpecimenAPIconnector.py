@@ -28,7 +28,7 @@ class specimen_util:
     
     Examples
     --------
-    A code Examples, where the Specimens/Derivatives/Aliquots are handled is in the Jupyter-Notebook::
+    A code Examples, where the Specimens/Derivatives/Aliquots are handled is in the Jupyter-Notebook
         $ jupyter notebook main.ipynb
     """
 
@@ -349,7 +349,7 @@ class specimen_util:
 
         """Delete a Specimen/Derivative/Aliquot
         
-        Delete an already existing Specimen/Derivative/Aliquot. The Parameters ::specimenid:: is the uniqe ID of the Specimen/
+        Delete an already existing Specimen/Derivative/Aliquot. The Parameters <specimenid> is the uniqe ID of the Specimen/
         Derivative/Aliquot which is generated automatically from OpenSpecimen. To get the ID one can click in the GUI on the 
         Specimen/Derivative/Aliquot and read it from the URL, with format:
         http(s)://<host>:<port>/openspecimen/cp-view/{cpid}/specimen/{specimenid}/... .

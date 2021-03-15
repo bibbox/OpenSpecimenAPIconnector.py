@@ -156,8 +156,8 @@ class cpr_util:
         """Register a participant to a Collection Protocol.
 
         This function can create a new participant to an already existing Collection Protocol. To use this function one
-        has to known either the Collection Protocoll id ::cpId::,the title of the Collection Protocol ::cpTitle:: or 
-        the short title of the Collection Protocol ::cpshorttitle:: .
+        has to known either the Collection Protocoll id <cpId>,the title of the Collection Protocol <cpTitle> or 
+        the short title of the Collection Protocol <cpshorttitle>.
         Those values can be seen via GUI, extracted from the responses with the class collection_protocol in os_core or
         collection_protocol_util in os_util. 
 
@@ -257,8 +257,8 @@ class cpr_util:
         """Register a Participant to a Collection Protocol.
 
         This function can create a new participant to an already existing Collection Protocol. To use this function one
-        has to know either the Collection Protocoll id ::cpId::,the title of the Collection Protocol ::cpTitle:: or 
-        the short title of the Collection Protocol ::cpshorttitle:: .
+        has to know either the Collection Protocoll id <cpId>,the title of the Collection Protocol <cpTitle> or 
+        the short title of the Collection Protocol <cpshorttitle> .
         Those values can be seen via GUI, extracted from the responses with the class collection_protocol in os_core or
         collection_protocol_util in os_util.  For updating a participant the cprid has to be known. This can be seen via GUI
         or with searching the participant first.
