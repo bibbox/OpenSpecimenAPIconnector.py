@@ -11,7 +11,6 @@ Welcome to OpenSpecimenAPIConnector's documentation!
    :maxdepth: 2
 
    installing
-   stuff
 
 .. toctree::
    :caption: OpenSpecimenAPIConnector Modules
