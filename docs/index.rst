@@ -7,13 +7,13 @@ Welcome to OpenSpecimenAPIConnector's documentation!
 ====================================================
 
 .. toctree::
-   :caption: OpenSpecimenAPIConnector Documentation
+   :caption: OSAPIConnector Documentation
    :maxdepth: 2
 
    installing
 
 .. toctree::
-   :caption: OpenSpecimenAPIConnector Modules
+   :caption: OSAPIConnector Modules
    :maxdepth: 4
 
    source/OpenSpecimenAPIconnector
