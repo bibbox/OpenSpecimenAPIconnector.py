@@ -2,3 +2,4 @@ python-dateutil
 pandas
 XlsxWriter
 openpyxl
+sphinx_rtd_theme
