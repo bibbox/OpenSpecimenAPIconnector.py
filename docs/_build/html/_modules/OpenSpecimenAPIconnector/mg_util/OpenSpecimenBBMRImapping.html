@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8" />
   
@@ -33,7 +33,6 @@
         <script type="text/javascript" src="../../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../../_static/doctools.js"></script>
         <script type="text/javascript" src="../../../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -53,7 +52,7 @@
           
 
           
-            <a href="../../../index.html" class="icon icon-home"> OpenSpecimenAPIConnector
+            <a href="../../../contents.html" class="icon icon-home"> OpenSpecimenAPIConnector
           
 
           
@@ -84,16 +83,8 @@
               
             
             
-              <p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Documentation</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../stuff.html">Paragraph Level Markup</a></li>
-</ul>
-<p class="caption"><span class="caption-text">OpenSpecimenAPIConnector Modules</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../source/OpenSpecimenAPIconnector.html">OpenSpecimenAPIconnector package</a></li>
-</ul>
-
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
             
           
         </div>
@@ -107,7 +98,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../../index.html">OpenSpecimenAPIConnector</a>
+          <a href="../../../contents.html">OpenSpecimenAPIConnector</a>
         
       </nav>
 
@@ -138,7 +129,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="../../../contents.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
@@ -175,22 +166,22 @@
 <span class="sd">    -- optional: functionize it?!?</span>
 
 <span class="sd">&#39;&#39;&#39;</span>
-<span class="kn">from</span> <span class="nn">..mg_core.mappings</span> <span class="k">import</span> <span class="n">bbmri_mapping</span> 
-<span class="kn">from</span> <span class="nn">..os_core.site</span> <span class="k">import</span> <span class="n">sites</span>
-<span class="kn">from</span> <span class="nn">..os_core.jsons</span> <span class="k">import</span> <span class="n">Json_factory</span>
-<span class="kn">from</span> <span class="nn">..os_core.users</span> <span class="k">import</span> <span class="n">users</span>
-<span class="kn">from</span> <span class="nn">..os_core.collection_protocol_registration</span> <span class="k">import</span> <span class="n">collection_protocol_registration</span>
-<span class="kn">from</span> <span class="nn">..os_core.collection_protocol</span> <span class="k">import</span> <span class="n">collection_protocol</span>
-<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">config_manager</span>
+<span class="kn">from</span> <span class="nn">..mg_core.mappings</span> <span class="kn">import</span> <span class="n">bbmri_mapping</span> 
+<span class="kn">from</span> <span class="nn">..os_core.site</span> <span class="kn">import</span> <span class="n">sites</span>
+<span class="kn">from</span> <span class="nn">..os_core.jsons</span> <span class="kn">import</span> <span class="n">Json_factory</span>
+<span class="kn">from</span> <span class="nn">..os_core.users</span> <span class="kn">import</span> <span class="n">users</span>
+<span class="kn">from</span> <span class="nn">..os_core.collection_protocol_registration</span> <span class="kn">import</span> <span class="n">collection_protocol_registration</span>
+<span class="kn">from</span> <span class="nn">..os_core.collection_protocol</span> <span class="kn">import</span> <span class="n">collection_protocol</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">config_manager</span>
 
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">xlsxwriter</span>
-<span class="kn">from</span> <span class="nn">openpyxl</span> <span class="k">import</span> <span class="n">load_workbook</span>
+<span class="kn">from</span> <span class="nn">openpyxl</span> <span class="kn">import</span> <span class="n">load_workbook</span>
 
 <div class="viewcode-block" id="bbmri_connector"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.mg_util.html#OpenSpecimenAPIconnector.mg_util.OpenSpecimenBBMRImapping.bbmri_connector">[docs]</a><span class="k">class</span> <span class="nc">bbmri_connector</span><span class="p">:</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
 
 <div class="viewcode-block" id="bbmri_connector.execute"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.mg_util.html#OpenSpecimenAPIconnector.mg_util.OpenSpecimenBBMRImapping.bbmri_connector.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">collection_protocol_ids</span><span class="p">):</span>

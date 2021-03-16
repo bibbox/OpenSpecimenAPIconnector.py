@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Installation &mdash; OpenSpecimenAPIConnector 0.9.1 documentation</title>
+  <title>Getting Started &mdash; OpenSpecimenAPIConnector 0.9.1 documentation</title>
   
 
   
@@ -85,8 +85,10 @@
             
               <!-- Local TOC -->
               <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">Installation</a><ul>
-<li><a class="reference internal" href="#jupyter-demos">Jupyter Demos</a></li>
+<li><a class="reference internal" href="#">Getting Started</a><ul>
+<li><a class="reference internal" href="#load-package">Load package</a></li>
+<li><a class="reference internal" href="#configure-url-and-login">Configure URL and Login</a></li>
+<li><a class="reference internal" href="#create-an-institute">Create an Institute</a></li>
 </ul>
 </li>
 </ul>
@@ -137,13 +139,13 @@
     
       <li><a href="contents.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Installation</li>
+      <li>Getting Started</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/installing.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/gettingStarted.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -156,35 +158,55 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
-<p>Install the package:</p>
-<div class="code console highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install OpenSpecimenApiConnector
-</pre></div>
-</div>
-<p>In your <code class="docutils literal notranslate"><span class="pre">sript.py</span></code> file:</p>
+  <div class="section" id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<p>After the <a class="reference internal" href="installing.html#installation"><span class="std std-ref">Installation</span></a> is done, one can use the package for the personal OpenSpecimen distribution.</p>
+<div class="section" id="load-package">
+<h2>Load package<a class="headerlink" href="#load-package" title="Permalink to this headline">¶</a></h2>
+<p>First step is to load the package via PIP installer.</p>
 <div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">OpenSpecimenAPIconnector</span> <span class="k">as</span> <span class="nn">OSconn</span>
 <span class="kn">import</span> <span class="nn">OpenSpecimenAPIconnector.os_core</span> <span class="k">as</span> <span class="nn">os_core</span>
 <span class="kn">import</span> <span class="nn">OpenSpecimenAPIconnector.os_util</span> <span class="k">as</span> <span class="nn">os_util</span>
-
-<span class="c1"># Set Login Example</span>
+</pre></div>
+</div>
+<p>Instead of <code class="docutils literal notranslate"><span class="pre">OpenSpecimenAPIconnector.os_core</span> <span class="pre">as</span> <span class="pre">os_util</span></code> on can use <code class="docutils literal notranslate"><span class="pre">OSconn.os_util</span></code> in the code. The same applies for <code class="docutils literal notranslate"><span class="pre">os_core</span></code>.</p>
+</div>
+<div class="section" id="configure-url-and-login">
+<h2>Configure URL and Login<a class="headerlink" href="#configure-url-and-login" title="Permalink to this headline">¶</a></h2>
+<p>The next step is to define the URL of OpenSpecimen aswell as the Loginname and Password of the User, who wants to use this package.
+The default password and loginname in OpenSpecimen are those which are used here:</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set Login Example</span>
 <span class="n">baseurl</span> <span class="o">=</span> <span class="s1">&#39;http(s)://&lt;OS-Instance-Name&gt;/openspecimen/rest/ng&#39;</span>
 <span class="n">loginname</span> <span class="o">=</span> <span class="s2">&quot;admin&quot;</span>
 <span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;Login@123&quot;</span>
 <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">loginname</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
 <span class="n">OSconn</span><span class="o">.</span><span class="n">config_manager</span><span class="o">.</span><span class="n">set_login</span><span class="p">(</span><span class="n">url</span> <span class="o">=</span> <span class="n">base_url</span><span class="p">,</span> <span class="n">auth</span> <span class="o">=</span> <span class="n">auth</span><span class="p">)</span>
-<span class="c1"># Use some Methods</span>
-    <span class="o">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-an-institute">
+<h2>Create an Institute<a class="headerlink" href="#create-an-institute" title="Permalink to this headline">¶</a></h2>
+<p>OpenSpecimen has a hierarchy, which has to be respected when creating objects. For example if one wants to create a <strong>site</strong>, there has to be an <strong>institute</strong>.
+So the highest instance is an <strong>institute</strong> which can be done as follows:</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># initialize Institutes</span>
+<span class="n">institutes_util</span> <span class="o">=</span> <span class="n">os_util</span><span class="o">.</span><span class="n">institutes_util</span><span class="p">()</span>
+
+<span class="n">institutes_util</span><span class="o">.</span><span class="n">create_institute</span><span class="p">(</span><span class="n">institutename</span> <span class="o">=</span> <span class="s1">&#39;Demo Institute&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">This will produce an Error if you current instance url or authorization is invalid</p>
+<p>The same can be done with the function in <code class="docutils literal notranslate"><span class="pre">os_core.institutes.create_institute</span></code>. The difference is that in the os_core functions one has to hand over a
+JSON-formatted string. This is more general, its useable with customized OpenSpecimen versions. But it is more difficult to use.
+The code then looks like:</p>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">institute</span> <span class="pre">=</span> <span class="pre">os_core.institute()</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">institute.create(params</span> <span class="pre">=</span> <span class="pre">'{\&quot;institutename\&quot;:\&quot;Demo</span> <span class="pre">Institute\&quot;}')</span></code></div>
 </div>
-<div class="section" id="jupyter-demos">
-<h2>Jupyter Demos<a class="headerlink" href="#jupyter-demos" title="Permalink to this headline">¶</a></h2>
-<p>For more information and detailed demos visit:
-<a class="reference external" href="https://github.com/bibbox/OpenSpecimenAPIconnector.py/tree/master/demo_notebooks">https://github.com/bibbox/OpenSpecimenAPIconnector.py/tree/master/demo_notebooks</a></p>
+<p class="last">The parameters which are passed to the function have all to be known, this means the <em>entity-name</em>, the <em>value</em> and the <em>type</em>. There are some parameters,
+which are itself <em>dicts</em>. The os_util functions have a defined input, with the standard values of OpenSpecimen, and the json-formatted string is generated
+automatically.</p>
+</div>
 </div>
 </div>
 

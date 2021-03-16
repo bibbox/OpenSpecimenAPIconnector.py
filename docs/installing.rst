@@ -18,7 +18,7 @@ In your ``sript.py`` file:
 
     # Set Login Example
     baseurl = 'http(s)://<OS-Instance-Name>/openspecimen/rest/ng'
-    loginname = "amdin"
+    loginname = "admin"
     password = "Login@123"
     auth = (loginname, password)
     OSconn.config_manager.set_login(url = base_url, auth = auth)

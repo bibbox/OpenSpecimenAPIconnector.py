@@ -13,6 +13,12 @@ Welcome to OpenSpecimenAPIConnector's documentation!
    installing
 
 .. toctree::
+   :caption: Getting Started
+   :maxdepth: 2
+
+   gettingStarted
+
+.. toctree::
    :caption: OSAPIConnector Modules
    :maxdepth: 4
 
