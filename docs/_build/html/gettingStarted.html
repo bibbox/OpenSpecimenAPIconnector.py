@@ -89,6 +89,7 @@
 <li><a class="reference internal" href="#load-package">Load package</a></li>
 <li><a class="reference internal" href="#configure-url-and-login">Configure URL and Login</a></li>
 <li><a class="reference internal" href="#create-an-institute">Create an Institute</a></li>
+<li><a class="reference internal" href="#creating-a-site">Creating a Site</a></li>
 </ul>
 </li>
 </ul>
@@ -187,7 +188,8 @@ The default password and loginname in OpenSpecimen are those which are used here
 <div class="section" id="create-an-institute">
 <h2>Create an Institute<a class="headerlink" href="#create-an-institute" title="Permalink to this headline">¶</a></h2>
 <p>OpenSpecimen has a hierarchy, which has to be respected when creating objects. For example if one wants to create a <strong>site</strong>, there has to be an <strong>institute</strong>.
-So the highest instance is an <strong>institute</strong> which can be done as follows:</p>
+So the highest instance is an <strong>institute</strong>. This can be done as follows, with the function
+<a href="#id1"><span class="problematic" id="id2">:py:function:`os_util.institutes_util.create_institute`</span></a> :</p>
 <div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># initialize Institutes</span>
 <span class="n">institutes_util</span> <span class="o">=</span> <span class="n">os_util</span><span class="o">.</span><span class="n">institutes_util</span><span class="p">()</span>
 
@@ -203,9 +205,19 @@ The code then looks like:</p>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">institute</span> <span class="pre">=</span> <span class="pre">os_core.institute()</span></code></div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">institute.create(params</span> <span class="pre">=</span> <span class="pre">'{\&quot;institutename\&quot;:\&quot;Demo</span> <span class="pre">Institute\&quot;}')</span></code></div>
 </div>
-<p class="last">The parameters which are passed to the function have all to be known, this means the <em>entity-name</em>, the <em>value</em> and the <em>type</em>. There are some parameters,
-which are itself <em>dicts</em>. The os_util functions have a defined input, with the standard values of OpenSpecimen, and the json-formatted string is generated
-automatically.</p>
+<p class="last">In general, the parameters which are passed to <strong>os_core</strong> functions have all to be known, this means the <em>entity-name</em>, the <em>value</em> and the <em>type</em>.
+There are some parameters, which are itself <em>dicts</em>. The <strong>os_util</strong> functions have a <em>defined input</em>, with the <em>standard values</em> of OpenSpecimen
+and the json-formatted string is generated automatically.</p>
+</div>
+</div>
+<div class="section" id="creating-a-site">
+<h2>Creating a Site<a class="headerlink" href="#creating-a-site" title="Permalink to this headline">¶</a></h2>
+<p>If there is an institute, one can create a site. This works with the <em>os_util</em> package <em>site_util</em> as follows:</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#initialize Site</span>
+<span class="n">site_util</span> <span class="o">=</span> <span class="n">os_util</span><span class="o">.</span><span class="n">site_util</span><span class="p">()</span>
+
+<span class="n">site_util</span><span class="o">.</span><span class="n">create_sites</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Demo Site&#39;</span><span class="p">,</span> <span class="n">institutename</span> <span class="o">=</span> <span class="s1">&#39; Demo Institute&#39;</span><span class="p">,</span> <span class="n">type_</span> <span class="o">=</span> <span class="s1">&#39;not specified&#39;</span><span class="p">)</span>
+</pre></div>
 </div>
 </div>
 </div>

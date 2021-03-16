@@ -36,7 +36,8 @@ Create an Institute
 ===================
 
 OpenSpecimen has a hierarchy, which has to be respected when creating objects. For example if one wants to create a **site**, there has to be an **institute**.
-So the highest instance is an **institute** which can be done as follows:
+So the highest instance is an **institute**. This can be done as follows, with the function 
+:py:obj:`os_util.institutes_util.create_institute` :
 
 .. code:: python
 
@@ -53,9 +54,21 @@ So the highest instance is an **institute** which can be done as follows:
     | ``institute = os_core.institute()``
     | ``institute.create(params = '{\"institutename\":\"Demo Institute\"}')``
 
-    The parameters which are passed to the function have all to be known, this means the *entity-name*, the *value* and the *type*. There are some parameters,
-    which are itself *dicts*. The os_util functions have a defined input, with the standard values of OpenSpecimen, and the json-formatted string is generated 
-    automatically.
+    In general, the parameters which are passed to **os_core** functions have all to be known, this means the *entity-name*, the *value* and the *type*.  
+    There are some parameters, which are itself *dicts*. The **os_util** functions have a *defined input*, with the *standard values* of OpenSpecimen 
+    and the json-formatted string is generated automatically.
+
+Creating a Site
+===============
+
+If there is an institute, one can create a site. This works with the *os_util* package *site_util* as follows: 
+
+.. code:: python
+
+    #initialize Site
+    site_util = os_util.site_util()
+
+    site_util.create_sites(name = 'Demo Site', institutename = ' Demo Institute', type_ = 'not specified')
 
 
 
