@@ -16,6 +16,21 @@ After the :ref:`installation <installation>` is done, one can use the package fo
 Installing the Package
 ======================
 
+In your console one has to run
+
+.. code:: console
+
+    pip install OpenSpecimenAPIConnector
+
+or 
+
+.. code:: console
+
+    pip3 install OpenSpecimenAPIConnector
+
+Importing the Package
+=====================
+
 First step is to import the modules to the python script.
 
 .. code:: python
