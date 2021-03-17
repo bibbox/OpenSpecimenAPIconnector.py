@@ -302,11 +302,11 @@ class integrationTest:
             # ignore warning 
             csv.Type[0] = "Collection Site"
             csv = pd.DataFrame(csv, index=[0]).to_csv(index=False)
-            #csv = pd.DataFrame(data, index=[0]).to_csv(index=False) 
+            # csv = pd.DataFrame(data, index=[0]).to_csv(index=False) 
             response = self.csv_util_import.bulk_import(csv, filename="integration_test.csv", schemaname="site", operation="UPDATE")
         except AssertionError as error:
-            self.logFile.write("-Error creating Site via CSV- \n" + str(error) + "\n")
-            raise AssertionError("-Error creating Site via CSV- \n" + str(error) + "\n")
+            self.logFile.write("-Error updating Site via CSV- \n" + str(error) + "\n")
+            raise AssertionError("-Error updating Site via CSV- \n" + str(error) + "\n")
         self.logFile.write(str(response)+ " \n")
 
         ## Users
@@ -620,8 +620,6 @@ class integrationTest:
         assert bool(response), "Error creating an Event"
         self.ID['event']=response['id']
         self.logFile.write(str(response)+ ' \n')
-
-        input()
 
         ##Visits
         #Create a Visit

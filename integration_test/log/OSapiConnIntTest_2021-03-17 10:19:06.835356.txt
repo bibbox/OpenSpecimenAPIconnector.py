@@ -1,0 +1,54 @@
+-Fetching templates- 
+-Fetching templates complete- 
+-Creating an Institute- 
+{'id': 9, 'name': 'IntegrationTestInstitute', 'activityStatus': 'Active', 'usersCount': 0} 
+-Search for an Institute via Substring- 
+[{'id': 9, 'name': 'IntegrationTestInstitute', 'activityStatus': 'Active', 'usersCount': 0}] 
+-Updating an Institute- 
+{'id': 9, 'name': 'IntegrationTestInstitute1', 'activityStatus': 'Active', 'usersCount': 0} 
+-Export Institute Data as CSV- 
+Identifier,Name,Activity Status
+1,Biobank Institute,Active
+9,IntegrationTestInstitute1,Active
+ 
+- Delete Institute- 
+{'id': 9, 'name': 'IntegrationTestInstitute1_1615972750085', 'activityStatus': 'Disabled', 'usersCount': 0} 
+-Creating an Institute via CSV- 
+   Identifier                       Name Activity Status OS_IMPORT_STATUS                          OS_ERROR_MESSAGE
+0           1          Biobank Institute          Active             FAIL  Institute with same name already exists.
+1           9  IntegrationTestInstitute1          Active          SUCCESS                                         0 
+-Search for an Institute via Substring- 
+[{'id': 10, 'name': 'IntegrationTestInstitute1', 'activityStatus': 'Active', 'usersCount': 0}] 
+-Updating an Institute via CSV- 
+                        name  identifier OS_IMPORT_STATUS OS_ERROR_MESSAGE
+0  IntegrationTestInstitute1          10          SUCCESS                0 
+-Creating a Site- 
+{'opComments': None, 'id': 2, 'name': 'IntegrationTestSite', 'instituteName': 'IntegrationTestInstitute1', 'code': None, 'type': 'Not Specified', 'activityStatus': 'Active', 'cpCount': 0, 'coordinators': [], 'address': None, 'extensionDetail': None} 
+-Searching for a site- 
+[{'opComments': None, 'id': 2, 'name': 'IntegrationTestSite', 'instituteName': 'IntegrationTestInstitute1', 'code': None, 'type': 'Not Specified', 'activityStatus': 'Active', 'cpCount': 0, 'coordinators': [], 'address': None, 'extensionDetail': None}] 
+-Updating a site- 
+[{'code': 'FORMS_INVALID_DATA', 'message': 'Invalid form data. Reason: BBMRI Biobank.Contact Priority:NULL_OR_EMPTY, BBMRI Biobank.Partner Chart:NULL_OR_EMPTY, BBMRI Biobank.ID:NULL_OR_EMPTY, BBMRI Biobank.Collaboration non for profit.:NULL_OR_EMPTY, BBMRI Biobank.Juridical Person:NULL_OR_EMPTY, BBMRI Biobank.Country:NULL_OR_EMPTY'}] 
+-Export Site Data as CSV- 
+Identifier,Name,Institute Name,Acronym,Type,Address,Contact Information#1#Email Address,Activity Status,BBMRI Biobank#ID,BBMRI Biobank#Acronym,BBMRI Biobank#Description,BBMRI Biobank#Bioresource Reference,BBMRI Biobank#URL,BBMRI Biobank#Juridical Person,BBMRI Biobank#Country,BBMRI Biobank#IT Support available,BBMRI Biobank#IT Staff Size,BBMRI Biobank#IS Available,BBMRI Biobank#His Available,BBMRI Biobank#Partner Chart,BBMRI Biobank#Head Title,BBMRI Biobank#Head Firstname,BBMRI Biobank#Head Lastname,BBMRI Biobank#Head Title After Name,BBMRI Biobank#Head Role,BBMRI Biobank#Contact Priority,BBMRI Biobank#Latitude,BBMRI Biobank#Longitude,BBMRI Biobank#also known,BBMRI Biobank#Contact,BBMRI Biobank#Planned Collection Protocols,BBMRI Biobank#Collection Protocols already in Biobank,BBMRI Biobank#Network,BBMRI Biobank#Collection Protocols already in Biobank.,BBMRI Biobank#Collaboration non for profit.,BBMRI Biobank#Capabilities,BBMRI Biobank#Operational Standards,BBMRI Biobank#other Standards,BBMRI Biobank#Quality
+1,Franzis Bombenhaus,Biobank Institute,,Collection Site,,,Active,bbmri-eric:Franz,,,,,Biobank Institute,Austria,Yes,22.0,Yes,No,Yes,Dr.Mag.,Franz,Fuchs,J.,Bomber,0.0,10.0,,,,,,,Yes,Yes,,,,
+2,IntegrationTestSite,IntegrationTestInstitute1,,Not Specified,,,Active,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+ 
+-Get all sites- 
+[{'id': 1, 'name': 'Biobank Institute', 'activityStatus': 'Active', 'usersCount': 0}, {'id': 10, 'name': 'IntegrationTestInstitute1', 'activityStatus': 'Active', 'usersCount': 0}] 
+-Delete Site- 
+{'opComments': None, 'id': 2, 'name': 'IntegrationTestSite_1615972751991', 'instituteName': 'IntegrationTestInstitute1', 'code': None, 'type': 'Not Specified', 'activityStatus': 'Disabled', 'cpCount': 0, 'coordinators': [], 'address': None, 'extensionDetail': None} 
+-Creating a Site via CSV- 
+   Identifier                 Name             Institute Name Acronym             Type Address Contact Information#1#Email Address  ... BBMRI Biobank#Collaboration non for profit. BBMRI Biobank#Capabilities BBMRI Biobank#Operational Standards BBMRI Biobank#other Standards BBMRI Biobank#Quality OS_IMPORT_STATUS                     OS_ERROR_MESSAGE
+0           1   Franzis Bombenhaus          Biobank Institute       0  Collection Site       0                                   0  ...                                         Yes                          0                                   0                             0                     0             FAIL  Site with same name already exists.
+1           2  IntegrationTestSite  IntegrationTestInstitute1       0    Not Specified       0                                   0  ...                                           0                          0                                   0                             0                     0          SUCCESS                                    0
+
+[2 rows x 41 columns] 
+-Searching for a site- 
+[{'opComments': None, 'id': 2, 'name': 'IntegrationTestSite', 'instituteName': 'IntegrationTestInstitute1', 'code': None, 'type': 'Not Specified', 'activityStatus': 'Active', 'cpCount': 0, 'coordinators': [], 'address': None, 'extensionDetail': None}] 
+-Update a Site via CSV- 
+-Error creating Site via CSV- 
+Error creating site by CSV: 
+   Identifier                Name     Institute Name Acronym             Type Address Contact Information#1#Email Address  ... BBMRI Biobank#Collaboration non for profit. BBMRI Biobank#Capabilities BBMRI Biobank#Operational Standards BBMRI Biobank#other Standards BBMRI Biobank#Quality OS_IMPORT_STATUS                                   OS_ERROR_MESSAGE
+0           1  Franzis Bombenhaus  Biobank Institute       0  Collection Site       0                                   0  ...                                         Yes                          0                                   0                             0                     0             FAIL  Invalid form data. Reason: BBMRI Biobank.Conta...
+
+[1 rows x 41 columns]

@@ -1,12 +1,18 @@
 from setuptools import setup, find_packages
 
+with open('README_pypi.md') as f:
+    long_description = f.read()
+
+
 setup(
     name='OpenSpecimenAPIconnector',
     version='0.9.1',    
     description='Python API commands to interact with OpenSpecimen',
+    long_description=long_description,
+    long_description_content_type='text/markdown',  # This is important!
     url='https://github.com/bibbox/OpenSpecimenAPIconnector.py/tree/master',
     author='Christam Schorn and Simon Streit',
-    author_email='simon.streit@medunigraz-at',
+    author_email='simon.streit@medunigraz.at',
     license='BSD 2-clause',
     install_requires=['pandas',
                       'numpy',               
@@ -16,9 +22,9 @@ setup(
 		      'xlsxwriter',
 		      'openpyxl'],
     classifiers=[
-        'Development Status :: 3 -Alpha',
+        'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
-        'Topic :: Software Development :: API communication interface',
+        'Topic :: Software Development',
         'License :: OSI Approved :: BSD License',  
         'Operating System :: POSIX :: Linux',
         'Programming Language :: Python :: 3',
