@@ -7,6 +7,12 @@ Welcome to OpenSpecimenAPIConnector's documentation!
 ====================================================
 
 .. toctree::
+   :caption: Home
+   :maxdepth: 2
+
+   index
+
+.. toctree::
    :caption: OSAPIConnector Documentation
    :maxdepth: 2
 
@@ -32,3 +38,10 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+Links
+=====
+* `Documentation of OpenSpecimen <https://openspecimen.atlassian.net/wiki/spaces/CAT/overview>`_
+* `GitHub of the Project <https://github.com/bibbox/OpenSpecimenAPIconnector.py>`_
+* `GitHub for Docker-Version of OpenSpecimen <https://github.com/bibbox/app-openspecimen>`_ 
+* Else?

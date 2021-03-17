@@ -86,10 +86,13 @@
               <!-- Local TOC -->
               <div class="local-toc"><ul>
 <li><a class="reference internal" href="#">Getting Started</a><ul>
-<li><a class="reference internal" href="#load-package">Load package</a></li>
-<li><a class="reference internal" href="#configure-url-and-login">Configure URL and Login</a></li>
-<li><a class="reference internal" href="#create-an-institute">Create an Institute</a></li>
+<li><a class="reference internal" href="#installing-the-package">Installing the Package</a></li>
+<li><a class="reference internal" href="#configuring-the-url-and-login">Configuring the URL and Login</a></li>
+<li><a class="reference internal" href="#creating-an-institute">Creating an Institute</a></li>
 <li><a class="reference internal" href="#creating-a-site">Creating a Site</a></li>
+<li><a class="reference internal" href="#creating-a-collection-protocol">Creating a Collection Protocol</a></li>
+<li><a class="reference internal" href="#creating-a-registration">Creating a Registration</a></li>
+<li><a class="reference internal" href="#creating-a-specimen-together-with-a-visit">Creating a Specimen together with a Visit</a></li>
 </ul>
 </li>
 </ul>
@@ -161,10 +164,18 @@
             
   <div class="section" id="getting-started">
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
-<p>After the <a class="reference internal" href="installing.html#installation"><span class="std std-ref">Installation</span></a> is done, one can use the package for the personal OpenSpecimen distribution.</p>
-<div class="section" id="load-package">
-<h2>Load package<a class="headerlink" href="#load-package" title="Permalink to this headline">¶</a></h2>
-<p>First step is to load the package via PIP installer.</p>
+<p>As an introduction to this package, a specimen with all its dependencies gets created.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The calls are done with the mandatory fields only. There are other fields which can be filled out, while creating the objects in OpenSpecimen. For further insights
+on can read  the <a class="reference external" href="https://openspecimen.atlassian.net/wiki/spaces/CAT/overview">Documentation of OpenSpecimen</a> or  the
+<span class="xref std std-ref">Code Documentation of the pip-package</span>.</p>
+</div>
+<p>Before starting one has to <a class="reference internal" href="installing.html#installation"><span class="std std-ref">install</span></a> the package.
+After the <a class="reference internal" href="installing.html#installation"><span class="std std-ref">installation</span></a> is done, one can use the package for the personal OpenSpecimen distribution.</p>
+<div class="section" id="installing-the-package">
+<h2>Installing the Package<a class="headerlink" href="#installing-the-package" title="Permalink to this headline">¶</a></h2>
+<p>First step is to import the modules to the python script.</p>
 <div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">OpenSpecimenAPIconnector</span> <span class="k">as</span> <span class="nn">OSconn</span>
 <span class="kn">import</span> <span class="nn">OpenSpecimenAPIconnector.os_core</span> <span class="k">as</span> <span class="nn">os_core</span>
 <span class="kn">import</span> <span class="nn">OpenSpecimenAPIconnector.os_util</span> <span class="k">as</span> <span class="nn">os_util</span>
@@ -172,8 +183,8 @@
 </div>
 <p>Instead of <code class="docutils literal notranslate"><span class="pre">OpenSpecimenAPIconnector.os_core</span> <span class="pre">as</span> <span class="pre">os_util</span></code> on can use <code class="docutils literal notranslate"><span class="pre">OSconn.os_util</span></code> in the code. The same applies for <code class="docutils literal notranslate"><span class="pre">os_core</span></code>.</p>
 </div>
-<div class="section" id="configure-url-and-login">
-<h2>Configure URL and Login<a class="headerlink" href="#configure-url-and-login" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="configuring-the-url-and-login">
+<h2>Configuring the URL and Login<a class="headerlink" href="#configuring-the-url-and-login" title="Permalink to this headline">¶</a></h2>
 <p>The next step is to define the URL of OpenSpecimen aswell as the Loginname and Password of the User, who wants to use this package.
 The default password and loginname in OpenSpecimen are those which are used here:</p>
 <div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set Login Example</span>
@@ -185,15 +196,14 @@ The default password and loginname in OpenSpecimen are those which are used here
 </pre></div>
 </div>
 </div>
-<div class="section" id="create-an-institute">
-<h2>Create an Institute<a class="headerlink" href="#create-an-institute" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="creating-an-institute">
+<h2>Creating an Institute<a class="headerlink" href="#creating-an-institute" title="Permalink to this headline">¶</a></h2>
 <p>OpenSpecimen has a hierarchy, which has to be respected when creating objects. For example if one wants to create a <strong>site</strong>, there has to be an <strong>institute</strong>.
-So the highest instance is an <strong>institute</strong>. This can be done as follows, with the function
-<a href="#id1"><span class="problematic" id="id2">:py:function:`os_util.institutes_util.create_institute`</span></a> :</p>
-<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># initialize Institutes</span>
+So the highest instance is an <strong>institute</strong>. This can be done as follows, with the function <code class="docutils literal notranslate"><span class="pre">create_institute</span></code>:</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># initialize</span>
 <span class="n">institutes_util</span> <span class="o">=</span> <span class="n">os_util</span><span class="o">.</span><span class="n">institutes_util</span><span class="p">()</span>
 
-<span class="n">institutes_util</span><span class="o">.</span><span class="n">create_institute</span><span class="p">(</span><span class="n">institutename</span> <span class="o">=</span> <span class="s1">&#39;Demo Institute&#39;</span><span class="p">)</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">institutes_util</span><span class="o">.</span><span class="n">create_institute</span><span class="p">(</span><span class="n">institutename</span> <span class="o">=</span> <span class="s1">&#39;Demo Institute&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -212,12 +222,63 @@ and the json-formatted string is generated automatically.</p>
 </div>
 <div class="section" id="creating-a-site">
 <h2>Creating a Site<a class="headerlink" href="#creating-a-site" title="Permalink to this headline">¶</a></h2>
-<p>If there is an institute, one can create a site. This works with the <em>os_util</em> package <em>site_util</em> as follows:</p>
-<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#initialize Site</span>
+<p>If there is an institute, one can create a site. This works with the method <code class="docutils literal notranslate"><span class="pre">create_institute</span></code> from the <cite>os_util</cite> class <cite>site_util</cite>
+as follows:</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#initialize</span>
 <span class="n">site_util</span> <span class="o">=</span> <span class="n">os_util</span><span class="o">.</span><span class="n">site_util</span><span class="p">()</span>
 
-<span class="n">site_util</span><span class="o">.</span><span class="n">create_sites</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Demo Site&#39;</span><span class="p">,</span> <span class="n">institutename</span> <span class="o">=</span> <span class="s1">&#39; Demo Institute&#39;</span><span class="p">,</span> <span class="n">type_</span> <span class="o">=</span> <span class="s1">&#39;not specified&#39;</span><span class="p">)</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">site_util</span><span class="o">.</span><span class="n">create_sites</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Demo Site&#39;</span><span class="p">,</span> <span class="n">institutename</span> <span class="o">=</span> <span class="s1">&#39; Demo Institute&#39;</span><span class="p">,</span> <span class="n">type_</span> <span class="o">=</span> <span class="s1">&#39;not specified&#39;</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
+<div class="section" id="creating-a-collection-protocol">
+<h2>Creating a Collection Protocol<a class="headerlink" href="#creating-a-collection-protocol" title="Permalink to this headline">¶</a></h2>
+<p>On a Site on can have a collection, which can be managed in OpenSpecimen. For that one can create a Collection Protocol, with the  method <code class="docutils literal notranslate"><span class="pre">create_collection_protocol</span></code>
+from the <cite>os_util</cite> class <cite>colletion_protocol_util</cite>:</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#initialize</span>
+<span class="n">colletion_protocol_util</span> <span class="o">=</span> <span class="n">os_util</span><span class="o">.</span><span class="n">colletion_protocol_util</span><span class="p">()</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">colletion_protocol_util</span><span class="o">.</span><span class="n">create_collection_protocol</span><span class="p">(</span><span class="n">short_title</span> <span class="o">=</span> <span class="s1">&#39;Demo CP&#39;</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Demo Collection Protocol&#39;</span><span class="p">,</span> <span class="n">pi_mail</span> <span class="o">=</span> <span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="n">sites</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Demo Site&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The response is a dict with the details of the created collection protocol. For example the ID of the Colletion protocol can be extracted with key ‘id’.
+This will be used later and can be done as follows.</p>
+<div class="last line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">cpId</span> <span class="pre">=</span> <span class="pre">collection</span> <span class="pre">protocol</span> <span class="pre">ID</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">cpID</span> <span class="pre">=</span> <span class="pre">response['id']</span></code></div>
+</div>
+</div>
+</div>
+<div class="section" id="creating-a-registration">
+<h2>Creating a Registration<a class="headerlink" href="#creating-a-registration" title="Permalink to this headline">¶</a></h2>
+<p>Once there is a Collection Protocol OpenSpecimen is ready to Register Participants. The method <code class="docutils literal notranslate"><span class="pre">create_registration</span></code>, from the <cite>os_util</cite> class <cite>cpr_util</cite> does the job:</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#initialize</span>
+<span class="n">cpr_util</span> <span class="o">=</span> <span class="n">os_util</span><span class="o">.</span><span class="n">cpr_util</span><span class="p">()</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">cpr_util</span><span class="o">.</span><span class="n">create_registration</span><span class="p">(</span><span class="n">regdate</span> <span class="o">=</span> <span class="s1">&#39;2021-03-17&#39;</span><span class="p">,</span> <span class="n">cpid</span> <span class="o">=</span> <span class="n">cpID</span><span class="p">,</span> <span class="n">ppid</span> <span class="o">=</span> <span class="s2">&quot;IntegrationTestPPID&quot;</span><span class="p">,</span><span class="n">lastname</span> <span class="o">=</span> <span class="s2">&quot;Sepp&quot;</span><span class="p">)</span>
+<span class="n">cprID</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="c1">#is needed afterwards</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-a-specimen-together-with-a-visit">
+<h2>Creating a Specimen together with a Visit<a class="headerlink" href="#creating-a-specimen-together-with-a-visit" title="Permalink to this headline">¶</a></h2>
+<p>In order to create a <cite>specimen</cite>, there has to be a visit. OpenSpecimen provides a call which created both at ones. This is the method <code class="docutils literal notranslate"><span class="pre">add_visit_speci</span></code> from the
+<cite>os_util</cite> class <cite>vis_util</cite>.</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#initialize</span>
+<span class="n">vis_util</span> <span class="o">=</span> <span class="n">os_util</span><span class="o">.</span><span class="n">vis_util</span><span class="p">()</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">vis_util</span><span class="o">.</span><span class="n">add_visit_speci</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Demo Visit&#39;</span><span class="p">,</span> <span class="n">lineage</span> <span class="o">=</span> <span class="s1">&#39;New&#39;</span><span class="p">,</span> <span class="n">av_qty</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">user</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">init_qty</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">spec_class</span> <span class="o">=</span><span class="s1">&#39;Fluid&#39;</span><span class="p">,</span>
+                <span class="n">spec_type</span> <span class="o">=</span> <span class="s1">&#39;Bile&#39;</span><span class="p">,</span> <span class="n">anat_site</span> <span class="o">=</span><span class="s1">&#39;Anal Canal&#39;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;Malignant&#39;</span><span class="p">,</span> <span class="n">site</span> <span class="o">=</span> <span class="s1">&#39;Demo Site&#39;</span><span class="p">,</span> <span class="n">speclabel</span> <span class="o">=</span> <span class="s1">&#39;Demo Label&#39;</span> <span class="p">,</span><span class="n">cpid</span> <span class="o">=</span> <span class="n">cpID</span><span class="p">,</span>
+                 <span class="n">ppid</span> <span class="o">=</span> <span class="s1">&#39;Demo PPID&#39;</span><span class="p">,</span> <span class="n">cprid</span> <span class="o">=</span> <span class="s1">&#39;cprID, colltime = &#39;</span><span class="mi">2021</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">17</span><span class="s1">&#39; ,rectime = &#39;</span><span class="mi">2021</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">17</span><span class="s1">&#39; )</span>
+
+<span class="c1">#the user admin, which is created from OpenSpecimen when it is installed,  has the ID 2</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If one knows the visits before which gets collected, then one can first create an <strong>event</strong>, then add the visit to the event and after that collect the specimen</p>
 </div>
 </div>
 </div>
