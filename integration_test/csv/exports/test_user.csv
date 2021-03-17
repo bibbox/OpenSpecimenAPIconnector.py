@@ -1,0 +1,3 @@
+Identifier,Last Name,First Name,Domain Name,Login Name,Email Address,Institute,Primary Site,Type,Address,Phone Number,Activity Status,Disable Email Notifications
+4,TestUser,Integration,openspecimen,TestUser,email@address.com,IntegrationTestInstitute1,,SUPER,,,Active,False
+2,Administrator,System,openspecimen,admin,admin@localhost,Biobank Institute,,SUPER,,,Active,False

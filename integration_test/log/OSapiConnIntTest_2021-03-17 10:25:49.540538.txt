@@ -1,0 +1,98 @@
+-Fetching templates- 
+-Fetching templates complete- 
+-Creating an Institute- 
+{'id': 11, 'name': 'IntegrationTestInstitute', 'activityStatus': 'Active', 'usersCount': 0} 
+-Search for an Institute via Substring- 
+[{'id': 11, 'name': 'IntegrationTestInstitute', 'activityStatus': 'Active', 'usersCount': 0}] 
+-Updating an Institute- 
+{'id': 11, 'name': 'IntegrationTestInstitute1', 'activityStatus': 'Active', 'usersCount': 0} 
+-Export Institute Data as CSV- 
+Identifier,Name,Activity Status
+1,Biobank Institute,Active
+11,IntegrationTestInstitute1,Active
+ 
+- Delete Institute- 
+{'id': 11, 'name': 'IntegrationTestInstitute1_1615973152638', 'activityStatus': 'Disabled', 'usersCount': 0} 
+-Creating an Institute via CSV- 
+   Identifier                       Name Activity Status OS_IMPORT_STATUS                          OS_ERROR_MESSAGE
+0           1          Biobank Institute          Active             FAIL  Institute with same name already exists.
+1          11  IntegrationTestInstitute1          Active          SUCCESS                                         0 
+-Search for an Institute via Substring- 
+[{'id': 12, 'name': 'IntegrationTestInstitute1', 'activityStatus': 'Active', 'usersCount': 0}] 
+-Updating an Institute via CSV- 
+                        name  identifier OS_IMPORT_STATUS OS_ERROR_MESSAGE
+0  IntegrationTestInstitute1          12          SUCCESS                0 
+-Creating a Site- 
+{'opComments': None, 'id': 3, 'name': 'IntegrationTestSite', 'instituteName': 'IntegrationTestInstitute1', 'code': None, 'type': 'Not Specified', 'activityStatus': 'Active', 'cpCount': 0, 'coordinators': [], 'address': None, 'extensionDetail': None} 
+-Searching for a site- 
+[{'opComments': None, 'id': 3, 'name': 'IntegrationTestSite', 'instituteName': 'IntegrationTestInstitute1', 'code': None, 'type': 'Not Specified', 'activityStatus': 'Active', 'cpCount': 0, 'coordinators': [], 'address': None, 'extensionDetail': None}] 
+-Updating a site- 
+{'opComments': None, 'id': 3, 'name': 'IntegrationTestSite1', 'instituteName': 'IntegrationTestInstitute1', 'code': None, 'type': 'Not Specified', 'activityStatus': 'Active', 'cpCount': 0, 'coordinators': [], 'address': None, 'extensionDetail': None} 
+-Export Site Data as CSV- 
+Identifier,Name,Institute Name,Acronym,Type,Address,Contact Information#1#Email Address,Activity Status
+1,Franzis Bombenhaus,Biobank Institute,,Collection Site,,,Active
+3,IntegrationTestSite1,IntegrationTestInstitute1,,Not Specified,,,Active
+ 
+-Get all sites- 
+[{'id': 1, 'name': 'Biobank Institute', 'activityStatus': 'Active', 'usersCount': 0}, {'id': 12, 'name': 'IntegrationTestInstitute1', 'activityStatus': 'Active', 'usersCount': 0}] 
+-Delete Site- 
+{'opComments': None, 'id': 3, 'name': 'IntegrationTestSite1_1615973154583', 'instituteName': 'IntegrationTestInstitute1', 'code': None, 'type': 'Not Specified', 'activityStatus': 'Disabled', 'cpCount': 0, 'coordinators': [], 'address': None, 'extensionDetail': None} 
+-Creating a Site via CSV- 
+   Identifier                  Name             Institute Name Acronym             Type Address Contact Information#1#Email Address Activity Status OS_IMPORT_STATUS                     OS_ERROR_MESSAGE
+0           1    Franzis Bombenhaus          Biobank Institute       0  Collection Site       0                                   0          Active             FAIL  Site with same name already exists.
+1           3  IntegrationTestSite1  IntegrationTestInstitute1       0    Not Specified       0                                   0          Active          SUCCESS                                    0 
+-Searching for a site- 
+[{'opComments': None, 'id': 3, 'name': 'IntegrationTestSite1', 'instituteName': 'IntegrationTestInstitute1', 'code': None, 'type': 'Not Specified', 'activityStatus': 'Active', 'cpCount': 0, 'coordinators': [], 'address': None, 'extensionDetail': None}] 
+-Update a Site via CSV- 
+   Identifier                Name     Institute Name Acronym             Type Address Contact Information#1#Email Address Activity Status OS_IMPORT_STATUS OS_ERROR_MESSAGE
+0           1  Franzis Bombenhaus  Biobank Institute       0  Collection Site       0                                   0          Active          SUCCESS                0 
+-create an User- 
+{'opComments': None, 'id': 3, 'firstName': 'Integration', 'lastName': 'TestUser', 'emailAddress': 'email@address.com', 'domainName': 'openspecimen', 'loginName': 'TestUser', 'instituteId': 12, 'instituteName': 'IntegrationTestInstitute1', 'primarySite': None, 'type': 'SUPER', 'phoneNumber': None, 'manageForms': True, 'dnd': False, 'address': None, 'timeZone': None, 'creationDate': 1615973155771, 'activityStatus': 'Active'} 
+-Export User Data as CSV- 
+Identifier,Last Name,First Name,Domain Name,Login Name,Email Address,Institute,Primary Site,Type,Address,Phone Number,Activity Status,Disable Email Notifications
+3,TestUser,Integration,openspecimen,TestUser,email@address.com,IntegrationTestInstitute1,,SUPER,,,Active,False
+2,Administrator,System,openspecimen,admin,admin@localhost,Biobank Institute,,SUPER,,,Active,False
+ 
+-update an User- 
+{'opComments': None, 'id': 3, 'firstName': 'Integration', 'lastName': 'TestUser1', 'emailAddress': 'email@address.com', 'domainName': 'openspecimen', 'loginName': 'TestUser', 'instituteId': 12, 'instituteName': 'IntegrationTestInstitute1', 'primarySite': None, 'type': 'NONE', 'phoneNumber': None, 'manageForms': False, 'dnd': False, 'address': None, 'timeZone': None, 'creationDate': 1615939200000, 'activityStatus': 'Active'} 
+-change Password- 
+True 
+-get all users- 
+[{'id': 3, 'type': 'NONE', 'firstName': 'Integration', 'lastName': 'TestUser1', 'loginName': 'TestUser', 'domain': 'openspecimen', 'emailAddress': 'email@address.com', 'instituteName': 'IntegrationTestInstitute1', 'primarySite': None, 'admin': False, 'instituteAdmin': False, 'manageForms': False, 'cpCount': 0, 'creationDate': 1615939200000, 'activityStatus': 'Active'}, {'id': 2, 'type': 'SUPER', 'firstName': 'System', 'lastName': 'Administrator', 'loginName': 'admin', 'domain': 'openspecimen', 'emailAddress': 'admin@localhost', 'instituteName': 'Biobank Institute', 'primarySite': None, 'admin': True, 'instituteAdmin': False, 'manageForms': False, 'cpCount': 0, 'creationDate': None, 'activityStatus': 'Active'}] 
+-get roles- 
+[] 
+-Delete User- 
+{'opComments': None, 'id': 3, 'firstName': 'Integration', 'lastName': 'TestUser1', 'emailAddress': 'email@address.com_1615973156614', 'domainName': 'openspecimen', 'loginName': 'TestUser_1615973156614', 'instituteId': 12, 'instituteName': 'IntegrationTestInstitute1', 'primarySite': None, 'type': 'NONE', 'phoneNumber': None, 'manageForms': False, 'dnd': False, 'address': None, 'timeZone': None, 'creationDate': 1615939200000, 'activityStatus': 'Disabled'} 
+-create a User via CSV- 
+   Identifier      Last Name   First Name   Domain Name Login Name      Email Address                  Institute Primary Site   Type Address Phone Number Activity Status  Disable Email Notifications OS_IMPORT_STATUS                                   OS_ERROR_MESSAGE
+0           3       TestUser  Integration  openspecimen   TestUser  email@address.com  IntegrationTestInstitute1            0  SUPER       0            0          Active                        False          SUCCESS                                                  0
+1           2  Administrator       System  openspecimen      admin    admin@localhost          Biobank Institute            0  SUPER       0            0          Active                        False             FAIL  User with same login name exist., An user with... 
+-Export User Data as CSV- 
+Identifier,Last Name,First Name,Domain Name,Login Name,Email Address,Institute,Primary Site,Type,Address,Phone Number,Activity Status,Disable Email Notifications
+4,TestUser,Integration,openspecimen,TestUser,email@address.com,IntegrationTestInstitute1,,SUPER,,,Active,False
+2,Administrator,System,openspecimen,admin,admin@localhost,Biobank Institute,,SUPER,,,Active,False
+ 
+-create a User via CSV- 
+   Identifier  Last Name   First Name   Domain Name Login Name      Email Address                  Institute Primary Site   Type Address Phone Number Activity Status  Disable Email Notifications OS_IMPORT_STATUS OS_ERROR_MESSAGE
+0           4  TestUser1  Integration  openspecimen   TestUser  email@address.com  IntegrationTestInstitute1            0  SUPER       0            0          Active                        False          SUCCESS                0 
+-Create Collection protocol- 
+{'id': 4, 'shortTitle': 'IntTestCP', 'title': 'IntegrationTestCP', 'principalInvestigator': {'id': 2, 'type': 'SUPER', 'firstName': 'System', 'lastName': 'Administrator', 'loginName': 'admin', 'domain': 'openspecimen', 'emailAddress': 'admin@localhost', 'instituteName': 'Biobank Institute', 'primarySite': None, 'admin': True, 'instituteAdmin': False, 'manageForms': False, 'cpCount': 0, 'creationDate': None, 'activityStatus': 'Active'}, 'manualPpidEnabled': False, 'specimenCentric': False, 'coordinators': [], 'cpSites': [{'id': 4, 'siteName': 'IntegrationTestSite1', 'code': None}], 'consentsWaived': False, 'manualVisitNameEnabled': False, 'manualSpecLabelEnabled': False, 'bulkPartRegEnabled': False, 'barcodingEnabled': False, 'closeParentSpecimens': False, 'visitCollectionMode': 'ALL_SPMNS', 'visitNamePrintMode': 'NONE', 'spmnLabelPrePrintMode': 'NONE', 'spmnLabelPrintSettings': [], 'distributionProtocols': [], 'activityStatus': 'Active', 'aliquotLabelFmtToUse': '%PSPEC_LABEL%_%PSPEC_UID%'} 
+-Create Collection protocol- 
+{'id': 5, 'shortTitle': 'IntTestCP2', 'title': 'IntegrationTestCP2', 'principalInvestigator': {'id': 2, 'type': 'SUPER', 'firstName': 'System', 'lastName': 'Administrator', 'loginName': 'admin', 'domain': 'openspecimen', 'emailAddress': 'admin@localhost', 'instituteName': 'Biobank Institute', 'primarySite': None, 'admin': True, 'instituteAdmin': False, 'manageForms': False, 'cpCount': 0, 'creationDate': None, 'activityStatus': 'Active'}, 'manualPpidEnabled': False, 'specimenCentric': False, 'coordinators': [], 'cpSites': [{'id': 5, 'siteName': 'IntegrationTestSite1', 'code': None}], 'consentsWaived': False, 'manualVisitNameEnabled': False, 'manualSpecLabelEnabled': False, 'bulkPartRegEnabled': False, 'barcodingEnabled': False, 'closeParentSpecimens': False, 'visitCollectionMode': 'ALL_SPMNS', 'visitNamePrintMode': 'NONE', 'spmnLabelPrePrintMode': 'NONE', 'spmnLabelPrintSettings': [], 'distributionProtocols': [], 'activityStatus': 'Active', 'aliquotLabelFmtToUse': '%PSPEC_LABEL%_%PSPEC_UID%'} 
+-Merge Colletion Protocol- 
+{'srcCpShortTitle': 'IntTestCP2', 'tgtCpShortTitle': 'IntTestCP'} 
+-Getting all Collection protocols- 
+[{'opComments': None, 'id': 4, 'shortTitle': 'IntTestCP', 'title': 'IntegrationTestCP', 'code': None, 'principalInvestigator': None, 'startDate': None, 'endDate': None, 'participantCount': None, 'specimenCount': None, 'ppidFmt': None, 'manualPpidEnabled': False, 'specimenCentric': False, 'catalogId': None}, {'opComments': None, 'id': 5, 'shortTitle': 'IntTestCP2', 'title': 'IntegrationTestCP2', 'code': None, 'principalInvestigator': None, 'startDate': None, 'endDate': None, 'participantCount': None, 'specimenCount': None, 'ppidFmt': None, 'manualPpidEnabled': False, 'specimenCentric': False, 'catalogId': None}, {'opComments': None, 'id': 3, 'shortTitle': 'Zrissenes', 'title': 'Franzis liebste Sprengreste', 'code': None, 'principalInvestigator': None, 'startDate': None, 'endDate': None, 'participantCount': None, 'specimenCount': None, 'ppidFmt': None, 'manualPpidEnabled': False, 'specimenCentric': False, 'catalogId': None}] 
+-Search CP- 
+[{'opComments': None, 'id': 4, 'shortTitle': 'IntTestCP', 'title': 'IntegrationTestCP', 'code': None, 'principalInvestigator': None, 'startDate': None, 'endDate': None, 'participantCount': None, 'specimenCount': None, 'ppidFmt': None, 'manualPpidEnabled': False, 'specimenCentric': False, 'catalogId': None}, {'opComments': None, 'id': 5, 'shortTitle': 'IntTestCP2', 'title': 'IntegrationTestCP2', 'code': None, 'principalInvestigator': None, 'startDate': None, 'endDate': None, 'participantCount': None, 'specimenCount': None, 'ppidFmt': None, 'manualPpidEnabled': False, 'specimenCentric': False, 'catalogId': None}] 
+-update CP- 
+{'id': 4, 'shortTitle': 'IntTestCP', 'title': 'IntegrationTestCP', 'principalInvestigator': {'id': 2, 'type': 'SUPER', 'firstName': 'System', 'lastName': 'Administrator', 'loginName': 'admin', 'domain': 'openspecimen', 'emailAddress': 'admin@localhost', 'instituteName': 'Biobank Institute', 'primarySite': None, 'admin': True, 'instituteAdmin': False, 'manageForms': False, 'cpCount': 0, 'creationDate': None, 'activityStatus': 'Active'}, 'startDate': 1614124800000, 'manualPpidEnabled': False, 'specimenCentric': False, 'coordinators': [], 'cpSites': [{'id': 4, 'siteName': 'IntegrationTestSite1', 'code': None}], 'consentsWaived': False, 'manualVisitNameEnabled': False, 'manualSpecLabelEnabled': True, 'bulkPartRegEnabled': False, 'barcodingEnabled': False, 'closeParentSpecimens': False, 'visitCollectionMode': 'ALL_SPMNS', 'visitNamePrintMode': 'NONE', 'spmnLabelPrePrintMode': 'NONE', 'spmnLabelPrintSettings': [], 'distributionProtocols': [], 'activityStatus': 'Active', 'aliquotLabelFmtToUse': '%PSPEC_LABEL%_%PSPEC_UID%'} 
+-assign role- 
+{'id': 5, 'role': {'id': 4, 'name': 'Technician', 'description': 'User can perform specimen operations without access to PHI data within the assigned protocols.', 'parentRoleName': None, 'childRoles': [], 'acl': [{'id': 15, 'resourceName': 'CollectionProtocol', 'operations': [{'resourceInstanceId': None, 'operationName': 'Read'}]}, {'id': 39, 'resourceName': 'ShippingAndTracking', 'operations': [{'resourceInstanceId': None, 'operationName': 'Read'}, {'resourceInstanceId': None, 'operationName': 'Create'}, {'resourceInstanceId': None, 'operationName': 'Delete'}, {'resourceInstanceId': None, 'operationName': 'Export Import'}, {'resourceInstanceId': None, 'operationName': 'Update'}]}, {'id': 16, 'resourceName': 'ParticipantDeid', 'operations': [{'resourceInstanceId': None, 'operationName': 'Read'}]}, {'id': 17, 'resourceName': 'Specimen', 'operations': [{'resourceInstanceId': None, 'operationName': 'Read'}, {'resourceInstanceId': None, 'operationName': 'Update'}, {'resourceInstanceId': None, 'operationName': 'Delete'}, {'resourceInstanceId': None, 'operationName': 'Export Import'}, {'resourceInstanceId': None, 'operationName': 'Create'}]}, {'id': 71, 'resourceName': 'Visit', 'operations': [{'resourceInstanceId': None, 'operationName': 'Create'}, {'resourceInstanceId': None, 'operationName': 'Read'}, {'resourceInstanceId': None, 'operationName': 'Delete'}, {'resourceInstanceId': None, 'operationName': 'Update'}, {'resourceInstanceId': None, 'operationName': 'Export Import'}]}, {'id': 18, 'resourceName': 'Order', 'operations': [{'resourceInstanceId': None, 'operationName': 'Update'}, {'resourceInstanceId': None, 'operationName': 'Read'}, {'resourceInstanceId': None, 'operationName': 'Export Import'}, {'resourceInstanceId': None, 'operationName': 'Delete'}, {'resourceInstanceId': None, 'operationName': 'Create'}]}, {'id': 56, 'resourceName': 'Query', 'operations': [{'resourceInstanceId': None, 'operationName': 'Delete'}, {'resourceInstanceId': None, 'operationName': 'Update'}, {'resourceInstanceId': None, 'operationName': 'Export Import'}, {'resourceInstanceId': None, 'operationName': 'Create'}, {'resourceInstanceId': None, 'operationName': 'Read'}]}, {'id': 45, 'resourceName': 'DistributionProtocol', 'operations': [{'resourceInstanceId': None, 'operationName': 'Read'}]}, {'id': 14, 'resourceName': 'StorageContainer', 'operations': [{'resourceInstanceId': None, 'operationName': 'Read'}]}]}, 'collectionProtocol': {'opComments': None, 'id': 4, 'shortTitle': 'IntTestCP', 'title': 'IntegrationTestCP', 'code': None, 'principalInvestigator': {'id': 2, 'type': 'SUPER', 'firstName': 'System', 'lastName': 'Administrator', 'loginName': 'admin', 'domain': 'openspecimen', 'emailAddress': 'admin@localhost', 'instituteName': 'Biobank Institute', 'primarySite': None, 'admin': True, 'instituteAdmin': False, 'manageForms': False, 'cpCount': 0, 'creationDate': None, 'activityStatus': 'Active'}, 'startDate': 1614124800000, 'endDate': None, 'participantCount': None, 'specimenCount': None, 'ppidFmt': None, 'manualPpidEnabled': False, 'specimenCentric': False, 'catalogId': None}, 'site': {'opComments': None, 'id': 3, 'name': 'IntegrationTestSite1', 'instituteName': 'IntegrationTestInstitute1', 'code': None, 'type': 'Not Specified', 'activityStatus': 'Active', 'cpCount': 0, 'coordinators': [], 'address': None, 'extensionDetail': None}, 'systemRole': False} 
+-Delete CP- 
+{'completed': True, 'entity': {'id': 4, 'shortTitle': 'IntTestCP_1615973158782', 'title': 'IntegrationTestCP_1615973158782', 'principalInvestigator': {'id': 2, 'type': 'SUPER', 'firstName': 'System', 'lastName': 'Administrator', 'loginName': 'admin', 'domain': 'openspecimen', 'emailAddress': 'admin@localhost', 'instituteName': 'Biobank Institute', 'primarySite': None, 'admin': True, 'instituteAdmin': False, 'manageForms': False, 'cpCount': 0, 'creationDate': None, 'activityStatus': 'Active'}, 'startDate': 1614124800000, 'manualPpidEnabled': False, 'specimenCentric': False, 'coordinators': [], 'cpSites': [{'id': 4, 'siteName': 'IntegrationTestSite1', 'code': None}], 'consentsWaived': False, 'manualVisitNameEnabled': False, 'manualSpecLabelEnabled': True, 'bulkPartRegEnabled': False, 'barcodingEnabled': False, 'closeParentSpecimens': False, 'visitCollectionMode': 'ALL_SPMNS', 'visitNamePrintMode': 'NONE', 'spmnLabelPrePrintMode': 'NONE', 'spmnLabelPrintSettings': [], 'distributionProtocols': [], 'activityStatus': 'Disabled', 'aliquotLabelFmtToUse': '%PSPEC_LABEL%_%PSPEC_UID%'}} 
+-create a CP via CSV- 
+-Error updating CP via CSV- 
+Error creating cp by CSV: 
+               Title Short Title      PI#PI Email          Sites#1#Name OS_IMPORT_STATUS                                   OS_ERROR_MESSAGE
+0  IntegrationTestCP   IntTestCP  admin@localhost  IntegrationTestSite1             FAIL  Study name is required to complete requested o...
