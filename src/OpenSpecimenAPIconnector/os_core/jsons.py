@@ -303,7 +303,6 @@ class Json_factory():
 
         return json.dumps(params)
 
-
     def create_specimen_json(self, label=None, specimenclass=None, specimentype=None, pathology=None, anatomic=None,
                             laterality=None, initqty=None, avaqty=None, visitid=None, userid=None, colltime=None,
                             rectime=None, recqlt=None, lineage='New', status='Collected', storloc=None, concentration=None,
@@ -1085,5 +1084,82 @@ class Json_factory():
             "cpId":cpid,
             "ppid":ppid
         }
+
+        return json.dumps(data)
+
+    def create_container_json(name=None, barcode=None, typename=None, activitystatus=None, sitename=None, storageloc=None, numcols=None, 
+                        numrows=None, storespecimens=None, childcontainers=None, temp=None, columnlabelscheme=None, rowlablescheme=None,
+                        comment=None, specimenclasses=None, specimentypes=None, collectionprotocols=None):
+        
+         """Create a storage container in OpenSpecimen
+
+        Parameters
+        ----------
+        name : string
+            Name of the sorage container
+        barcode: string
+            Barcode of the sotrage container
+        typename : string
+            Container type (e.g. Freezer see https://openspecimen.atlassian.net/wiki/spaces/CAT/overview 
+            for available types and customization)
+        activitystatus : string
+            Whether the container is operational: Active or disabled; Default active
+        sitename : string
+            Site location of the container
+        storageloc : dict
+            used if conatiner is a child container gives the name, id and position of the child 
+            within the parent container
+        numcols : string
+            Number of container columns (if type allows it)
+        numrows : string
+            Number of rows (if type allows it)
+        storespecimens: string
+            Boolean value (true, false) whether container can hold specimens or not
+        childcontainers : string
+            Filled if container sotres multiple other conatiners with different attributes
+        temp : string
+            Number literal giving the container temperature in celcius (e.g. -80, -20)
+        columnlabelscheme : string
+            Column labels - Numbers by default; 
+            Permissible Values are {Numbers, Alphabets Upper Case, Alphabets Lower Case, Roman Upper Case, Roman Lower Case}
+        rowlabelscheme : string
+            Row labels - Numbers by default; 
+            Permissible Values are {Numbers, Alphabets Upper Case, Alphabets Lower Case, Roman Upper Case, Roman Lower Case}
+        comment : string
+            Additional comments for the sorage container
+        specimenclasses : list
+            Specimen Classes allowed to be stored within the container
+        specimentypes : list
+            Specimen Types allowed to be stored within the container
+        collecitonprotocols : list
+            List of collection Protocols that can store samples within the given container
+        
+
+        Returns
+        -------
+        string
+            Json-formatted string with details needed to create a container.
+        """
+
+        data = {
+            "name":name,
+            "barcode":barcode,
+            "typeName":typename,
+            "activityStatus":activitystatus,
+            "siteName":sitename,
+            "storageLocation":storageloc,
+            "noOfColumns":numcols,
+            "noOfRows":numrows,
+            "storeSpecimensEnabled":storespecimens,
+            "childContainers":childcontainers,
+            "temperature":temp,
+            "columnLabelingScheme":columnlabelscheme,
+            "rowLabelingScheme":rowlablescheme,
+            "comments":comments,
+            "allowedSpecimenClasses":specimenclasses,
+            "allowedSpecimenTypes":specimentypes,
+            "allowedCollectionProtocols":collectionprotocols
+        }
+        data = {k: v for k, v in data.items() if v is not None}
 
         return json.dumps(data)

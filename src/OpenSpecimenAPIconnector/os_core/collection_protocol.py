@@ -60,7 +60,7 @@ class collection_protocol():
         print(self.base_url, self.OS_request_gen.auth)
 
 
-    def create_collection_protocol(self, params):
+    def create_collection_protocol(self, data):
 
         """Creates a Collection Protocol
 
@@ -71,7 +71,7 @@ class collection_protocol():
 
         Parameters
         ----------
-        params : string
+        data : JSON-formatted string
             JSON formatted string with parameters: title, shortTitle, code[optional], startDate[optional],
             endDate[optional], principalInvestigator, coordinators[optional], irbId[optonal],
             anticipatedParticipantsCount[optional], activityStatus, visitNameFmt[optional],
