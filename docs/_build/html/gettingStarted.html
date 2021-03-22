@@ -225,7 +225,7 @@ JSON-formatted string. This is more general, its useable with customized OpenSpe
 The code then looks like:</p>
 <div class="line-block">
 <div class="line"><code class="docutils literal notranslate"><span class="pre">institute</span> <span class="pre">=</span> <span class="pre">os_core.institute()</span></code></div>
-<div class="line"><code class="docutils literal notranslate"><span class="pre">institute.create(params</span> <span class="pre">=</span> <span class="pre">'{\&quot;institutename\&quot;:\&quot;Demo</span> <span class="pre">Institute\&quot;}')</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">institute.create_institute(params</span> <span class="pre">=</span> <span class="pre">'{\&quot;institutename\&quot;:\&quot;Demo</span> <span class="pre">Institute\&quot;}')</span></code></div>
 </div>
 <p class="last">In general, the parameters which are passed to <strong>os_core</strong> functions have all to be known, this means the <em>entity-name</em>, the <em>value</em> and the <em>type</em>.
 There are some parameters, which are itself <em>dicts</em>. The <strong>os_util</strong> functions have a <em>defined input</em>, with the <em>standard values</em> of OpenSpecimen
@@ -248,9 +248,9 @@ as follows:</p>
 <p>On a Site on can have a collection, which can be managed in OpenSpecimen. For that one can create a Collection Protocol, with the  method <code class="docutils literal notranslate"><span class="pre">create_collection_protocol</span></code>
 from the <cite>os_util</cite> class <cite>colletion_protocol_util</cite>:</p>
 <div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#initialize</span>
-<span class="n">colletion_protocol_util</span> <span class="o">=</span> <span class="n">os_util</span><span class="o">.</span><span class="n">colletion_protocol_util</span><span class="p">()</span>
+<span class="n">collection_protocol_util</span> <span class="o">=</span> <span class="n">os_util</span><span class="o">.</span><span class="n">collection_protocol_util</span><span class="p">()</span>
 
-<span class="n">response</span> <span class="o">=</span> <span class="n">colletion_protocol_util</span><span class="o">.</span><span class="n">create_collection_protocol</span><span class="p">(</span><span class="n">short_title</span> <span class="o">=</span> <span class="s1">&#39;Demo CP&#39;</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Demo Collection Protocol&#39;</span><span class="p">,</span> <span class="n">pi_mail</span> <span class="o">=</span> <span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="n">sites</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Demo Site&#39;</span><span class="p">])</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">collection_protocol_util</span><span class="o">.</span><span class="n">create_cp</span><span class="p">(</span><span class="n">short_title</span> <span class="o">=</span> <span class="s1">&#39;Demo CP&#39;</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Demo Collection Protocol&#39;</span><span class="p">,</span> <span class="n">pi_mail</span> <span class="o">=</span> <span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="n">sites</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Demo Site&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -269,7 +269,7 @@ This will be used later and can be done as follows.</p>
 <div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#initialize</span>
 <span class="n">cpr_util</span> <span class="o">=</span> <span class="n">os_util</span><span class="o">.</span><span class="n">cpr_util</span><span class="p">()</span>
 
-<span class="n">response</span> <span class="o">=</span> <span class="n">cpr_util</span><span class="o">.</span><span class="n">create_registration</span><span class="p">(</span><span class="n">regdate</span> <span class="o">=</span> <span class="s1">&#39;2021-03-17&#39;</span><span class="p">,</span> <span class="n">cpid</span> <span class="o">=</span> <span class="n">cpID</span><span class="p">,</span> <span class="n">ppid</span> <span class="o">=</span> <span class="s2">&quot;IntegrationTestPPID&quot;</span><span class="p">,</span><span class="n">lastname</span> <span class="o">=</span> <span class="s2">&quot;Sepp&quot;</span><span class="p">)</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">cpr_util</span><span class="o">.</span><span class="n">create_registration</span><span class="p">(</span><span class="n">regdate</span> <span class="o">=</span> <span class="s1">&#39;2021-03-17&#39;</span><span class="p">,</span> <span class="n">cpid</span> <span class="o">=</span> <span class="n">cpID</span><span class="p">,</span> <span class="n">ppid</span> <span class="o">=</span> <span class="s2">&quot;DemoPPID&quot;</span><span class="p">,</span><span class="n">lastname</span> <span class="o">=</span> <span class="s2">&quot;Sepp&quot;</span><span class="p">)</span>
 <span class="n">cprID</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="c1">#is needed afterwards</span>
 </pre></div>
 </div>

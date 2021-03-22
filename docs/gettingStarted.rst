@@ -77,7 +77,7 @@ So the highest instance is an **institute**. This can be done as follows, with t
     The code then looks like:
   
     | ``institute = os_core.institute()``
-    | ``institute.create(params = '{\"institutename\":\"Demo Institute\"}')``
+    | ``institute.create_institute(params = '{\"institutename\":\"Demo Institute\"}')``
 
     In general, the parameters which are passed to **os_core** functions have all to be known, this means the *entity-name*, the *value* and the *type*.  
     There are some parameters, which are itself *dicts*. The **os_util** functions have a *defined input*, with the *standard values* of OpenSpecimen 
@@ -107,9 +107,9 @@ from the `os_util` class `colletion_protocol_util`:
 .. code:: python
 
     #initialize
-    colletion_protocol_util = os_util.colletion_protocol_util()
+    collection_protocol_util = os_util.collection_protocol_util()
 
-    response = colletion_protocol_util.create_collection_protocol(short_title = 'Demo CP', title = 'Demo Collection Protocol', pi_mail = 'admin', sites = ['Demo Site'])
+    response = collection_protocol_util.create_cp(short_title = 'Demo CP', title = 'Demo Collection Protocol', pi_mail = 'admin', sites = ['Demo Site'])
 
 .. note::
     The response is a dict with the details of the created collection protocol. For example the ID of the Colletion protocol can be extracted with key 'id'. 
@@ -129,7 +129,7 @@ Once there is a Collection Protocol OpenSpecimen is ready to Register Participan
     #initialize
     cpr_util = os_util.cpr_util()
 
-    response = cpr_util.create_registration(regdate = '2021-03-17', cpid = cpID, ppid = "IntegrationTestPPID",lastname = "Sepp")
+    response = cpr_util.create_registration(regdate = '2021-03-17', cpid = cpID, ppid = "DemoPPID",lastname = "Sepp")
     cprID = response['id'] #is needed afterwards
 
 Creating a Specimen together with a Visit
