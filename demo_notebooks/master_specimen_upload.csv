@@ -1,0 +1,7 @@
+CP Short Title,PPID,Registration Date,First Name,Last Name,Middle Name,Date Of Birth,Death Date,Gender,Race#1,Race#2,Vital Status,Ethnicity,National ID,eMPI,Event Label,Visit Name,Visit Date,Collection Site,Visit Status,Clinical Diagnosis,Clinical Status,Path. Number,Visit Comments,Specimen Requirement Code,Specimen Label,Class,Type,Lineage,Parent Specimen Label,Anatomic Site,Laterality,Pathological Status,Quantity,Concentration,Created On,Comments,Container,Row,Column,Position,Collection Date,Collection Procedure,Collection Container,Collector,Received Date,Received Quality,Receiver,PMI#1#Site Name,PMI#1#MRN,PMI#2#Site Name,PMI#2#MRN
+Demo CP,Demo001,01-01-2016,Jane,Kane,L,01-08-1991,,Female,White,Asian,Alive,Unknown,123,EMPI111,Demo Visit,,01-02-2016,Demo Site,Complete,Not Specified,Not Specified,,,,DEMO001.WB1,Fluid,Whole Blood,New,,Blood,Not Specified,Non-Malignant,5,,,,,,,,01-02-2016 00:00,Venipuncture,,admin@localhost,01-02-2016 00:00,Acceptable,admin@localhost,Demo Site,1111,,
+Demo CP,,,,,,,,,,,,,,,,,,,,,,,,,DEMO001.Pl,Fluid,Plasma,Derived,DEMO001.WB1,,,,5,,01-02-2016,,,,,,,,,,,,,,,,
+Demo CP,,,,,,,,,,,,,,,,,,,,,,,,,DEMO001.Pl1,Fluid,Plasma,Aliquot,DEMO001.Pl,,,,1,,01-02-2016,,,,,,,,,,,,,,,,
+Demo CP,,,,,,,,,,,,,,,,,,,,,,,,,DEMO001.Pl2,Fluid,Plasma,Aliquot,DEMO001.Pl,,,,1,,01-02-2016,,,,,,,,,,,,,,,,
+Demo CP,,,,,,,,,,,,,,,,,,,,,,,,,DEMO001.Pl3,Fluid,Plasma,Aliquot,DEMO001.Pl,,,,1,,01-02-2016,,,,,,,,,,,,,,,,
+Demo CP,,,,,,,,,,,,,,,,,,,,,,,,,DEMO001.Pl4,Fluid,Plasma,Aliquot,DEMO001.Pl,,,,1,,01-02-2016,,,,,,,,,,,,,,,,
