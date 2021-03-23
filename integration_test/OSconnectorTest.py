@@ -94,6 +94,10 @@ class integrationTest:
         # Specimen API
         self.spec = os_core.specimen()
         self.spec_util = os_util.specimen_util()
+
+        # Container API
+        self.cont = os_core.container()
+        self.cont_util = os_util.container_util()
         
         # Query API
         self.qry = os_core.query()
@@ -233,7 +237,7 @@ class integrationTest:
         assert bool(response), " error creating a site"
         self.logFile.write(str(response) + ' \n')
 
-        #Search a site by attributes
+        # Search a site by attributes
         self.logFile.write("-Searching for a site- \n")
         response = self.site_util.search_sites(sitename ="IntegrationTestSite")
         assert str(response).lower().find('error')==-1, "Error searching for sites by attributes: "+str(response)
@@ -241,7 +245,7 @@ class integrationTest:
         self.ID['site'] = response[0]['id']
         self.logFile.write(str(response)+ ' \n')
 
-        #Updating a site
+        # Updating a site
         self.logFile.write("-Updating a site- \n")
         self.names["site"] = "IntegrationTestSite1"
         response = self.site_util.update_sites(siteid = self.ID["site"], name = self.names['site'], institutename=self.names['institute'], type_='not specified')
@@ -249,7 +253,7 @@ class integrationTest:
         assert bool(response), "error updating site"
         self.logFile.write(str(response) + ' \n')
 
-        #Export Site via CSV
+        # Export Site via CSV
         self.logFile.write("-Export Site Data as CSV- \n")
         try:
             export_csv = self.csv_util_export.csv_export(objecttype="site", recordids=[self.ID["site"]], csv=True)
@@ -259,15 +263,14 @@ class integrationTest:
             raise AssertionError("-Error exporting Site CSV- \n" + str(error) + "\n")
         self.logFile.write(str(export_csv) + " \n")
 
-
-        #Get all sites
+        # Get all sites
         self.logFile.write('-Get all sites- \n')
         response = self.inst.get_all_institutes()
         assert str(response).lower().find('error')==-1, "Error getting all sites: "+str(response)
         assert bool(response), "error getting all sites"
         self.logFile.write(str(response) + " \n")
 
-        #delete site
+        # delete site
         self.logFile.write("-Delete Site- \n")
         response = self.site.delete_sites(siid = self.ID['site'])
         assert str(response).lower().find('error')==-1, "Error deleting Site: "+str(response)
@@ -286,7 +289,7 @@ class integrationTest:
             raise AssertionError("-Error creating Site via CSV- \n" + str(error) + "\n")
         self.logFile.write(str(response)+ " \n")
         
-        #Search a site by attributes
+        # Search a site by attributes
         self.logFile.write("-Searching for a site- \n")
         response = self.site_util.search_sites(sitename ="IntegrationTestSite")
         assert str(response).lower().find('error')==-1, "Error searching for sites by attributes: "+str(response)
@@ -310,7 +313,7 @@ class integrationTest:
         self.logFile.write(str(response)+ " \n")
 
         ## Users
-        #Creating a user
+        # Creating a user
         self.logFile.write("-create an User- \n")
         response = self.user_util.create_user(first = "Integration", last = "TestUser", email = "email@address.com", login = "TestUser",
                    institute = self.names["institute"], type_ = "SUPER")
@@ -320,7 +323,7 @@ class integrationTest:
         self.ID['user'] = response['id']
         self.names['user'] = "TestUser"
 
-        #Export User via CSV
+        # Export User via CSV
         self.logFile.write("-Export User Data as CSV- \n")
         try:
             export_csv = self.csv_util_export.csv_export(objecttype="User", recordids=[self.ID["user"]], csv=True)
@@ -330,7 +333,7 @@ class integrationTest:
             raise AssertionError("-Error exporting User CSV- \n" + str(error) + "\n")
         self.logFile.write(str(export_csv) + " \n")
 
-        #Update a User
+        # Update a User
         self.logFile.write("-update an User- \n")
         response = self.user_util.update_user(userid = self.ID['user'],first ="Integration", last = "TestUser1", email = "email@address.com", login = "TestUser",
                    institute = self.names["institute"])
@@ -338,27 +341,27 @@ class integrationTest:
         assert bool(response), "Error updating an User"
         self.logFile.write(str(response)+ ' \n')
 
-        #Change Password 
+        # Change Password 
         self.logFile.write("-change Password- \n")
         response = self.user_util.change_password(userid = self.ID['user'], newpw = "P4ssW0rd!")
         assert str(response).lower().find('error')==-1, "Error changing password: "+str(response)
         assert bool(response), "Error changing password"
         self.logFile.write(str(response) + ' \n')
 
-        #Get all users
+        # Get all users
         self.logFile.write('-get all users- \n')
         response = self.user.get_all_users()
         assert str(response).lower().find('error')==-1, "Error getting all users: "+str(response)
         assert bool(response), "Error getting all users"
         self.logFile.write(str(response) + ' \n')
 
-        #Get Roles
+        # Get Roles
         self.logFile.write('-get roles- \n')
         response = self.user.get_roles(userid=self.ID['user'])
         assert str(response).lower().find('error')==-1, "Error getting roles: "+str(response)
         self.logFile.write(str(response) + ' \n')
 
-        #delete user
+        # delete user
         self.logFile.write("-Delete User- \n")
         response = self.user.delete_user(userid = self.ID['user'])
         assert str(response).lower().find('error')==-1, "Error deleting User: "+str(response)
@@ -378,7 +381,7 @@ class integrationTest:
             raise AssertionError("-Error creating User via CSV- \n" + str(error) + "\n")
         self.logFile.write(str(response)+ " \n")
         
-        #Export User via CSV
+        # Export User via CSV
         self.logFile.write("-Export User Data as CSV- \n")
         try:
             export_csv = self.csv_util_export.csv_export(objecttype="User", recordids=[self.ID["user"]], csv=True)
@@ -404,7 +407,8 @@ class integrationTest:
             raise AssertionError("-Error updating User via CSV- \n" + str(error) + "\n")
         self.logFile.write(str(response)+ " \n")
 
-        ##Collection protocol
+        ## Collection protocol
+        
         # create collection protocol
         self.logFile.write("-Create Collection protocol- \n")
         self.names['CP']="IntegrationTestCP"
@@ -422,21 +426,21 @@ class integrationTest:
         self.logFile.write(str(response) + ' \n')
         self.ID['CP2'] = response['id']
 
-        #merge Collection protocols
+        # merge Collection protocols
         self.logFile.write('-Merge Colletion Protocol- \n')
         response = self.cp_util.merge_cps(src_cp = "IntTestCP2", trg_cp ="IntTestCP")
         assert str(response).lower().find('error')==-1, "Error merging Colelction protocols: "+str(response)
         assert bool(response), "Error merging Colelction protocols"
         self.logFile.write(str(response) + ' \n')
 
-        #getting all Collection Protocols
+        # getting all Collection Protocols
         self.logFile.write('-Getting all Collection protocols- \n')
         response = self.cp.get_all_collection_protocols()
         assert str(response).lower().find('error')==-1, "Error getting all Collection protocols: "+str(response)
         assert bool(response), "Error getting all Colelction protocols"
         self.logFile.write(str(response) + ' \n')
         
-        #search cp
+        # search cp
         self.logFile.write("-Search CP- \n")
         response = self.cp_util.search_cps(title=self.names['CP'])
         assert str(response).lower().find('error')==-1, "Error searching for a Collection protocol: "+str(response)
@@ -444,7 +448,7 @@ class integrationTest:
         self.ID['CP']=response[0]['id']
         self.logFile.write(str(response) + ' \n')
 
-        #update CP
+        # update CP
         self.logFile.write("-update CP- \n")
         response = self.cp_util.update_cp(cpid = self.ID['CP'], short_title = "IntTestCP", title = self.names['CP'], pi_mail = "admin",
                         time_start="2021-02-24", sites = [self.names["site"]])
@@ -452,14 +456,14 @@ class integrationTest:
         assert bool(response), "Error updating CP"
         self.logFile.write(str(response)+ ' \n')
 
-        #assign roles
+        # assign roles
         self.logFile.write('-assign role- \n')
         response = self.user_util.assign_role(userid = self.ID['user'], siteid = self.ID['site'], cpid = self.ID['CP'], role = 'Technician')
         assert str(response).lower().find('error')==-1, "Error assigning role: "+str(response)
         assert bool(response), "Error assigning role"
         self.logFile.write(str(response)+ ' \n')
 
-        #delete CP
+        # delete CP
         self.logFile.write("-Delete CP- \n")
         response = self.cp.delete_collection_protocol(cpid = self.ID['CP'])
         assert str(response).lower().find('error')==-1, "Error deleting CP: "+str(response)
@@ -497,6 +501,7 @@ class integrationTest:
         self.logFile.write(str(response)+ " \n")
         
         ## Collection Protocol Registration
+
         # Create a Registration
         self.logFile.write('-Create Registration- \n')
         response = self.cpr_util.create_registration(regdate = "2021-02-24", cpid = self.ID['CP'], ppid = "IntegrationTestPPID",lastname = "Sepp")
@@ -601,7 +606,8 @@ class integrationTest:
         self.logFile.write(str(response)+ " \n")
 
         ## Events
-        #Create an Event
+        
+        # Create an Event
         self.logFile.write('-Create CP Event- \n')
         self.names['eventLabel']="IntegrationTestLabel"
         response = self.cpe_util.create_event(label = self.names['eventLabel'], point = 0, cp = self.names['CP'], site = self.names['site'],
@@ -611,7 +617,7 @@ class integrationTest:
         self.ID['event']=response['id']
         self.logFile.write(str(response)+ ' \n')
 
-        #Update an Event
+        # Update an Event
         self.logFile.write('-Update CP Event- \n')
         self.names['eventLabel']="IntegrationTestLabel1"
         response = self.cpe_util.update_event(eventid=self.ID['event'],label = self.names['eventLabel'], point = 0, cp = self.names['CP'],
@@ -620,9 +626,10 @@ class integrationTest:
         assert bool(response), "Error creating an Event"
         self.ID['event']=response['id']
         self.logFile.write(str(response)+ ' \n')
-
+        
         ##Visits
-        #Create a Visit
+
+        # Create a Visit
         self.logFile.write('-Create a Visit- \n')
         self.names['visit']="IntegrationTestVisit"
         response = self.vis_util.add_visit(cprid = self.ID['cpr'], name = self.names['visit'], site = self.names['site'])
@@ -631,27 +638,27 @@ class integrationTest:
         self.ID['visit']=response['id']
         self.logFile.write(str(response)+ ' \n')
 
-        #searchvisits
+        # searchvisits
         self.logFile.write('-search for visits- \n')
         response = self.vis_util.search_visit_namespr(visitname = self.names['visit'])
         assert str(response).lower().find('error')==-1, "Error searching for a Visit: "+str(response)
         self.logFile.write(str(response)+ ' \n')
 
-        #Get visit with cprID
+        # Get visit with cprID
         self.logFile.write('- Get visit by CPRID- \n')
         response = self.vis_util.search_visit_cprid(cprid = self.ID['cpr'])
         assert str(response).lower().find('error')==-1, "Error getting visit: "+str(response)
         assert bool(response), "Error getting visit"
         self.logFile.write(str(response)+ ' \n')
         
-        #Get all events
+        # Get all events
         self.logFile.write('-Get all Events- \n')
         response = self.cpe.get_all_events(cpid=self.ID['CP'])
         assert str(response).lower().find('error')==-1, "Error getting all Events: "+str(response)
         assert bool(response), "Error getting all events"
         self.logFile.write(str(response)+ ' \n')
 
-        #Update a Visit
+        # Update a Visit
         self.logFile.write('-Update a Visit- \n')
         self.names['visit']="IntegrationTestVisit1"
         response = self.vis_util.update_visit(visitid = self.ID['visit'], cprid = self.ID['cpr'], name = self.names['visit'], site = self.names['site'])
@@ -659,7 +666,7 @@ class integrationTest:
         assert bool(response), "Error updating a Visit"
         self.logFile.write(str(response)+ ' \n')
 
-        #Add a Visit and Specimen in one turn
+        # Add a Visit and Specimen in one turn
         self.logFile.write('-Add Visit and Specimen- \n')
         self.names['visit2']="IntegrationTestVisit2"
         self.names['speci2']="IntegrationTestSpeci2"
@@ -672,8 +679,9 @@ class integrationTest:
         self.ID['speci2']=response['specimens'][0]['id']
         self.logFile.write(str(response)+ ' \n')
 
-        ##Specimens
-        #Add a Specimen
+        ## Specimens
+        
+        # Add a Specimen
         self.logFile.write('-Add a Specimen- \n')
         self.names['speci']="IntegrationTestSpeci"
         response = self.spec_util.create_specimen(specimenclass = 'Fluid', specimentype = 'Bile', pathology = 'Malignant', anatomic = 'Anal Canal',  
@@ -684,14 +692,14 @@ class integrationTest:
         self.ID['speci']=response['id']
         self.logFile.write(str(response)+ ' \n')
 
-        #check label
+        # check label
         self.logFile.write('-Check if label exist- \n')
         response = self.spec.check_specimen(specimenLabel = self.names['speci'])
         assert str(response).lower().find('error')==-1, "Error checking Specimen: "+str(response)
         assert bool(response), "Error checking Specimen"
         self.logFile.write(str(response)+ ' \n')
 
-        #update Specimen
+        # update Specimen
         self.logFile.write('-Update Specimen- \n')
         self.names['speci']="IntegrationTestSpeci1"
         response = self.spec_util.update_specimen(specimenid = self.ID['speci'], specimenclass = 'Fluid', specimentype = 'Bile', pathology = 'Malignant', anatomic = 'Anal Canal',  
@@ -701,29 +709,62 @@ class integrationTest:
         assert bool(response), "Error updating Specimen"
         self.logFile.write(str(response) + ' \n')
 
-        #search Specimens
-        self.logFile.write('Search Specimens- \n')
+        # search Specimens
+        self.logFile.write('-Search Specimens- \n')
         response = self.spec_util.search_specimens(label=self.names['speci'])
         assert str(response).lower().find('error')==-1, "Error searching for a Specimen: "+str(response)
         assert bool(response), "Error searching for a Specimen"
         self.logFile.write(str(response) + ' \n')
 
-        #Queries
-        #Create AQL
+        ## Container
+
+        # Create Container
+        self.logFile.write("-Create Container-")
+        response = self.cont_util.create_container(name="Int_test_cont", sitename=self.names["site"], numrows=2, numcols=2, storespecimens="true")
+        assert str(response).lower().find('error')==-1, "Error creating Container: "+str(response)
+        assert bool(response), "Error creating Container"
+        self.logFile.write(str(response) + ' \n')
+        self.ID['cont'] = response['id']
+
+        #Get Container
+        self.logFile.write("-Get Container-")
+        response = self.cont.get_container(container_id=self.ID["cont"])
+        assert str(response).lower().find('error')==-1, "Error getting Container: "+str(response)
+        assert bool(response), "Error getting Container"
+        self.logFile.write(str(response) + ' \n')
+
+        #Get all Containers
+        self.logFile.write("-Get all Containers-")
+        response = self.cont.get_all_containers()
+        assert str(response).lower().find('error')==-1, "Error getting all Containers: "+str(response)
+        assert bool(response), "Error getting all Containers"
+        self.logFile.write(str(response) + ' \n')
+
+        # Update Container
+        self.logFile.write("-Update Container-")
+        response = self.cont_util.update_container(name="Int_test_cont1", sitename=self.names["site"], numrows=2, numcols=2, storespecimens="true",
+                                                    container_id=self.ID["cont"])
+        assert str(response).lower().find('error')==-1, "Error creating Container: "+str(response)
+        assert bool(response), "Error creating Container"
+        self.logFile.write(str(response) + ' \n')
+
+        ## Queries
+
+        # Create AQL
         self.logFile.write('-Executing AQL- \n')
         response = self.qry_util.create_aql(cpid = self.ID['CP'], aql = "select Participant.ppid, SpecimenCollectionGroup.collectionDate, count(distinct Specimen.id) where Specimen.lineage = \"New\"")
         assert str(response).lower().find('error')==-1, "Error executing AQL: "+str(response)
         assert bool(response), "Error executing AQL"
         self.logFile.write(str(response) + ' \n')
 
-        #Search Queries
+        # Search Queries
         self.logFile.write('-Searching for queries- \n')
         response = self.qry_util.search_query()
         assert str(response).lower().find('error')==-1, "Error searching for queries: "+str(response)
         assert bool(response), "Error searching for queries"
         self.logFile.write(str(response) + ' \n')
 
-        #Executing saved queries
+        # Executing saved queries
         self.logFile.write('-Executing a saved query- \n')
         response = self.qry_util.execute_query(qryid = '1')
         assert str(response).lower().find('error')==-1, "Error executing saved query: "+str(response)
@@ -734,6 +775,13 @@ class integrationTest:
         ######################################################################################
         ############################## C L E A N   U P #######################################
         ######################################################################################
+
+        #delete Container
+        self.logFile.write("Delete Container")
+        response = self.cont.disable_container(containerid=self.ID["cont"])
+        assert str(response).lower().find('error')==-1, "Error deleting Container: "+str(response)
+        assert bool(response), "Error deleting Container"
+        self.logFile.write(str(response) + ' \n')
 
         #delete Specimen
         self.logFile.write('-Delete a Specimen- \n')
@@ -864,6 +912,8 @@ class integrationTest:
         return "end_of Test"
 
     def cleanUp(self):
+        if 'cont' in self.ID.keys():
+            self.cont.disable_container(self.ID["cont"])
         if 'speci' in self.ID.keys():
             self.spec_util.delete_specimens(specimenids =self.ID['speci'])
         if 'speci2' in self.ID.keys():

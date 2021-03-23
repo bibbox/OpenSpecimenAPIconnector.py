@@ -1,2 +1,2 @@
-Identifier,Name,Institute Name,Code,Type,Address,Coordinators#1#Email Address
-2,IntegrationTestSite1,IntegrationTestInstitute1,,Not Specified,,
+Identifier,Name,Institute Name,Code,Type,Address,Coordinators#1#Email Address,Activity Status
+11,IntegrationTestSite1,IntegrationTestInstitute1,,Not Specified,,,Active

@@ -60,7 +60,7 @@ class collection_protocol():
         print(self.base_url, self.OS_request_gen.auth)
 
 
-    def create_collection_protocol(self, params):
+    def create_collection_protocol(self, data):
 
         """Creates a Collection Protocol
 
@@ -71,7 +71,7 @@ class collection_protocol():
 
         Parameters
         ----------
-        params : string
+        data : JSON-formatted string
             JSON formatted string with parameters: title, shortTitle, code[optional], startDate[optional],
             endDate[optional], principalInvestigator, coordinators[optional], irbId[optonal],
             anticipatedParticipantsCount[optional], activityStatus, visitNameFmt[optional],
@@ -85,7 +85,7 @@ class collection_protocol():
         """
 
         url = self.base_url + '/'
-        payload = params
+        payload = data
         r = self.OS_request_gen.post_request(url,payload)
 
         return json.loads(r.text)
@@ -170,9 +170,9 @@ class collection_protocol():
 
     def get_collection_protocol(self, cpid):
 
-        """Get the Collection Protocol with the ID <cpid>
+        """Get the Collection Protocol with the ID cpid
 
-        Get the details of the Collection Protocol with the unique ID <cpid>.
+        Get the details of the Collection Protocol with the unique ID cpid.
         This ID is generated automatically from OpenSpecimen when the Protocol is created.
 
         Parameters
@@ -226,11 +226,11 @@ class collection_protocol():
 
     def update_collection_protocol(self, cpid, params):
 
-        """Updates an existing Collection Protocol with ID <cpid> with the Parameters <params>
+        """Updates an existing Collection Protocol with ID cpid with the Parameters params
 
             Updates an existing Collection Protocol with the automatically generated OpenSpecimen's system wide
-            unique Collection Protocol ID <cpid>, with the Parameters <params> which are passed to the function.
-            The ID of the Collection Protocol has to be known and can, for Examples, be seen in the GUI by clicking on 
+            unique Collection Protocol ID cpid, with the Parameters params which are passed to the function.
+            The ID of the Collection Protocol has to be known and can, for example, be seen in the GUI by clicking on 
             the Collection Protocol, which has the format http(s)://<host>:<port>/openspecimen/cps/{cpid}/... .
             Or via the function search_collection_protocols or get_all_collection_protocols
 

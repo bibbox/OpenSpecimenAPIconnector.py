@@ -297,7 +297,7 @@ class collection_protocol_registration:
         """Merge Participant x to Participant y
 
         Merges Participant with the unique Participant ID <id_from> to the Participant with
-        unique Participant ID  <id_to>. This will move data from all visits and specimens from the source participant to the target participant
+        unique Participant ID <id_to>. This will move data from all visits and specimens from the source participant to the target participant
         and then deletes the source participant.
         The Participants unique ID has to be known and can be seen for Examples via 
         the GUI in the URL: http(s)://<host>:<port>/openspecimen/cp-view/{cpId}/participants/{cprid}/...

@@ -25,7 +25,7 @@ class collection_protocol_util:
     Examples
     --------
 
-    A code Examples, where the Collection protocols are handled is in the Jupyter-NotebookS
+    A code Examples, where the Collection protocols are handled is in the Jupyter-Notebook
 
         $ jupyter notebook main.ipynb
     """
@@ -198,13 +198,13 @@ class collection_protocol_util:
             Details of the created Collection Protocol, or the OpenSpecimen's error message.
         """
 
-        params = self.jsons.create_CP_json(short_title=short_title, title=title, pi_mail=pi_mail, time_start=time_start, time_end=time_end,
+        data = self.jsons.create_CP_json(short_title=short_title, title=title, pi_mail=pi_mail, time_start=time_start, time_end=time_end,
                     sites=sites, man_id=man_id, coords=coords, consentsWaived=consentsWaived, eth_cons_id=eth_cons_id, part_no=part_no,
                     desc_url=desc_url, visitNameFmt=visitNameFmt, specimenLabelFmt=specimenLabelFmt, derivativeLabelFmt=derivativeLabelFmt,
                     man_visit_name=man_visit_name, man_spec_label=man_spec_label, aliquots_in_same=aliquots_in_same, activity=activity,
                     aliquotLabelFmt=aliquotLabelFmt, ppidFmt=ppidFmt, specimenCentric=specimenCentric)
 
-        r = self.cps.create_collection_protocol(params = params)
+        r = self.cps.create_collection_protocol(data = data)
 
         return r
     

@@ -160,9 +160,9 @@ class sites():
 
     def get_site(self, siteid):
         
-        """Get the Site with the ID <siteid>
+        """Get the Site with the ID siteid
         
-        Get the details of a site with the system wide unique ID <siteid>.
+        Get the details of a site with the system wide unique ID siteid.
         This ID is generated automatically from OpenSpecimen when the site is created.
         
         Parameters
@@ -185,10 +185,10 @@ class sites():
 
     def update_site(self, siid, params):
         
-        """Updates an existing Site with ID <siid> with the Parameters <params>
+        """Updates an existing Site with ID siid with the Parameters params
         
         Updates an existing site with the automatically generated OpsenSpecimen's system wide
-        unique site ID <siid>, with the parameters <params> which are passed to the function.
+        unique site ID siid, with the parameters params which are passed to the function.
         The ID of the site has to be known and can, for Examples, be seen in the GUI by clicking on 
         the site, which has the format http(s)://<host>:<port>/openspecimen/site/{cpid}/... .
         Or via the function search_sites or get_all_sites and extracted with key ["id"]

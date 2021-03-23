@@ -85,7 +85,7 @@ class collection_protocol():
         """
 
         url = self.base_url + '/'
-        payload = params
+        payload = data
         r = self.OS_request_gen.post_request(url,payload)
 
         return json.loads(r.text)

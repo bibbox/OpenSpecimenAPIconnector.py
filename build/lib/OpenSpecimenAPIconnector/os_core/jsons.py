@@ -29,9 +29,11 @@ class Json_factory():
 
         """Creates a JSON-formated string for participant creation
         This function creates the json corresponding to the cpr_util function
+        
         Note
         ----- 
         Mandatory parameters are passed as positional arguments in the caliing function
+        
         Parameters
         ----------
         regdate : string
@@ -195,7 +197,8 @@ class Json_factory():
         
         Returns
         -------
-        JSON-formated-string containing the collection protocol information neccesary for creation
+        JSON-formated-string 
+            Collection protocol information neccesary for creation
         """
 
         site_arr = []
@@ -249,9 +252,11 @@ class Json_factory():
         
         Create an event for a given Collection Protocol. Details of the parameters can be found in
         the parameters section.
+        
         Note
         -----
         Mandatory paramters are passed as positional args within the calling util class
+        
         Parameters
         ----------
         label : string
@@ -280,6 +285,7 @@ class Json_factory():
         
         code : string
             the Event code, is optional. In order to define condionals in the workflow, one need the Event code.
+        
         Returns
         -------
         JSON-formated string
@@ -299,7 +305,6 @@ class Json_factory():
 
         return json.dumps(params)
 
-
     def create_specimen_json(self, label=None, specimenclass=None, specimentype=None, pathology=None, anatomic=None,
                             laterality=None, initqty=None, avaqty=None, visitid=None, userid=None, colltime=None,
                             rectime=None, recqlt=None, lineage='New', status='Collected', storloc=None, concentration=None,
@@ -312,6 +317,7 @@ class Json_factory():
         Note
         -----
         Mandatory paramters are passed as positional args within the calling util class
+        
         Parameters
         ----------
         label : string
@@ -325,6 +331,7 @@ class Json_factory():
         
         pathology : string
             Pathologystatus of the Specimen.
+        
         anatomic : string
             The anatomic site of the specimen.
         
@@ -359,6 +366,7 @@ class Json_factory():
         
         storlocx : int
             Position of the specimen in the Container in x direction.[optional]
+        
         storlocy : int
             Position of the specimen int the container in y direction.[optional]
             
@@ -376,6 +384,7 @@ class Json_factory():
         
         collproc : string
             The procedure of the collection[otpional].
+        
         conttype : string
             Type of the storage conatiner.
             
@@ -440,6 +449,7 @@ class Json_factory():
         """Create JSON formated string neccesary for exporting an collection protocol (should be implemented but is not see OpenSpecimen 7.2)
 
         Parameters
+        ----------
         objecttype: string 
             Identifying the general object to be exported.
             Permissible Values: "institute", "site", "user", "cpr", "specimen", "extensions", "storageContainer"
@@ -457,11 +467,12 @@ class Json_factory():
         formname: string
             Defines the form to be downloaded in context of the extension object type together with the specified entity 
         specimenlabels: list or string
-            List of comma seperated specimen identifiers; str if its a singular specimen to be exported        
-        ----------
-        Returns JSON-formated-string 
-            Json data needed for creating an export job for the given entity
+            List of comma seperated specimen identifiers; str if its a singular specimen to be exported
+        Returns
         -------
+        JSON-formated-string 
+            Json data needed for creating an export job for the given entity
+        
         """
         object_types = ["institute", "site", "user", "cpr", "specimen", "extensions", "storageContainer", "distributionProtocol", "cp", "cpe"]
         entity_types = ["Participant", "Visit", "Specimen", "SpecimenEvent", "SpecimenCollectionGroup", "CollectionProtocol"]
@@ -499,6 +510,7 @@ class Json_factory():
         """Create JSON formated string to execute a specified query passed to the method
 
         Parameters
+        ----------
         cp_id: string 
             Collection protocoll id of export target
         aql: string
@@ -514,11 +526,10 @@ class Json_factory():
             Specifies how the date column values needs to be serialised in the query response. 
             If true, then date/time values are serialised using ISO format: yyyy-MM-dd'T'HH:mm:ss. 
             Otherwise, date/time values are serialised using the format specified in OS locale settings
-        ----------
         Returns
+        -------
         JSON-formated-string 
             Json data needed for executing a system query
-        -------
         """
         params = {
             "cpId" : cpid,
@@ -534,11 +545,13 @@ class Json_factory():
     # Execute Saved Query
     def execute_query(self, start, results, drivingform="Participant", rowmode="OFF"):
         
-        """Create JSON formated string neccesary for execution of a saved query
+        """Create JSON formated string neccesary for execution of a saved query 
+        
         Parameters
+        ----------
         start: string 
             Used for paginating the results. If start=5, the output result will start from row number 5.
-        resutls: string
+        results: string
             Used for paginating the results. If results=10, the output result will be maximum 10 rows
         drivingform: string
             Driving form determines the search perspective. When left empty, it defaults to Participant.
@@ -546,11 +559,11 @@ class Json_factory():
             which is then used to join with the other tables.
             Similarly when drivingForm is Specimen, the root table will be catissue_specimen, 
             which will be joined with the other tables.) rowmode: string
-        ----------
+        
         Returns
-        JSON-formated-string 
-            Json data needed for executing a query saved within an Openspecimen appliance
         -------
+        JSON-formatted-string 
+            Json data needed for executing a query saved within an Openspecimen appliance
         """
 
         params= {
@@ -568,6 +581,7 @@ class Json_factory():
         """Create JSON formated string neccesary for creating a bulk import operation to be handled by OpenSpecimen
 
         Parameters
+        ----------
         schemaname : string
             The Openspecimen schematype, that defines the expected CSV file structure for the entity to be created   
         operation : string
@@ -580,11 +594,10 @@ class Json_factory():
         timeformat: string
             Specification of time format used in the OpenSpecimen API. See link for details
             https://openspecimen.atlassian.net/wiki/spaces/CAT/pages/68976690/Date+and+time+formats
-        ----------
         Returns
+        -------
         JSON-formated-string 
             Json data needed for creating an CSV file import job for the given entity
-        -------
         """
         
         data = {"objectType": schemaname,
@@ -603,6 +616,7 @@ class Json_factory():
         """Create JSON formated string neccesary for creating a bulk import operation to be handled by OpenSpecimen
 
         Parameters
+        ----------
         cpid : string
             Collection protol id of the participants to be queried
         registrationdate: string
@@ -626,12 +640,12 @@ class Json_factory():
             This Parameters specifies how many participant records should be included in the API response. 
         exactmatch: string
             Specifies whether the PPID should be exact match or sub-string match. Boolean true means exact match. Otherwise it is substring match.
-        ----------
+        
         Returns
-        JSON-formated-string   trg_cp: string
+        -------
+        JSON-formated-string
             CP id of target of merge action
             Json data needed for creating an CSV file import job for the given entity
-        -------
         """
 
         params = {
@@ -660,7 +674,7 @@ class Json_factory():
 
         Parameters
         ----------
-         cprid : int
+        cprid : int
             Identifier of the Collection Protocoll Registration to which the Visit belongs.
             cprid or (cptitle and ppid) or (cpid and ppid) or (cpshorttitle and ppid) are mandatory.
         
@@ -986,7 +1000,7 @@ class Json_factory():
         
         Note
         -----
-        If an user changes its one password, the old password is mandatory.
+        If an user changes its own password, the old password is mandatory.
         If the user who changes the password is a superadmin, the new password is enough.
 
         Parameters
@@ -1072,5 +1086,83 @@ class Json_factory():
             "cpId":cpid,
             "ppid":ppid
         }
+
+        return json.dumps(data)
+
+    def create_container_json(self, name=None, barcode=None, typename=None, activitystatus=None, sitename=None, 
+                            storageloc=None, numcols=None, numrows=None, storespecimens=None, childcontainers=None, 
+                            temp=None, columnlabelscheme=None, rowlablescheme=None, comment=None, specimenclasses=None, 
+                            specimentypes=None, collectionprotocols=None):
+        
+        """Create a storage container in OpenSpecimen
+
+        Parameters
+        ----------
+        name : string
+            Name of the sorage container
+        barcode: string
+            Barcode of the sotrage container
+        typename : string
+            Container type (e.g. Freezer see https://openspecimen.atlassian.net/wiki/spaces/CAT/overview 
+            for available types and customization)
+        activitystatus : string
+            Whether the container is operational: Active or disabled; Default active
+        sitename : string
+            Site location of the container
+        storageloc : dict
+            used if conatiner is a child container gives the name, id and position of the child 
+            within the parent container
+        numcols : string
+            Number of container columns (if type allows it)
+        numrows : string
+            Number of rows (if type allows it)
+        storespecimens: string
+            Boolean value (true, false) whether container can hold specimens or not
+        childcontainers : string
+            Filled if container sotres multiple other conatiners with different attributes
+        temp : string
+            Number literal giving the container temperature in celcius (e.g. -80, -20)
+        columnlabelscheme : string
+            Column labels - Numbers by default; 
+            Permissible Values are {Numbers, Alphabets Upper Case, Alphabets Lower Case, Roman Upper Case, Roman Lower Case}
+        rowlabelscheme : string
+            Row labels - Numbers by default; 
+            Permissible Values are {Numbers, Alphabets Upper Case, Alphabets Lower Case, Roman Upper Case, Roman Lower Case}
+        comment : string
+            Additional comments for the sorage container
+        specimenclasses : list
+            Specimen Classes allowed to be stored within the container
+        specimentypes : list
+            Specimen Types allowed to be stored within the container
+        collecitonprotocols : list
+            List of collection Protocols that can store samples within the given container
+        
+
+        Returns
+        -------
+        string
+            Json-formatted string with details needed to create a container.
+        """
+
+        data = {
+            "name":name,
+            "barcode":barcode,
+            "typeName":typename,
+            "activityStatus":activitystatus,
+            "siteName":sitename,
+            "storageLocation":storageloc,
+            "noOfColumns":numcols,
+            "noOfRows":numrows,
+            "storeSpecimensEnabled":storespecimens,
+            "childContainers":childcontainers,
+            "temperature":temp,
+            "columnLabelingScheme":columnlabelscheme,
+            "rowLabelingScheme":rowlablescheme,
+            "comments":comment,
+            "allowedSpecimenClasses":specimenclasses,
+            "allowedSpecimenTypes":specimentypes,
+            "allowedCollectionProtocols":collectionprotocols
+        }
+        data = {k: v for k, v in data.items() if v is not None}
 
         return json.dumps(data)

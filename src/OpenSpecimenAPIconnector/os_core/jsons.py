@@ -29,9 +29,11 @@ class Json_factory():
 
         """Creates a JSON-formated string for participant creation
         This function creates the json corresponding to the cpr_util function
+        
         Note
         ----- 
         Mandatory parameters are passed as positional arguments in the caliing function
+        
         Parameters
         ----------
         regdate : string
@@ -1087,11 +1089,12 @@ class Json_factory():
 
         return json.dumps(data)
 
-    def create_container_json(name=None, barcode=None, typename=None, activitystatus=None, sitename=None, storageloc=None, numcols=None, 
-                        numrows=None, storespecimens=None, childcontainers=None, temp=None, columnlabelscheme=None, rowlablescheme=None,
-                        comment=None, specimenclasses=None, specimentypes=None, collectionprotocols=None):
+    def create_container_json(self, name=None, barcode=None, typename=None, activitystatus=None, sitename=None, 
+                            storageloc=None, numcols=None, numrows=None, storespecimens=None, childcontainers=None, 
+                            temp=None, columnlabelscheme=None, rowlablescheme=None, comment=None, specimenclasses=None, 
+                            specimentypes=None, collectionprotocols=None):
         
-         """Create a storage container in OpenSpecimen
+        """Create a storage container in OpenSpecimen
 
         Parameters
         ----------
@@ -1155,7 +1158,7 @@ class Json_factory():
             "temperature":temp,
             "columnLabelingScheme":columnlabelscheme,
             "rowLabelingScheme":rowlablescheme,
-            "comments":comments,
+            "comments":comment,
             "allowedSpecimenClasses":specimenclasses,
             "allowedSpecimenTypes":specimentypes,
             "allowedCollectionProtocols":collectionprotocols

@@ -17,6 +17,7 @@ src/OpenSpecimenAPIconnector/os_core/__init__.py
 src/OpenSpecimenAPIconnector/os_core/collection_protocol.py
 src/OpenSpecimenAPIconnector/os_core/collection_protocol_event.py
 src/OpenSpecimenAPIconnector/os_core/collection_protocol_registration.py
+src/OpenSpecimenAPIconnector/os_core/container.py
 src/OpenSpecimenAPIconnector/os_core/csv_bulk.py
 src/OpenSpecimenAPIconnector/os_core/csv_export.py
 src/OpenSpecimenAPIconnector/os_core/institute.py
@@ -34,6 +35,7 @@ src/OpenSpecimenAPIconnector/os_util/__init__.py
 src/OpenSpecimenAPIconnector/os_util/aggregated_fields.py
 src/OpenSpecimenAPIconnector/os_util/bulk_operations.py
 src/OpenSpecimenAPIconnector/os_util/collection_protocol_util.py
+src/OpenSpecimenAPIconnector/os_util/container_util.py
 src/OpenSpecimenAPIconnector/os_util/cpevent_util.py
 src/OpenSpecimenAPIconnector/os_util/cpr_util.py
 src/OpenSpecimenAPIconnector/os_util/csv_exp_util.py

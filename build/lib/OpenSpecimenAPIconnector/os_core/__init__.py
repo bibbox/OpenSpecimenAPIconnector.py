@@ -14,6 +14,7 @@ from .specimen import specimen
 from .url import url_gen
 from .users import users
 from .visit import visit
+from .container import container
 
 # __all__ = [
 #     'collection_protocol_event',

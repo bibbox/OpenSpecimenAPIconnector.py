@@ -157,7 +157,7 @@ class cpr_util:
 
         This function can create a new participant to an already existing Collection Protocol. To use this function one
         has to known either the Collection Protocoll id <cpId>,the title of the Collection Protocol <cpTitle> or 
-        the short title of the Collection Protocol <cpshorttitle>.
+        the short title of the Collection Protocol <cpshorttitle> .
         Those values can be seen via GUI, extracted from the responses with the class collection_protocol in os_core or
         collection_protocol_util in os_util. 
 

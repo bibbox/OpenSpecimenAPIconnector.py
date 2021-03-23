@@ -49,7 +49,7 @@ class csv_exporter:
     def csv_export(self, objecttype, recordids=None, cpid=None, ppids=None,  entitytype=None, formname=None, 
                             specimenlabels=None, csv=False):
 
-        """Export CV for entity collection protocol
+        """Export CSV for the given entity
 
         Export function for collection protocols 
 
