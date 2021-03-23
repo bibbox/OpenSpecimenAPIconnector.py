@@ -28,6 +28,14 @@ OpenSpecimenAPIconnector.os\_util.collection\_protocol\_util module
    :undoc-members:
    :show-inheritance:
 
+OpenSpecimenAPIconnector.os\_util.container\_util module
+--------------------------------------------------------
+
+.. automodule:: OpenSpecimenAPIconnector.os_util.container_util
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 OpenSpecimenAPIconnector.os\_util.cpevent\_util module
 ------------------------------------------------------
 

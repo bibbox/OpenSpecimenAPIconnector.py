@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
   
@@ -38,7 +38,9 @@
 
     
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting Started" href="gettingStarted.html" />
+    <link rel="prev" title="Welcome to OpenSpecimenAPIConnector’s documentation!" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -52,7 +54,7 @@
           
 
           
-            <a href="contents.html" class="icon icon-home"> OpenSpecimenAPIConnector
+            <a href="index.html" class="icon icon-home"> OpenSpecimenAPIConnector
           
 
           
@@ -83,14 +85,22 @@
               
             
             
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">Installation</a><ul>
-<li><a class="reference internal" href="#jupyter-demos">Jupyter Demos</a></li>
+              <p class="caption"><span class="caption-text">OSAPIConnector Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#jupyter-demos">Jupyter Demos</a></li>
 </ul>
 </li>
 </ul>
-</div>
+<p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="gettingStarted.html">Getting Started</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OSAPIConnector Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="source/OpenSpecimenAPIconnector.html">OpenSpecimenAPIconnector package</a></li>
+</ul>
+
             
           
         </div>
@@ -104,7 +114,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="contents.html">OpenSpecimenAPIConnector</a>
+          <a href="index.html">OpenSpecimenAPIConnector</a>
         
       </nav>
 
@@ -135,7 +145,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="contents.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>Installation</li>
     
@@ -159,13 +169,13 @@
   <div class="section" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
 <p>Install the package:</p>
-<div class="code console highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install OpenSpecimenApiConnector
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> pip install OpenSpecimenApiConnector
 </pre></div>
 </div>
 <p>In your <code class="docutils literal notranslate"><span class="pre">sript.py</span></code> file:</p>
-<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">OpenSpecimenAPIconnector</span> <span class="k">as</span> <span class="nn">OSconn</span>
-<span class="kn">import</span> <span class="nn">OpenSpecimenAPIconnector.os_core</span> <span class="k">as</span> <span class="nn">os_core</span>
-<span class="kn">import</span> <span class="nn">OpenSpecimenAPIconnector.os_util</span> <span class="k">as</span> <span class="nn">os_util</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">OpenSpecimenAPIconnector</span> <span class="kn">as</span> <span class="nn">OSconn</span>
+<span class="kn">import</span> <span class="nn">OpenSpecimenAPIconnector.os_core</span> <span class="kn">as</span> <span class="nn">os_core</span>
+<span class="kn">import</span> <span class="nn">OpenSpecimenAPIconnector.os_util</span> <span class="kn">as</span> <span class="nn">os_util</span>
 
 <span class="c1"># Set Login Example</span>
 <span class="n">baseurl</span> <span class="o">=</span> <span class="s1">&#39;http(s)://&lt;OS-Instance-Name&gt;/openspecimen/rest/ng&#39;</span>
@@ -178,8 +188,8 @@
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This will produce an Error if you current instance url or authorization is invalid</p>
+<p class="admonition-title">Note</p>
+<p>This will produce an Error if you current instance url or authorization is invalid</p>
 </div>
 <div class="section" id="jupyter-demos">
 <h2>Jupyter Demos<a class="headerlink" href="#jupyter-demos" title="Permalink to this headline">¶</a></h2>
@@ -193,6 +203,10 @@
            
           </div>
           <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="gettingStarted.html" class="btn btn-neutral float-right" title="Getting Started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to OpenSpecimenAPIConnector’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
 
   <hr/>
 

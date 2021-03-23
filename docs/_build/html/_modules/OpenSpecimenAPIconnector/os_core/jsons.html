@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
   
@@ -52,7 +52,7 @@
           
 
           
-            <a href="../../../contents.html" class="icon icon-home"> OpenSpecimenAPIConnector
+            <a href="../../../index.html" class="icon icon-home"> OpenSpecimenAPIConnector
           
 
           
@@ -83,8 +83,19 @@
               
             
             
-              <!-- Local TOC -->
-              <div class="local-toc"></div>
+              <p class="caption"><span class="caption-text">OSAPIConnector Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../gettingStarted.html">Getting Started</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OSAPIConnector Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/OpenSpecimenAPIconnector.html">OpenSpecimenAPIconnector package</a></li>
+</ul>
+
             
           
         </div>
@@ -98,7 +109,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../../contents.html">OpenSpecimenAPIConnector</a>
+          <a href="../../../index.html">OpenSpecimenAPIConnector</a>
         
       </nav>
 
@@ -129,7 +140,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../../contents.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
@@ -150,9 +161,9 @@
             
   <h1>Source code for OpenSpecimenAPIconnector.os_core.jsons</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
-<span class="kn">from</span> <span class="nn">dateutil.relativedelta</span> <span class="kn">import</span> <span class="n">relativedelta</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">date</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">dateutil.relativedelta</span> <span class="k">import</span> <span class="n">relativedelta</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 
@@ -160,7 +171,7 @@
 
 <div class="viewcode-block" id="Json_factory"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.jsons.Json_factory">[docs]</a><span class="k">class</span> <span class="nc">Json_factory</span><span class="p">():</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
 
     <span class="c1">## first approach to be overhauled</span>
@@ -180,9 +191,11 @@
 
         <span class="sd">&quot;&quot;&quot;Creates a JSON-formated string for participant creation</span>
 <span class="sd">        This function creates the json corresponding to the cpr_util function</span>
+<span class="sd">        </span>
 <span class="sd">        Note</span>
 <span class="sd">        ----- </span>
 <span class="sd">        Mandatory parameters are passed as positional arguments in the caliing function</span>
+<span class="sd">        </span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        regdate : string</span>
@@ -453,7 +466,6 @@
         <span class="p">}</span>
 
         <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">params</span><span class="p">)</span></div>
-
 
 <div class="viewcode-block" id="Json_factory.create_specimen_json"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_specimen_json">[docs]</a>    <span class="k">def</span> <span class="nf">create_specimen_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">specimenclass</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">specimentype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pathology</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">anatomic</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                             <span class="n">laterality</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">initqty</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">avaqty</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">visitid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">userid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">colltime</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -1236,6 +1248,84 @@
             <span class="s2">&quot;cpId&quot;</span><span class="p">:</span><span class="n">cpid</span><span class="p">,</span>
             <span class="s2">&quot;ppid&quot;</span><span class="p">:</span><span class="n">ppid</span>
         <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Json_factory.create_container_json"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.jsons.Json_factory.create_container_json">[docs]</a>    <span class="k">def</span> <span class="nf">create_container_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">barcode</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">typename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">activitystatus</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sitename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                            <span class="n">storageloc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">numcols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">numrows</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">storespecimens</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">childcontainers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                            <span class="n">temp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">columnlabelscheme</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rowlablescheme</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">specimenclasses</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                            <span class="n">specimentypes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">collectionprotocols</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;Create a storage container in OpenSpecimen</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name : string</span>
+<span class="sd">            Name of the sorage container</span>
+<span class="sd">        barcode: string</span>
+<span class="sd">            Barcode of the sotrage container</span>
+<span class="sd">        typename : string</span>
+<span class="sd">            Container type (e.g. Freezer see https://openspecimen.atlassian.net/wiki/spaces/CAT/overview </span>
+<span class="sd">            for available types and customization)</span>
+<span class="sd">        activitystatus : string</span>
+<span class="sd">            Whether the container is operational: Active or disabled; Default active</span>
+<span class="sd">        sitename : string</span>
+<span class="sd">            Site location of the container</span>
+<span class="sd">        storageloc : dict</span>
+<span class="sd">            used if conatiner is a child container gives the name, id and position of the child </span>
+<span class="sd">            within the parent container</span>
+<span class="sd">        numcols : string</span>
+<span class="sd">            Number of container columns (if type allows it)</span>
+<span class="sd">        numrows : string</span>
+<span class="sd">            Number of rows (if type allows it)</span>
+<span class="sd">        storespecimens: string</span>
+<span class="sd">            Boolean value (true, false) whether container can hold specimens or not</span>
+<span class="sd">        childcontainers : string</span>
+<span class="sd">            Filled if container sotres multiple other conatiners with different attributes</span>
+<span class="sd">        temp : string</span>
+<span class="sd">            Number literal giving the container temperature in celcius (e.g. -80, -20)</span>
+<span class="sd">        columnlabelscheme : string</span>
+<span class="sd">            Column labels - Numbers by default; </span>
+<span class="sd">            Permissible Values are {Numbers, Alphabets Upper Case, Alphabets Lower Case, Roman Upper Case, Roman Lower Case}</span>
+<span class="sd">        rowlabelscheme : string</span>
+<span class="sd">            Row labels - Numbers by default; </span>
+<span class="sd">            Permissible Values are {Numbers, Alphabets Upper Case, Alphabets Lower Case, Roman Upper Case, Roman Lower Case}</span>
+<span class="sd">        comment : string</span>
+<span class="sd">            Additional comments for the sorage container</span>
+<span class="sd">        specimenclasses : list</span>
+<span class="sd">            Specimen Classes allowed to be stored within the container</span>
+<span class="sd">        specimentypes : list</span>
+<span class="sd">            Specimen Types allowed to be stored within the container</span>
+<span class="sd">        collecitonprotocols : list</span>
+<span class="sd">            List of collection Protocols that can store samples within the given container</span>
+<span class="sd">        </span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        string</span>
+<span class="sd">            Json-formatted string with details needed to create a container.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="n">name</span><span class="p">,</span>
+            <span class="s2">&quot;barcode&quot;</span><span class="p">:</span><span class="n">barcode</span><span class="p">,</span>
+            <span class="s2">&quot;typeName&quot;</span><span class="p">:</span><span class="n">typename</span><span class="p">,</span>
+            <span class="s2">&quot;activityStatus&quot;</span><span class="p">:</span><span class="n">activitystatus</span><span class="p">,</span>
+            <span class="s2">&quot;siteName&quot;</span><span class="p">:</span><span class="n">sitename</span><span class="p">,</span>
+            <span class="s2">&quot;storageLocation&quot;</span><span class="p">:</span><span class="n">storageloc</span><span class="p">,</span>
+            <span class="s2">&quot;noOfColumns&quot;</span><span class="p">:</span><span class="n">numcols</span><span class="p">,</span>
+            <span class="s2">&quot;noOfRows&quot;</span><span class="p">:</span><span class="n">numrows</span><span class="p">,</span>
+            <span class="s2">&quot;storeSpecimensEnabled&quot;</span><span class="p">:</span><span class="n">storespecimens</span><span class="p">,</span>
+            <span class="s2">&quot;childContainers&quot;</span><span class="p">:</span><span class="n">childcontainers</span><span class="p">,</span>
+            <span class="s2">&quot;temperature&quot;</span><span class="p">:</span><span class="n">temp</span><span class="p">,</span>
+            <span class="s2">&quot;columnLabelingScheme&quot;</span><span class="p">:</span><span class="n">columnlabelscheme</span><span class="p">,</span>
+            <span class="s2">&quot;rowLabelingScheme&quot;</span><span class="p">:</span><span class="n">rowlablescheme</span><span class="p">,</span>
+            <span class="s2">&quot;comments&quot;</span><span class="p">:</span><span class="n">comment</span><span class="p">,</span>
+            <span class="s2">&quot;allowedSpecimenClasses&quot;</span><span class="p">:</span><span class="n">specimenclasses</span><span class="p">,</span>
+            <span class="s2">&quot;allowedSpecimenTypes&quot;</span><span class="p">:</span><span class="n">specimentypes</span><span class="p">,</span>
+            <span class="s2">&quot;allowedCollectionProtocols&quot;</span><span class="p">:</span><span class="n">collectionprotocols</span>
+        <span class="p">}</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
 
         <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div></div>
 </pre></div>

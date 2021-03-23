@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
   
@@ -52,7 +52,7 @@
           
 
           
-            <a href="../../../contents.html" class="icon icon-home"> OpenSpecimenAPIConnector
+            <a href="../../../index.html" class="icon icon-home"> OpenSpecimenAPIConnector
           
 
           
@@ -83,8 +83,19 @@
               
             
             
-              <!-- Local TOC -->
-              <div class="local-toc"></div>
+              <p class="caption"><span class="caption-text">OSAPIConnector Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../gettingStarted.html">Getting Started</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OSAPIConnector Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/OpenSpecimenAPIconnector.html">OpenSpecimenAPIconnector package</a></li>
+</ul>
+
             
           
         </div>
@@ -98,7 +109,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../../contents.html">OpenSpecimenAPIConnector</a>
+          <a href="../../../index.html">OpenSpecimenAPIConnector</a>
         
       </nav>
 
@@ -129,7 +140,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../../contents.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
@@ -152,9 +163,9 @@
 <span></span><span class="ch">#! /bin/python3</span>
 
 <span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">from</span> <span class="nn">.req_util</span> <span class="kn">import</span> <span class="n">OS_request_gen</span>
-<span class="kn">from</span> <span class="nn">.jsons</span> <span class="kn">import</span> <span class="n">Json_factory</span>
-<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">config_manager</span>
+<span class="kn">from</span> <span class="nn">.req_util</span> <span class="k">import</span> <span class="n">OS_request_gen</span>
+<span class="kn">from</span> <span class="nn">.jsons</span> <span class="k">import</span> <span class="n">Json_factory</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">config_manager</span>
 
 <div class="viewcode-block" id="collection_protocol"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.collection_protocol.collection_protocol">[docs]</a><span class="k">class</span> <span class="nc">collection_protocol</span><span class="p">():</span>
 
@@ -180,7 +191,7 @@
 <span class="sd">        $ jupyter notebook main.ipynb</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;Constructor of the Class collection_protocol</span>
 
@@ -211,7 +222,7 @@
         <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">auth</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="collection_protocol.create_collection_protocol"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.collection_protocol.collection_protocol.create_collection_protocol">[docs]</a>    <span class="k">def</span> <span class="nf">create_collection_protocol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+<div class="viewcode-block" id="collection_protocol.create_collection_protocol"><a class="viewcode-back" href="../../../source/OpenSpecimenAPIconnector.os_core.html#OpenSpecimenAPIconnector.os_core.collection_protocol.collection_protocol.create_collection_protocol">[docs]</a>    <span class="k">def</span> <span class="nf">create_collection_protocol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;Creates a Collection Protocol</span>
 
@@ -222,7 +233,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        params : string</span>
+<span class="sd">        data : JSON-formatted string</span>
 <span class="sd">            JSON formatted string with parameters: title, shortTitle, code[optional], startDate[optional],</span>
 <span class="sd">            endDate[optional], principalInvestigator, coordinators[optional], irbId[optonal],</span>
 <span class="sd">            anticipatedParticipantsCount[optional], activityStatus, visitNameFmt[optional],</span>
@@ -236,7 +247,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span>
-        <span class="n">payload</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">data</span>
         <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OS_request_gen</span><span class="o">.</span><span class="n">post_request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">payload</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>

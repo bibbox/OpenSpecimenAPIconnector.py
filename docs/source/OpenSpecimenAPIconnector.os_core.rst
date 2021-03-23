@@ -28,6 +28,14 @@ OpenSpecimenAPIconnector.os\_core.collection\_protocol\_registration module
    :undoc-members:
    :show-inheritance:
 
+OpenSpecimenAPIconnector.os\_core.container module
+--------------------------------------------------
+
+.. automodule:: OpenSpecimenAPIconnector.os_core.container
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 OpenSpecimenAPIconnector.os\_core.csv\_bulk module
 --------------------------------------------------
 

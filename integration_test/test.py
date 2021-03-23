@@ -7,5 +7,5 @@ auth = ('admin', 'Login@123')
 
 integration = integrationTest(base_url = base_url, auth = auth)
 
-out_ = integration.runIntegrationTest()
+integration.runIntegrationTest()
 print('finito')
