@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: OpenSpecimenAPIconnector
-Version: 0.9.1
+Version: 0.9.2
 Summary: Python API commands to interact with OpenSpecimen
 Home-page: https://github.com/bibbox/OpenSpecimenAPIconnector.py/tree/master
 Author: Christam Schorn and Simon Streit

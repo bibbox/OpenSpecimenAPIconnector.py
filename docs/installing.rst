@@ -33,3 +33,23 @@ Jupyter Demos
 
 For more information and detailed demos visit:
 https://github.com/bibbox/OpenSpecimenAPIconnector.py/tree/master/demo_notebooks
+
+Integration Testing
+===================
+
+To verify your version installation is running correctly use the test.py script which can be
+found in the integration_test folder on GitHub. To check your installation change the the url
+in test.py 
+
+.. code:: python
+
+    from OSconnectorTest import integrationTest
+
+    base_url = 'http(s)://<OS-Instance-Name>/openspecimen/rest/ng' # change me accordingly
+    auth = ('admin', 'Login@123')
+
+    integration = integrationTest(base_url = base_url, auth = auth)
+
+    integration.runIntegrationTest()
+    print('finito')
+        ...
