@@ -45,7 +45,7 @@ in test.py
 
     from OSconnectorTest import integrationTest
 
-    base_url = 'http://localhost:9013/openspecimen//rest/ng'
+    base_url = 'http(s)://<OS-Instance-Name>/openspecimen/rest/ng' # change me accordingly
     auth = ('admin', 'Login@123')
 
     integration = integrationTest(base_url = base_url, auth = auth)
