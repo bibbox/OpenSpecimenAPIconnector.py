@@ -33,3 +33,9 @@ Jupyter Demos
 
 For more information and detailed demos visit:
 https://github.com/bibbox/OpenSpecimenAPIconnector.py/tree/master/demo_notebooks
+
+Integration Testing
+===================
+
+To verify your version installation is running correctly use the test.py script which can be <br>
+found in the integration_test folder on GitHub
