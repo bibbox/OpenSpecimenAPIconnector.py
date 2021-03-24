@@ -1,5 +1,5 @@
 # OpenSpecimenAPIconnector.py
-Version 0.9.1
+Version 0.9.2
 python framework for importing, exporting and combining various data entries from OpenSpecimen and Molgenis
 
 
