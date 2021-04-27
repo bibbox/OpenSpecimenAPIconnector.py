@@ -1,3 +1,3 @@
-Identifier,Name
-1,Biobank Institute
-6,IntegrationTestInstitute1
+Identifier,Name,Activity Status
+1,Biobank Institute,Active
+2,IntegrationTestInstitute1,Active

@@ -39,4 +39,4 @@ Links
 * `Documentation of OpenSpecimen <https://openspecimen.atlassian.net/wiki/spaces/CAT/overview>`_
 * `GitHub of the Project <https://github.com/bibbox/OpenSpecimenAPIconnector.py>`_
 * `GitHub for Docker-Version of OpenSpecimen <https://github.com/bibbox/app-openspecimen>`_ 
-* Else?
+
