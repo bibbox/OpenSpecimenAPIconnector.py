@@ -7,7 +7,7 @@ Author: Christam Schorn and Simon Streit
 Author-email: simon.streit@medunigraz.at
 License: BSD 2-clause
 Description: # OpenSpecimenAPIconnector.py
-        Version 0.9.1
+        Version 0.9.2
         python framework for importing, exporting and combining various data entries from OpenSpecimen and Molgenis
         
         

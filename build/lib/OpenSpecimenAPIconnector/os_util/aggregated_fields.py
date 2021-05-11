@@ -17,6 +17,7 @@ from .bulk_operations import bulk_operations
 from .query_util import query_util
 from .cpr_util import cpr_util
 from .visit_util import visit_util
+from.csv_exp_util import csv_exporter
 import json
 import pandas
 import random
@@ -63,10 +64,10 @@ class aggregator():
         and where to use''--_'
         """
         cp_tools = collection_protocol()
-        csv_export = Export_OP()
+        csv_export =  csv_exporter()
         if sel_schema == "cpr":
             for i, cp_id in enumerate(ids):
-                up_cp_data = self.extract_age_fields(csv_export.export_file(sel_schema, cp_id), 
+                up_cp_data = self.extract_age_fields(csv_export.csv_export(sel_schema, cpid=cp_id), 
                                                     cp_tools.get_collection_protocol(cp_id), cp_id)
                 r = cp_tools.update_collection_protocol(str(cp_id), json.dumps(up_cp_data)) 
             if r.get("extensionDetail"):

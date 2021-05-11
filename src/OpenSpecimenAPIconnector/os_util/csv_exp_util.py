@@ -7,7 +7,6 @@ import io
 import pandas
 import time
 
-## TODO Add all the other entities currently in export operations. Da sollten wir nochmal drüber sprechen
 
 class csv_exporter:
 
