@@ -33,7 +33,7 @@ class bbmri_connector:
     def __init__(self):
         pass
 
-    def execute(self, collection_protocol_ids):
+    def execute(self, collection_protocol_ids, template_file_name):
 
         # shhetnames:
         bb_sheet = "eu_bbmri_eric_biobanks"
@@ -41,7 +41,7 @@ class bbmri_connector:
         cp_sheet = "eu_bbmri_eric_collections"
 
         # file_output
-        output_file = "test.xlsx"
+        output_file = template_file_name
 
         mapping = bbmri_mapping()
         persons_extensions = mapping.person_extension()
