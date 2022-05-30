@@ -15,6 +15,8 @@ from .url import url_gen
 from .users import users
 from .visit import visit
 from .container import container
+from .specimen_event import specimen_event
+from .form import form
 
 # __all__ = [
 #     'collection_protocol_event',
