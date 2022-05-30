@@ -3,3 +3,4 @@
 __pycache__
 .ipynb_checkpoints
 .idea/
+/integration_test/log/
