@@ -70,4 +70,94 @@ class form:
 
         return json.loads(r.text)
 
+    def get_all_forms(self):
+        """Get the details for all forms.
+
+        Parameters
+        ---------
+
+        Returns
+        -------
+        JSON-dict
+            Details of the forms or the openSpecimen's error message.
+        """
+
+
+        endpoint = ''
+        url = self.base_url + endpoint
+        r = self.OS_request_gen.get_request(url)
+
+        return json.loads(r.text)
+
+
+    def get_record(self, formId, recordId):
+        """Get the details for a single record (instance of a form).
+
+        Parameters
+        ---------
+        formId: int
+            id of the form that has been filled out
+        recordId: int
+            id of the specific record
+
+        Returns
+        -------
+        JSON-dict
+            Details of the forms or the openSpecimen's error message.
+        """
+
+        endpoint = f'/{formId}/data/{recordId}'
+        url = self.base_url + endpoint
+        r = self.OS_request_gen.get_request(url)
+
+        return json.loads(r.text)
+
+
+    def add_record(self, formid, data):
+        """Fills a specific form
+
+        Parameters
+        ---------
+        formid: int
+            id of the form
+        data: string
+            JSON formatted string to fill the form; must follow form specific structure
+
+        Returns
+        -------
+        JSON-dict
+            Details of the form or the openSpecimen's error message.
+        """
+
+        endpoint = f'//{formid}/data'
+        #print(endpoint)
+        url = self.base_url + endpoint
+        r = self.OS_request_gen.put_request(url, data)
+
+        return json.loads(r.text)
+
+
+    def delete_record(self, formId, recordId):
+        """Get the details for a single record (instance of a form).
+
+        Parameters
+        ---------
+        formId: int
+            id of the form that has been filled out
+        recordId: int
+            id of the specific record to be deleted
+
+        Returns
+        -------
+        JSON-dict
+            RecordId that has been deleted or the openSpecimen's error message.
+        """
+
+        endpoint = f'/{formId}/data/{recordId}'
+        url = self.base_url + endpoint
+        r = self.OS_request_gen.delete_request(url)
+
+        return json.loads(r.text)
+
+
 
