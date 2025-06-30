@@ -139,7 +139,7 @@ class Json_factory():
         return json.dumps(data)
 
     # Collection Protocoll
-    def create_CP_json(self, short_title = None, title=None, pi_mail=None, time_start=None, time_end=None, sites=None, man_id=False, coords=None,
+    def create_CP_json(self, short_title = None, title=None, pi_mail=None, pi_domain=None, time_start=None, time_end=None, sites=None, man_id=False, coords=None,
                            consentsWaived=None,eth_cons_id=None, part_no=None, desc_url=None, visitNameFmt=None, specimenLabelFmt=None, 
                            derivativeLabelFmt =None, man_visit_name=False, man_spec_label=True, aliquots_in_same=None, activity=None,
                            aliquotLabelFmt = None, ppidFmt= None, specimenCentric = None, cpid=None):
@@ -157,7 +157,10 @@ class Json_factory():
             Title of the Collection Protocol.
         pi_mail : string
             Email Address of the Principal Investigator.
-        
+
+        pi_domain: string
+            The domain of the Principal Investigator.
+
         time_start: string
             String with the start_time of the collection Protocol in the timeformat specified in the System configuration.
         
@@ -217,7 +220,7 @@ class Json_factory():
             "principalInvestigator":
                 {
                     "loginName": pi_mail,
-                    "domain": "openspecimen"
+                    "domain": pi_domain
                 },
             "startDate": time_start,
             "endDate": time_end,
@@ -1166,3 +1169,20 @@ class Json_factory():
         data = {k: v for k, v in data.items() if v is not None}
 
         return json.dumps(data)
+
+    def add_form_record_json(self, form_ctx_id, object_id, form_data, form_status="COMPLETE"):
+
+
+        data = {
+            "appData":{
+                "formCtxId":form_ctx_id,
+                "objectId":object_id,
+                "formStatus":form_status,
+            },
+        }
+        data.update(form_data)
+
+        print(data)
+
+        return json.dumps(data)
+

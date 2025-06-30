@@ -90,47 +90,6 @@ class form:
         return json.loads(r.text)
 
 
-    def get_form_definition(self, formId):
-        """Get the definition of one form.
-
-        Parameters
-        ---------
-        formId : string or int
-
-        Returns
-        -------
-        JSON-dict
-            Details of the forms or the openSpecimen's error message.
-        """
-
-        endpoint = '/' + str(formId) + '/definition/'
-        url = self.base_url + endpoint
-        r = self.OS_request_gen.get_request(url)
-
-        return json.loads(r.text)
-
-
-    def get_form_context(self, formId):
-        """Get the context of one form.
-
-        Parameters
-        ---------
-        formId: int
-            id of the form that has been filled out
-
-        Returns
-        -------
-        JSON-dict
-            Details of the forms or the openSpecimen's error message.
-        """
-
-        endpoint = '/' + str(formId) + '/contexts/'
-        url = self.base_url + endpoint
-        r = self.OS_request_gen.get_request(url)
-
-        return json.loads(r.text)
-
-
     def get_record(self, formId, recordId):
         """Get the details for a single record (instance of a form).
 
@@ -154,7 +113,7 @@ class form:
         return json.loads(r.text)
 
 
-    def add_record(self, formid, params):
+    def add_record(self, formid, data):
         """Fills a specific form
 
         Parameters
@@ -173,8 +132,7 @@ class form:
         endpoint = f'//{formid}/data'
         #print(endpoint)
         url = self.base_url + endpoint
-        payload = params
-        r = self.OS_request_gen.post_request(url, payload)
+        r = self.OS_request_gen.put_request(url, data)
 
         return json.loads(r.text)
 

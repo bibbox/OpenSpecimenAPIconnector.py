@@ -20,14 +20,18 @@ src/OpenSpecimenAPIconnector/os_core/collection_protocol_registration.py
 src/OpenSpecimenAPIconnector/os_core/container.py
 src/OpenSpecimenAPIconnector/os_core/csv_bulk.py
 src/OpenSpecimenAPIconnector/os_core/csv_export.py
+src/OpenSpecimenAPIconnector/os_core/form.py
 src/OpenSpecimenAPIconnector/os_core/institute.py
 src/OpenSpecimenAPIconnector/os_core/jsons.py
+src/OpenSpecimenAPIconnector/os_core/lists.py
 src/OpenSpecimenAPIconnector/os_core/mandatory.py
 src/OpenSpecimenAPIconnector/os_core/participant.py
 src/OpenSpecimenAPIconnector/os_core/query.py
 src/OpenSpecimenAPIconnector/os_core/req_util.py
+src/OpenSpecimenAPIconnector/os_core/shipment.py
 src/OpenSpecimenAPIconnector/os_core/site.py
 src/OpenSpecimenAPIconnector/os_core/specimen.py
+src/OpenSpecimenAPIconnector/os_core/specimen_event.py
 src/OpenSpecimenAPIconnector/os_core/url.py
 src/OpenSpecimenAPIconnector/os_core/users.py
 src/OpenSpecimenAPIconnector/os_core/visit.py
@@ -39,6 +43,7 @@ src/OpenSpecimenAPIconnector/os_util/container_util.py
 src/OpenSpecimenAPIconnector/os_util/cpevent_util.py
 src/OpenSpecimenAPIconnector/os_util/cpr_util.py
 src/OpenSpecimenAPIconnector/os_util/csv_exp_util.py
+src/OpenSpecimenAPIconnector/os_util/form_util.py
 src/OpenSpecimenAPIconnector/os_util/institute_util.py
 src/OpenSpecimenAPIconnector/os_util/query_util.py
 src/OpenSpecimenAPIconnector/os_util/site_util.py

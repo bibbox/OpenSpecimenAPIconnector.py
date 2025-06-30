@@ -130,7 +130,7 @@ class collection_protocol_util:
         return r
 
 
-    def create_cp(self, short_title , title, pi_mail, sites, time_start=None, time_end=None,  man_id=None, coords=None,
+    def create_cp(self, short_title , title, pi_mail, pi_domain, sites, time_start=None, time_end=None,  man_id=None, coords=None,
                            consentsWaived=None,eth_cons_id=None, part_no=None, desc_url=None, visitNameFmt=None, specimenLabelFmt=None, 
                            derivativeLabelFmt =None, man_visit_name=None, man_spec_label=None, aliquots_in_same=None, activity=None,
                            aliquotLabelFmt = None, ppidFmt= None, specimenCentric = None):
@@ -149,7 +149,10 @@ class collection_protocol_util:
 
         pi_mail : string
             Email Address of the Principal Investigator.
-        
+
+        pi_domain: string
+            The domain of the Principal Investigator.
+
         time_start: string
             String with the start_time of the collection Protocol in the timeformat specified in the System configuration.
         
@@ -198,7 +201,7 @@ class collection_protocol_util:
             Details of the created Collection Protocol, or the OpenSpecimen's error message.
         """
 
-        data = self.jsons.create_CP_json(short_title=short_title, title=title, pi_mail=pi_mail, time_start=time_start, time_end=time_end,
+        data = self.jsons.create_CP_json(short_title=short_title, title=title, pi_mail=pi_mail, pi_domain=pi_domain, time_start=time_start, time_end=time_end,
                     sites=sites, man_id=man_id, coords=coords, consentsWaived=consentsWaived, eth_cons_id=eth_cons_id, part_no=part_no,
                     desc_url=desc_url, visitNameFmt=visitNameFmt, specimenLabelFmt=specimenLabelFmt, derivativeLabelFmt=derivativeLabelFmt,
                     man_visit_name=man_visit_name, man_spec_label=man_spec_label, aliquots_in_same=aliquots_in_same, activity=activity,

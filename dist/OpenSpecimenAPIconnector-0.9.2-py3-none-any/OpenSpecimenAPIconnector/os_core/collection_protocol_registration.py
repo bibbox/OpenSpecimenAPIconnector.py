@@ -205,34 +205,6 @@ class collection_protocol_registration:
         return r
 
 
-    def get_extension_records(self, cprid):
-
-        """Get the extension forms of a participant.
-
-        Gets the extension forms of an existing participant with the uniquely participant ID <cprid>
-        which is generated from the system. The ID has to be known and can be seen for Examples via
-        the GUI in the URL: http(s)://<host>:<port>/openspecimen/cp-view/{cpId}/participants/{cprid}/...
-        or with the function get_participant_matches in the os_core class participants.
-
-        Parameters
-        ---------
-        cprid : int
-            System generated unique ID of the participant. Will get converted to a string.
-
-        Returns
-        -------
-        JSON-dict
-            Details of the extension form or the openSpecimen's error message.
-        """
-
-        endpoint = '/' + str(cprid) + '/extension-records'
-        url = self.base_url + endpoint
-        r = self.OS_request_gen.get_request(url)
-
-        return json.loads(r.text)
-
-
-
     def get_registration(self, cprid):
 
         """Get the details form of a participant.

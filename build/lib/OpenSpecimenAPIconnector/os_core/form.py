@@ -111,18 +111,7 @@ class form:
 
 
     def get_form_context(self, formId):
-        """Get the context of one form.
-
-        Parameters
-        ---------
-        formId: int
-            id of the form that has been filled out
-
-        Returns
-        -------
-        JSON-dict
-            Details of the forms or the openSpecimen's error message.
-        """
+        """Get the context of one form."""
 
         endpoint = '/' + str(formId) + '/contexts/'
         url = self.base_url + endpoint
