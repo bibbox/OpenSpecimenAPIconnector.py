@@ -246,4 +246,30 @@ class specimen:
 
         return json.loads(r.text)
 
+    def get_extension_records(self, specimenid):
+
+        """Get the extension records of a Specimen
+
+        Get the extension records of a Specimen with the unique ID specimenid.
+        This ID is generated automatically from OpenSpecimen when the Specimen is created.
+        It can be seen in the GUI by clicking on the desired Specimen, and read from the URL:
+        http(s)://<host>:<port>/openspecimen/cps/{cpid}/specimens/{specimenid}/... .
+        Otherwise via search Specimen, for Examples by name and then extract the ID via key ["id"].
+
+        Parameters
+        ----------
+        specimenid : string or int
+            The System's ID of the Specimen, which will be converted to a string.
+        Returns
+        -------
+        JSON-dict
+            Details of the Specimen with the specified ID, or the OpenSpecimen error message.
+        """
+
+        endpoint = '/' + str(specimenid) + '/extension-records'
+        url = self.base_url + endpoint
+        r = self.OS_request_gen.get_request(url)
+
+        return json.loads(r.text)
+
 ##TODO create aliquot

@@ -139,7 +139,7 @@ class Json_factory():
         return json.dumps(data)
 
     # Collection Protocoll
-    def create_CP_json(self, short_title = None, title=None, pi_mail=None, time_start=None, time_end=None, sites=None, man_id=False, coords=None,
+    def create_CP_json(self, short_title = None, title=None, pi_mail=None, pi_domain=None, time_start=None, time_end=None, sites=None, man_id=False, coords=None,
                            consentsWaived=None,eth_cons_id=None, part_no=None, desc_url=None, visitNameFmt=None, specimenLabelFmt=None, 
                            derivativeLabelFmt =None, man_visit_name=False, man_spec_label=True, aliquots_in_same=None, activity=None,
                            aliquotLabelFmt = None, ppidFmt= None, specimenCentric = None, cpid=None):
@@ -157,7 +157,10 @@ class Json_factory():
             Title of the Collection Protocol.
         pi_mail : string
             Email Address of the Principal Investigator.
-        
+
+        pi_domain: string
+            The domain of the Principal Investigator.
+
         time_start: string
             String with the start_time of the collection Protocol in the timeformat specified in the System configuration.
         
@@ -217,7 +220,7 @@ class Json_factory():
             "principalInvestigator":
                 {
                     "loginName": pi_mail,
-                    "domain": "openspecimen"
+                    "domain": pi_domain
                 },
             "startDate": time_start,
             "endDate": time_end,
@@ -576,7 +579,7 @@ class Json_factory():
         return json.dumps(params)
 
     def create_bulk_import_job(self, schemaname=None, operation=None, fileid=None,
-                                   dateformat=None, timeformat=None):
+                                   dateformat=None, timeformat=None, cp_id=None, csvType="SINGLE_ROW_PER_OBJ"):
 
         """Create JSON formated string neccesary for creating a bulk import operation to be handled by OpenSpecimen
 
@@ -601,13 +604,17 @@ class Json_factory():
         """
         
         data = {"objectType": schemaname,
-                    "importType": operation,
-                    "inputFileId": fileid,
-                    "dateFormat":dateformat,
-                    "timeFormat":timeformat
+                "importType": operation,
+                "inputFileId": fileid,
+                "dateFormat":dateformat,
+                "timeFormat":timeformat,
+                "csvType":csvType,
+                "objectParams": {
+                    "cpId":cp_id
                     }
-
+                }
         data = {k: v for k, v in data.items() if v is not None}
+
         return json.dumps(data)
 
     def get_registrations(self, cpid=None, registrationdate=None, ppid=None, name=None, birthdate=None, uid=None, specimen=None,
@@ -1166,3 +1173,96 @@ class Json_factory():
         data = {k: v for k, v in data.items() if v is not None}
 
         return json.dumps(data)
+
+    def add_form_record_json(self, form_ctx_id, object_id, form_data, form_status="COMPLETE"):
+        """
+        Generates a JSON-formatted string that combines form context information,
+        object identification, form data details, and form status into a single
+        data structure. The generated JSON includes application data parameters
+        and merges any additional form data provided.
+
+        Parameters
+        ----------
+        form_ctx_id : int
+            The identifier for the form context associated with the specific form
+            operation.
+        object_id : int
+            The identifier of the object linked to the form record.
+        form_data : dict
+            A dictionary containing additional data to be included in the form
+            record. The keys and values of this dictionary are merged into the
+            output.
+        form_status : str, optional
+            The status of the form, such as "COMPLETE" or other states. Defaults
+            to "COMPLETE".
+
+        Returns
+        -------
+        string
+            Json-formatted string with details needed to add a record.
+
+        """
+        data = {
+            "appData":{
+                "useUdn":True,
+                "formCtxtId":form_ctx_id,
+                "objectId":object_id,
+                "formStatus":form_status,
+            },
+        }
+        data.update(form_data)
+
+        return json.dumps(data)
+
+    def attach_form_json(self, form_id, level, cp_id=-1, multi_record=False):
+        """
+        Create the json to attach a form to a collection protocol.
+
+        This function creates a JSON structure for attaching a form to a collection
+        protocol with specified parameters. It supports optional parameters such
+        as collection protocol ID and multi-record option.
+
+        Parameters
+        ----------
+        form_id : int
+            Identifier for the form to be attached.
+        level : str
+            The level at which the form will be attached.
+            Possible values: "CollectionProtocolExtension", "CommonParticipant", "StorageContainerExtension"
+                "ParticipantExtension", "Participant", "SiteExtension", "SpecimenExtension", "SpecimenEvent",
+                "Specimen", "SpecimenSlideEvent", "VisitExtension", "SpecimenCollectionGroup"
+        cp_id : int, optional
+            Identifier for the collection protocol, by default -1 (global form).
+        multi_record : bool, optional
+            Indicates whether the form is multi-record, by default False.
+
+        Returns
+        -------
+        str
+            A JSON-formatted string containing the form attachment properties.
+        """
+
+        # The following are all global forms and don't have a collection protocol
+        if level == "CollectionProtocolExtension":
+            cp_id = -1
+        if level == "StorageContainerExtension":
+            cp_id = -1
+        if level == "CommonParticipant":
+            cp_id = -1
+        if level == "SiteExtension":
+            cp_id = -1
+        if level == "SpecimenEvent":
+            cp_id = -1
+        if level == "SpecimenSlideEvent":
+            cp_id = -1
+
+        data = {
+            "collectionProtocol":{
+                "id":cp_id
+            },
+            "formId":form_id,
+            "level":level,
+            "multiRecord":multi_record
+        }
+
+        return json.dumps([data])

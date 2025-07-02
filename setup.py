@@ -6,12 +6,12 @@ with open('README_pypi.md') as f:
 
 setup(
     name='OpenSpecimenAPIconnector',
-    version='0.9.2',    
+    version='0.9.3',
     description='Python API commands to interact with OpenSpecimen',
     long_description=long_description,
     long_description_content_type='text/markdown',  # This is important!
     url='https://github.com/bibbox/OpenSpecimenAPIconnector.py/tree/master',
-    author='Christam Schorn and Simon Streit',
+    author='Christam Schorn, Simon Streit, Christoph Koch',
     author_email='simon.streit@medunigraz.at',
     license='BSD 2-clause',
     install_requires=['pandas',
