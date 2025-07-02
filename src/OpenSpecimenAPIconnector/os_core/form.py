@@ -202,4 +202,10 @@ class form:
         return json.loads(r.text)
 
 
+    def attach_form(self, formId, params):
+        """Attach a form to something else"""
 
+        endpoint = '/' + str(formId) + '/contexts/'
+        url = self.base_url + endpoint
+        payload = params
+        r = self.OS_request_gen.put_request(url, payload)

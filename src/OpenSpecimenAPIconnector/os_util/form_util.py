@@ -57,4 +57,11 @@ class forms_util:
         r = self.form.add_record(form_id, params = params)
 
         return r
-        
+
+    def attach_form(self, form_id, level, cp_id):
+        """Attaches a form to a collection protocol."""
+
+        params = self.jsons.attach_form_json(form_id=form_id , cp_id=cp_id, level=level)
+        r = self.form.attach_form(form_id, params = params)
+
+        return r

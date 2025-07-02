@@ -111,7 +111,18 @@ class form:
 
 
     def get_form_context(self, formId):
-        """Get the context of one form."""
+        """Get the context of one form.
+
+        Parameters
+        ---------
+        formId: int
+            id of the form that has been filled out
+
+        Returns
+        -------
+        JSON-dict
+            Details of the forms or the openSpecimen's error message.
+        """
 
         endpoint = '/' + str(formId) + '/contexts/'
         url = self.base_url + endpoint
@@ -191,4 +202,10 @@ class form:
         return json.loads(r.text)
 
 
+    def attach_form(self, formId, params):
+        """Attach a form to something else"""
 
+        endpoint = '/' + str(formId) + '/contexts/'
+        url = self.base_url + endpoint
+        payload = params
+        r = self.OS_request_gen.put_request(url, payload)

@@ -1179,14 +1179,65 @@ class Json_factory():
 
         data = {
             "appData":{
-                "formCtxId":form_ctx_id,
+                "useUdn":True,
+                "formCtxtId":form_ctx_id,
                 "objectId":object_id,
                 "formStatus":form_status,
             },
         }
         data.update(form_data)
 
-        print(data)
-
         return json.dumps(data)
 
+    def attach_form_json(self, form_id, level, cp_id=-1, multi_record=False):
+        """
+        Create the json to attach a form to a collection protocol.
+
+        This function creates a JSON structure for attaching a form to a collection
+        protocol with specified parameters. It supports optional parameters such
+        as collection protocol ID and multi-record option.
+
+        Parameters
+        ----------
+        form_id : int
+            Identifier for the form to be attached.
+        level : str
+            The level at which the form will be attached.
+            Possible values: "CollectionProtocolExtension", "CommonParticipant", "StorageContainerExtension"
+                "ParticipantExtension", "Participant", "SiteExtension", "SpecimenExtension", "SpecimenEvent",
+                "Specimen", "SpecimenSlideEvent", "VisitExtension", "SpecimenCollectionGroup"
+        cp_id : int, optional
+            Identifier for the collection protocol, by default -1 (global form).
+        multi_record : bool, optional
+            Indicates whether the form is multi-record, by default False.
+
+        Returns
+        -------
+        str
+            A JSON-formatted string containing the form attachment properties.
+        """
+
+        # The following are all global forms and don't have a collection protocol
+        if level == "CollectionProtocolExtension":
+            cp_id = -1
+        if level == "StorageContainerExtension":
+            cp_id = -1
+        if level == "CommonParticipant":
+            cp_id = -1
+        if level == "SiteExtension":
+            cp_id = -1
+        if level == "SpecimenEvent":
+            cp_id = -1
+        if level == "SpecimenSlideEvent":
+            cp_id = -1
+
+        data = {
+            "collectionProtocol":{
+                "id":cp_id
+            },
+            "formId":form_id,
+            "level":level,
+            "multiRecord":multi_record
+        }
+
+        return json.dumps([data])
