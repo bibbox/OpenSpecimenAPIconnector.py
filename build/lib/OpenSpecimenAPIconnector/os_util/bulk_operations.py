@@ -28,7 +28,7 @@ class bulk_operations:
         self.csv_bulk = csv_bulk()
 
     def bulk_import(self, file, filename, schemaname, operation='CREATE',
-                    dateformat=None, timeformat=None):
+                    dateformat=None, timeformat=None, cp_id=None):
         
         """Make and Run a CSV-bulk import job
 
@@ -67,7 +67,7 @@ class bulk_operations:
         """
 
         fileid = self.csv_bulk.upload_csv(filename, file)
-        upload_ = self.csv_bulk.run_upload(schemaname=schemaname, fileid=fileid, operation=operation,
+        upload_ = self.csv_bulk.run_upload(schemaname=schemaname, fileid=fileid, cp_id=cp_id, operation=operation,
                                            dateformat=dateformat, timeformat=timeformat)
 
         jobid = upload_[0]

@@ -579,7 +579,7 @@ class Json_factory():
         return json.dumps(params)
 
     def create_bulk_import_job(self, schemaname=None, operation=None, fileid=None,
-                                   dateformat=None, timeformat=None):
+                                   dateformat=None, timeformat=None, cp_id=None, csvType="SINGLE_ROW_PER_OBJ"):
 
         """Create JSON formated string neccesary for creating a bulk import operation to be handled by OpenSpecimen
 
@@ -604,13 +604,17 @@ class Json_factory():
         """
         
         data = {"objectType": schemaname,
-                    "importType": operation,
-                    "inputFileId": fileid,
-                    "dateFormat":dateformat,
-                    "timeFormat":timeformat
+                "importType": operation,
+                "inputFileId": fileid,
+                "dateFormat":dateformat,
+                "timeFormat":timeformat,
+                "csvType":csvType,
+                "objectParams": {
+                    "cpId":cp_id
                     }
-
+                }
         data = {k: v for k, v in data.items() if v is not None}
+
         return json.dumps(data)
 
     def get_registrations(self, cpid=None, registrationdate=None, ppid=None, name=None, birthdate=None, uid=None, specimen=None,
