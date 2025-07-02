@@ -1175,8 +1175,33 @@ class Json_factory():
         return json.dumps(data)
 
     def add_form_record_json(self, form_ctx_id, object_id, form_data, form_status="COMPLETE"):
+        """
+        Generates a JSON-formatted string that combines form context information,
+        object identification, form data details, and form status into a single
+        data structure. The generated JSON includes application data parameters
+        and merges any additional form data provided.
 
+        Parameters
+        ----------
+        form_ctx_id : int
+            The identifier for the form context associated with the specific form
+            operation.
+        object_id : int
+            The identifier of the object linked to the form record.
+        form_data : dict
+            A dictionary containing additional data to be included in the form
+            record. The keys and values of this dictionary are merged into the
+            output.
+        form_status : str, optional
+            The status of the form, such as "COMPLETE" or other states. Defaults
+            to "COMPLETE".
 
+        Returns
+        -------
+        string
+            Json-formatted string with details needed to add a record.
+
+        """
         data = {
             "appData":{
                 "useUdn":True,

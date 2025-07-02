@@ -43,14 +43,30 @@ class forms_util:
 
     def add_record(self,form_id, form_ctx_id, object_id, form_data, form_status="COMPLETE"):
 
-        """Creates a record in a form.
+        """
+        Adds a record to the form with the given parameters.
 
-        Fills out a form in OpenSpecimen.
+        This method is intended to facilitate the addition of a record to
+        a specific form by preparing the necessary parameters in JSON format
+        and interacting with the appropriate backend or system.
 
         Parameters
         ----------
-        formid : int/str
-            the id of the form in OpenSpecimen.
+        form_id : int
+            The identifier for the form to which the record will be added.
+        form_ctx_id : int
+            The context identifier for the form. (Differs when the form is not a global form)
+        object_id : int
+            The identifier for the object associated with the form data. (Specimen, Participants, ...)
+        form_data : dict
+            The data to be added as a record to the form. The data type and structure
+            must adhere to the requirements of the form's backend system.
+        form_status : str, optional
+            The status of the form record for submission or saving. Defaults to "COMPLETE".
+
+        Returns
+        -------
+
         """
 
         params = self.jsons.add_form_record_json(form_ctx_id, object_id, form_data, form_status)
@@ -59,7 +75,25 @@ class forms_util:
         return r
 
     def attach_form(self, form_id, level, cp_id):
-        """Attaches a form to a collection protocol."""
+        """
+        Attaches a form to a specified entity using provided parameters. This method
+        communicates with an external system or API to perform the attachment
+        operation. It prepares the required parameters in a formatted JSON,
+        sends the request, and returns the response from the system.
+
+        Parameters
+        ----------
+        form_id : int
+            The unique identifier of the form to be attached.
+        level : str
+            Level of the entity to which the form is attached. (Specimen, CommonParticipant, ...)
+        cp_id : int
+            The unique identifier of the collection protocol.
+
+        Returns
+        -------
+
+        """
 
         params = self.jsons.attach_form_json(form_id=form_id , cp_id=cp_id, level=level)
         r = self.form.attach_form(form_id, params = params)
