@@ -24,7 +24,7 @@ class OS_request_gen():
         $ jupyter notebook main.ipynb
     """
 
-    def __init__(self, auth):
+    def __init__(self, auth, token=None):
         
         """Constructor of the class OS_request_gen()
         
@@ -38,13 +38,13 @@ class OS_request_gen():
         """
         
         self.json_headers = {
-            'content-type': "application/json", 'cache-control': "no-cache"}
+            'content-type': "application/json", 'cache-control': "no-cache", 'X-OS-API-TOKEN': token}
         self.zip_headers = {
-            'content-type': "application/zip", 'cache-control': "no-cache"}
+            'content-type': "application/zip", 'cache-control': "no-cache", 'X-OS-API-TOKEN': token}
         self.form_data_headers = {
-            'content-type': "form-data", 'cache-control': "no-cache"}
+            'content-type': "form-data", 'cache-control': "no-cache", 'X-OS-API-TOKEN': token}
         self.file_headers={
-            'cache-control': "no-cache"}
+            'cache-control': "no-cache", 'X-OS-API-TOKEN': token}
 
         self.auth = auth
         self.user_name = auth[0]
@@ -75,11 +75,11 @@ class OS_request_gen():
         """
 
         if stream:
-            r = requests.request("GET", url, auth=self.auth,
+            r = requests.request("GET", url,
             headers=self.zip_headers, stream=stream)
 
         else:
-            r = requests.request("GET", url, auth=self.auth,
+            r = requests.request("GET", url,
                                  headers=self.json_headers)
 
         return r
@@ -120,14 +120,14 @@ class OS_request_gen():
         """
         
         if form_data:
-            r = requests.request("POST", url, data=data, auth=self.auth,
+            r = requests.request("POST", url, data=data,
                                  headers=self.form_data_headers, params=params)
 
         if form_data==False and files==None:
-            r = requests.request("POST", url, data=data, auth=self.auth,
+            r = requests.request("POST", url, data=data,
                                  headers=self.json_headers, params=params)
         if files!=None:
-            r= requests.request("POST", url, auth=self.auth, 
+            r= requests.request("POST", url,
                                  headers=self.file_headers,files=files, params=params)
         return r
 
@@ -156,7 +156,7 @@ class OS_request_gen():
             for different request.
         """
 
-        r = requests.request("PUT", url, data=data, auth=self.auth,
+        r = requests.request("PUT", url, data=data,
                              headers=self.json_headers)
         return r
 
@@ -181,7 +181,7 @@ class OS_request_gen():
             for different requests.
         """
 
-        r = requests.request("DELETE", url, auth=self.auth)
+        r = requests.request("DELETE", url)
 
         return r
 
@@ -206,7 +206,7 @@ class OS_request_gen():
             for different request.
         """
 
-        r = requests.request("HEAD", url, auth=self.auth)
+        r = requests.request("HEAD", url)
 
         return r
 

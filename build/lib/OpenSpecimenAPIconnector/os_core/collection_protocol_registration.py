@@ -46,7 +46,8 @@ class collection_protocol_registration:
         """
         self.base_url = config_manager.get_url() + '/collection-protocol-registrations'
         self.auth = config_manager.get_auth() 
-        self.OS_request_gen = OS_request_gen(self.auth)
+        self.token = config_manager.get_token()
+        self.OS_request_gen = OS_request_gen(self.auth, self.token)
 
     def ausgabe(self):
 

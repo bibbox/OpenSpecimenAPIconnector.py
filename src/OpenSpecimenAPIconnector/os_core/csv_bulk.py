@@ -35,7 +35,8 @@ class csv_bulk:
         """
         self.base_url = config_manager.get_url() + '/import-jobs'
         self.auth = config_manager.get_auth()
-        self.OS_request_gen = OS_request_gen(self.auth)
+        self.token = config_manager.get_token()
+        self.OS_request_gen = OS_request_gen(self.auth, self.token)
         self.Json_fact = Json_factory()
 
     def ausgabe(self):

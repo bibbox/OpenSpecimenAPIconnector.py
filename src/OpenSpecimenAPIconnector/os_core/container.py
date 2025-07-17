@@ -38,7 +38,8 @@ class container:
         """
         self.base_url = config_manager.get_url() + '/storage-containers'
         self.auth = config_manager.get_auth()
-        self.OS_request_gen = OS_request_gen(self.auth)
+        self.token = config_manager.get_token()
+        self.OS_request_gen = OS_request_gen(self.auth, self.token)
         self.jsons = Json_factory()
 
     def create_container(self, params):
