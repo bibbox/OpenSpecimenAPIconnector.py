@@ -181,7 +181,7 @@ class OS_request_gen():
             for different requests.
         """
 
-        r = requests.request("DELETE", url)
+        r = requests.request("DELETE", url, headers=self.json_headers)
 
         return r
 
@@ -206,7 +206,7 @@ class OS_request_gen():
             for different request.
         """
 
-        r = requests.request("HEAD", url)
+        r = requests.request("HEAD", url, headers=self.json_headers)
 
         return r
 

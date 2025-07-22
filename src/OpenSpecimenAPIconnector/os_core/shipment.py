@@ -120,3 +120,13 @@ class shipment:
         r = self.OS_request_gen.get_request(url)
 
         return json.loads(r.text)
+
+    def delete_shipment(self, shipmentid):
+
+        import requests
+
+        endpoint = '/' + str(shipmentid)
+        url = self.base_url + endpoint
+        r = self.OS_request_gen.delete_request(url)
+
+        return json.loads(r.text)
