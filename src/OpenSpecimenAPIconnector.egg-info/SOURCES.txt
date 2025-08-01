@@ -14,6 +14,7 @@ src/OpenSpecimenAPIconnector/mg_core/mappings.py
 src/OpenSpecimenAPIconnector/mg_util/OpenSpecimenBBMRImapping.py
 src/OpenSpecimenAPIconnector/mg_util/__init__.py
 src/OpenSpecimenAPIconnector/os_core/__init__.py
+src/OpenSpecimenAPIconnector/os_core/catalog.py
 src/OpenSpecimenAPIconnector/os_core/collection_protocol.py
 src/OpenSpecimenAPIconnector/os_core/collection_protocol_event.py
 src/OpenSpecimenAPIconnector/os_core/collection_protocol_registration.py
@@ -43,6 +44,7 @@ src/OpenSpecimenAPIconnector/os_util/container_util.py
 src/OpenSpecimenAPIconnector/os_util/cpevent_util.py
 src/OpenSpecimenAPIconnector/os_util/cpr_util.py
 src/OpenSpecimenAPIconnector/os_util/csv_exp_util.py
+src/OpenSpecimenAPIconnector/os_util/form_helper.py
 src/OpenSpecimenAPIconnector/os_util/form_util.py
 src/OpenSpecimenAPIconnector/os_util/institute_util.py
 src/OpenSpecimenAPIconnector/os_util/query_util.py

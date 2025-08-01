@@ -210,3 +210,13 @@ class form:
         url = self.base_url + endpoint
         payload = params
         r = self.OS_request_gen.put_request(url, payload)
+
+
+    def update_form(self, formId, params):
+
+        endpoint = '/' + str(formId)
+        url = self.base_url + endpoint
+        payload = params
+        r = self.OS_request_gen.put_request(url, payload)
+
+        return json.loads(r.text)
