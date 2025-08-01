@@ -19,6 +19,7 @@ from .specimen_event import specimen_event
 from .form import form
 from .lists import lists
 from .shipment import shipment
+from .catalog import catalog
 
 # __all__ = [
 #     'collection_protocol_event',
