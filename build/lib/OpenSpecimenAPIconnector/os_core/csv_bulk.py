@@ -129,7 +129,7 @@ class csv_bulk:
         return json.loads(r.text)["fileId"]
 
 
-    def run_upload(self, schemaname, fileid, operation = 'CREATE', dateformat = None, timeformat = None, cp_id = None):
+    def run_upload(self, schemaname, fileid, operation = 'CREATE', dateformat = None, timeformat = None, cp_id = None, form_name = None, entity_type = None):
 
         """Run a job which is already created.
 
@@ -169,7 +169,8 @@ class csv_bulk:
 
         url = self.base_url
         payload = self.Json_fact.create_bulk_import_job(schemaname=schemaname, operation=operation, fileid=fileid,
-                                                            dateformat=dateformat, timeformat=timeformat, cp_id=cp_id)
+                                                            dateformat=dateformat, timeformat=timeformat, cp_id=cp_id,
+                                                            form_name=form_name, entity_type=entity_type)
         r = self.OS_request_gen.post_request(url, data=payload)
         return (json.loads(r.text)["id"], r.text)
 

@@ -285,4 +285,15 @@ class collection_protocol():
 
         return cp_pandas_template
 
+    def get_extensions(self, cp_id, entity_types=["CommonParticipant", "Participant", "SpecimenCollectionGroup", "Specimen"]):
+        
+        endpoint = "/" + str(cp_id) + "/forms?"
+        for entity_type in entity_types:
+            endpoint += f"entityType={entity_type}&"
+        endpoint = endpoint[:-1]
+        print(endpoint)
 
+        url = self.base_url + endpoint
+        r = self.OS_request_gen.get_request(url)
+
+        return json.loads(r.text)

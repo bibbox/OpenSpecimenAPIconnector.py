@@ -41,7 +41,7 @@ class form_helper:
         return [row]
     
 
-    def create_textfield(self, caption, form_name="", same_row_as_last_field=False, category=""):
+    def create_textfield(self, caption, form_name="", same_row_as_last_field=False, mandatory=False, category=""):
         name = self._create_variable_name(
             caption = caption,
             form_name = form_name,
@@ -51,6 +51,7 @@ class form_helper:
             "defaultValue": "",
             "caption": caption,
             "type": "stringTextField",
+            "mandatory": mandatory,
             "labelPosition": "LEFT_SIDE",
             "showInGrid": False,
             "name": name,
@@ -62,7 +63,7 @@ class form_helper:
         return [row]    
 
 
-    def create_checkbox(self, caption, options, default_idx, form_name="", same_row_as_last_field=False, category=""):
+    def create_checkbox(self, caption, options, default_idx, form_name="", same_row_as_last_field=False, mandatory=False, category=""):
         name = self._create_variable_name(
             caption = caption,
             form_name = form_name,
@@ -84,7 +85,7 @@ class form_helper:
                 "pvs": pvs,
                 "caption": caption,
                 "type": "checkbox",
-                "mandatory": False,
+                "mandatory": mandatory,
                 "optionsPerRow": len(options),
                 "labelPosition": "LEFT_SIDE",
                 "showInGrid": False,
@@ -92,7 +93,7 @@ class form_helper:
                 "toolTip": "",
                 "name": name,
                 "udn": name,
-                "$sameRowAsLastField": False,
+                "$sameRowAsLastField": same_row_as_last_field,
                 "$sfField": False,
                 "$unused": [
                     options[default_idx]
@@ -102,7 +103,7 @@ class form_helper:
         return [row]
 
 
-    def create_dropdown(self, caption, options, default_idx=-1, form_name="", same_row_as_last_field=False, category=""):
+    def create_dropdown(self, caption, options, default_idx=-1, form_name="", same_row_as_last_field=False, mandatory=False, category=""):
         name = self._create_variable_name(
             caption = caption,
             form_name = form_name,
@@ -119,7 +120,7 @@ class form_helper:
         row = {
             "caption": caption,
             "type": "combobox",
-            "mandatory": False,
+            "mandatory": mandatory,
             "labelPosition": "LEFT_SIDE",
             "showInGrid": False,
             "pvOrdering": "NONE",
