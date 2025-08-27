@@ -6,7 +6,7 @@ with open('README_pypi.md') as f:
 
 setup(
     name='OpenSpecimenAPIconnector',
-    version='0.9.3',
+    version='0.9.4',
     description='Python API commands to interact with OpenSpecimen',
     long_description=long_description,
     long_description_content_type='text/markdown',  # This is important!

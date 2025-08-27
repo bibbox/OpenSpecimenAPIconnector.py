@@ -50,7 +50,7 @@ class csv_bulk:
         print(self.base_url, self.OS_request_gen.auth)
 
 
-    def get_template(self, schemaname):
+    def get_template(self, schemaname, entity_type=None, form_name=None, cp_id=None):
     
         """Get the Templates to the corresponding schema
 
@@ -68,7 +68,7 @@ class csv_bulk:
             String in camelCase of the schema, permissable values are: cp, specimen, cpr, user, userRoles, site, shipment,
             institute, dpRequirement, distributionProtocol, distributionOrder, storageContainer, storageContainertype,
             containerShipment, cpe, masterSpecimen, participant, sr, visit, specimenAliquot, specimenDerivatice,
-            specimenDisposal, consent
+            specimenDisposal, consent, extensions
 
         Returns
         -------
@@ -81,11 +81,24 @@ class csv_bulk:
         schemes = ["cp", "specimen", "cpr", "user", "userRoles", "site", "shipment",
             "institute", "dpRequirement", "distributionProtocol", "distributionOrder", "storageContainer", "storageContainerType",
             "containerShipment", "cpe", "masterSpecimen", "participant", "sr", "visit", "specimenAliquot", "specimenDerivative",
-            "specimenDisposal", "consent"]
-       
+            "specimenDisposal", "consent", "extensions"]
+
+        entity_types = ["CommonParticipant", "Participant", "Visit", "Specimen", "SpecimenEvent", "SpecimenCollectionGroup",
+                        "SpecimenExtension", "CollectionProtocol"]
+
         assert schemaname in schemes, "Non permissible schema please check documentation for permissible values"
 
         endpoint = '/input-file-template?schema=' + str(schemaname)
+
+        if schemaname == "extensions":
+            assert entity_type is not None, "Schema extensions need an entity_type"
+            assert form_name is not None, "Schema extensions need a form name"
+            assert cp_id is not None, "Schema extensions need a collection protocol ID"
+
+            assert entity_type in entity_types, "Non permissible entity type please check documentation for permissible values"
+
+            endpoint += f"&entityType={entity_type}&formName={form_name}&cpId={cp_id}"
+
         url = self.base_url + endpoint
 
         r = self.OS_request_gen.get_request(url)

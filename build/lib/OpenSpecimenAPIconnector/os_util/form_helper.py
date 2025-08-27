@@ -7,10 +7,11 @@ class form_helper:
         self.form_id = form_id
 
     
-    def get_fresh_structure(self, caption):
-        name = self._create_variable_name(
-            caption = caption,
-            form_name = "main")
+    def get_fresh_structure(self, caption, variable=None):
+        if variable is None:
+            variable = caption
+
+        name = self._clear_variable_name(variable)
 
         form = {"$saved": True,
                 "name": name,
@@ -22,11 +23,11 @@ class form_helper:
         return form
 
 
-    def create_headline(self, text, form_name="", category="", font_size=20):
-        name = self._create_variable_name(
-            caption = text,
-            form_name = form_name,
-            category = category)
+    def create_headline(self, text, variable=None, font_size=20):
+        if variable is None:
+            variable = text
+
+        name = self._clear_variable_name(variable)
 
         row = {
             "$saved": True,
@@ -41,11 +42,11 @@ class form_helper:
         return [row]
     
 
-    def create_textfield(self, caption, form_name="", same_row_as_last_field=False, mandatory=False, category=""):
-        name = self._create_variable_name(
-            caption = caption,
-            form_name = form_name,
-            category = category)
+    def create_textfield(self, caption, variable=None, mandatory=False, same_row_as_last_field=False):
+        if variable is None:
+            variable = caption
+
+        name = self._clear_variable_name(variable)
 
         row = {
             "defaultValue": "",
@@ -63,11 +64,11 @@ class form_helper:
         return [row]    
 
 
-    def create_checkbox(self, caption, options, default_idx, form_name="", same_row_as_last_field=False, mandatory=False, category=""):
-        name = self._create_variable_name(
-            caption = caption,
-            form_name = form_name,
-            category = category)
+    def create_checkbox(self, caption, options, default_idx, variable=None, same_row_as_last_field=False):
+        if variable is None:
+            variable = caption
+
+        name = self._clear_variable_name(variable)
 
         pvs = []
         for pv in options:
@@ -85,7 +86,7 @@ class form_helper:
                 "pvs": pvs,
                 "caption": caption,
                 "type": "checkbox",
-                "mandatory": mandatory,
+                "mandatory": False,
                 "optionsPerRow": len(options),
                 "labelPosition": "LEFT_SIDE",
                 "showInGrid": False,
@@ -103,11 +104,11 @@ class form_helper:
         return [row]
 
 
-    def create_dropdown(self, caption, options, default_idx=-1, form_name="", same_row_as_last_field=False, mandatory=False, category=""):
-        name = self._create_variable_name(
-            caption = caption,
-            form_name = form_name,
-            category = category)
+    def create_dropdown(self, caption, options, default_idx=-1, variable=None, mandatory=False, same_row_as_last_field=False):
+        if variable is None:
+            variable = caption
+
+        name = self._clear_variable_name(variable)
 
         pvs = []
         for pv in options:
@@ -159,10 +160,10 @@ class form_helper:
         return json.dumps(form)
 
 
-    def _create_variable_name(self, form_name, caption, category=""):
+    def _clear_variable_name(self, variable_name):
 
         # replace escape sequence
-        caption = caption.encode().decode("unicode-escape")
+        variable_name = variable_name.encode().decode("unicode-escape")
 
         # Remove umlauts
         umlaut_map = {
@@ -176,13 +177,9 @@ class form_helper:
             }
 
         for umlaut, replacement in umlaut_map.items():
-            caption = caption.replace(umlaut, replacement)
+            variable_name = variable_name.replace(umlaut, replacement)
 
         # Replace special characters with underscores
-        caption = re.sub(r'[^a-zA-Z0-9]', '_', caption)
-   
-        if not category == "":
-            category = re.sub(r'[^a-zA-Z0-9]', '_', category)
+        variable_name = re.sub(r'[^a-zA-Z0-9]', '_', variable_name)
 
-        variable_name = f"cg_{category}_fn_{form_name}_vn_{caption}"
         return variable_name.lower()

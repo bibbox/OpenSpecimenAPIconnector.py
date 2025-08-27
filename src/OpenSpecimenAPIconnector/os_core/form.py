@@ -211,6 +211,8 @@ class form:
         payload = params
         r = self.OS_request_gen.put_request(url, payload)
 
+        return r
+
 
     def update_form(self, formId, params):
 

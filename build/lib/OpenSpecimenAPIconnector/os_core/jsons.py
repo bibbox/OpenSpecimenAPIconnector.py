@@ -478,7 +478,7 @@ class Json_factory():
         
         """
         object_types = ["institute", "site", "user", "cpr", "specimen", "extensions", "storageContainer", "distributionProtocol", "cp", "cpe", "visit"]
-        entity_types = ["Participant", "Visit", "Specimen", "SpecimenEvent", "SpecimenCollectionGroup", "CollectionProtocol"]
+        entity_types = ["CommonParticipant", "Participant", "Visit", "Specimen", "SpecimenEvent", "SpecimenCollectionGroup", "CollectionProtocol"]
         objecttype = objecttype.lower()
         
         assert objecttype in object_types, "Object Type {} not allowed check documentation".format(objecttype)

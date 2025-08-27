@@ -291,7 +291,6 @@ class collection_protocol():
         for entity_type in entity_types:
             endpoint += f"entityType={entity_type}&"
         endpoint = endpoint[:-1]
-        print(endpoint)
 
         url = self.base_url + endpoint
         r = self.OS_request_gen.get_request(url)
