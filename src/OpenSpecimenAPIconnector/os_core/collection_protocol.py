@@ -46,7 +46,8 @@ class collection_protocol():
         """
         self.base_url = config_manager.get_url() + '/collection-protocols'
         self.auth = config_manager.get_auth()
-        self.OS_request_gen = OS_request_gen(self.auth)
+        self.token = config_manager.get_token()
+        self.OS_request_gen = OS_request_gen(self.auth, self.token)
         self.jsons = Json_factory()
 
     def ausgabe(self):
@@ -284,4 +285,14 @@ class collection_protocol():
 
         return cp_pandas_template
 
+    def get_extensions(self, cp_id, entity_types=["CommonParticipant", "Participant", "SpecimenCollectionGroup", "Specimen"]):
+        
+        endpoint = "/" + str(cp_id) + "/forms?"
+        for entity_type in entity_types:
+            endpoint += f"entityType={entity_type}&"
+        endpoint = endpoint[:-1]
 
+        url = self.base_url + endpoint
+        r = self.OS_request_gen.get_request(url)
+
+        return json.loads(r.text)

@@ -34,7 +34,8 @@ class form:
         """
         self.base_url = config_manager.get_url() + '/forms'
         self.auth = config_manager.get_auth()
-        self.OS_request_gen = OS_request_gen(self.auth)
+        self.token = config_manager.get_token()
+        self.OS_request_gen = OS_request_gen(self.auth, self.token)
 
     def ausgabe(self):
         """Testing of the URL and authentification.
@@ -209,3 +210,15 @@ class form:
         url = self.base_url + endpoint
         payload = params
         r = self.OS_request_gen.put_request(url, payload)
+
+        return r
+
+
+    def update_form(self, formId, params):
+
+        endpoint = '/' + str(formId)
+        url = self.base_url + endpoint
+        payload = params
+        r = self.OS_request_gen.put_request(url, payload)
+
+        return json.loads(r.text)

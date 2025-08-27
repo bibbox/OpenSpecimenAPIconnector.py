@@ -13,6 +13,7 @@ from .institute_util import institutes_util
 from .aggregated_fields import aggregator
 from .container_util import container_util
 from .form_util import forms_util
+from .form_helper import form_helper
 
 # module imports from core outside
 from ..mg_util.OpenSpecimenBBMRImapping import bbmri_connector

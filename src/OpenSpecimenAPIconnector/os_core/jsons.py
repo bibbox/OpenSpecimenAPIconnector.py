@@ -477,8 +477,8 @@ class Json_factory():
             Json data needed for creating an export job for the given entity
         
         """
-        object_types = ["institute", "site", "user", "cpr", "specimen", "extensions", "storageContainer", "distributionProtocol", "cp", "cpe"]
-        entity_types = ["Participant", "Visit", "Specimen", "SpecimenEvent", "SpecimenCollectionGroup", "CollectionProtocol"]
+        object_types = ["institute", "site", "user", "cpr", "specimen", "extensions", "storageContainer", "distributionProtocol", "cp", "cpe", "visit"]
+        entity_types = ["CommonParticipant", "Participant", "Visit", "Specimen", "SpecimenEvent", "SpecimenCollectionGroup", "CollectionProtocol"]
         objecttype = objecttype.lower()
         
         assert objecttype in object_types, "Object Type {} not allowed check documentation".format(objecttype)
@@ -579,7 +579,7 @@ class Json_factory():
         return json.dumps(params)
 
     def create_bulk_import_job(self, schemaname=None, operation=None, fileid=None,
-                                   dateformat=None, timeformat=None, cp_id=None, csvType="SINGLE_ROW_PER_OBJ"):
+                                   dateformat=None, timeformat=None, cp_id=None, csvType="SINGLE_ROW_PER_OBJ", entity_type=None, form_name=None):
 
         """Create JSON formated string neccesary for creating a bulk import operation to be handled by OpenSpecimen
 
@@ -603,6 +603,9 @@ class Json_factory():
             Json data needed for creating an CSV file import job for the given entity
         """
         
+        if schemaname == "extensions":
+            assert form_name is not None and entity_type is not None, "Please specify formname and the entitytype the given form is attached to"
+
         data = {"objectType": schemaname,
                 "importType": operation,
                 "inputFileId": fileid,
@@ -610,7 +613,9 @@ class Json_factory():
                 "timeFormat":timeformat,
                 "csvType":csvType,
                 "objectParams": {
-                    "cpId":cp_id
+                    "cpId":cp_id,
+                    "entityType": entity_type,
+                    "formName": form_name
                     }
                 }
         data = {k: v for k, v in data.items() if v is not None}

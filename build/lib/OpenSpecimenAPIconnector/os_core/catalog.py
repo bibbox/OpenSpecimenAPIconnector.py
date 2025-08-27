@@ -7,7 +7,7 @@ from .. import config_manager
 import json
 
 
-class shipment:
+class catalog:
     
     """Handles the calls for Shipments
     
@@ -41,10 +41,12 @@ class shipment:
         auth : tuple
             Consists of two strings ( loginname , password)
         """ 
-        self.base_url = config_manager.get_url() + '/shipments'
+        self.base_url = config_manager.get_url() + '/specimen-catalogs'
         self.auth = config_manager.get_auth()
         self.token = config_manager.get_token()
         self.OS_request_gen = OS_request_gen(self.auth, self.token)
+
+        # https://pad.medunigraz.at/rest/ng/specimen-catalogs/6/specimen-requests/4
 
     def ausgabe(self):
         
@@ -57,7 +59,7 @@ class shipment:
         print(self.base_url, self.OS_request_gen.auth)
         
 
-    def get_all_shipments(self):
+    def get_all_catalogs(self):
         """
         Retrieves all shipments by sending a GET request to a designated endpoint.
 
@@ -79,7 +81,7 @@ class shipment:
         return json.loads(r.text)
 
 
-    def get_shipment(self, shipmentid):
+    def get_metadata(self, catalog_id):
         
         """Get the Shipment with the ID shipmentid
         
@@ -99,13 +101,14 @@ class shipment:
             Details of the Specimen with the specified ID, or the OpenSpecimen error message.
         """
 
-        endpoint = '/' + str(shipmentid)
+        endpoint = '/' + str(catalog_id)
         url = self.base_url + endpoint
         r = self.OS_request_gen.get_request(url)
 
         return json.loads(r.text)
 
-    def get_specimens(self, shipmentid):
+
+    def get_all_requests(self, catalog_id):
 
         """Get the Specimens of the Shipment with the ID shipmentid
 
@@ -115,18 +118,45 @@ class shipment:
         http(s)://<host>:<port>/openspecimen/cps/{cpid}/specimens/{specimenid}/... .
         Otherwise via search Specimen, for Examples by name and then extract the ID via key ["id"].
         """
-        endpoint = '/' + str(shipmentid) + '/specimens'
+        endpoint = '/' + str(catalog_id) + '/specimen-requests'
         url = self.base_url + endpoint
         r = self.OS_request_gen.get_request(url)
 
         return json.loads(r.text)
 
-    def delete_shipment(self, shipmentid):
 
-        import requests
+    def get_specimens_request(self, catalog_id, request_id):
 
-        endpoint = '/' + str(shipmentid)
+        endpoint = '/' + str(catalog_id) + '/specimen-requests/' + str(request_id)
         url = self.base_url + endpoint
-        r = self.OS_request_gen.delete_request(url)
+        r = self.OS_request_gen.get_request(url)
+
+        return json.loads(r.text)
+
+
+    def get_all_specimens(self, catalog_id):
+
+        endpoint = '/' + str(catalog_id) + '/search'
+        url = self.base_url + endpoint
+        
+        data = json.dumps({"criteria": []})
+
+        r = self.OS_request_gen.post_request(url, data=data)
+
+        return json.loads(r.text)
+
+
+    def close_request(self, catalog_id, request_id, comment=""):
+
+        endpoint = '/' + str(catalog_id) + '/specimen-requests/' + str(request_id) + '/status'
+        url = self.base_url + endpoint
+
+        data = json.dumps({
+            "id": request_id,
+            "reason": comment,
+            "status": "Closed"
+        })
+
+        r = self.OS_request_gen.put_request(url, data)
 
         return json.loads(r.text)

@@ -43,7 +43,8 @@ class shipment:
         """ 
         self.base_url = config_manager.get_url() + '/shipments'
         self.auth = config_manager.get_auth()
-        self.OS_request_gen = OS_request_gen(self.auth)
+        self.token = config_manager.get_token()
+        self.OS_request_gen = OS_request_gen(self.auth, self.token)
 
     def ausgabe(self):
         
@@ -117,5 +118,15 @@ class shipment:
         endpoint = '/' + str(shipmentid) + '/specimens'
         url = self.base_url + endpoint
         r = self.OS_request_gen.get_request(url)
+
+        return json.loads(r.text)
+
+    def delete_shipment(self, shipmentid):
+
+        import requests
+
+        endpoint = '/' + str(shipmentid)
+        url = self.base_url + endpoint
+        r = self.OS_request_gen.delete_request(url)
 
         return json.loads(r.text)
