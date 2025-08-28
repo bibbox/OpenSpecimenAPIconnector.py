@@ -144,3 +144,15 @@ class catalog:
         r = self.OS_request_gen.post_request(url, data=data)
 
         return json.loads(r.text)
+
+    def close_request(self, catalog_id, request_id, params):
+        """Close the specimen request in a specific catalog
+
+        Warning: This is not reversible!
+        """
+        endpoint = '/' + str(catalog_id) + '/specimen-requests/' + str(request_id) + '/status'
+        url = self.base_url + endpoint
+
+        r = self.OS_request_gen.put_request(url, data=params)
+
+        return json.loads(r.text)

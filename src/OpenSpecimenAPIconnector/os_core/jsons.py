@@ -1271,3 +1271,27 @@ class Json_factory():
         }
 
         return json.dumps([data])
+
+    def close_catalog_request_json(self, request_id, reason=None):
+        """Creates the correct json format to close a specimen request in a catalog.
+
+        Parameters
+        ----------
+        request_id (int): The ID of the specifig request
+        reason (str): The comment string why the request is closed.
+
+        Returns
+        -------
+        str
+            A JSON-formatted string containing the close catalog properties.
+
+        """
+        assert isinstance(reason, str) or reason is None, "The reason for closing the request must me a string or None!"
+
+        params = {"id": request_id,
+                  "reason": reason,
+                  "status": "Closed"}
+        params = {k: v for k, v in params.items() if v is not None}
+
+        return json.dumps(params)
+
