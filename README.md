@@ -1,5 +1,5 @@
 # OpenSpecimenAPIconnector.py
-Version 0.9.1
+Version 0.9.5
 python framework for importing, exporting and combining various data entries from Open Specimen and Molgenis
 
 SORCE code can be found in src/OpenSpecimenAPIconnector/
@@ -13,4 +13,4 @@ In general the Framework is comprised of 2 individual Levels:<br>
   - All further operations are then handled via python scripts that use the methods from above to implement the desired functionality.
 
 To install the pip package after cloning run:<br>
-pip install dist/OpenSpecimenAPIconnector-0.9.1-py3-none-any.whl
+pip install dist/OpenSpecimenAPIconnector-0.9.5-py3-none-any.whl

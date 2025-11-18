@@ -46,7 +46,7 @@ class csv_exporter:
 
 
     def csv_export(self, objecttype, recordids=None, cpid=None, ppids=None,  entitytype=None, formname=None, 
-                            specimenlabels=None, csv=False):
+                            specimenlabels=None, visitnames=None, csv=False):
 
         """Export CSV for the given entity
 
@@ -79,8 +79,8 @@ class csv_exporter:
         """
         
 
-        data = self.json.create_csv_export_job(objecttype = objecttype, cpid = cpid,
-                entitytype = entitytype, formname = formname)
+        data = self.json.create_csv_export_job(objecttype = objecttype, cpid = cpid, ppids=ppids,
+                entitytype = entitytype, formname = formname, specimenlabels=specimenlabels, visitnames=visitnames)
         
         job_id = self.export.create_export_job(data = data)
 

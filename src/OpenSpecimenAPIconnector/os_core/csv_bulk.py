@@ -84,7 +84,7 @@ class csv_bulk:
             "specimenDisposal", "consent", "extensions"]
 
         entity_types = ["CommonParticipant", "Participant", "Visit", "Specimen", "SpecimenEvent", "SpecimenCollectionGroup",
-                        "SpecimenExtension", "CollectionProtocol"]
+                        "SpecimenExtension", "CollectionProtocol", "VisitExtension", "ParticipantExtension"]
 
         assert schemaname in schemes, "Non permissible schema please check documentation for permissible values"
 

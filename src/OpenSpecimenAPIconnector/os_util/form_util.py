@@ -4,6 +4,10 @@ from ..os_core.url import url_gen
 from ..os_core.jsons import Json_factory
 from ..os_core.form import form
 
+import zipfile
+import io
+import re
+import os
 
 class forms_util:
 
@@ -99,3 +103,60 @@ class forms_util:
         r = self.form.attach_form(form_id, params = params)
 
         return r
+
+    def download_form(self, form_id, target_dir="./", filename_prefix=None, as_zip=True, max_size=512):
+        """ Downloads the form as zip archive or xml and saves it in the target_dir.
+
+        Parameters
+        ----------
+        form_id: int
+            ID of the form in OpenSpecimen
+        target_dir: str
+            Directory to save the form
+        as_zip: bool
+            As zip or as xml
+        max_size:
+            Maximum size of the file in MB.
+
+        Returns
+        -------
+        status: dict
+        code: intr
+        """
+        # Request the zip file
+        r = self.form.download_form(form_id)
+
+        if r.status_code == 200:
+            # Check if there is a response
+            MAX_SIZE = max_size * 1024 ** 2
+            total_size = 0
+            zip_bytes=io.BytesIO()
+
+            filename = f'{filename_prefix}_form_{form_id}.zip' if filename_prefix else f'form_{form_id}.zip'
+
+            # Check if there is a filename in the headers
+            query_filename = re.search(r'filename="?([^"]+)"?', r.headers.get('Content-Disposition'))
+            if query_filename:
+                filename = f'{filename_prefix}_{query_filename.group(1)}'
+
+            # Read the raw datastream
+            for chunk in r.iter_content(chunk_size=8192):
+                if chunk:
+                    total_size += len(chunk)
+                    assert total_size <= MAX_SIZE, "File too large, aborting. Check max_size but keep your RAM size in mind."
+                    zip_bytes.write(chunk)
+
+            # Save either as zip or extract the files directly
+            if total_size > 0 and total_size <= MAX_SIZE:
+                zip_bytes.seek(0)
+                if as_zip:
+                    with open(os.path.join(target_dir, filename), 'wb') as f:
+                        f.write(zip_bytes.read())
+                else:
+                    with zipfile.ZipFile(zip_bytes, 'r') as zip_ref:
+                        zip_ref.extractall(target_dir)
+
+            return {"status": "success"}, 200
+
+        else:
+            return {"status": "failed"}, 400
