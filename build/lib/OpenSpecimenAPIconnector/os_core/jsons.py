@@ -447,7 +447,7 @@ class Json_factory():
     
     # Create CSV export job  
     def create_csv_export_job(self, objecttype=None, recordids=None, cpid=None, ppids=None,  entitytype=None, formname=None, 
-                            specimenlabels=None):
+                            specimenlabels=None, visitnames=None):
     
         """Create JSON formated string neccesary for exporting an collection protocol (should be implemented but is not see OpenSpecimen 7.2)
 
@@ -478,7 +478,8 @@ class Json_factory():
         
         """
         object_types = ["institute", "site", "user", "cpr", "specimen", "extensions", "storageContainer", "distributionProtocol", "cp", "cpe", "visit"]
-        entity_types = ["CommonParticipant", "Participant", "Visit", "Specimen", "SpecimenEvent", "SpecimenCollectionGroup", "CollectionProtocol"]
+        entity_types = ["CommonParticipant", "Participant", "ParticipantExtension", "Visit", "VisitExtension", "Specimen",
+                        "SpecimenExtension", "SpecimenEvent", "SpecimenCollectionGroup", "CollectionProtocol"]
         objecttype = objecttype.lower()
         
         assert objecttype in object_types, "Object Type {} not allowed check documentation".format(objecttype)
@@ -491,8 +492,27 @@ class Json_factory():
             assert formname is not None and entitytype is not None, "Please specify formname and the entitytype the given form is attached to"
             assert cpid is not None , "cpid may not be none with objecttype {}".format(objecttype)
 
+        if specimenlabels is not None:
+            assert isinstance(specimenlabels, (list, str)), "specimen labels have to be given in list format or string if it only one."
+            assert len(specimenlabels) > 0, "Specimen labels list must not be empty."
+            if isinstance(specimenlabels, list) and len(specimenlabels) > 0:
+                specimenlabels = ",".join(specimenlabels)
+
+        if ppids is not None:
+            assert isinstance(ppids, (list, str)), "PPIDs have to be given in list format or string if it only one."
+            assert len(ppids) > 0, "PPIDs list must not be empty."
+            if isinstance(ppids, list) and len(ppids) > 0:
+                ppids = ",".join(ppids)
+
+        if visitnames is not None:
+            assert isinstance(visitnames, (list, str)), "Visit Names have to be given in list format or string if it only one."
+            assert len(visitnames) > 0, "Visit Names list must not be empty."
+            if isinstance(visitnames, list) and len(visitnames) > 0:
+                visitnames = ",".join(visitnames)
+
         params = {
                 "ppids": ppids,
+                "visitNames": visitnames,
                 "specimenLabels": specimenlabels,
                 "entityType": entitytype,
                 "formName": formname,
@@ -1271,3 +1291,27 @@ class Json_factory():
         }
 
         return json.dumps([data])
+
+    def close_catalog_request_json(self, request_id, reason=None):
+        """Creates the correct json format to close a specimen request in a catalog.
+
+        Parameters
+        ----------
+        request_id (int): The ID of the specifig request
+        reason (str): The comment string why the request is closed.
+
+        Returns
+        -------
+        str
+            A JSON-formatted string containing the close catalog properties.
+
+        """
+        assert isinstance(reason, str) or reason is None, "The reason for closing the request must me a string or None!"
+
+        params = {"id": request_id,
+                  "reason": reason,
+                  "status": "Closed"}
+        params = {k: v for k, v in params.items() if v is not None}
+
+        return json.dumps(params)
+

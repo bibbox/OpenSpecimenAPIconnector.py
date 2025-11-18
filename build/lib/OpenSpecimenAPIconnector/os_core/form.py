@@ -222,3 +222,24 @@ class form:
         r = self.OS_request_gen.put_request(url, payload)
 
         return json.loads(r.text)
+
+
+    def download_form(self, formId):
+        """ Download the form as zip archive and returns the zip file.
+
+        Parameters
+        ----------
+        formId: int
+            id of the form in OpenSpecimen
+
+        Returns
+        -------
+        zipfile
+            but needs to be processed to save
+        """
+
+        endpoint = '/' + str(formId) + '/definition-zip'
+        url = self.base_url + endpoint
+        r = self.OS_request_gen.get_request(url, stream=True)
+
+        return r

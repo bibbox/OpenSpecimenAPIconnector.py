@@ -66,9 +66,31 @@ class lists:
         payload = []
         data = json.dumps(payload)
         url = self.base_url + endpoint
-        # print(url)
         r = self.OS_request_gen.post_request(url, data=data)
 
         return json.loads(r.text)
 
+    def get_collection_protocol_list_view(self, max_results=101, cpid=-1):
+        """Get the cp details for a specific cp or all cps
+        # e.g. check if specimens are in the cp
+        # https://pad.medunigraz.at/rest/ng/lists/data?listName=cp-list-view&maxResults=101&objectId=-1
 
+        Parameters
+        ----------
+        max_results : string or int
+            number of maximum results that will be included in the response, which will be converted to a string.
+        cpid: string or int
+            The System's ID of the collection protocol of interest, which will be converted to a string
+        Returns
+        -------
+        JSON-dict
+            Details of the Specimen with the specified ID, or the OpenSpecimen error message.
+        """
+
+        endpoint = '/data?listName=cp-list-view' + '&maxResults=' + str(max_results) + '&objectId=' + str(cpid)
+        payload = []
+        data = json.dumps(payload)
+        url = self.base_url + endpoint
+        r = self.OS_request_gen.post_request(url, data=data)
+
+        return json.loads(r.text)
