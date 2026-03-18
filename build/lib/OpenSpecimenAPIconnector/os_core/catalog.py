@@ -145,6 +145,13 @@ class catalog:
 
         return json.loads(r.text)
 
+    def place_request(self, catalog_id, payload):
+        endpoint = '/' + str(catalog_id) + '/specimen-requests'
+        url = self.base_url + endpoint
+        r = self.OS_request_gen.post_request(url, data=payload)
+
+        return r
+
     def close_request(self, catalog_id, request_id, params):
         """Close the specimen request in a specific catalog
 

@@ -4,9 +4,7 @@ from ..os_core.query import query
 from ..os_core.jsons import Json_factory
 from ..os_core.url import url_gen
 import json
-import io
-import pandas
-import time
+import re
 
 class query_util:
 
@@ -158,3 +156,118 @@ class query_util:
         r = self.query.search_query(suburl = params)
 
         return r
+
+
+    def aql_helper(self, datafields=["Participant.id", "Specimen.id"], search=[('CollectionProtocol.id', 'exists', None)], limit=None, binder="and"):
+        """Builds an AQL query string from components.
+
+        This helper function constructs a valid AQL (Advanced Query Language)
+        string from a list of data fields to select and a list of search
+        conditions. It includes validation for field names, operators, and
+        values to prevent malformed queries and provides basic protection
+        against injection by whitelisting operators and validating field formats.
+
+        Parameters
+        ----------
+        datafields : list[str], optional
+            A list of strings representing the data fields to be returned by
+            the query (e.g., ["Participant.id", "Specimen.id"]).
+        search : list[tuple], optional
+            A list of tuples, where each tuple defines a search condition
+            in the format (field, operator, value).
+            Example: [('CollectionProtocol.id', '=', 1), ('Specimen.label', 'contains', 'S1')].
+        limit : int, optional
+            The maximum number of records to return. If None, no limit is applied.
+        binder : str, optional
+            The logical operator ('and' or 'or') used to join multiple search
+            conditions in the 'where' clause. Defaults to "and".
+
+        Returns
+        -------
+        str
+            A formatted AQL query string ready to be executed.
+
+        Raises
+        ------
+        AssertionError
+            If `datafields` or `search` are empty, or if inputs have incorrect types.
+        ValueError
+            If an invalid binder, operator, field format, or value is provided.
+        """
+
+
+
+        assert len(datafields) > 0, "You have to specify datafields to return!"
+        assert isinstance(datafields, list), "Variable <datafields> has to be a list of strings."
+        assert len(search) > 0, "You have to search for something!"
+        assert isinstance(search, list), "Variable <search> has to be a list of tuples."
+        assert isinstance(binder, str), "Variable <binder> has to be a string."
+
+        # Whitelist validation for binder
+        allowed_binders = ['and', 'or']
+        if binder.lower() not in allowed_binders:
+            raise ValueError(f"Invalid binder: '{binder}'. Allowed values are {allowed_binders}.")
+
+        # Regex validation for datafields
+        field_pattern = re.compile(r"^[A-Za-z0-9_]+(\.[A-Za-z0-9_]+)+$")
+        for field in datafields:
+            if not field_pattern.match(field):
+                raise ValueError(f"Invalid datafield format: '{field}'")
+
+        # Whitelist validation for search operators
+        allowed_ops = ['=', '!=', '<', '>', '<=', '>=',
+                       'exists', 'not exists', 'any',
+                       'in', 'not in', 'between',
+                       'starts with', 'ends with', 'contains']
+
+        # Safely build search conditions
+        where_clauses = []
+        for condition in search:
+            field, op, value = condition
+            if not field_pattern.match(field):
+                raise ValueError(f"Invalid field format in search condition: '{field}'")
+            if op.lower() not in allowed_ops:
+                raise ValueError(f"Invalid operator in search condition: '{op}'")
+
+            op_lower = op.lower()
+
+            if op_lower in ['exists', 'not exists', 'any']:
+                where_clauses.append(f"{field} {op}")
+            elif op_lower in ['in', 'not in']:
+                if not isinstance(value, (list, tuple)):
+                    raise ValueError(f"Value for '{op}' must be a list or tuple.")
+
+                safe_values = []
+                for item in value:
+                    if isinstance(item, str):
+                        safe_values.append('"' + item.replace('"', '\\"') + '"')
+                    else:
+                        safe_values.append(str(item))
+                where_clauses.append(f"{field} {op} ({', '.join(safe_values)})")
+            elif op_lower == 'between':
+                if not isinstance(value, (list, tuple)) or len(value) != 2:
+                    raise ValueError(f"Value for 'between' must be a list or tuple of 2 elements.")
+
+                safe_values = []
+                for item in value:
+                    if isinstance(item, str):
+                        safe_values.append('"' + item.replace('"', '\\"') + '"')
+                    else:
+                        safe_values.append(str(item))
+                where_clauses.append(f"{field} {op} ({', '.join(safe_values)})")
+            else: # Handles =, !=, <, >, <=, >=, starts with, ends with, contains
+                if isinstance(value, str):
+                    safe_value = '"' + value.replace('"', '\\"') + '"'
+                else:
+                    safe_value = str(value)
+                where_clauses.append(f"{field} {op} {safe_value}")
+
+        aql = f'select {", ".join(datafields)} where {(" " + binder + " ").join(where_clauses)}'
+
+        if limit:
+            assert isinstance(limit, int), "Variable <limit> has to be an integer."
+            assert limit > 0, "A limit can not be smaller than zero!"
+            limits = [str(0), str(limit)]
+            aql = f'{aql} limit {", ".join(limits)}'
+
+        return aql

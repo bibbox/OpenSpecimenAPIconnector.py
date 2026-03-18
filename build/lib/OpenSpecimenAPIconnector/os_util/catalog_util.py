@@ -1,8 +1,10 @@
 #! /bin/python3
+import json
 
 from ..os_core.url import url_gen
 from ..os_core.jsons import Json_factory
 from ..os_core.catalog import catalog
+from ..os_core.users import users
 
 
 class catalog_util:
@@ -37,6 +39,68 @@ class catalog_util:
         """
         self.catalog = catalog()
         self.jsons = Json_factory()
+        self.users = users()
+
+    def place_request(self, catalog_id, user_id, request_form_data, specimen_ids):
+        """
+
+        Parameters
+        ----------
+        catalog_id: int
+            ID of the catalog where the order should be placed
+        user_id: int
+            ID of the user who requests the specimens
+        request_form_data: dict
+            e.g.: form_data = {
+                    "name_of_study": "dfaewf",
+                    "short_name_of_study": "fesasfe",
+                    "receiving_site_dropdown": "Christoph's office",
+                    "comments": "Order placed via the dashboard.",
+                    "patient_gender": "No",
+                    "patient_age": "No",
+                    "material_anatomical_site": "No",
+                    "material_specification": "No",
+                    "material_collection_method": "No",
+                    "block_specification": "No",
+                    "slide_specification": "No",
+                    "staining": "No",
+                    "diagnosis": "No",
+                    "macroscopic_description": "No",
+                    "histological_description": "No",
+                    "molecular_pathological_description": "No",
+                    "molecular_pathological_diagnosis": "No",
+                    "frozen_section_examination": "No",
+                    "additional_information": "No"
+                }
+
+        specimen_ids: list
+            List of specimen IDs
+
+        Returns
+        -------
+            response
+
+        """
+        requestor = {"requestor": self.users.get_user(user_id)}
+
+        assert isinstance(specimen_ids, list), "Specimen ids have to be given as list!"
+        items_list = [{"specimen": {"id": int(specimen_id)}} for specimen_id in specimen_ids]
+        items = {"items": items_list}
+
+        attrs_list = [{"name": key, "value": value} for key, value in request_form_data.items()]
+        extension_detail = {"extensionDetail": {"attrs": attrs_list}}
+
+        merged_payload = {
+            **requestor,
+            **items,
+            **extension_detail
+        }
+        payload = json.dumps(merged_payload, indent=2)
+
+        r = self.catalog.place_request(catalog_id, payload)
+        return r
+
+
 
     def close_request(self, catalog_id, request_id, reason=None):
         """Close the specimen request in a specific catalog

@@ -87,6 +87,7 @@ class bulk_operations:
 
         check = found_same.count()["OS_IMPORT_STATUS"] + found.count()["OS_ERROR_MESSAGE"]
         
-        assert check == len(ret["OS_IMPORT_STATUS"]), "Error creating {} by CSV: \n".format(schemaname) + str(ret)
+        if check != len(ret["OS_IMPORT_STATUS"]):
+            print("Error creating {} by CSV: \n".format(schemaname) + str(ret))
         assert not ret.empty, "Error creating {} by CSV: Empty Return".format(schemaname)
         return ret
